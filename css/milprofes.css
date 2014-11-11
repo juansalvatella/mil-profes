@@ -1,0 +1,21 @@
+body {
+  padding-top: 50px;
+}
+
+div.img-logo {
+   content:url(../img/logo.png);
+   margin-top: -5px;
+   height: 30px;
+}​
+
+.mp-bgcolor {
+	background-color: #656565;
+}
+.mp-color {
+	color: #656565;
+}
+
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
