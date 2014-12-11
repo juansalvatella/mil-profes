@@ -1,0 +1,71 @@
+html, body {
+    height: 100%;
+}
+body {
+    margin: 0; 
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+div.img-logo {
+   content:url(../img/logo.png);
+   margin-top: -5px;
+   height: 30px;
+}​
+
+/* LAYOUT */
+.mp-bgcolor {
+	background-color: #656565;
+}
+.mp-color {
+	color: #656565;
+}
+
+.navbar-inverse {
+	background-color: rgba(0,0,0,0.75);
+}
+
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+.alert-cookies {
+	color: #d9dadc;
+	background-color: rgba(0,0,0,0.1);
+	margin-bottom: 0px;
+}
+#loginbox {
+	padding-top: 15px;
+}
+#loginbox a:hover {
+	color: white;
+}
+/* END LAYOUT */
+
+/* HOME */
+.home-splash {
+	background:url(../img/home.jpg) bottom center no-repeat;
+	background-size: cover;
+	max-width: 100%;
+	padding: 110px 0 245px 0;
+	height: 90%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: relative;
+}
+.home-splash .jumbo h1{
+	font-size: 70px;
+	font-weight: 600;
+	color: white;
+}
+.home-actions {
+	margin-top: 15px;
+}
+/* END HOME */
+
+/* SEARCH */
+
+
+
+/* END SEARCH */
