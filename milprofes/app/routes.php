@@ -19,6 +19,7 @@ Route::get('demo', function()
 {
     return View::make('home');
 });
+Route::post('demo','SearchController@search');
 
 Route::get('/user/{naming}', function($naming)
 {
@@ -84,8 +85,6 @@ Route::get('/academias', function()
 
     return View::make('academias')->with('academias', $academias);
 });
-
-
 
 Route::get('contact', function()
 {

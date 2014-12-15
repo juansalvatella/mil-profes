@@ -4,8 +4,8 @@
   <div class="container">
     <!-- div class="row">
       <div class="col-md-offset-4 col-md-4 jumbo" -->
-        
-        {{ Form::open(array('url' => 'search')) }}
+
+    {{ Form::open(array('action' => 'SearchController@search')) }}
 
         <div class="row">
           <div class="col-xs-12">
