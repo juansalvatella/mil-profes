@@ -2,5 +2,9 @@
 
 class School extends Eloquent
 {
-    public $table = 'schools';
+
+    public function subjects() {
+        return $this->belongsToMany('Subject');
+    }
+
 }

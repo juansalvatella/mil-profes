@@ -2,7 +2,9 @@
 
 class Teacher extends Eloquent
 {
-    public $table = 'teachers';
 
+    public function subjects() {
+        return $this->belongsToMany('Subject');
+    }
 
 }
