@@ -15,75 +15,35 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
 Route::get('demo', function()
 {
     return View::make('home');
 });
+
 Route::post('demo','SearchController@search');
 
-Route::get('/user/{naming}', function($naming)
-{
-    $user = new User();
-    $user->name = $naming;
-    $user->email = $naming.'@email.com';
-    var_dump($user->save());
-});
-Route::get('/users', function()
-{
-    $users = User::all();
+Route::get('populate', 'PopulateController@populate');
 
-    return View::make('users')->with('users', $users);
+Route::get('teachers', function()
+{
+    $teachers = Teacher::all();
+
+    return View::make('teachers')->with('teachers', $teachers);
 });
 
-Route::get('user/view/{id}', function($id)
+Route::get('schools', function()
 {
-    return View::make('user');
-});
-Route::get('user/edit/{id}', function($id)
-{
-    return View::make('user');
+    $schools = School::all();
+
+    return View::make('schools')->with('schools', $schools);
 });
 
-Route::get('/profesor/{naming}', function($naming)
+Route::get('students', function()
 {
-    $profesor = new Profesor();
-    $profesor->nombre = $naming;
-    $profesor->preciohora = 'Negociable';
-    $profesor->disponibilidad = 'Lunes y Miércoles de 17h a 18:30h';
-    $profesor->direccion = 'Carrer de Roger de Llúria, 14';
-    $profesor->poblacion = 'Barcelona';
-    $profesor->email = $naming.'@email.com';
-    $profesor->telefono = '999 88 77 66';
-    $profesor->categoria = 'escolar';
-    $profesor->descripcion = 'Sin descripción';
-    var_dump($profesor->save());
-});
-Route::get('/profesores', function()
-{
-    $profesores = Profesor::all();
+    $students = Student::all();
 
-    return View::make('profesores')->with('profesores', $profesores);
-});
-
-Route::get('/academia/{naming}', function($naming)
-{
-    $academia = new Academia();
-    $academia->nombre = $naming;
-    $academia->precio = 'Desde 300€ por curso';
-    $academia->horario = 'De Lunes a Viernes de 15h a 23h';
-    $academia->direccion = 'Carrer de Roger de Llúria, 14';
-    $academia->poblacion = 'Barcelona';
-    $academia->email = $naming.'@email.com';
-    $academia->telefono = '799 88 77 66';
-    $academia->categoria = 'universitario';
-    $academia->descripcion = 'Sin descripción';
-    var_dump($academia->save());
-});
-Route::get('/academias', function()
-{
-    $academias = Academia::all();
-
-    return View::make('academias')->with('academias', $academias);
+    return View::make('students')->with('students', $students);
 });
 
 Route::get('contact', function()

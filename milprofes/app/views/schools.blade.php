@@ -5,28 +5,12 @@
         <thead>
         <tr>
             <th>Nombre</th>
-            <th>Precio</th>
-            <th>Horario</th>
-            <th>Dirección</th>
-            <th>Población</th>
-            <th>E-Mail</th>
-            <th>Teléfono</th>
-            <th>Categoría</th>
-            <th>Descripción</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($academias as $academia)
+        @foreach($schools as $school)
             <tr>
-                <td>{{ $academia->nombre }}</td>
-                <td>{{ $academia->precio }}</td>
-                <td>{{ $academia->horario }}</td>
-                <td>{{ $academia->direccion }}</td>
-                <td>{{ $academia->poblacion }}</td>
-                <td>{{ $academia->email }}</td>
-                <td>{{ $academia->telefono }}</td>
-                <td>{{ $academia->categoria }}</td>
-                <td>{{ $academia->descripcion }}</td>
+                <td>{{ $school->name }}</td>
             </tr>
         @endforeach
         </tbody>

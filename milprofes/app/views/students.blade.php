@@ -9,10 +9,10 @@
 			</tr>
 		</thead>
 		<tbody>
-	@foreach($users as $user)
+	@foreach($students as $student)
 			<tr>
-				<td>{{ $user->name }}</td>
-				<td>{{ $user->email }}</td>
+				<td>{{ $student->name }}</td>
+				<td>{{ $student->email }}</td>
 			</tr>
 	@endforeach
 		</tbody>

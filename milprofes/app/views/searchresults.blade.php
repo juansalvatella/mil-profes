@@ -15,27 +15,13 @@
                 @if($data['prof_o_acad']=='profesor')
                     @foreach($data['results'] as $result)
                         <li class="search-result">
-                            {{  $result['nombre'] }}
-                            {{  $result['preciohora'] }}
-                            {{  $result['disponibilidad'] }}
-                            {{  $result['direccion'] }}
-                            {{  $result['poblacion'] }}
-                            {{  $result['email'] }}
-                            {{  $result['telefono'] }}
-                            {{  $result['descripcion'] }}
+                            {{  $result['name'] }}
                         </li>
                     @endforeach
                 @else
                     @foreach($data['results'] as $result)
                         <li class="search-result">
-                            {{  $result['nombre'] }}
-                            {{  $result['precio'] }}
-                            {{  $result['horario'] }}
-                            {{  $result['direccion'] }}
-                            {{  $result['poblacion'] }}
-                            {{  $result['email'] }}
-                            {{  $result['telefono'] }}
-                            {{  $result['descripcion'] }}
+                            {{  $result['name'] }}
                         </li>
                     @endforeach
                 @endif
