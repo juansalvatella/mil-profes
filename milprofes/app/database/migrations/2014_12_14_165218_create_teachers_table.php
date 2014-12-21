@@ -19,8 +19,8 @@ class CreateTeachersTable extends Migration {
 			$table->string('rate',25);
 			$table->string('schedule',250);
 			$table->string('address',200);
-			$table->decimal('lat');
-			$table->decimal('long');
+			$table->decimal('lat',9,7);
+			$table->decimal('long',9,7);
 			$table->string('email',50)->unique();
 			$table->string('tel',25);
 			$table->string('description',1000);

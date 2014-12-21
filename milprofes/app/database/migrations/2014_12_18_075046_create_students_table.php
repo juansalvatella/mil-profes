@@ -18,8 +18,8 @@ class CreateStudentsTable extends Migration {
 			$table->string('name');
 			$table->string('email')->unique();
 			$table->string('address');
-			$table->decimal('lat');
-			$table->decimal('long');
+			$table->decimal('lat',9,7);
+			$table->decimal('long',9,7);
 			$table->timestamps();
 		});
 	}
