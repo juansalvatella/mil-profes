@@ -3,50 +3,112 @@
 class Geocoding {
 
     public static function geocode($address) {
-
         // url encode the address
         $address = urlencode($address);
-
-        // google map geocode api url
-        $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address={$address}";
-
+        // google map geocode api url (in Spain)
+        $url = "http://maps.google.es/maps/api/geocode/json?sensor=false&address={$address}";
         // get the json response
         $resp_json = file_get_contents($url);
-
         // decode the json
         $resp = json_decode($resp_json, true);
-
         // response status will be 'OK', if able to geocode given address
         if($resp['status']=='OK'){
-
             // get the important data
             $lati = $resp['results'][0]['geometry']['location']['lat'];
-            $longi = $resp['results'][0]['geometry']['location']['lng'];
+            $loni = $resp['results'][0]['geometry']['location']['lng'];
             $formatted_address = $resp['results'][0]['formatted_address'];
-
             // verify if data is complete
-            if($lati && $longi && $formatted_address){
-
+            if($lati && $loni && $formatted_address){
                 // put the data in the array
                 $data_arr = array();
-
                 array_push(
                     $data_arr,
                     $lati,
-                    $longi,
+                    $loni,
                     $formatted_address
                 );
-
                 return $data_arr;
-
             }else{
                 return false;
             }
-
         }else{
             return false;
         }
-
     } // function to geocode address, it will return false if unable to geocode address
+
+    public static function checkdistanceconstrains($lat_origin,$lon_origin,$distance,$locations_collection)
+    {
+        //Latitud y Longitud vienen en grados sexagesimales desde el API de Google o la base de datos
+        $R = 6371.01; //Distancias en km
+        $r = $distance/$R; //$r en radianes
+        $latr = deg2rad($lat_origin); //Pasamos a radianes
+        $lonr = deg2rad($lon_origin);
+        $min_lat = rad2deg($latr-$r); //Pasamos a grados
+        $max_lat = rad2deg($latr+$r);
+        $delta_lon = asin(sin($r)/cos($latr));
+        $min_lon = rad2deg($lonr-$delta_lon);
+        $max_lon = rad2deg($lonr+$delta_lon);
+
+        $filtered_collection = $locations_collection->filter(function($location) use ($min_lat,$max_lat,$min_lon,$max_lon)
+        {
+            if ($location->lat >= $min_lat && $location->lat <= $max_lat && $location->lon >= $min_lon && $location->lon <= $max_lon)
+                return true;
+        }); //Primer filtro
+
+        if (!$filtered_collection->isEmpty())
+        {
+            $filtered_collection = $filtered_collection->filter(function($location) use ($R,$latr,$lonr,$distance)
+            {
+                if (($R*acos(sin($latr)*sin(deg2rad($location->lat))+cos($latr)*cos(deg2rad($location->lat))*cos(deg2rad($location->lon)-$lonr))) <= $distance)
+                    return true;
+            }); //Segundo filtro
+        }
+
+        return $filtered_collection;
+    } //Filtering function, check if elements inside a collection of locations are within a given distance
+
+    public static function findwithin($lat, $lon, $distance, $limit, $prof_o_acad)
+    {
+        $R = 6371.01; //radio de la tierra promedio (en km)
+        $r = $distance/$R; //angulo en radianes que equivale a recorrer $distance kms sobre un círculo de radio el de la Tierra
+        $latr = deg2rad($lat); //en rads
+        $lonr = deg2rad($lon); //en rads
+        $min_lat = rad2deg($latr-$r); //en sexag
+        $max_lat = rad2deg($latr+$r); //en sexag
+        $delta_lon = asin(sin($r)/cos($latr)); //en rads
+        $min_lon = rad2deg($lonr-$delta_lon); //en sexag
+        $max_lon = rad2deg($lonr+$delta_lon); //en sexag
+
+        $select = "({$R}*ACOS(SIN({$latr})*SIN(RADIANS(lat))+COS({$latr})*COS(RADIANS(lat))*COS(RADIANS(lon)-{$lonr}))) AS distance";
+
+        if ($prof_o_acad == 'profesor')
+        {
+            $results = DB::table('teachers')
+                ->select(DB::raw('teachers.*, '.$select))
+                ->where('lat','>=',$min_lat)
+                ->where('lat','<=',$max_lat)
+                ->where('lon','>=',$min_lon)
+                ->where('lon','<=',$max_lon)
+                ->having('distance','<=',$distance)
+                ->orderBy('distance','asc')
+                ->take($limit)
+                ->get();
+        }
+        else
+        {
+            $results = DB::table('schools')
+                ->select(DB::raw('schools.*, '.$select))
+                ->where('lat','>=',$min_lat)
+                ->where('lat','<=',$max_lat)
+                ->where('lon','>=',$min_lon)
+                ->where('lon','<=',$max_lon)
+                ->having('distance','<=',$distance)
+                ->orderBy('distance','asc')
+                ->take($limit)
+                ->get();
+        }
+
+        return $results;
+    }
 
 }

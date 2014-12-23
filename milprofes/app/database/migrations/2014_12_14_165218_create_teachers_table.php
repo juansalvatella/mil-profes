@@ -20,7 +20,7 @@ class CreateTeachersTable extends Migration {
 			$table->string('schedule',250);
 			$table->string('address',200);
 			$table->decimal('lat',9,7);
-			$table->decimal('long',9,7);
+			$table->decimal('lon',9,7);
 			$table->string('email',50)->unique();
 			$table->string('tel',25);
 			$table->string('description',1000);

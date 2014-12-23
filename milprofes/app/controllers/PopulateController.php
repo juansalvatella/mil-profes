@@ -27,7 +27,7 @@ class PopulateController extends BaseController
             $student->address = 'Passeig de Gràcia '.$str2.', Barcelona';
             $add_encoded = Geocoding::geocode($student->address);
             $student->lat = $add_encoded[0]; //latitud
-            $student->long = $add_encoded[1]; //longitud
+            $student->lon = $add_encoded[1]; //longitud
             var_dump($student->save());
         }
     }
@@ -47,7 +47,7 @@ class PopulateController extends BaseController
             $teacher->address = 'Avenida Diagonal '.$str2.', Barcelona';
             $add_encoded = Geocoding::geocode($teacher->address);
             $teacher->lat = $add_encoded[0]; //latitud
-            $teacher->long = $add_encoded[1]; //longitud
+            $teacher->lon = $add_encoded[1]; //longitud
             $teacher->email = 'tea_clon_'.$str.'@gmail.com';
             $teacher->tel = '999 88 77 6'.$str;
             $teacher->description = 'Sin descripción en cuanto a este profesor no.'.$str;
@@ -70,7 +70,7 @@ class PopulateController extends BaseController
             $school->address = 'Avenida Meridiana '.$str2.', Barcelona';
             $add_encoded = Geocoding::geocode($school->address);
             $school->lat = $add_encoded[0]; //latitud
-            $school->long = $add_encoded[1]; //longitud
+            $school->lon = $add_encoded[1]; //longitud
             $school->email = 'sch_'.$str.'@gmail.com';
             $school->cif = '98765432'.$str;
             $school->tel = '999 88 77 6'.$str;
