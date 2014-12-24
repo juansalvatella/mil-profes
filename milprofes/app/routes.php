@@ -50,10 +50,12 @@ Route::get('contact', function()
 {
     return View::make('contact');
 });
+
 Route::get('faq', function()
 {
     return View::make('faq');
 });
+
 Route::get('search', function()
 {
     return View::make('search');

@@ -5,7 +5,8 @@
 
     <div class="row">
         <div class="col-md-5">
-            {{ HTML::image("img/map.png", "Map") }}
+            {{ $gmap['js'] }}
+            {{ $gmap['html'] }}
         </div>
         <div class="col-md-7">
             <div class="search-total">
