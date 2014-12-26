@@ -10,8 +10,8 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="form-group">
-              {{ Form::label('direccion', @trans('home.donde')) }}
-              {{ Form::text('direccion', '', array('class'=>'form-control input-lg','placeholder'=>@trans('home.defaultdonde'))) }}
+              {{ Form::label('user_address', @trans('home.donde')) }}
+              {{ Form::text('user_address', '', array('class'=>'form-control input-lg','placeholder'=>@trans('home.defaultdonde'))) }}
             </div>
           </div>
         </div>
@@ -25,8 +25,8 @@
           </div>
           <div class="col-xs-6">
             <div class="form-group">
-              {{ Form::label('categoria', @trans('home.aprender')) }}
-              {{ Form::select('categoria', array(
+              {{ Form::label('category', @trans('home.aprender')) }}
+              {{ Form::select('category', array(
                 'escolar' => @trans('home.escolar'),
                 'cfp' => @trans('home.cfp'),
                 'universitario' => @trans('home.universitario'),

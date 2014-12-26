@@ -36,7 +36,7 @@ class Geocoding {
         }
     } // function to geocode address, it will return false if unable to geocode address
 
-    public static function checkdistanceconstrains($lat_origin,$lon_origin,$distance,$locations_collection)
+    public static function findWithinDistance($lat_origin,$lon_origin,$distance,$locations_collection)
     {
         //Latitud y Longitud vienen en grados sexagesimales desde el API de Google o la base de datos
         $R = 6371.01; //Distancias en km
@@ -67,7 +67,7 @@ class Geocoding {
         return $filtered_collection;
     } //Filtering function, check if elements inside a collection of locations are within a given distance
 
-    public static function findwithin($lat, $lon, $distance, $limit, $prof_o_acad)
+    public static function dbFindWithin($lat, $lon, $distance, $limit, $prof_o_acad)
     {
         $R = 6371.01; //radio de la tierra promedio (en km)
         $r = $distance/$R; //angulo en radianes que equivale a recorrer $distance kms sobre un círculo de radio el de la Tierra
