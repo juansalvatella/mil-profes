@@ -4,15 +4,15 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" id="gmapDiv">
             <!--GoogleMap-->
             {{ $gmap['js'] }}
             {{ $gmap['html'] }}
             <!--/GoogleMap-->
         </div>
 
-        <!-- Form data -->
-        {{ Form::open(array('action' => 'SearchController@search','id' => 'hiddenForm')) }}
+        <!-- Hidden form data -->
+        {{ Form::open(array('', 'id' => 'hiddenForm')) }}
             {{ Form::hidden('user_lat', $user_lat) }}
             {{ Form::hidden('user_lon', $user_lon) }}
             {{ Form::hidden('user_address', $user_address) }}
@@ -21,7 +21,7 @@
             {{ Form::hidden('subj_id', $subj_id) }}
             {{ Form::hidden('distance', $search_distance) }}
         {{ Form::close() }}
-        <!--/Form data -->
+        <!--/Hidden form data -->
 
         <div class="col-md-6">
             <div class="row" style="margin-top:20px;">&nbsp;</div><!--/Vertical spacing //-->
@@ -40,7 +40,25 @@
                         handle: 'square'
                     }).on('slideStop', function(slideEv){
                         $('[name=distance]').val(slideEv.value);
-                        $('form#hiddenForm').submit();
+                        var hiddenForm = $('form#hiddenForm');
+                        $.post('/demo/ajaxsearch',
+                            {
+                                _token: hiddenForm.find('input[name=_token]').val(),
+                                user_lat: hiddenForm.find('input[name=user_lat]').val(),
+                                user_lon: hiddenForm.find('input[name=user_lon]').val(),
+                                user_address: hiddenForm.find('input[name=user_address]').val(),
+                                prof_o_acad: hiddenForm.find('input[name=prof_o_acad]').val(),
+                                category: hiddenForm.find('input[name=category]').val(),
+                                subj_id: hiddenForm.find('input[name=subj_id]').val(),
+                                distance: hiddenForm.find('input[name=distance]').val()
+                            },
+                            function(data){ //handle the controller response
+                                $('#gmapDiv').replaceWith($(data).find("#gmapDiv"));
+                                initialize_map(); //necesaria llamada a función tras cargar el código js del gmap de forma asíncrona
+                                $('.search-total').replaceWith($(data).find('.search-total'));
+                                $('.search-results-list').replaceWith($(data).find('.search-results-list'));
+                            }
+                        );
                     });
                 });
             </script>

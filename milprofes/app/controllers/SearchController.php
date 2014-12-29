@@ -2,7 +2,6 @@
 
 class SearchController extends BaseController
 {
-
     public function search()
     {
         if (Input::has('user_lon')) //check if user longitude exists (implies no need of geo-coding)
@@ -42,7 +41,8 @@ class SearchController extends BaseController
         } //obtained subject ID
 
         //set maximum distance for results, defaults to 10
-        $search_distance = Input::get('distance', 10); //en km
+        $search_distance = Input::get('distance', 10); //en km. Si no existe input de distancia, default a 10 km
+
 //Será necesario comprobar que la distancia esté dentro de los límites que consideremos aceptable (validar distance)
 
         //filter results by teachers/schools and chosen subject
@@ -55,8 +55,8 @@ class SearchController extends BaseController
         $results = Geocoding::findWithinDistance($user_lat,$user_lon,$search_distance,$results_by_subject);
 
 //The last two steps can be avoided in future if we pass to the search method the results collection
-//from a previous search. We would need to records the distances of every item, within the maximum distance
-//possible to the user address
+//from a previous search. In this case is necessary to record the distances of every result within the
+//maximum distance allowed by the slider
 
         //set google map config, initialize google map view and add results markers
         $config = array();
@@ -67,7 +67,7 @@ class SearchController extends BaseController
         $marker = array();
         $marker['position'] = $user_lat.','.$user_lon;
         $marker['icon'] = 'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
-        Gmaps::add_marker($marker); //student marker (center)
+        Gmaps::add_marker($marker); //add student marker (center) into the map
 
         foreach ($results as $result)
         {
@@ -76,7 +76,7 @@ class SearchController extends BaseController
             $marker['infowindow_content'] = $result['name'];
             $marker['icon'] = 'http://maps.google.com/mapfiles/kml/pal4/icon47.png';
             Gmaps::add_marker($marker);
-        } //found locations markers
+        } //add found locations markers into the map
 
         $gmap =  Gmaps::create_map(); //create map with given options
 

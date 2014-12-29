@@ -23,6 +23,8 @@ Route::get('demo', function()
 
 Route::post('demo','SearchController@search');
 
+Route::post('/demo/ajaxsearch','SearchController@search');
+
 Route::get('populate', 'PopulateController@populate');
 
 Route::get('teachers', function()
