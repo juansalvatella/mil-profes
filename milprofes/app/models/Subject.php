@@ -4,8 +4,6 @@ class Subject extends Eloquent {
 
 	protected $fillable = [];
 
-	public $timestamps = false;
-
 	public function schools() {
 		return $this->belongsToMany('School');
 	}
