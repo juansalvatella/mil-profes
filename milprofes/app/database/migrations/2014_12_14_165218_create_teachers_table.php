@@ -15,15 +15,16 @@ class CreateTeachersTable extends Migration {
 		Schema::create('teachers', function($table)
 		{
 			$table->increments('id');
-			$table->string('name',150);
-			$table->string('rate',25);
-			$table->string('schedule',250);
-			$table->string('address',200);
+			$table->string('name');
+			$table->string('lastname');
+			$table->string('email')->unique();
+			$table->string('phone');
+			$table->string('address');
+			$table->string('avatar');
+			$table->string('availability');
+			$table->string('description');
 			$table->decimal('lat',9,7);
 			$table->decimal('lon',9,7);
-			$table->string('email',50)->unique();
-			$table->string('tel',25);
-			$table->string('description',1000);
 			$table->timestamps();
 		});
 	}
