@@ -10,6 +10,8 @@ class User extends Ardent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
+	protected $fillable = [];
+
 	/**
 	 * The database table used by the model.
 	 *
@@ -27,5 +29,20 @@ class User extends Ardent implements UserInterface, RemindableInterface {
 	public static $rules = array(
 		'email' => 'required'
 	);
+
+	public function student()
+	{
+		return $this->hasOne('Student');
+	}
+
+	public function teacher()
+	{
+		return $this->hasOne('Teacher');
+	}
+
+//	public function teacher()
+//	{
+//		return $this->hasOne('Teacher');
+//	}
 
 }

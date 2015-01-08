@@ -10,7 +10,7 @@ class Rating extends Eloquent
     }
 
     public function lesson() {
-        return $this->belongsTo('Teacher_Lesson');
+        return $this->belongsTo('TeacherLesson','teacher_lesson_id');
     }
 
 }

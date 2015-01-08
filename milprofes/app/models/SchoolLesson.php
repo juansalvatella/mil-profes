@@ -4,8 +4,10 @@ class SchoolLesson extends Eloquent
 {
     protected $fillable = [];
 
+    protected $table = 'school_lessons';
+
     //Each lesson belongs to 1 teacher and 1 subject
-    public function teacher() {
+    public function school() {
         return $this->belongsTo('School');
     }
 

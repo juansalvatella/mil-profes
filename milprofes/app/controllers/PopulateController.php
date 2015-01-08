@@ -3,78 +3,100 @@
 class PopulateController extends BaseController
 {
 
+    //Cantidades (students y teachers han de ser igual o menores a users)
+    const NUSERS = 10;
+    const NTEACHERS = 5;
+    const NSTUDENTS = self::NUSERS;
+    const NSCHOOLS = 10;
+    const NLESSONS = 10; //teacher or school lessons
+    const NRATINGS = 10;
+
     public function populate()
-    { //Recomiendo ir descomentando y ejecutar métodos 1 a 1 debido a posibles errores y/o tiempos de ejecución excesivos
+    { //Si NO se tiene una base de datos recién creada, descomentar el primer método para eliminar todos las rows de las tablas
+        //$this->deleteAllRowsInAllTables(); //BEWARE!!! For testing purposes ONLY!!!
 
-        //$this::populateStudents(); //30 escuelas
-        //$this::populateTeachers(); //30 profesores
-        //$this::populateSchools(); //30 estudiantes
-        //$this::populateSubjects(); //7 materias
+        $this->populateUsers(); //users
+        $this->makeAllUsersStudents(); //todos los users son estudiantes por defecto
+        $this->makeSomeUsersTeachers(); //algunos serán, además, profesores
 
-        //$this::populatePivotTeachersSubjects(); //1 o 2 materias relacionadas con cada profesor
-        //$this::populatePivotSchoolsSubjects(); //1 o 2 materias relacionadas con cada academia
+        $this->populateSchools(); //escuelas
+        $this->populateSubjects(); //materias
 
-        //$this::populateLessons(); //90 lecciones/clases con 1 profesor (docente) y 1 materia relacionados
-        //$this::populateRatings(); //90 ratings, con 1 clase (puntuada) y 1 estudiante (puntuador) relacionados
-        echo('No more methods being called');
+        $this->populateTeacherLessons(); //lecciones/clases con 1 profesor (docente) y 1 materia relacionados
+        $this->populateSchoolLessons(); //lecciones/clases con 1 academia (docente) y 1 materia relacionados
+        $this->populateRatings(); //ratings, con 1 clase (puntuada) y 1 estudiante (puntuador) relacionados
+
+        echo("<br>The End");
 
     } //This method only works on fresh created tables (if all ids starts counting from 1)
 
-    private function populateStudents()
+    private function deleteAllRowsInAllTables()
     {
-        for ($i=0;$i<30;++$i)
-        {
-            $str = (string) $i;
-            $student = new Student();
-            $student->name = 'Nombre'.$str;
-            $student->lastname = 'Varios Apellidos'.$str;
-            $student->email = 'estudiante'.$str.'@email.com';
-            $student->phone = '666 55 44 '.$str;
-                if (!isset($i2)) { $i2 = 1; }
-                $i2 += 5;
-                $str2 = (string) $i2;
-            $student->address = 'Passeig de Gràcia '.$str2.', Barcelona';
-            $student->avatar = 'default_avatar.jpg';
-            $student->availability = 'All night long';
-            $student->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, at auctor dui. Integer id interdum eros.';
-            $add_encoded = Geocoding::geocode($student->address);
-            $student->lat = $add_encoded[0]; //latitud
-            $student->lon = $add_encoded[1]; //longitud
-            if(!($student->save()))
-                dd('No se ha podido poblar la tabla de estudiantes');
-        }
-        echo('1/8 Se ha poblado la tabla de estudiantes');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('ratings')->truncate();
+        DB::table('school_lessons')->truncate();
+        DB::table('teacher_lessons')->truncate();
+        DB::table('subjects')->truncate();
+        DB::table('students')->truncate();
+        DB::table('teachers')->truncate();
+        DB::table('users')->truncate();
+        DB::table('schools')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
-    private function populateTeachers()
+    private function populateUsers()
     {
-        for ($i=0;$i<30;++$i)
+        for ($i=0;$i<self::NUSERS;++$i)
         {
             $str = (string) $i;
-            $teacher = new Teacher();
-            $teacher->name = 'Profesor'.$str;
-            $teacher->lastname = 'Chiflado Apellidos'.$str;
-            $teacher->email = 'profesor'.$str.'@email.com';
-            $teacher->phone = '999 88 77 '.$str;
+            $user = new User();
+            $user->name = 'Nombre'.$str;
+            $user->lastname = 'Varios Apellidos'.$str;
+            $user->email = 'estudiante'.$str.'@email.com';
+            $user->phone = '666 55 44 '.$str;
                 if (!isset($i2)) { $i2 = 1; }
                 $i2 += 5;
                 $str2 = (string) $i2;
-            $teacher->address = 'Avenida Diagonal '.$str2.', Barcelona';
-            $add_encoded = Geocoding::geocode($teacher->address);
-            $teacher->lat = $add_encoded[0]; //latitud
-            $teacher->lon = $add_encoded[1]; //longitud
-            $teacher->avatar = 'default_avatar.jpg';
-            $teacher->availability = 'All night long';
-            $teacher->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, at auctor dui. Integer id interdum eros.';
-            if(!($teacher->save()))
-                dd('No se ha podido poblar la tabla de profesores');
+            $user->address = 'Passeig de Gràcia '.$str2.', Barcelona';
+            $user->avatar = 'default_avatar.jpg';
+            $user->availability = 'Not implemented yet';
+            $user->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, at auctor dui. Integer id interdum eros.';
+            $add_encoded = Geocoding::geocode($user->address);
+            $user->lat = $add_encoded[0]; //latitud
+            $user->lon = $add_encoded[1]; //longitud
+
+            if(!($user->save()))
+                dd('No se ha podido poblar la tabla de usuarios');
+
         }
-        echo('2/8 Se ha poblado la tabla de profesores');
+        echo("Se ha poblado la tabla usuarios, estudiantes y profesores<br>");
+    }
+
+    private function makeAllUsersStudents()
+    {
+        for($i=1;$i<(self::NSTUDENTS+1);++$i)
+        {
+            $user = User::findOrFail($i);
+            $student = new Student();
+            $student->user()->associate($user);
+            $student->save();
+        }
+    }
+
+    private function makeSomeUsersTeachers()
+    {
+        for($i=1;$i<(self::NTEACHERS+1);++$i)
+        {
+            $user = User::findOrFail($i);
+            $teacher = new Teacher();
+            $teacher->user()->associate($user);
+            $teacher->save();
+        }
     }
 
     private function populateSchools()
     {
-        for ($i=0;$i<30;++$i)
+        for ($i=0;$i<self::NSCHOOLS;++$i)
         {
             $str = (string) $i;
             $school = new School();
@@ -95,7 +117,7 @@ class PopulateController extends BaseController
             if(!($school->save()))
                 dd('No se ha podido poblar la tabla de academias');
         }
-        echo('3/8 Se ha poblado la tabla de academias');
+        echo("Se ha poblado la tabla de academias<br>");
     }
 
     private function populateSubjects()
@@ -108,77 +130,67 @@ class PopulateController extends BaseController
             if(!($subject->save()))
                 dd('No se ha podido poblar la tabla de materias');
         }
-        echo('4/8 Se ha poblado la tabla de materias');
+        echo("Se ha poblado la tabla de materias<br>");
     }
 
-    private function populatePivotTeachersSubjects()
-    { //Many-to-many: teachers-subjects
-        for ($i=1;$i<31;++$i)
+    private function populateTeacherLessons()
+    { //Each lesson relates 1 teacher and 1 subject with the lesson itself
+        for ($i=0;$i<self::NLESSONS;++$i)
         {
-                $rint1 = (integer) rand(1,7);
-                $rint2 = (integer) rand(1,7);
-            $teacher = Teacher::findOrFail($i);
-            if($rint1!=$rint2)
-                $teacher->subjects()->sync(array($rint1,$rint2));
-            else
-                $teacher->subjects()->sync(array($rint1));
-        }
-        echo('5/8 Se ha poblado la tabla pivote profesores-materias');
-    }
-
-    private function populatePivotSchoolsSubjects()
-    { //Many-to-many: schools-subjects
-        for ($i=1;$i<31;++$i)
-        {
-                $rint1 = (integer) mt_rand(1,7);
-                $rint2 = (integer) mt_rand(1,7);
-            $school = School::findOrFail($i);
-            if($rint1!=$rint2)
-                $school->subjects()->sync(array($rint1,$rint2));
-            else
-                $school->subjects()->sync(array($rint1));
-        }
-        echo('6/8 Se ha poblado la tabla pivote academias-materias');
-    }
-
-    private function populateLessons()
-    { //FK_ids, 1-Many: teacher, subject
-        for ($i=0;$i<90;++$i)
-        {
-            $lesson = new Lesson();
-                $rprice = (float) mt_rand(50,199)/10;
+            $lesson = new TeacherLesson();
+            $rprice = (float) mt_rand(50,199)/10;
             $lesson->price = $rprice;
             $lesson->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, at auctor dui. Integer id interdum eros.';
-                $rid1 = (integer) mt_rand(1,30);
-                $rid2 = (integer) mt_rand(1,7);
+                $rid1 = (integer) mt_rand(1,self::NTEACHERS);
             $teacher = Teacher::findOrFail($rid1);
+                $rid2 = (integer) mt_rand(1,7); //Pq hay 7 asignaturas básicas
             $subject = Subject::findOrFail($rid2);
             $lesson->teacher()->associate($teacher);
             $lesson->subject()->associate($subject);
             if(!($lesson->save()))
                 dd('No se ha podido poblar la tabla de lecciones');
         }
-        echo('7/8 Se ha poblado la tabla de lecciones');
+        echo("Se ha poblado la tabla de clases de profesores<br>");
+    }
+
+    private function populateSchoolLessons()
+    { //Each lesson relates 1 school and 1 subject with the lesson itself
+        for ($i=0;$i<self::NLESSONS;++$i)
+        {
+            $lesson = new SchoolLesson();
+            $rprice = (float) mt_rand(50,199)/10;
+            $lesson->price = $rprice;
+            $lesson->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, at auctor dui. Integer id interdum eros.';
+                $rid1 = (integer) mt_rand(1,self::NSCHOOLS);
+            $school = School::findOrFail($rid1);
+                $rid2 = (integer) mt_rand(1,7); //Pq hay 7 asignaturas básicas
+            $subject = Subject::findOrFail($rid2);
+            $lesson->school()->associate($school);
+            $lesson->subject()->associate($subject);
+            if(!($lesson->save()))
+                dd('No se ha podido poblar la tabla de lecciones');
+        }
+        echo("Se ha poblado la tabla de clases de academias<br>");
     }
 
     private function populateRatings()
-    { //FK_ids, 1-Many: student, lesson
-        for($i=0;$i<90;++$i)
+    { //Each rating relates 1 student (rater) and 1 teacher-lesson (rated) with the rating itself
+        for($i=0;$i<self::NRATINGS;++$i)
         {
             $rating = new Rating();
-                $nota = (float) mt_rand(0,100)/10;
+                $nota = (float) mt_rand(0,50)/10; //Entre 0 y 5
             $rating->value = $nota;
             $rating->comment = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, at auctor dui. Integer id interdum eros.';
-                $rid1 = (integer) mt_rand(1,30);
-                $rid2 = (integer) mt_rand(1,90);
+                $rid1 = (integer) mt_rand(1,self::NSTUDENTS);
             $student = Student::findOrFail($rid1);
-            $lesson = Lesson::findOrFail($rid2);
+                $rid2 = (integer) mt_rand(1,self::NLESSONS);
+            $lesson = TeacherLesson::findOrFail($rid2);
             $rating->student()->associate($student);
             $rating->lesson()->associate($lesson);
             if(!($rating->save()))
-                dd('No se ha podido poblar la tabla de ratings');
+                dd('No se ha podido poblar la tabla de ratings<br>');
         }
-        echo('8/8 Se ha poblado la tabla de ratings');
+        echo("Se ha poblado la tabla de ratings<br>");
     }
 
 }

@@ -4,12 +4,14 @@ class Subject extends Eloquent {
 
 	protected $fillable = [];
 
-	public function schools() {
-		return $this->belongsToMany('School');
+	public function ratings()
+	{
+		return $this->hasMany('Rating');
 	}
 
-	public function teachers() {
-		return $this->belongsToMany('Teacher');
+	public function lessons()
+	{
+		return $this->hasMany('TeacherLesson');
 	}
 
 }
