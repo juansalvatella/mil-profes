@@ -33,7 +33,7 @@
                         min:    1.0,
                         max:    20.0,
                         step:   1.0,
-                        value:  {{ $search_distance }},
+                        value:  {{ $search_distance }}.0,
                         formater: function(value){
                             return value+' km';
                         },
@@ -77,27 +77,32 @@
                         <div class="col-xs-3">
                             <div class="row"><!--Picture, name, age, rate info -->
                                 <div class="img-thumbnail col-xs-5">
-                                        {{ $result['avatar'] }}
-                                        {{ $result['logo'] }}
+                                    @if($prof_o_acad=='profesor')
+                                        {{ $result->avatar }}
+                                    @else
+                                        {{ $result->logo }}
+                                    @endif
                                 </div>
-                                <div class="col-xs-7">{{ $result['name'] }}</div>
+                                <div class="col-xs-7">{{ $result->name }}</div>
                                 <div class="col-xs-7">{{-- $result['age'] --}}</div>
                                 <div class="col-xs-7">Rating: ?.?</div>
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <div class="row"><!-- Description -->
-                                <div class="col-xs-12">{{ $result['description'] }}</div>
+                                <div class="col-xs-12">{{ $result->description }}</div>
                             </div>
                             <div class="row"><!-- email, tel -->
-                                <div class="col-xs-6">{{ $result['email'] }}</div>
-                                <div class="col-xs-6">{{ $result['phone'] }}</div>
+                                <div class="col-xs-6">{{ $result->email }}</div>
+                                <div class="col-xs-6">{{ $result->phone }}</div>
                             </div>
                         </div>
                         <div class="col-xs-3">
                             <div class="row"><!-- Price, schedule -->
                                 <div class="col-xs-12">Precio??</div>
-                                <div class="col-xs-12">{{ $result['availability'] }}</div>
+                                @if($prof_o_acad=='profesor')
+                                    <div class="col-xs-12">{{ $result->availability }}</div>
+                                @endif
                             </div>
                         </div>
                     </div>

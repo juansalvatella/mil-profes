@@ -1,22 +1,24 @@
 <?php
 
+use Illuminate\Support\Collection;
+
 class SearchController extends BaseController
 {
     public function search()
     {
-        if (Input::has('user_lon')) //check if user longitude exists (implies no need of geo-coding)
+        if (Input::has('user_lon')) //check if user longitude input exists (implies no need of geo-coding)
         {
             $user_lat = Input::get('user_lat');
             $user_lon = Input::get('user_lon');
             $user_address = Input::get('user_address');
         }
-        else //geo-coding is needed by passing user address
+        else //geo-coding is needed by passing user address (user address input is needed)
         {
             $geodata_array = Geocoding::geocode(Input::get('user_address'));
             if ($geodata_array == false) //if geo-coding fails
             {
                 //Falta mostrar algún mensaje de error
-                return Redirect::to('demo');
+                dd('ERROR: address not found by the google API');
             }
             else
             {
@@ -40,16 +42,38 @@ class SearchController extends BaseController
             $subj_id = $subject[0]['id'];
         } //obtained subject ID
 
-        //set maximum distance for results, defaults to 10
-        $search_distance = Input::get('distance', 10); //en km. Si no existe input de distancia, default a 10 km
+        //set maximum distance for results, defaults to 10 km
+        $search_distance = Input::get('distance', 10);
 
-//Será necesario comprobar que la distancia esté dentro de los límites que consideremos aceptable (validar distance)
+        //validar distance
+        //...
 
-        //filter results by teachers/schools and chosen subject
+        //filter results by teachers/schools lessons and chosen subject
         if ($prof_o_acad == 'profesor') //Query the pivot tables
-            $results_by_subject = Subject::find($subj_id)->teachers;
+        {
+            //Estructura del SQL select:
+            // SELECT * FROM `teacher_lessons`
+            // INNER JOIN `teachers` ON `teachers.id` = `teacher_lessons`.`teacher_id`
+            // INNER JOIN `users` ON `teachers.id` = `teachers`.`user_id`
+            // WHERE `subject_id` = 7
+            $results_by_subject_array = DB::table('teacher_lessons')
+                ->join('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
+                ->join('users','users.id','=','teachers.user_id')
+                ->where('subject_id',$subj_id)
+                ->get();
+        }
         else
-            $results_by_subject = Subject::find($subj_id)->schools;
+        {
+            //Estructura del SQL select:
+            // SELECT * FROM `school_lessons`
+            // INNER JOIN `school` ON `schools.id` = `school_lessons`.`school_id`
+            // WHERE `subject_id` = 7
+            $results_by_subject_array = DB::table('school_lessons')
+                ->join('schools', 'schools.id', '=', 'school_lessons.school_id')
+                ->where('subject_id',$subj_id)
+                ->get();
+        }
+        $results_by_subject = new Collection($results_by_subject_array); //pasamos array a collection
 
         //filter results within distance boundaries
         $results = Geocoding::findWithinDistance($user_lat,$user_lon,$search_distance,$results_by_subject);
@@ -61,22 +85,29 @@ class SearchController extends BaseController
         //set google map config, initialize google map view and add results markers
         $config = array();
         $config['center'] = $user_lat.','.$user_lon;
-        $config['zoom'] = 'auto';
+        $config['zoom'] = '10';
         Gmaps::initialize($config);
 
-        $marker = array();
-        $marker['position'] = $user_lat.','.$user_lon;
-        $marker['icon'] = 'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
-        Gmaps::add_marker($marker); //add student marker (center) into the map
+//        $marker = array();
+//        $marker['position'] = $user_lat.','.$user_lon;
+//        $marker['icon'] = 'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
+//        Gmaps::add_marker($marker); //add student marker (center) into the map
 
-        foreach ($results as $result)
-        {
-            $marker = array();
-            $marker['position'] = $result['lat'].','.$result['lon'];
-            $marker['infowindow_content'] = $result['name'];
-            $marker['icon'] = 'http://maps.google.com/mapfiles/kml/pal4/icon47.png';
-            Gmaps::add_marker($marker);
-        } //add found locations markers into the map
+        $circle_radius = (string) ($search_distance*1000);
+        $circle = array();
+        $circle['center'] = $user_lat.','.$user_lon;
+        $circle['radius'] = $circle_radius;
+        Gmaps::add_circle($circle);
+
+// Por ahora hemos decididio (Joan, Mitxel) no implementar marcadores de localización de los resultados
+//        foreach ($results as $result)
+//        {
+//            $marker = array();
+//            $marker['position'] = $result['lat'].','.$result['lon'];
+//            $marker['infowindow_content'] = $result['name'];
+//            $marker['icon'] = 'http://maps.google.com/mapfiles/kml/pal4/icon47.png';
+//            Gmaps::add_marker($marker);
+//        } //add found locations markers into the map
 
         $gmap =  Gmaps::create_map(); //create map with given options
 

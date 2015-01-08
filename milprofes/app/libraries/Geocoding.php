@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Collection;
+
 class Geocoding {
 
     public static function geocode($address) {
@@ -36,11 +38,11 @@ class Geocoding {
         }
     } // function to geocode address, it will return false if unable to geocode address
 
-    public static function findWithinDistance($lat_origin,$lon_origin,$distance,$locations_collection)
+    public static function findWithinDistance($lat_origin,$lon_origin,$max_distance,$locations_collection)
     {
         //Latitud y Longitud vienen en grados sexagesimales desde el API de Google o la base de datos
         $R = 6371.01; //Radio de la Tierra, en km
-        $r = $distance/$R; //1 radián (aproximación por exceso)
+        $r = $max_distance/$R; //1 radián (aproximación por exceso)
         $latr = deg2rad($lat_origin); //Pasamos a radianes
         $lonr = deg2rad($lon_origin);
         $min_lat = rad2deg($latr-$r); //Pasamos a grados
@@ -57,10 +59,12 @@ class Geocoding {
 
         if (!$filtered_collection->isEmpty())
         {
-            $filtered_collection = $filtered_collection->filter(function($location) use ($R,$latr,$lonr,$distance)
+            $filtered_collection = $filtered_collection->filter(function($location) use ($R,$latr,$lonr,$max_distance)
             {
-                if (($R*acos(sin($latr)*sin(deg2rad($location->lat))+cos($latr)*cos(deg2rad($location->lat))*cos(deg2rad($location->lon)-$lonr))) <= $distance)
+                $distance = $R*acos(sin($latr)*sin(deg2rad($location->lat))+cos($latr)*cos(deg2rad($location->lat))*cos(deg2rad($location->lon)-$lonr));
+                if ($distance <= $max_distance) {
                     return true;
+                }
             }); //Segundo filtro
         }
 
