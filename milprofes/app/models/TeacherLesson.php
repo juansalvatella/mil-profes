@@ -1,6 +1,6 @@
 <?php
 
-class Lesson extends Eloquent
+class TeacherLesson extends Eloquent
 {
     protected $fillable = [];
 

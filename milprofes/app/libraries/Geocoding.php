@@ -39,8 +39,8 @@ class Geocoding {
     public static function findWithinDistance($lat_origin,$lon_origin,$distance,$locations_collection)
     {
         //Latitud y Longitud vienen en grados sexagesimales desde el API de Google o la base de datos
-        $R = 6371.01; //Distancias en km
-        $r = $distance/$R; //$r en radianes
+        $R = 6371.01; //Radio de la Tierra, en km
+        $r = $distance/$R; //1 radián (aproximación por exceso)
         $latr = deg2rad($lat_origin); //Pasamos a radianes
         $lonr = deg2rad($lon_origin);
         $min_lat = rad2deg($latr-$r); //Pasamos a grados

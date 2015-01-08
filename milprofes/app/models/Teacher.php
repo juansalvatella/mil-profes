@@ -4,8 +4,7 @@ class Teacher extends Eloquent
 {
     protected $fillable = [];
 
-    public function subjects() {
-        return $this->belongsToMany('Subject');
+    public function user() {
+        return $this->belongsTo('User');
     }
-
 }
