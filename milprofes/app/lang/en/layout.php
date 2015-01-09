@@ -11,11 +11,11 @@ return array(
 
 	'buscador' => 'Quiero aprender',
 	'contactanos' => 'Contactanos',
-	'anunciarme' => 'Registrarse',
+	'registrarme' => 'Registrarse',
 	'faq' => 'FAQ',
 	'login' => 'Iniciar sesión',
 	'logintitle' => 'Iniciar sesión en MilProfes',
-	'anunciarmetitle' => 'Registrarme en MiProfes',
+	'registrarmetitle' => 'Registrarme en MiProfes',
 	'contactanostitle' => 'Contacta con MilProfes',
 	'faqtitle' => 'Preguntas frecuentes',
 );

@@ -2,7 +2,6 @@
 
 class PopulateController extends BaseController
 {
-
     //Cantidades (students y teachers han de ser igual o menores a users)
     const NUSERS = 10;
     const NTEACHERS = 5;
@@ -10,6 +9,12 @@ class PopulateController extends BaseController
     const NSCHOOLS = 10;
     const NLESSONS = 10; //teacher or school lessons
     const NRATINGS = 10;
+
+    public function unpopulate()
+    {
+        //$this->deleteAllRowsInAllTables(); //BEWARE!!! For testing purposes ONLY!!!
+        echo("<br>The End");
+    }
 
     public function populate()
     { //Si NO se tiene una base de datos recién creada, descomentar el primer método para eliminar todos las rows de las tablas
@@ -42,6 +47,8 @@ class PopulateController extends BaseController
         DB::table('users')->truncate();
         DB::table('schools')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        echo("Se han vaciado todas las tablas<br>");
     }
 
     private function populateUsers()

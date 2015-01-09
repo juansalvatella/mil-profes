@@ -123,6 +123,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Appitventures\Phpgmaps\PhpgmapsServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
+		'Zizaco\Confide\ServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider',
 
 	),
 
@@ -191,6 +193,8 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
 		'Gmaps'				=> 'Appitventures\Phpgmaps\Facades\Phpgmaps',
+		'Confide' 			=> 'Zizaco\Confide\Facade',
+		'Entrust' 			=> 'Zizaco\Entrust\EntrustFacade',
 
 	),
 

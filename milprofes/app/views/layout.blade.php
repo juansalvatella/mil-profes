@@ -51,9 +51,9 @@
             <li><a href="#contact" title="@lang('layout.faqtitle')">@lang('layout.faq')</a></li>
           </ul>
           <div id="loginbox" class="pull-right">
-          	<a href="/login" title="@lang('layout.logintitle')">@lang('layout.login')</a>
+          	<a href="/users/login" title="@lang('layout.logintitle')">@lang('layout.login')</a>
             ·
-            <a href="#contact" title="@lang('layout.anunciarmetitle')">@lang('layout.anunciarme')</a>
+            <a href="/users/create" title="@lang('layout.registrarmetitle')">@lang('layout.registrarme')</a>
           </div>
         </div><!--/.nav-collapse -->
       </div>
