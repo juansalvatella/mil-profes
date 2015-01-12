@@ -51,9 +51,13 @@
             <li><a href="#contact" title="@lang('layout.faqtitle')">@lang('layout.faq')</a></li>
           </ul>
           <div id="loginbox" class="pull-right">
+            @if(Auth::check())
+              Welcome back {{ Confide::user()->name }}! Access your <a href="/userpanel/dashboard" title="">Control Panel</a> or <a href="/users/logout" title="">Logout</a>.
+            @else
           	<a href="/users/login" title="@lang('layout.logintitle')">@lang('layout.login')</a>
             ·
             <a href="/users/create" title="@lang('layout.registrarmetitle')">@lang('layout.registrarme')</a>
+            @endif
           </div>
         </div><!--/.nav-collapse -->
       </div>

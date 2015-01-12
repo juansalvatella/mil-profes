@@ -44,12 +44,14 @@ class UsersController extends Controller
                 );
             }
 
-            return Redirect::action('UsersController@login')
+            //return Redirect::action('UsersController@login')
+            return Redirect::to('/users/login')
                 ->with('notice', Lang::get('confide::confide.alerts.account_created'));
         } else {
             $error = $user->errors()->all(':message');
 
-            return Redirect::action('UsersController@create')
+            //return Redirect::action('UsersController@create')
+            return Redirect::to('/users/create')
                 ->withInput(Input::except('password'))
                 ->with('error', $error);
         }
@@ -90,7 +92,8 @@ class UsersController extends Controller
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-            return Redirect::action('UsersController@login')
+            //return Redirect::action('UsersController@login')
+            return Redirect::to('users/login')
                 ->withInput(Input::except('password'))
                 ->with('error', $err_msg);
         }
@@ -107,11 +110,13 @@ class UsersController extends Controller
     {
         if (Confide::confirm($code)) {
             $notice_msg = Lang::get('confide::confide.alerts.confirmation');
-            return Redirect::action('UsersController@login')
+            //return Redirect::action('UsersController@login')
+            return Redirect::to('users/login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
-            return Redirect::action('UsersController@login')
+            //return Redirect::action('UsersController@login')
+            return Redirect::to('users/login')
                 ->with('error', $error_msg);
         }
     }
@@ -135,7 +140,8 @@ class UsersController extends Controller
     {
         if (Confide::forgotPassword(Input::get('email'))) {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
-            return Redirect::action('UsersController@login')
+            //return Redirect::action('UsersController@login')
+            return Redirect::to('users/login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
@@ -175,7 +181,8 @@ class UsersController extends Controller
         // By passing an array with the token, password and confirmation
         if ($repo->resetPassword($input)) {
             $notice_msg = Lang::get('confide::confide.alerts.password_reset');
-            return Redirect::action('UsersController@login')
+            //return Redirect::action('UsersController@login')
+            return Redirect::to('users/login')
                 ->with('notice', $notice_msg);
         } else {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');

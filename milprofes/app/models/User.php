@@ -10,9 +10,6 @@ use Zizaco\Confide\ConfideUserInterface;
 use Zizaco\Entrust\HasRole;
 
 //class User extends Ardent implements UserInterface, RemindableInterface {
-class User extends Eloquent implements ConfideUserInterface {
-
-	use ConfideUser, HasRole;
 //	use UserTrait, RemindableTrait;
 //
 //	protected $fillable = [];
@@ -21,6 +18,12 @@ class User extends Eloquent implements ConfideUserInterface {
 //	public static $rules = array(
 //		'email' => 'required'
 //	);
+//}
+class User extends Eloquent implements ConfideUserInterface {
+
+	use ConfideUser, HasRole;
+
+	protected $fillable = [];
 
 	public function student()
 	{

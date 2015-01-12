@@ -52,7 +52,7 @@ class PopulateController extends BaseController
     }
 
     private function populateUsers()
-    {
+    { //ES NECESARIO DESVINCULAR MODEL USERS ANTES DE POBLAR TABLAS debido a que impide guardar rows si no se cumplen ciertas restriccinoes de entrada de datos
         for ($i=0;$i<self::NUSERS;++$i)
         {
             $str = (string) $i;
@@ -71,9 +71,14 @@ class PopulateController extends BaseController
             $add_encoded = Geocoding::geocode($user->address);
             $user->lat = $add_encoded[0]; //latitud
             $user->lon = $add_encoded[1]; //longitud
+            $user->username = 'perdofime'.$i;
+            $user->password = '$2y$10$Ql8qVV7kvrBVYII3jdaHce6lECWNAAc5xjxH5WJ0D7FEw5TFO0Dwq';
+            $user->confirmation_code = '0f51f2ad89589ac5c62f7264a09fc814';
+            $user->remember_token = null;
+            $user->confirmed = true;
 
             if(!($user->save()))
-                dd('No se ha podido poblar la tabla de usuarios');
+                dd('No se ha podido poblar la tabla de usuarios. Error al introducir usuario '.($i+1).' de '.self::NUSERS);
 
         }
         echo("Se ha poblado la tabla usuarios, estudiantes y profesores<br>");

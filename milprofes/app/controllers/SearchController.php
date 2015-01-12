@@ -88,10 +88,10 @@ class SearchController extends BaseController
         $config['zoom'] = '10';
         Gmaps::initialize($config);
 
-//        $marker = array();
-//        $marker['position'] = $user_lat.','.$user_lon;
-//        $marker['icon'] = 'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
-//        Gmaps::add_marker($marker); //add student marker (center) into the map
+        $marker = array();
+        $marker['position'] = $user_lat.','.$user_lon;
+        $marker['icon'] = url(asset('/img/target_icon.png'));//'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
+        Gmaps::add_marker($marker); //add student marker (center) into the map
 
         $circle_radius = (string) ($search_distance*1000);
         $circle = array();
@@ -103,8 +103,8 @@ class SearchController extends BaseController
 //        foreach ($results as $result)
 //        {
 //            $marker = array();
-//            $marker['position'] = $result['lat'].','.$result['lon'];
-//            $marker['infowindow_content'] = $result['name'];
+//            $marker['position'] = $result->lat.','.$result->lon;
+//            $marker['infowindow_content'] = $result->name;
 //            $marker['icon'] = 'http://maps.google.com/mapfiles/kml/pal4/icon47.png';
 //            Gmaps::add_marker($marker);
 //        } //add found locations markers into the map

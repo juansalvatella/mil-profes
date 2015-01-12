@@ -24,6 +24,19 @@ class UserRepository
         $user->username = array_get($input, 'username');
         $user->email    = array_get($input, 'email');
         $user->password = array_get($input, 'password');
+        //Custom user fields
+        $user->username = array_get($input, 'username');
+        $user->name = array_get($input, 'name');
+        $user->lastname= array_get($input, 'lastname');
+        $user->phone = array_get($input, 'phone');
+        $user->address = array_get($input, 'address');
+        $geocoded_user_address = Geocoding::geocode($user->address);
+        $user->lat = $geocoded_user_address[0]; //latitud
+        $user->lon = $geocoded_user_address[1]; //longitud
+        //Default values
+        $user->avatar = 'default_avatar.jpg';
+        $user->availability = 'full, default';
+        $user->description = 'Default description';
 
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's

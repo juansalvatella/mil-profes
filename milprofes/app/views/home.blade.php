@@ -11,7 +11,11 @@
           <div class="col-xs-12">
             <div class="form-group">
               {{ Form::label('user_address', @trans('home.donde')) }}
+            @if(Auth::check())
+              {{ Form::text('user_address', Confide::user()->address, array('class'=>'form-control input-lg','placeholder'=>@trans('home.defaultdonde'))) }}
+            @else
               {{ Form::text('user_address', '', array('class'=>'form-control input-lg','placeholder'=>@trans('home.defaultdonde'))) }}
+            @endif
             </div>
           </div>
         </div>
