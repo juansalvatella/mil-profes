@@ -15,11 +15,11 @@ class CreatePhoneVisualizations extends Migration {
 		Schema::create('phone_visualizations', function(Blueprint $table)
 		{
 			$table->increments('id');
-			//Each visualization belongs to 1 user (observer) and 1 user (observed)
-			$table->integer('observer_id')->unsigned();
-			$table->foreign('observer_id')->references('id')->on('users');
-			$table->integer('observed_id')->unsigned();
-			$table->foreign('observed_id')->references('id')->on('users');
+			//Each visualization belongs to 1 user (observer) and 1 teacher (observed)
+			$table->integer('user_id')->unsigned()->nullable();
+			$table->foreign('user_id')->references('id')->on('users');
+			$table->integer('teacher_id')->unsigned();
+			$table->foreign('teacher_id')->references('id')->on('users');
 			$table->timestamps();
 		});
 	}

@@ -25,7 +25,6 @@ class UserRepository
         $user->email    = array_get($input, 'email');
         $user->password = array_get($input, 'password');
         //Custom user fields
-        $user->username = array_get($input, 'username');
         $user->name = array_get($input, 'name');
         $user->lastname= array_get($input, 'lastname');
         $user->phone = array_get($input, 'phone');
