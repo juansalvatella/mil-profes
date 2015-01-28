@@ -9,16 +9,16 @@ return array(
 	|
 	*/
 
-	'profesor_found' => 'encontrado|encontrados',
+	'profesor_found' => 'encontrada|encontradas',
 	'academia_found' => 'encontrada|encontradas',
-	'profesor' => 'profesor|profesores',
-	'academia' => 'academia|academias',
-	'escolar' => 'de escolar',
+	'profesor' => 'clase|clases',
+	'academia' => 'clase de academia|clases de academia',
+	'escolar' => 'de nivel escolar',
 	'cfp' => 'de CFP',
-	'universitario' => 'de universidad',
-	'artes' => 'de artes',
+	'universitario' => 'de nivel universitario',
+	'artes' => 'de arte',
 	'música' => 'de música',
 	'idiomas' => 'de idiomas',
-	'deportes' => 'de deportes',
+	'deportes' => 'de deporte',
 
 );
