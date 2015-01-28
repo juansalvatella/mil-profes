@@ -31,6 +31,14 @@ class UsersController extends Controller
         $user = $repo->signup(Input::all());
 
         if ($user->id) {
+
+            //Make the user a student by default (add to student table and assign student role)
+            $student = new Student();
+            $student->user()->associate($user);
+            $student->save();
+            $student_role = Role::where('name','student')->first();
+            $user->attachRole($student_role);
+
             if (Config::get('confide::signup_email')) {
                 Mail::queueOn(
                     Config::get('confide::email_queue'),
@@ -44,7 +52,6 @@ class UsersController extends Controller
                 );
             }
 
-            //return Redirect::action('UsersController@login')
             return Redirect::to('/users/login')
                 ->with('notice', Lang::get('confide::confide.alerts.account_created'));
         } else {
@@ -55,6 +62,7 @@ class UsersController extends Controller
                 ->withInput(Input::except('password'))
                 ->with('error', $error);
         }
+
     }
 
     /**
@@ -202,5 +210,52 @@ class UsersController extends Controller
         Confide::logout();
 
         return Redirect::to('/demo');
+    }
+
+    public function updateUser()
+    {
+        $user = Auth::user();
+
+        if(Input::hasFile('avatar')) {
+            $file = Input::file('avatar');
+            $file_extension = Input::file('avatar')->getClientOriginalExtension();
+            $filename = Str::random(20) . '.' . $file_extension;
+            $path = public_path() . '/img/avatars/';
+            $file->move($path, $filename);
+            $user->avatar = $filename;
+        }
+        $user->username = Input::get('username');
+        $user->name = Input::get('name');
+        $user->lastname = Input::get('lastname');
+        $user->phone = Input::get('phone');
+        $user->description = Input::get('description');
+        if(Input::get('address') != $user->address)
+        {
+            $user->address = Input::get('address');
+            $geocoding = Geocoding::geocode($user->address);
+            $user->lat = $geocoding[0]; //latitud
+            $user->lon = $geocoding[1]; //longitud
+        }
+
+        if($user->save())
+            return Redirect::route('userpanel')->with('success', 'Tus datos se han actualizado con éxito');
+        else
+            return Redirect::route('userpanel')->with('failure', 'Error al actualizar tus datos!');
+    }
+
+    public function becomeATeacher()
+    {
+        $user = Auth::user();
+        //Añadir a tabla de profesores
+        $teacher = new Teacher();
+        $teacher->user()->associate($user);
+        $teacher->save();
+
+        //Añadir rol(permisos) de profesor
+        $teacher_role = Role::where('name','teacher')->first();
+        $user->attachRole($teacher_role);
+
+        //Redirect
+        return Redirect::route('userpanel')->with('success', 'Ahora ya eres profesor! Publica tus clases!');
     }
 }

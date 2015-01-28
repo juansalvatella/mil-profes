@@ -17,8 +17,7 @@ class SearchController extends BaseController
             $geodata_array = Geocoding::geocode(Input::get('user_address'));
             if ($geodata_array == false) //if geo-coding fails
             {
-                //Falta mostrar algún mensaje de error
-                dd('ERROR: address not found by the google API');
+                return Redirect::route('home')->with('failure', 'Error! Tu dirección no ha sido encontrada. ¿Seguro que la escribiste bien?');
             }
             else
             {
@@ -38,7 +37,7 @@ class SearchController extends BaseController
         }
         else //we need to query database to obtain subject ID by passing subject by name
         {
-            $subject = Subject::where('name', '=', $category)->get()->toArray();
+            $subject = Subject::where('name', $category)->get()->toArray();
             $subj_id = $subject[0]['id'];
         } //obtained subject ID
 
@@ -60,7 +59,8 @@ class SearchController extends BaseController
                 ->join('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
                 ->join('users','users.id','=','teachers.user_id')
                 ->where('subject_id',$subj_id)
-                ->get();
+                ->get(array('teacher_lessons.*','users.lat','users.lon','users.name','users.email','users.phone','users.avatar','users.address','users.availability','users.username'));
+            // Muy importante NO escoger las columnas id de las tablas joined o de lo contrario la columna id resultante será la de la última tabla joined, en lugar de la de la tabla original
         }
         else
         {
@@ -71,16 +71,48 @@ class SearchController extends BaseController
             $results_by_subject_array = DB::table('school_lessons')
                 ->join('schools', 'schools.id', '=', 'school_lessons.school_id')
                 ->where('subject_id',$subj_id)
-                ->get();
+                ->get(array('school_lessons.*','schools.lat','schools.lon','schools.name','schools.email','schools.phone','schools.logo','schools.address'));
+            // Muy importante NO escoger las columnas id de las tablas joined o de lo contrario la columna id resultante será la de la última tabla joined, en lugar de la de la tabla original
         }
         $results_by_subject = new Collection($results_by_subject_array); //pasamos array a collection
 
         //filter results within distance boundaries
         $results = Geocoding::findWithinDistance($user_lat,$user_lon,$search_distance,$results_by_subject);
 
+        //Obtener número de reviews y los ratings de los profesores y las clases
+        if($prof_o_acad=='profesor')
+        {
+            foreach($results as $result)
+            {
+                $teacher = Teacher::findOrFail($result->teacher_id);
+                $result->teacher_rating = $teacher->getTeacherAvgRating();
+                $lesson = TeacherLesson::findOrFail($result->id);
+                $result->lesson_rating = $lesson->getLessonAvgRating();
+                $result->number_of_reviews = $lesson->getNumberOfReviews();
+            }
+        }
+
 //The last two steps can be avoided in future if we pass to the search method the results collection
 //from a previous search. In this case is necessary to record the distances of every result within the
 //maximum distance allowed by the slider
+
+        //Telephone trimmer (this does not validate, so get sure that the phones were validated at the input form (more than 4 digits, no spaces, letters, etc.)
+        foreach($results as $result)
+        {
+            if ($result->phone) //if exists, trim the last numbers
+            {
+                $phone_pieces = str_split(trim($result->phone));
+                $trimmered_phone = '';
+                $i = 0;
+                foreach ($phone_pieces as $piece)
+                { //Remove last 4 digits and fill with * instead
+                    if($i < (count($phone_pieces)-4)) { $trimmered_phone .= $piece; }
+                    else { $trimmered_phone .='*'; }
+                    ++$i;
+                }
+                $result->trimmered_phone = $trimmered_phone;
+            }
+        }
 
         //set google map config, initialize google map view and add results markers
         $config = array();
