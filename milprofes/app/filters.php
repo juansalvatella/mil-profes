@@ -33,6 +33,19 @@ App::after(function($request, $response)
 |
 */
 
+/*
+| Entrust-style shortened route filters
+| Entrust::routeNeedsRole( ruta , role o array of roles , [route to redirect if auth fails] , [false] )
+| Entrust::routeNeedsPermission( ruta, permission o array of permission , [route to redirect if auth fails ] , [false])
+| 3er parámetro opcional (si no hay ruta devuelve error), 4o parámetro false indica que se falla sólo si fallan TODOS los roles o permissions del array
+*/
+Entrust::routeNeedsRole('userpanel/*', 'student', Redirect::to('/'));
+Entrust::routeNeedsRole('teacher/*', 'teacher', Redirect::to('/'));
+Entrust::routeNeedsRole('admin/*', 'admin', Redirect::to('/'));
+
+/*
+| Confide-style route filters
+*/
 Route::filter('auth', function()
 {
 	if (Auth::guest())
