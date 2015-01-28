@@ -15,4 +15,9 @@ class SchoolLesson extends Eloquent
         return $this->belongsTo('Subject');
     }
 
+    public function visualizations() {
+        return $this->hasMany('SchoolPhoneVisualization');
+    }
+
+
 }

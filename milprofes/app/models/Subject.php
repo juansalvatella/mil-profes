@@ -14,4 +14,9 @@ class Subject extends Eloquent {
 		return $this->hasMany('TeacherLesson');
 	}
 
+	public function schoolLessons()
+	{
+		return $this->hasMany('SchoolLesson');
+	}
+
 }
