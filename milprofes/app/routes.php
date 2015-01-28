@@ -12,10 +12,10 @@
 */
 
 //Home page
-Route::get('/', function()
+Route::get('/', array('as' => 'home', function()
 {
     return View::make('home');
-});
+}));
 Route::get('demo', function()
 {
     return View::make('home');
@@ -24,6 +24,47 @@ Route::get('demo', function()
 //Search controller calls
 Route::post('demo','SearchController@search');
 Route::post('/demo/ajaxsearch','SearchController@search');
+
+//Register telephone visualizations
+Route::post('/phoneHandler/t_phone/{lesson_id}', function($lesson_id) {
+    if (!Session::has('teacher_tlf_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
+    {
+        Session::put('teacher_tlf_'.$lesson_id, true); //record the visualization in the session array
+        Session::save();
+        $visualization = new TeacherPhoneVisualization(); //register the visualization in database
+        if ($observer = Auth::user()) //if user is authenticated relate the user id with the visualization
+            $visualization->user_id = $observer->id;
+        $visualization->teacher_lesson_id = $lesson_id;
+        $visualization->save();
+    }
+    //Obtain telephone to be displayed >>> Obtain the school table that has the telephone field
+    $lesson = TeacherLesson::findOrFail($lesson_id);
+    $teacher = $lesson->teacher()->first();
+    $observed_user = $teacher->user()->first();
+
+    return $observed_user->phone;
+});
+Route::post('/phoneHandler/s_phone/{lesson_id}', function($lesson_id) {
+
+    if (!Session::has('school_tlf_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
+    {
+        Session::put('school_tlf_'.$lesson_id, true); //record the visualization in the session array
+        Session::save();
+        $visualization = new SchoolPhoneVisualization(); //register the visualization in database
+        if ($observer = Auth::user()) //if user is authenticated relate the user id with the visualization
+            $visualization->user_id = $observer->id;
+        $visualization->school_lesson_id = $lesson_id;
+        $visualization->save();
+    }
+    //Obtain telephone to be displayed >>> Obtain the school table that has the telephone field
+    $lesson = SchoolLesson::findOrFail($lesson_id);
+    $observed_school = $lesson->school()->first();
+
+    return $observed_school->phone;
+});
+
+//Handle reviews
+Route::post('/reviews/handleReview','ReviewsController@handleNewReview');
 
 //Populate and view tables. Database test tools. FOR TEST PURPOSES ONLY!!!
 Route::get('populate', 'PopulateController@populate');
@@ -77,10 +118,8 @@ Route::get('/list/{table}', function($table)
 });
 
 // Confide routes
-    //Route::get('users/create', 'UsersController@create');
 Route::get('users/create', function(){ return View::make('users_register'); });
 Route::post('users', 'UsersController@store');
-    //Route::get('users/login', 'UsersController@login');
 Route::get('users/login', function(){ return View::make('users_login'); });
 Route::post('users/login', 'UsersController@doLogin');
 Route::get('users/confirm/{code}', 'UsersController@confirm');
@@ -90,11 +129,151 @@ Route::get('users/reset_password/{token}', 'UsersController@resetPassword');
 Route::post('users/reset_password', 'UsersController@doResetPassword');
 Route::get('users/logout', 'UsersController@logout');
 
-//Control Panels
-Route::get('userpanel/dashboard', function(){ return View::make('userpanel_dashboard'); });
+
+//===================
+//User control Panels
+//===================
+Route::get('userpanel/dashboard', array('as' => 'userpanel', function()
+{
+    $user = Auth::user();
+
+    if(Entrust::hasRole('teacher'))
+    {
+        $teacher = $user->teacher()->first();
+        $lessons = $teacher->lessons()->get();
+        $subjects = array();
+        foreach($lessons as $lesson)
+        {
+            $subjects[$lesson->id] = $lesson->subject()->first();
+        }
+        return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_manage_lessons',compact('teacher','lessons','subjects'));
+    }
+    else
+        return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
+}));
+Route::group(array('before' => 'csrf'), function() {
+    Route::post('userpanel/dashboard', 'UsersController@updateUser');
+});
+Route::get('userpanel/become/teacher','UsersController@becomeATeacher');
+
+//======================
+//Teacher control panels
+//======================
+Route::get('teacher/create/lesson', function()
+{
+    $user = Auth::user();
+    $teacher = $user->teacher()->first();
+
+    return View::make('teacher_lesson_create',compact('user','teacher'));
+});
+Route::post('teacher/create/lesson', 'TeachersController@createLesson');
+Route::get('teacher/edit/lesson/{lesson_id}', function($lesson_id)
+{
+    $lesson = TeacherLesson::findOrFail($lesson_id);
+    $subject = $lesson->subject()->first();
+    $lesson_teacher = $lesson->teacher()->first();
+
+    $user = Auth::user();
+    $teacher = $user->teacher()->first();
+
+    if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de editar clases de otros usuarios
+        return View::make('teacher_lesson_edit', compact('lesson','subject'));
+    else
+        return Redirect::route('userpanel')->with('failure', 'Error! Tu clase no ha sido encontrada');
+});
+Route::post('teacher/edit/lesson/{teacher_id}', 'TeachersController@saveLesson');
+Route::get('teacher/delete/lesson/{lesson_id}', function($lesson_id)
+{
+    $lesson = TeacherLesson::findOrFail($lesson_id);
+    $lesson_teacher = $lesson->teacher()->first();
+    $subject = $lesson->subject()->first();
+
+    $user = Auth::user();
+    $teacher = $user->teacher()->first();
+
+    if($teacher->id==$lesson_teacher->id) //Comprobamos que no se está tratando de eliminar las clases de otros usuarios
+        return View::make('teacher_lesson_confirm_delete', compact('user','lesson','subject'));
+    else
+        return Redirect::route('userpanel')->with('failure', 'Error! Tu clase no ha sido encontrada');
+});
+Route::post('teacher/delete/lesson/{teacher_id}', 'TeachersController@deleteLesson');
+
+
+
+//====================
+//Admin control Panels
+//====================
+Route::get('admin/schools', function()
+{
+    $schools = School::orderBy('name')->get();
+    $lessons = array();
+    foreach($schools as $school)
+    {
+        $lessons[$school->id] = SchoolLesson::where('school_id',$school->id)->get();
+    }
+
+    return View::make('schools_dashboard', compact('schools','lessons'));
+});
+
+Route::get('admin/create/school', function(){ return View::make('school_register'); });
+Route::post('admin/create/school', 'AdminController@createSchool');
+Route::get('admin/edit/school/{school_id}', function($school_id)
+{
+    $school = School::findOrFail($school_id);
+
+    return View::make('school_edit', compact('school'));
+});
+Route::post('admin/edit/school/{school_id}','AdminController@saveSchool');
+Route::get('admin/delete/school/{school_id}',function($school_id)
+{
+    $school = School::findOrFail($school_id);
+
+    return View::make('school_confirm_delete',compact('school'));
+});
+Route::post('admin/delete/school/{school_id}','AdminController@deleteSchool');
+
+Route::get('admin/lessons/{school_id}', array('as' => 'lessons', function($school_id)
+{
+    $school = School::findOrFail($school_id);
+    $lessons = SchoolLesson::where('school_id',$school_id)->get();
+    $subjects = array();
+    foreach($lessons as $lesson)
+    {
+        $subjects[$lesson->id] = $lesson->subject()->first();
+    }
+
+    return View::make('lessons_dashboard', compact('school','lessons','subjects'));
+}));
+
+Route::get('admin/create/lesson/{school_id}', function($school_id)
+{
+    $school = School::findOrFail($school_id);
+
+    return View::make('lesson_create', compact('school'));
+});
+Route::post('admin/create/lesson/{school_id}', 'AdminController@createLesson');
+Route::get('admin/edit/lesson/{lesson_id}', function($lesson_id)
+{
+    $lesson = SchoolLesson::findOrFail($lesson_id);
+    $school = $lesson->school()->first();
+    $subject = $lesson->subject()->first();
+
+    return View::make('lesson_edit', compact('lesson','school','subject'));
+});
+Route::post('admin/edit/lesson/{school_id}', 'AdminController@saveLesson');
+Route::get('admin/delete/lesson/{lesson_id}', function($lesson_id)
+{
+    $lesson = SchoolLesson::findOrFail($lesson_id);
+    $school = $lesson->school()->first();
+    $subject = $lesson->subject()->first();
+
+    return View::make('lesson_confirm_delete', compact('lesson','school','subject'));
+});
+Route::post('admin/delete/lesson/{school_id}', 'AdminController@deleteLesson');
+
 
 //Auth filters
-Route::when('userpanel/*', 'auth');
+//Route::when('userpanel/*', 'auth');
 
 //Not ready. To be implemented.
     //Route::get('contact', function()
