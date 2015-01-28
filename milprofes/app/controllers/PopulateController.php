@@ -10,12 +10,6 @@ class PopulateController extends BaseController
     const NLESSONS = 10; //teacher or school lessons
     const NRATINGS = 10;
 
-    public function unpopulate()
-    {
-        //$this->deleteAllRowsInAllTables(); //BEWARE!!! For testing purposes ONLY!!!
-        echo("<br>The End");
-    }
-
     public function populate()
     { //Si NO se tiene una base de datos recién creada, descomentar el primer método para vaciar todas las tablas
 //        $this->deleteAllRowsInAllTables(); //BEWARE!!! For testing purposes ONLY!!!
@@ -23,20 +17,16 @@ class PopulateController extends BaseController
 //        $this->populateUsers(); //descomentar la clase Users para test (ver modelo User.php), CONFIDE impide guardar users de forma programática
 //        $this->makeAllUsersStudents(); //todos los users son estudiantes por defecto
 //        $this->makeSomeUsersTeachers(); //algunos serán, además, profesores
-//
 //        $this->populateSchools(); //escuelas
 //        $this->populateSubjects(); //materias
-//
 //        $this->populateTeacherLessons(); //lecciones/clases con 1 profesor (docente) y 1 materia relacionados
 //        $this->populateSchoolLessons(); //lecciones/clases con 1 academia (docente) y 1 materia relacionados
 //        $this->populateRatings(); //ratings, con 1 clase (puntuada) y 1 estudiante (puntuador) relacionados
-
 //        $this->populateRoles();
 //        $this->populatePermissions();
 //        $this->relatePermissionsWithRoles();
-        
 //        $this->createUserAdmin(); //descomentar la clase Users para test (ver modelo User.php), CONFIDE impide guardar users de forma programática
-        $this->relateUsersWithRoles();
+//        $this->relateUsersWithRoles();
 
         echo("<br>The End");
 
@@ -70,24 +60,24 @@ class PopulateController extends BaseController
             $user = new User();
             $user->name = 'Nombre'.$str;
             $user->lastname = 'Varios Apellidos'.$str;
-            $user->email = 'estudiante'.$str.'@email.com';
             $user->phone = '666 55 44 '.$str;
             if (!isset($i2)) { $i2 = 1; }
             $i2 += 20;
             $str2 = (string) $i2;
             $user->address = 'Passeig de Gràcia '.$str2.', Barcelona';
-            $user->avatar = 'default_avatar.jpg';
-            $user->availability = 'Not implemented yet';
-            $user->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, a';
             $add_encoded = Geocoding::geocode($user->address);
             $user->lat = $add_encoded[0]; //latitud
             $user->lon = $add_encoded[1]; //longitud
-            $user->username = 'perdofime'.$i;
-            $user->password = '$2y$10$Ql8qVV7kvrBVYII3jdaHce6lECWNAAc5xjxH5WJ0D7FEw5TFO0Dwq';
-            $user->confirmation_code = '0f51f2ad89589ac5c62f7264a09fc814';
-            $user->remember_token = null;
+            $user->avatar = 'default_avatar.jpg';
+            $user->availability = 'Not implemented yet';
+            $user->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, a';
+            $user->username = 'username'.$i;
+            $user->email = 'estudiante'.$str.'@email.com';
+            $user->password = 'passwordtest1234';
+            $user->password_confirmation = 'passwordtest1234';
+            $user->confirmation_code = md5(uniqid(mt_rand(), true));
             $user->confirmed = true;
-            
+
             if(!($user->save()))
                 dd('No se ha podido poblar la tabla de usuarios. Error al introducir usuario '.($i+1).' de '.self::NUSERS);
         }
@@ -273,10 +263,9 @@ class PopulateController extends BaseController
     private function createUserAdmin()
     {
         $admin = new User();
-        $admin->username = 'admin';
+
         $admin->name = 'Administrador';
         $admin->lastname = 'Network';
-        $admin->email = 'mitxel@network30.com';
         $admin->phone = '622 70 63 10';
         $admin->avatar = 'default_avatar.jpg';
         $admin->availability = 'Not implemented yet';
@@ -285,10 +274,18 @@ class PopulateController extends BaseController
         $add_encoded = Geocoding::geocode($admin->address);
         $admin->lat = $add_encoded[0]; //latitud
         $admin->lon = $add_encoded[1]; //longitud
-        $admin->password = '$2y$10$Ql8qVV7kvrBVYII3jdaHce6lECWNAAc5xjxH5WJ0D7FEw5TFO0Dwq';
-        $admin->confirmation_code = '0f51f2ad89589ac5c62f7264a09fc814';
-        $admin->remember_token = null;
+
+        $admin->username = 'admin';
+        $admin->email = 'mitxel@network30.com';
+        $admin->password = 'passwordtest1234';
+        $admin->password_confirmation = 'passwordtest1234';
+        $admin->confirmation_code = md5(uniqid(mt_rand(), true));
         $admin->confirmed = true;
+
+        //Hacer profesor al admin
+        $teacher = new Teacher();
+        $teacher->user()->associate($admin);
+        $teacher->save();
 
         if(!($admin->save()))
             dd('No se ha podido crear al usuario Administrador');
