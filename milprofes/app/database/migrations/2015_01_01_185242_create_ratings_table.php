@@ -19,10 +19,10 @@ class CreateRatingsTable extends Migration {
 			$table->string('comment');
 
 			//Each rating-comment belongs to 1 student and 1 lesson
-			$table->integer('student_id')->unsigned();
-			$table->foreign('student_id')->references('id')->on('students');
+			$table->integer('student_id')->unsigned()->nullable();
+			$table->foreign('student_id')->references('id')->on('students')->onDelete('set null')->onUpdate('cascade');
 			$table->integer('lesson_id')->unsigned();
-			$table->foreign('lesson_id')->references('id')->on('lessons');
+			$table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade')->onUpdate('cascade');
 
 			$table->timestamps();
 

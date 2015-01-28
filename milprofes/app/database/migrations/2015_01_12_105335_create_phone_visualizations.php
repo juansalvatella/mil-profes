@@ -19,7 +19,7 @@ class CreatePhoneVisualizations extends Migration {
 			$table->integer('user_id')->unsigned()->nullable();
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->integer('teacher_id')->unsigned();
-			$table->foreign('teacher_id')->references('id')->on('users');
+			$table->foreign('teacher_id')->references('id')->on('teachers');
 			$table->timestamps();
 		});
 	}
