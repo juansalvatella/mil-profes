@@ -16,6 +16,7 @@
     {{ HTML::style('css/milprofes.css') }}
     {{ HTML::style('css/slider.css') }}
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    {{ HTML::style('css/jquery.raty.css') }}
 
     <!-- JQuery JS lib -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -25,10 +26,15 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <!-- Custom JavaScript for this template -->
+    {{ HTML::script('js/jquery.raty.js') }}
+    {{ HTML::script('js/bootbox.min.js') }}
 </head>
 
 <body>
 @yield('content')
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

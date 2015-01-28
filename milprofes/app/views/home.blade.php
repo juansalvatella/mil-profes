@@ -9,6 +9,11 @@
 
         <div class="row">
           <div class="col-xs-12">
+            @if(Session::has('success'))
+              <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
+            @elseif(Session::has('failure'))
+              <div class="alert alert-danger" role="alert">{{ Session::get('failure') }}</div>
+            @endif
             <div class="form-group">
               {{ Form::label('user_address', @trans('home.donde')) }}
             @if(Auth::check())
@@ -45,6 +50,7 @@
         <div class="row">
           {{ Form::submit(@trans('home.encontrar'), array('class'=>'btn btn-default')) }}
         </div>
+
 
         {{ Form::close() }}
 

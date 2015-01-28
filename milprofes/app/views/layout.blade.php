@@ -52,7 +52,7 @@
           </ul>
           <div id="loginbox" class="pull-right">
             @if(Auth::check())
-              Welcome back {{ Confide::user()->name }}! Access your <a href="/userpanel/dashboard" title="">Control Panel</a> or <a href="/users/logout" title="">Logout</a>.
+              Welcome back {{ Confide::user()->name }}! Access your <a href="{{ url('userpanel/dashboard') }}" title="">Control Panel</a> or <a href="{{ url('users/logout') }}" title="">Logout</a>.
             @else
           	<a href="/users/login" title="@lang('layout.logintitle')">@lang('layout.login')</a>
             ·
