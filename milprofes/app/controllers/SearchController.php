@@ -44,9 +44,6 @@ class SearchController extends BaseController
         //set maximum distance for results, defaults to 10 km
         $search_distance = Input::get('distance', 10);
 
-        //validar distance
-        //...
-
         //filter results by teachers/schools lessons and chosen subject
         if ($prof_o_acad == 'profesor') //Query the pivot tables
         {
@@ -76,6 +73,20 @@ class SearchController extends BaseController
         }
         $results_by_subject = new Collection($results_by_subject_array); //pasamos array a collection
 
+//===============================================================================
+//  Filter results that belong to teachers whose payments are not up to date
+//  TO BE IMPLEMENTED LATER
+//===============================================================================
+//        if ($prof_o_acad == 'profesor') {
+//            $results_by_subject = $results_by_subject->filter(function ($result) {
+//                $lesson = TeacherLesson::findOrFail($result->id);
+//                $teacher = $lesson->teacher()->first();
+//                $user = $teacher->user()->first();
+//
+//                return $user->thisUserPaymentIsCurrent();
+//            });
+//        }
+
         //filter results within distance boundaries
         $results = Geocoding::findWithinDistance($user_lat,$user_lon,$search_distance,$results_by_subject);
 
@@ -91,10 +102,6 @@ class SearchController extends BaseController
                 $result->number_of_reviews = $lesson->getNumberOfReviews();
             }
         }
-
-//The last two steps can be avoided in future if we pass to the search method the results collection
-//from a previous search. In this case is necessary to record the distances of every result within the
-//maximum distance allowed by the slider
 
         //Telephone trimmer (this does not validate, so get sure that the phones were validated at the input form (more than 4 digits, no spaces, letters, etc.)
         foreach($results as $result)
@@ -122,7 +129,9 @@ class SearchController extends BaseController
 
         $marker = array();
         $marker['position'] = $user_lat.','.$user_lon;
-        $marker['icon'] = url(asset('/img/target_icon.png'));//'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
+//        $marker['icon'] = url(asset('/img/target_icon.png'));
+//        $marker['icon'] = 'http://maps.google.com/mapfiles/kml/pal3/icon48.png';
+        $marker['icon'] = 'http://www.google.com/mapfiles/marker.png';
         Gmaps::add_marker($marker); //add student marker (center) into the map
 
         $circle_radius = (string) ($search_distance*1000);

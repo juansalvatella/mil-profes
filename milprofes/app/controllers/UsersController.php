@@ -214,7 +214,7 @@ class UsersController extends Controller
 
     public function updateUser()
     {
-        $user = Auth::user();
+        $user = Confide::user();
 
         if(Input::hasFile('avatar')) {
             $file = Input::file('avatar');
@@ -245,7 +245,7 @@ class UsersController extends Controller
 
     public function becomeATeacher()
     {
-        $user = Auth::user();
+        $user = Confide::user();
         //Añadir a tabla de profesores
         $teacher = new Teacher();
         $teacher->user()->associate($user);
@@ -258,4 +258,5 @@ class UsersController extends Controller
         //Redirect
         return Redirect::route('userpanel')->with('success', 'Ahora ya eres profesor! Publica tus clases!');
     }
+
 }

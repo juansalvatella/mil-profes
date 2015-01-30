@@ -91,12 +91,12 @@ Route::get('/list/{table}', function($table)
         $rows = School::all();
         $columns = Schema::getColumnListing('schools');
     }
-    elseif($table=='teacher_lessons' || $table=='clases_de_profesores')
+    elseif($table=='teacherlessons' || $table=='clasesdeprofesores')
     {
         $rows = TeacherLesson::all();
         $columns = Schema::getColumnListing('teacher_lessons');
     }
-    elseif($table=='school_lessons' || $table=='clases_de_academias')
+    elseif($table=='schoollessons' || $table=='clasesdeacademias')
     {
         $rows = SchoolLesson::all();
         $columns = Schema::getColumnListing('school_lessons');
@@ -111,11 +111,23 @@ Route::get('/list/{table}', function($table)
         $rows = Rating::all();
         $columns = Schema::getColumnListing('ratings');
     }
+    elseif($table=='teacherphones' || $table=='telefonosprofesores')
+    {
+        $rows = TeacherPhoneVisualization::all();
+        $columns = Schema::getColumnListing('teacher_lessons_phone_visualizations');
+    }
+    elseif($table=='schoolphones' || $table=='telefonosacademias')
+    {
+        $rows = SchoolPhoneVisualization::all();
+        $columns = Schema::getColumnListing('school_lessons_phone_visualizations');
+    }
     else
         return $table.' table not found';
 
     return View::make('show_table_contents', compact('table','rows','columns'));
 });
+Route::get('lastpayment', 'UsersController@paymentIsCurrent');
+Route::get('ihavejustpaid', 'UsersController@updateLastPaymentDate');
 
 // Confide routes
 Route::get('users/create', function(){ return View::make('users_register'); });
@@ -155,6 +167,8 @@ Route::group(array('before' => 'csrf'), function() {
     Route::post('userpanel/dashboard', 'UsersController@updateUser');
 });
 Route::get('userpanel/become/teacher','UsersController@becomeATeacher');
+
+
 
 //======================
 //Teacher control panels
