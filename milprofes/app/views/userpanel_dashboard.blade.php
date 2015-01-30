@@ -45,40 +45,40 @@
                                 <input type="file" name="avatar"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="username">Nombre de usuario</label>
-                            <div class="col-sm-10">
-                            <input class="form-control" placeholder="Nombre de usuario" type="text" name="username" id="username" value="{{{ $user->username }}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
-                            <div class="col-sm-10">
-                                {{{ $user->email }}}
-                            </div>
-                        </div>
+                        {{--<div class="form-group">--}}
+                            {{--<label class="col-sm-2 control-label" for="username">Nombre de usuario</label>--}}
+                            {{--<div class="col-sm-10">--}}
+                                {{--<input class="form-control" placeholder="Nombre de usuario" type="text" name="username" id="username" value="{{{ $user->username }}}">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="name">Nombre</label>
                             <div class="col-sm-10">
-                            <input class="form-control" placeholder="Tu nombre" type="text" name="name" id="name" value="{{{ $user->name }}}">
+                                <input class="form-control" placeholder="Tu nombre" type="text" name="name" id="name" value="{{{ $user->name }}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="lastname">Apellidos</label>
                             <div class="col-sm-10">
-                            <input class="form-control" placeholder="Tus apellidos" type="text" name="lastname" id="lastname" value="{{{ $user->lastname }}}">
+                                <input class="form-control" placeholder="Tus apellidos" type="text" name="lastname" id="lastname" value="{{{ $user->lastname }}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="address">Dirección</label>
                             <div class="col-sm-10">
-                            <input class="form-control" placeholder="Mi calle, número, ciudad..." type="text" name="address" id="address" value="{{{ $user->address }}}">
+                                <input class="form-control" placeholder="Mi calle, número, ciudad..." type="text" name="address" id="address" value="{{{ $user->address }}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" placeholder="Tu e-mail" type="text" name="email" id="email" value="{{{ $user->email }}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="phone">Teléfono</label>
                             <div class="col-sm-10">
-                            <input class="form-control" placeholder="Tu teléfono de contacto" type="text" name="phone" id="phone" value="{{{ $user->phone }}}">
+                                <input class="form-control" placeholder="Tu teléfono de contacto" type="text" name="phone" id="phone" value="{{{ $user->phone }}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -87,18 +87,24 @@
                                 <textarea rows="3" class="form-control" name="description" id="description">{{ $user->description }}</textarea>
                             </div>
                         </div>
-                        {{--<div class="form-group">--}}
-                            {{--<label class="col-sm-2 control-label" for="password">Nuevo password</label>--}}
-                            {{--<div class="col-sm-10">--}}
-                            {{--<input class="form-control" placeholder="Nuevo password" type="password" name="password" id="password">--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group">--}}
-                            {{--<label class="col-sm-2 control-label" for="password_confirmation">Confirmar password</label>--}}
-                            {{--<div class="col-sm-10">--}}
-                            {{--<input class="form-control" placeholder="Confirmar password" type="password" name="password_confirmation" id="password_confirmation">--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="old_password">Viejo password</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" placeholder="Viejo password" type="password" name="old_password" id="old_password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="new_password">Nuevo password</label>
+                            <div class="col-sm-10">
+                            <input class="form-control" placeholder="Nuevo password" type="password" name="new_password" id="new_password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="new_password_confirmation">Confirmar nuevo password</label>
+                            <div class="col-sm-10">
+                            <input class="form-control" placeholder="Confirmar nuevo password" type="password" name="new_password_confirmation" id="new_password_confirmation">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <input type="submit" value="Actualizar datos" class="btn btn-primary"/>

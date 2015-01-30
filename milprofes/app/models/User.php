@@ -61,7 +61,7 @@ class User extends Eloquent implements ConfideUserInterface {
 		$datetime1 = new DateTime('now');
 		$datetime2 = $lastpaymentdatetime;
 		$interval = $datetime2->diff($datetime1);
-		$elapsedDays = (int) $interval->format('%R%a');
+		$elapsedDays = (int) $interval->format('%R%a'); //pasar a días
 
 		return $elapsedDays;
 	}

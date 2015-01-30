@@ -214,33 +214,81 @@ class UsersController extends Controller
 
     public function updateUser()
     {
-        $user = Confide::user();
-
-        if(Input::hasFile('avatar')) {
-            $file = Input::file('avatar');
-            $file_extension = Input::file('avatar')->getClientOriginalExtension();
-            $filename = Str::random(20) . '.' . $file_extension;
-            $path = public_path() . '/img/avatars/';
-            $file->move($path, $filename);
-            $user->avatar = $filename;
-        }
-        $user->username = Input::get('username');
-        $user->name = Input::get('name');
-        $user->lastname = Input::get('lastname');
-        $user->phone = Input::get('phone');
-        $user->description = Input::get('description');
-        if(Input::get('address') != $user->address)
+        if($user = Confide::user())
         {
-            $user->address = Input::get('address');
-            $geocoding = Geocoding::geocode($user->address);
-            $user->lat = $geocoding[0]; //latitud
-            $user->lon = $geocoding[1]; //longitud
-        }
+            if(Input::hasFile('avatar')) {
+                //falta validar que sea una imagen!!!
+                $file = Input::file('avatar');
+                $file_extension = Input::file('avatar')->getClientOriginalExtension();
+                $filename = Str::random(20) . '.' . $file_extension;
+                $path = public_path() . '/img/avatars/';
+                $file->move($path, $filename);
+                $user->avatar = $filename;
+            }
+            if(Input::get('name') != $user->name)
+            {
+                $user->name = Input::get('name');
+            }
+            if(Input::get('lastname') != $user->lastname)
+            {
+                $user->lastname = Input::get('lastname');
+            }
+            if(Input::get('address') != $user->address)
+            {
+                $user->address = Input::get('address');
+                $geocoding = Geocoding::geocode($user->address);
+                $user->lat = $geocoding[0]; //latitud
+                $user->lon = $geocoding[1]; //longitud
+            }
+            if(Input::get('email') != $user->email)
+            {
+                $user->email = Input::get('email');
+            }
+            if(Input::get('phone') != $user->phone)
+            {
+                $user->phone = Input::get('phone');
+            }
+            if(Input::get('description') != $user->description)
+            {
+                $user->description = Input::get('description');
+            }
+            if(Input::has('new_password'))
+            {
+                $rules = array(
+                    'old_password'                  => 'required',
+                    'new_password'                  => 'required|confirmed|different:old_password',
+                    'new_password_confirmation'     => 'required|different:old_password|same:new_password'
+                );
+                $validator = Validator::make(Input::all(), $rules);
 
-        if($user->save())
-            return Redirect::route('userpanel')->with('success', 'Tus datos se han actualizado con éxito');
-        else
-            return Redirect::route('userpanel')->with('failure', 'Error al actualizar tus datos!');
+                //Is the input valid? new_password confirmed and meets requirements
+                if ($validator->fails()) {
+                    Session::flash('validationErrors', $validator->messages());
+                    return Redirect::route('userpanel')->withInput()->with('failure','No fue posible cambiar la contraseña. Asegúrate de introducir el viejo password y que el nuevo y su confirmación coinciden');
+                }
+
+                //Is the old password correct?
+                if(!Hash::check(Input::get('old_password'), $user->password)){
+                    return Redirect::route('userpanel')->withInput()->with('failure','El viejo password introducido no es correcto.');
+                }
+
+                //Set new password
+                $user->password = Input::get('new_password');
+                $user->password_confirmation = Input::get('new_password_confirmation');
+
+                $user->touch();
+                $user->save();
+                Confide::logout();
+
+                return Redirect::to('/')->with('success','Tu contraseña se ha actualizado con éxito. Por favor, vuelve a iniciar sesión');
+            }
+            if($user->save())
+                return Redirect::route('userpanel')->with('success', 'Tus datos se han actualizado con éxito');
+            else
+                return Redirect::route('userpanel')->withInput()->with('failure', 'Error al actualizar tus datos');
+        } else {
+            return Redirect::route('/')->with('failure', 'Al parecer tu sesión ha caducado, por favor, vuelve a iniciar sesión');
+        }
     }
 
     public function becomeATeacher()
