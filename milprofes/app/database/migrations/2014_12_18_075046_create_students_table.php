@@ -21,7 +21,7 @@ class CreateStudentsTable extends Migration {
 			$table->string('phone');
 			$table->string('address');
 			$table->string('avatar');
-			$table->string('availability');
+//			$table->string('availability');
 			$table->string('description');
 			$table->decimal('lat',9,7);
 			$table->decimal('lon',9,7);

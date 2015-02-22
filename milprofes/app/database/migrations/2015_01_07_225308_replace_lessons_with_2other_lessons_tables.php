@@ -33,6 +33,7 @@ class ReplaceLessonsWith2otherLessonsTables extends Migration {
 
 			$table->timestamps();
 		});
+		DB::statement('ALTER TABLE teacher_lessons ADD FULLTEXT search(description)');
 
 		Schema::create('school_lessons',function($table){
 			$table->increments('id');
@@ -47,12 +48,13 @@ class ReplaceLessonsWith2otherLessonsTables extends Migration {
 
 			$table->timestamps();
 		});
+		DB::statement('ALTER TABLE school_lessons ADD FULLTEXT search(description)');
 
 		//Finally, we replace the old ratings-lesson reference with the new one in the pivot table
 		Schema::table('ratings', function($table)
 		{
 			$table->integer('teacher_lesson_id')->unsigned();
-			$table->foreign('teacher_lesson_id')->references('id')->on('teacher_lessons');
+			$table->foreign('teacher_lesson_id')->references('id')->on('teacher_lessons')->onDelete('cascade')->onUpdate('cascade');
 		});
 
 	}
@@ -64,6 +66,14 @@ class ReplaceLessonsWith2otherLessonsTables extends Migration {
 	 */
 	public function down()
 	{
+		//drop FULLTEXT indexes from lesson tables before droping the tables
+		Schema::table('teacher_lessons', function($table) {
+			$table->dropIndex('search');
+		});
+		Schema::table('school_lessons', function($table) {
+			$table->dropIndex('search');
+		});
+
 		Schema::table('ratings', function($table)
 		{
 			$table->dropForeign('ratings_teacher_lesson_id_foreign');
