@@ -1,31 +1,70 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
 
-//Home page
+//Route Model Bindings
+Route::model('user','User');
+Route::model('teacher_review','Rating');
+Route::model('school_review','SchoolLessonRating');
+Route::model('teacher','Teacher');
+Route::model('school','School');
+Route::model('teacher_lesson','TeacherLesson');
+Route::model('school_lesson','SchoolLesson');
+
+
+//Home
 Route::get('/', array('as' => 'home', function()
 {
-    return View::make('home');
+    //check if new session to show cookies alert or not
+    if (!Session::has('new-session')) {
+        Session::put('new-session', true);
+        Session::save();
+    } else {
+        if(Session::get('new-session')==true) {
+            Session::put('new-session', false);
+            Session::save();
+        }
+    }
+
+    $popular_teachers = Milprofes::getPopularTeachers(4);
+    $popular_schools = Milprofes::getPopularSchools(4);
+
+    return View::make('home', compact('popular_schools','popular_teachers'));
+
 }));
-Route::get('demo', function()
-{
-    return View::make('home');
+Route::post('/','ContactController@getContactForm');
+
+//Profiles
+Route::get('profiles/teacher/{teacher}', function(Teacher $teacher) {
+    $user = $teacher->user()->get(array('username','avatar','email','phone','address','description'));
+    foreach($user as $u) {
+        $teacher->username = $u->username;
+        $teacher->avatar = $u->avatar;
+        $teacher->email = $u->email;
+        $teacher->phone = $u->phone;
+        $teacher->address = $u->address;
+        $teacher->description = $u->description;
+        break;
+    }
+    $lessons = $teacher->lessons()->get();
+    $teacher->availability = $teacher->availabilities()->get();
+    return View::make('teacher_details', compact('teacher','lessons'));
+});
+Route::get('profiles/school/{school}', function(School $school) {
+    $lessons = $school->lessons()->get();
+    foreach($lessons as $l) {
+        $l->availability = $l->availabilities()->get();
+    }
+    return View::make('school_details', compact('school','lessons'));
 });
 
-//Search controller calls
-Route::post('demo','SearchController@search');
-Route::post('/demo/ajaxsearch','SearchController@search');
+//Search
+Route::get('/search/results','SearchController@search');
+Route::post('search/results','SearchController@search');
+Route::post('/search','SearchController@search');
+Route::post('/search/asearch','SearchController@search');
 
-//Register telephone visualizations
+
+//Register contact info requests
 Route::post('/phoneHandler/t_phone/{lesson_id}', function($lesson_id) {
     if (!Session::has('teacher_tlf_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
     {
@@ -63,8 +102,11 @@ Route::post('/phoneHandler/s_phone/{lesson_id}', function($lesson_id) {
     return $observed_school->phone;
 });
 
+
 //Handle reviews
 Route::post('/reviews/handleReview','ReviewsController@handleNewReview');
+Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolLessonNewReview');
+
 
 //Populate and view tables. Database test tools. FOR TEST PURPOSES ONLY!!!
 Route::get('populate', 'PopulateController@populate');
@@ -129,6 +171,7 @@ Route::get('/list/{table}', function($table)
 Route::get('lastpayment', 'UsersController@paymentIsCurrent');
 Route::get('ihavejustpaid', 'UsersController@updateLastPaymentDate');
 
+
 // Confide routes
 Route::get('users/create', function(){ return View::make('users_register'); });
 Route::post('users', 'UsersController@store');
@@ -147,18 +190,43 @@ Route::get('users/logout', 'UsersController@logout');
 //===================
 Route::get('userpanel/dashboard', array('as' => 'userpanel', function()
 {
-    $user = Auth::user();
+    $user = Confide::user();
 
     if(Entrust::hasRole('teacher'))
     {
         $teacher = $user->teacher()->first();
+        $teacher_id = $teacher->id;
         $lessons = $teacher->lessons()->get();
         $subjects = array();
-        foreach($lessons as $lesson)
-        {
+        foreach($lessons as $lesson) {
             $subjects[$lesson->id] = $lesson->subject()->first();
         }
-        return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_manage_lessons',compact('teacher','lessons','subjects'));
+        $picks = $teacher->availabilities()->get();
+        if($picks->count()!=9) //if teacher has never saved availability before, create 9 new picks with the input
+        {
+            for ($i = 1; $i < 10; ++$i) {
+                $pick = new TeacherAvailability();
+                $pick->teacher_id = $teacher_id;
+                $pick->pick = '' . $i;
+                $pick->day = '';
+                $pick->start = '15:00:00';
+                $pick->end = '21:00:00';
+                $pick->save();
+            }
+            $picks = $teacher->availabilities()->get();
+        }
+
+        $n_picks_set = 0;
+        foreach($picks as $pick) //check how many picks are not blank
+        {
+            if($pick->day == '') {
+                break;
+            }
+            ++$n_picks_set;
+        }
+        $picks = $picks->toArray();
+
+        return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_manage_lessons',compact('teacher','lessons','subjects','picks','n_picks_set'));
     }
     else
         return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
@@ -167,7 +235,6 @@ Route::group(array('before' => 'csrf'), function() {
     Route::post('userpanel/dashboard', 'UsersController@updateUser');
 });
 Route::get('userpanel/become/teacher','UsersController@becomeATeacher');
-
 
 
 //======================
@@ -211,7 +278,7 @@ Route::get('teacher/delete/lesson/{lesson_id}', function($lesson_id)
         return Redirect::route('userpanel')->with('failure', 'Error! Tu clase no ha sido encontrada');
 });
 Route::post('teacher/delete/lesson/{teacher_id}', 'TeachersController@deleteLesson');
-
+Route::post('teacher/availability/save', 'TeachersController@saveAvailability');
 
 
 //====================
@@ -228,7 +295,39 @@ Route::get('admin/schools', function()
 
     return View::make('schools_dashboard', compact('schools','lessons'));
 });
+Route::get('admin/reviews', function()
+{
+    $schoolReviews = SchoolLessonRating::all();
+    $teacherReviews = Rating::all();
+    $reviews = $schoolReviews->merge($teacherReviews);
+    $reviews->sortByDesc(function ($review) {
+        return $review->created_at;
+    });
+    foreach($reviews as $review)
+    {
+        if($review->student_id) { //la valoración ha sido realizada por un usuario registrado
+            $user = Student::findOrFail($review->student_id)->user->first();
+            $review->valorador = $user->username;
+            $review->wasUser = true;
+        } else {
+            $review->valorador = 'Nombre';
+            $review->wasUser = false;
+        }
+        if($review->teacher_lesson_id) { //es una review de lesson de profesor
+            $user = TeacherLesson::findOrFail($review->teacher_lesson_id)->teacher->user->first();
+            $review->type = 'Profesor';
+            $review->valorado = $user->name;
+        } else { //es una review de lesson de academia
+            $school = SchoolLesson::findOrFail($review->school_lesson_id)->school->first();
+            $review->type = 'Academia';
+            $review->valorado = $school->name;
+        }
+    }
 
+    return View::make('admin_reviews', compact('reviews'));
+
+});
+Route::get('admin/delete/review/{type}/{id}', 'AdminController@deleteReview');
 Route::get('admin/create/school', function(){ return View::make('school_register'); });
 Route::post('admin/create/school', 'AdminController@createSchool');
 Route::get('admin/edit/school/{school_id}', function($school_id)
@@ -245,7 +344,6 @@ Route::get('admin/delete/school/{school_id}',function($school_id)
     return View::make('school_confirm_delete',compact('school'));
 });
 Route::post('admin/delete/school/{school_id}','AdminController@deleteSchool');
-
 Route::get('admin/lessons/{school_id}', array('as' => 'lessons', function($school_id)
 {
     $school = School::findOrFail($school_id);
@@ -258,7 +356,6 @@ Route::get('admin/lessons/{school_id}', array('as' => 'lessons', function($schoo
 
     return View::make('lessons_dashboard', compact('school','lessons','subjects'));
 }));
-
 Route::get('admin/create/lesson/{school_id}', function($school_id)
 {
     $school = School::findOrFail($school_id);
@@ -271,8 +368,31 @@ Route::get('admin/edit/lesson/{lesson_id}', function($lesson_id)
     $lesson = SchoolLesson::findOrFail($lesson_id);
     $school = $lesson->school()->first();
     $subject = $lesson->subject()->first();
+    $picks = $lesson->availabilities()->get();
+    if($picks->count()!=9) //if the school lesson has never had availability before, create 9 new picks with the input
+    {
+        for ($i = 1; $i < 10; ++$i) {
+            $pick = new SchoolLessonAvailability();
+            $pick->school_lesson_id = $lesson_id;
+            $pick->pick = '' . $i;
+            $pick->day = '';
+            $pick->start = '15:00:00';
+            $pick->end = '21:00:00';
+            $pick->save();
+        }
+        $picks = $lesson->availabilities()->get();
+    }
+    $n_picks_set = 0;
+    foreach($picks as $pick) //check how many picks are not blank
+    {
+        if($pick->day == '') {
+            break;
+        }
+        ++$n_picks_set;
+    }
+    $picks = $picks->toArray();
 
-    return View::make('lesson_edit', compact('lesson','school','subject'));
+    return View::make('lesson_edit', compact('lesson','school','subject','picks','n_picks_set'));
 });
 Route::post('admin/edit/lesson/{school_id}', 'AdminController@saveLesson');
 Route::get('admin/delete/lesson/{lesson_id}', function($lesson_id)
@@ -284,19 +404,3 @@ Route::get('admin/delete/lesson/{lesson_id}', function($lesson_id)
     return View::make('lesson_confirm_delete', compact('lesson','school','subject'));
 });
 Route::post('admin/delete/lesson/{school_id}', 'AdminController@deleteLesson');
-
-
-//Auth filters
-//Route::when('userpanel/*', 'auth');
-
-//Not ready. To be implemented.
-    //Route::get('contact', function()
-    //{
-    //    return View::make('contact');
-    //});
-    //
-    //Route::get('faq', function()
-    //{
-    //    return View::make('faq');
-    //});
-    //
