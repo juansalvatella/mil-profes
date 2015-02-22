@@ -73,7 +73,7 @@ class UsersController extends Controller
     public function login()
     {
         if (Confide::user()) {
-            return Redirect::to('/demo');
+            return Redirect::to('/');
         } else {
             return View::make(Config::get('confide::login_form'));
         }
@@ -90,7 +90,7 @@ class UsersController extends Controller
         $input = Input::all();
 
         if ($repo->login($input)) {
-            return Redirect::intended('/demo');
+            return Redirect::intended('/');
         } else {
             if ($repo->isThrottled($input)) {
                 $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
@@ -209,7 +209,7 @@ class UsersController extends Controller
     {
         Confide::logout();
 
-        return Redirect::to('/demo');
+        return Redirect::to('/');
     }
 
     public function updateUser()
@@ -293,18 +293,25 @@ class UsersController extends Controller
 
     public function becomeATeacher()
     {
-        $user = Confide::user();
-        //Añadir a tabla de profesores
-        $teacher = new Teacher();
-        $teacher->user()->associate($user);
-        $teacher->save();
+        if($user = Confide::user())
+        {
+            if($user->hasRole('teacher'))
+            { //Advertir de que ya es profesor!
+                return Redirect::route('userpanel')->with('success', 'Ya eres profesor! Publica tus clases!');
+            } else { //Añadir a tabla de profesores
+                $teacher = new Teacher();
+                $teacher->user()->associate($user);
+                $teacher->save();
 
-        //Añadir rol(permisos) de profesor
-        $teacher_role = Role::where('name','teacher')->first();
-        $user->attachRole($teacher_role);
+                //Añadir rol(permisos) de profesor
+                $teacher_role = Role::where('name', 'teacher')->first();
+                $user->attachRole($teacher_role);
 
-        //Redirect
-        return Redirect::route('userpanel')->with('success', 'Ahora ya eres profesor! Publica tus clases!');
+                return Redirect::route('userpanel')->with('success', 'Ahora ya eres profesor! Publica tus clases!');
+            }
+        } else {
+            return Redirect::route('/')->with('failure', 'Al parece tu sesión ha caducado. Vuelve a iniciar tu sesión');
+        }
     }
 
 }

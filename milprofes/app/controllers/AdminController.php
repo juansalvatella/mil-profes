@@ -78,9 +78,14 @@ class AdminController extends BaseController
 
     public function createLesson()
     {
+        $input = Input::all();
         $lesson = new SchoolLesson();
         $lesson->price = Input::get('price');
         $lesson->description = Input::get('description');
+        $lesson->address = Input::get('address');
+        $geocoding = Geocoding::geocode(Input::get('address'));
+        $lesson->lat = $geocoding[0]; //latitud
+        $lesson->lon = $geocoding[1]; //longitud
 
         $school_id = Input::get('school_id');
         $school = School::findOrFail($school_id);
@@ -90,32 +95,73 @@ class AdminController extends BaseController
         $lesson->subject()->associate($subject);
         $lesson->school()->associate($school);
 
-        if($lesson->save())
-            return Redirect::route('lessons',array('school_id' => $school_id))->with('success', 'Clase creada con éxito');
-        else
-            return Redirect::route('lessons',array('school_id' => $school_id))->with('failure', 'Error! No se pudo crear la clase');
+        if(!$lesson->save()) {
+            return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Error! No se pudo crear la clase');
+        }
+        else {
+            $lesson_id = $lesson->id;
+            for($i=1;$i<10;++$i)
+            {
+                $pick = new SchoolLessonAvailability();
+                $pick ->school_lesson_id = $lesson_id;
+                $pick->pick = ''.$i;
+                $pick->day = $input['day'.$i];
+                $pick->start = $input['start'.$i];
+                $pick->end = $input['end'.$i];
+                if(!$pick->save()) {
+                    return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Aviso: La clase se creó con errores');
+                }
+            }
+        }
+
+        return Redirect::route('lessons',array('school_id' => $school_id))->with('success', 'Clase creada con éxito');
     }
 
     public function saveLesson()
     {
+        $input = Input::all();
         $school_id = Input::get('school_id');
         $lesson = SchoolLesson::findOrFail(Input::get('lesson_id'));
         $lesson->price = Input::get('price');
         $lesson->description = Input::get('description');
+        $lesson->address = Input::get('address');
+        $geocoding = Geocoding::geocode(Input::get('address'));
+        $lesson->lat = $geocoding[0]; //latitud
+        $lesson->lon = $geocoding[1]; //longitud
+
         $subject_name = Input::get('subject');
         $subject = Subject::where('name',$subject_name)->first();
         $lesson->subject()->associate($subject);
 
-        if($lesson->save())
-            return Redirect::route('lessons',array('school_id' => $school_id))->with('success', 'Datos de la clase actualizados con éxito');
-        else
-            return Redirect::route('lessons',array('school_id' => $school_id))->with('failure', 'Error! No se pudo actualizar datos de la clase');
+        if(!$lesson->save()) {
+            return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Error! No se pudo actualizar datos de la clase');
+        } else { //update availabilities
+            $lesson_id = $lesson->id;
+            $previous_picks = $lesson->availabilities()->get();
+            $i = 1;
+            foreach($previous_picks as $pick)
+            {
+                $pick = SchoolLessonAvailability::findOrFail($pick->id);
+                $pick ->school_lesson_id = $lesson_id;
+                $pick->pick = ''.$i;
+                $pick->day = $input['day'.$i];
+                $pick->start = $input['start'.$i];
+                $pick->end = $input['end'.$i];
+                if(!$pick->save()) {
+                    return Redirect::route('userpanel')->with('failure', 'Aviso! Se actualizaron los datos de la clase con errores');
+                }
+                ++$i;
+            }
+        }
+
+        return Redirect::route('lessons',array('school_id' => $school_id))->with('success', 'Datos de la clase actualizados con éxito');
+
     }
 
     public function deleteLesson()
     {
-        $school_id = Input::get('school_id');
         $lesson_id = Input::get('lesson_id');
+        $school_id = Input::get('school_id');
         $lesson = SchoolLesson::findOrFail($lesson_id);
         $lesson->delete();
 
@@ -124,4 +170,19 @@ class AdminController extends BaseController
         else
             return Redirect::route('lessons',array('school_id' => $school_id))->with('success', 'Clase eliminada con éxito');
     }
+
+    public function deleteReview($type,$id)
+    {
+        if($type=='Profesor') {
+            $rating = Rating::findOrFail($id);
+        } else {
+            $rating = SchoolLessonRating::findOrFail($id);
+        }
+        $rating->delete();
+        if($rating->exists)
+            return Redirect::to('admin/reviews')->with('failure', 'Error! La valoración no pudo ser eliminada');
+        else
+            return Redirect::to('admin/reviews')->with('success', 'Valoración eliminada con éxito');
+    }
+
 }

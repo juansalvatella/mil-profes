@@ -19,8 +19,8 @@ class PopulateController extends BaseController
 //        $this->makeSomeUsersTeachers(); //algunos serán, además, profesores
 //        $this->populateSchools(); //escuelas
 //        $this->populateSubjects(); //materias
-//        $this->populateTeacherLessons(); //lecciones/clases con 1 profesor (docente) y 1 materia relacionados
-//        $this->populateSchoolLessons(); //lecciones/clases con 1 academia (docente) y 1 materia relacionados
+        $this->populateTeacherLessons(); //lecciones/clases con 1 profesor (docente) y 1 materia relacionados
+        $this->populateSchoolLessons(); //lecciones/clases con 1 academia (docente) y 1 materia relacionados
 //        $this->populateRatings(); //ratings, con 1 clase (puntuada) y 1 estudiante (puntuador) relacionados
 //        $this->populateRoles();
 //        $this->populatePermissions();
@@ -155,10 +155,15 @@ class PopulateController extends BaseController
             $rprice = (float) mt_rand(50,199)/10;
             $lesson->price = $rprice;
             $lesson->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, at auctor dui. Integer id interdum eros.';
-                $rid1 = (integer) mt_rand(1,self::NTEACHERS);
+            $rid1 = (integer) mt_rand(1,self::NTEACHERS);
             $teacher = Teacher::findOrFail($rid1);
-                $rid2 = (integer) mt_rand(1,7); //Pq hay 7 asignaturas básicas
+            $rid2 = (integer) mt_rand(1,7); //Hay 7 asignaturas básicas con IDs de 1 a 7
             $subject = Subject::findOrFail($rid2);
+            $user = $teacher->user()->first();
+            $lesson->address = $user->address;
+            $lesson->lat = $user->lat;
+            $lesson->lon = $user->lon;
+            $lesson->availability = 'Lunes a Viernes de 17 a 21h';
             $lesson->teacher()->associate($teacher);
             $lesson->subject()->associate($subject);
             if(!($lesson->save()))
@@ -175,10 +180,14 @@ class PopulateController extends BaseController
             $rprice = (float) mt_rand(50,199)/10;
             $lesson->price = $rprice;
             $lesson->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, at auctor dui. Integer id interdum eros.';
-                $rid1 = (integer) mt_rand(1,self::NSCHOOLS);
+            $rid1 = (integer) mt_rand(1,self::NSCHOOLS);
             $school = School::findOrFail($rid1);
-                $rid2 = (integer) mt_rand(1,7); //Pq hay 7 asignaturas básicas
+            $rid2 = (integer) mt_rand(1,7); //Pq hay 7 asignaturas básicas
             $subject = Subject::findOrFail($rid2);
+            $lesson->address = $school->address;
+            $lesson->lat = $school->lat;
+            $lesson->lon = $school->lon;
+            $lesson->availability = 'Lunes a Viernes de 17 a 21h';
             $lesson->school()->associate($school);
             $lesson->subject()->associate($subject);
             if(!($lesson->save()))
@@ -286,6 +295,11 @@ class PopulateController extends BaseController
         $teacher = new Teacher();
         $teacher->user()->associate($admin);
         $teacher->save();
+
+        //Hacer estudiante al admin
+        $student = new Student();
+        $student->user()->associate($admin);
+        $student->save();
 
         if(!($admin->save()))
             dd('No se ha podido crear al usuario Administrador');
