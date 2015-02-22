@@ -9,6 +9,11 @@ class Subject extends Eloquent {
 		return $this->hasMany('Rating');
 	}
 
+    public function searches()
+    {
+        return $this->hasMany('Search');
+    }
+
 	public function lessons()
 	{
 		return $this->hasMany('TeacherLesson');

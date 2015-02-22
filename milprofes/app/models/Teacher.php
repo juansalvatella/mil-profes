@@ -16,22 +16,30 @@ class Teacher extends Eloquent
         return $this->hasMany('TeacherLesson');
     }
 
+    public function availabilities()
+    {
+        return $this->hasMany('TeacherAvailability');
+    }
+
     public function getTeacherAvgRating()
     {
         $lessons = $this->lessons;
         foreach($lessons as $lesson)
         {
-            $lesson->average_rating = $lesson->getLessonAvgRating();
+            $lesson->average_rating = $lesson->getLessonAvgRatingWithoutCorrection();
         }
-        $lessons_array = $lessons->toArray();
-        if($n_lessons = count($lessons_array))
-        {
+        $lessons = $lessons->filter(function($lesson) { //filter lessons without rating (avg rating = -1)
+            if ($lesson->average_rating != -1)
+                return true;
+        });
+        $n = $lessons->count();
+        if($n) {
             $sum = 0;
-            for($i=0;$i<$n_lessons;++$i)
+            foreach($lessons as $lesson)
             {
-                $sum += (float) $lessons[$i]->average_rating;
+                $sum += (float)$lesson->average_rating;
             }
-            return round($sum/$n_lessons,2);
+            return round(($sum/$n), 1);
         }
         else
         {

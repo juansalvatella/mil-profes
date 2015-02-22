@@ -27,9 +27,17 @@ class TeacherLesson extends Eloquent
     public function getLessonAvgRating()
     {
         if($this->ratings()->count())
-            return round($this->ratings()->avg('value'), 2);
+            return round(($this->ratings()->avg('value')), 1);
         else
-            return (float) 3.00; //If there are no ratings for the lesson, default to 3.00
+            return (float) 3.0; //If there are no ratings for the lesson, default to 3.00
+    }
+
+    public function getLessonAvgRatingWithoutCorrection()
+    {
+        if($this->ratings()->count())
+            return round($this->ratings()->avg('value'), 1);
+        else
+            return -1; //If there are no ratings for the lesson, return -1
     }
 
     public function getNumberOfReviews()
