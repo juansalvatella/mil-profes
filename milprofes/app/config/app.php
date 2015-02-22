@@ -125,6 +125,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Zizaco\Confide\ServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
+        'Torann\GeoIP\GeoIPServiceProvider',
 
 	),
 
@@ -195,6 +196,7 @@ return array(
 		'Gmaps'				=> 'Appitventures\Phpgmaps\Facades\Phpgmaps',
 		'Confide' 			=> 'Zizaco\Confide\Facade',
 		'Entrust' 			=> 'Zizaco\Entrust\EntrustFacade',
+        'GeoIP'             => 'Torann\GeoIP\GeoIPFacade',
 
 	),
 
