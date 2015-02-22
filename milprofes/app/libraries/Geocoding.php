@@ -38,8 +38,18 @@ class Geocoding {
         }
     } // function to geocode address, it will return false if unable to geocode address
 
-    public static function findWithinDistance($lat_origin,$lon_origin,$max_distance,$locations_collection)
+    public static function findWithinDistance($lat_origin,$lon_origin,$distance_range,$locations_collection)
     {
+        if ($distance_range=='rang2') {
+            $min_distance = 0;
+            $max_distance = 20;
+        } else if ($distance_range=='rang1') {
+            $min_distance = 0;
+            $max_distance = 5;
+        } else { //if rang0, any other case also defaults to rang0
+            $min_distance = 0;
+            $max_distance = 2;
+        }
         //Latitud y Longitud vienen en grados sexagesimales desde el API de Google o la base de datos
         $R = 6371.01; //Radio de la Tierra, en km
         $r = $max_distance/$R; //1 radián (aproximación por exceso)
@@ -51,6 +61,7 @@ class Geocoding {
         $min_lon = rad2deg($lonr-$delta_lon);
         $max_lon = rad2deg($lonr+$delta_lon);
 
+
         $filtered_collection = $locations_collection->filter(function($location) use ($min_lat,$max_lat,$min_lon,$max_lon)
         {
             if ($location->lat >= $min_lat && $location->lat <= $max_lat && $location->lon >= $min_lon && $location->lon <= $max_lon)
@@ -59,10 +70,12 @@ class Geocoding {
 
         if (!$filtered_collection->isEmpty())
         {
-            $filtered_collection = $filtered_collection->filter(function($location) use ($R,$latr,$lonr,$max_distance)
+            $filtered_collection = $filtered_collection->filter(function($location) use ($R,$latr,$lonr,$min_distance,$max_distance)
             {
                 $distance = $R*acos(sin($latr)*sin(deg2rad($location->lat))+cos($latr)*cos(deg2rad($location->lat))*cos(deg2rad($location->lon)-$lonr));
-                if ($distance <= $max_distance) {
+                if ($distance >= $min_distance && $distance <= $max_distance) {
+                    $dist_to_user = (ceil($distance) < 1) ? 1 : ceil($distance);
+                    $location->dist_to_user = $dist_to_user;
                     return true;
                 }
             }); //Segundo filtro
