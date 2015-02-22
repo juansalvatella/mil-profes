@@ -1,8 +1,8 @@
-@extends('basic_template')
+@extends('layout')
 @section('content')
-
+<div class="container top-buffer-15 bottom-buffer-45">
     <div class="page-header">
-        <h1>¿Seguro que desea eliminar la clase de {{ $subject->name }} de la academia {{ $school->name }}?</h1>
+        <h1>¿Seguro que desea eliminar la clase de {{ $school->name }}?</h1>
     </div>
     <div class="container">
         <ul>
@@ -18,5 +18,5 @@
             <a href="{{ url('admin/lessons',$school->id) }}" class="btn btn-default">Cancelar</a>
         </form>
     </div>
-
+</div>
 @stop

@@ -2,7 +2,16 @@
 @section('content')
 
     <div class="page-header">
-        <h1>Academias <small>Panel de control</small></h1>
+        <div class="container">
+            <div class="row">
+                <div class="pull-left">
+                    <h1>Academias <small>Panel de control</small></h1>
+                </div>
+                <div class="pull-right">
+                    <a href="{{ url('userpanel/dashboard') }}" class="btn btn-default">Volver</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     @if(Session::has('success'))

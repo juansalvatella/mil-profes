@@ -1,0 +1,21 @@
+<?php
+
+$name = Input::get('contact_name');
+$email = Input::get('contact_email');
+$subject = Input::get('contact_subject');
+$message = Input::get('contact_message');
+$date_time = date("F j, Y, g:i a");
+$userIpAddress = Request::getClientIp();
+
+?>
+
+<h1>milProfes feedback e-mail</h1>
+
+<p>
+    Nombre: {{{ $name }}}<br>
+    E-mail: {{{ $email }}}<br>
+    Date: {{{ $date_time }}}<br>
+    User IP address: {{{ $userIpAddress }}}<br>
+    Asunto: {{{ $subject }}}<br><br>
+    Mensaje: {{{ $message }}}
+</p>

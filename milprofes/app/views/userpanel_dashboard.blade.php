@@ -1,18 +1,19 @@
-@extends('basic_template')
+@extends('layout')
 @section('content')
+
+<div class="container bottom-buffer-35">
 
     <div class="page-header">
         <div class="container">
             <div class="row">
                 <div class="pull-left">
-                    <h4><img src="{{ asset('img/avatars/'.$user->avatar) }}" class="img-thumbnail" style="min-height: 50px;height: 50px;min-width: 50px;width: 50px;"> Hola {{ $user->name }}. Bienvenido/a a tu panel de control</h4>
+                    <h4><img src="{{ asset('img/avatars/'.$user->avatar) }}" class="img-thumbnail" style="min-height: 50px;height: 50px;min-width: 50px;width: 50px;">&nbsp;&nbsp;Bienvenid&#64;, {{ $user->name }}</h4>
                 </div>
                 <div class="pull-right">
                     @if($user->hasRole("admin"))
+                        <a href="{{ url('admin/reviews') }}" class="btn btn-primary">Administrar valoraciones</a>
                         <a href="{{ url('admin/schools') }}" class="btn btn-warning">Administrar academias</a>
                     @endif
-                    <a href="{{ url('/') }}" class="btn btn-success">Buscar clases</a>
-                    <a href="{{ url('users/logout') }}" class="btn btn-default">Logout</a>
                 </div>
             </div>
         </div>
@@ -27,30 +28,25 @@
     <div role="tabpanel">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#student_tab" aria-controls="student_tab" role="tab" data-toggle="tab">Mis datos</a></li>
-            <li role="presentation"><a href="#teacher_tab" aria-controls="teacher_tab" role="tab" data-toggle="tab">Mis clases</a></li>
+            <li role="presentation" class="active"><a href="#teacher_tab" aria-controls="teacher_tab" role="tab" data-toggle="tab">Mis clases</a></li>
+            <li role="presentation"><a href="#profile_tab" aria-controls="profile_tab" role="tab" data-toggle="tab">Mi Perfil</a></li>
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="student_tab">
-
-                <div class="container" style="margin-top: 25px;">
+            <div role="tabpanel" class="tab-pane active" id="teacher_tab">
+                {{ $content_teacher }}
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile_tab">
+                <div class="container-fluid top-buffer-25">
                     <form class="form-horizontal" action="{{ action('UsersController@updateUser') }}" method="post" enctype="multipart/form-data" role="form">
                         <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
-
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="avatar">Nuevo avatar</label>
+                            <label class="col-sm-2 control-label" for="avatar">Mi imagen</label>
                             <div class="col-sm-10">
                                 <input type="file" name="avatar"/>
                             </div>
                         </div>
-                        {{--<div class="form-group">--}}
-                            {{--<label class="col-sm-2 control-label" for="username">Nombre de usuario</label>--}}
-                            {{--<div class="col-sm-10">--}}
-                                {{--<input class="form-control" placeholder="Nombre de usuario" type="text" name="username" id="username" value="{{{ $user->username }}}">--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="name">Nombre</label>
                             <div class="col-sm-10">
@@ -82,7 +78,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="description">Descripción</label>
+                            <label class="col-sm-2 control-label" for="description">Descríbete</label>
                             <div class="col-sm-10">
                                 <textarea rows="3" class="form-control" name="description" id="description">{{ $user->description }}</textarea>
                             </div>
@@ -113,11 +109,11 @@
                     </form>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="teacher_tab">
-                {{ $content_teacher }}
-            </div>
+
         </div>
 
     </div>
+
+</div>
 
 @stop

@@ -1,8 +1,8 @@
-@extends('basic_template')
+@extends('layout')
 @section('content')
 
     <div class="page-header">
-        <h1>¿Seguro que deseas eliminar tu clase de {{ $subject->name }}, {{ $user->name }}?</h1>
+        <h1>¿Seguro que deseas eliminar tu clase?</h1>
     </div>
     <div class="container">
         <ul>

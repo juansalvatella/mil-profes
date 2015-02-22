@@ -1,6 +1,6 @@
-@extends('basic_template')
+@extends('layout')
 @section('content')
-
+<div class="container top-buffer-15 bottom-buffer-45">
     <div class="page-header">
         <h1>Editor de clases <small>Academia: {{ $school->name }}</small></h1>
     </div>
@@ -57,4 +57,5 @@
             <a style="float:right;" href="{{ url('admin/schools') }}" class="btn btn-info">Volver a academias</a>
         </div>
     </div>
+</div>
 @stop
