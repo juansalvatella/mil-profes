@@ -180,6 +180,11 @@ class SearchController extends BaseController
                     $result->lesson_avg_rating = (float) 3.0;
                 else
                     $result->lesson_avg_rating = round((float) $result->lesson_avg_rating,1);
+                //get lesson subject
+                if($check_subject)
+                    $result->subject = $subject;
+                else
+                    $result->subject = TeacherLesson::findOrFail($result->id)->subject()->first()->name;
             }
         } else {
             foreach($results as $result)
@@ -197,6 +202,11 @@ class SearchController extends BaseController
                     $result->lesson_avg_rating = (float) 3.0;
                 else
                     $result->lesson_avg_rating = round((float) $result->lesson_avg_rating,1);
+                //get lesson subject
+                if($check_subject)
+                    $result->subject = $subject;
+                else
+                    $result->subject = SchoolLesson::findOrFail($result->id)->subject()->first()->name;
             }
         }
 
@@ -212,19 +222,16 @@ class SearchController extends BaseController
 
         //set GoogleMap
         if ($search_distance=='rang2') {
-//            $min_radius = (string) 5*1000;
-            $max_radius = (string) 20*1000;
+            $max_radius = (string) 50*1000;
         } else if ($search_distance=='rang1') {
-//            $min_radius = (string) 2*1000;
             $max_radius = (string) 5*1000;
         } else { //if rang0, any other case also defaults to rang0
-//            $min_radius = (string) 0;
             $max_radius = (string) 2*1000;
         }
         $config = array();
         $config['center'] = $user_lat.','.$user_lon;
         if($search_distance=='rang2')
-            $config['zoom'] = '9';
+            $config['zoom'] = '7'; //PASAR A CONFIG
         else if($search_distance=='rang1')
             $config['zoom'] = '11';
         else //rang0
@@ -241,33 +248,60 @@ class SearchController extends BaseController
         Gmaps::initialize($config);
         $marker = array();
         $marker['position'] = $user_lat.','.$user_lon;
-        $marker['icon'] = 'http://www.google.com/mapfiles/marker.png';
+        $marker['icon'] = asset('img/marcador-mapa.png');
         Gmaps::add_marker($marker); //add student marker (center)
         $circle = array();
         $circle['center'] = $user_lat.','.$user_lon;
         $circle['radius'] = $max_radius;
         $circle['strokeColor'] = '#d20500';
-        $circle['strokeOpacity'] = '0.7';
+        $circle['strokeOpacity'] = '0.2';
         $circle['strokeWeight'] = '1';
         $circle['fillColor'] = '#d20500';
-        $circle['fillOpacity'] = '0.3';
+        $circle['fillOpacity'] = '0.1';
         $circle['clickable'] = false;
         Gmaps::add_circle($circle);
 
         $gmap =  Gmaps::create_map(); //generate map view code with given options
 
+        /* GMap Static image generation */
+        $Zoom = $config['zoom'];
+        $Marker = 'http://s9.postimg.org/bmqh3803v/marcador_mapa.png'; //TEMPORARY STORAGE ¡¡¡¡¡¡¡¡¡CHANGE IT!!!!!!!!!
+        $MapLat    = $user_lat;
+        $MapLng    = $user_lon;
+        $MapRadius = $max_radius/1000;
+        $MapFill   = 'd65441';
+        $MapBorder = 'd22f1a';
+        $MapWidth  = 198;
+        $MapHeight = 170;
+        $EncString = Geocoding::GMapCircle($MapLat,$MapLng, $MapRadius); // Encode a circle over Earth
+        $MapAPI = 'http://maps.google.com/maps/api/staticmap?';
+        $MapImgURL = $MapAPI.'center='.$MapLat.','.$MapLng.
+            '&zoom='.$Zoom.
+            '&size='.$MapWidth.'x'.$MapHeight.
+            '&markers=icon:'.$Marker.'|'.$MapLat.','.$MapLng.
+            '&path=fillcolor:0x'.$MapFill.'33%7Ccolor:0x'.$MapBorder.'00%7Cenc:'.$EncString.
+            '&sensor=false';
+
         //Registrar búsqueda en base de datos
+        $search_subj_id = (!isset($subj_id)) ? null : $subj_id;
+        $search_user_address = (!isset($user_address)) ? 'Sin dirección' : $user_address;
         $search = new Search();
-        $search->address = $user_address;
-        $search->subject_id = $subj_id;
-        $search->subject = $subject;
+        $search->address = $search_user_address;
+        $search->subject_id = $search_subj_id;
+        $search->subject_name = $subject;
         $search->keywords = $keywords;
         $search->type = $prof_o_acad;
-        $search->results = $total_results;
+        $search->results = (int) $total_results;
         $search->save();
+
+//        ini_set('xdebug.var_display_max_data', 2000);
+//        var_dump($gmap['html']);
+//        dd($MapImgURL);
+//        ini_set('xdebug.var_display_max_data', 1024);
 
         return View::make('searchresults', compact(
             'gmap',
+            'MapImgURL',
             'total_results',
             'slices_showing',
             'display_show_more',

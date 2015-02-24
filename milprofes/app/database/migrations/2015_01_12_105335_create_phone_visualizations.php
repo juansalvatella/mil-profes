@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreatePhoneVisualizations extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('phone_visualizations', function(Blueprint $table)
@@ -24,11 +19,6 @@ class CreatePhoneVisualizations extends Migration {
 		});
 	}
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
 		Schema::drop('phone_visualizations');

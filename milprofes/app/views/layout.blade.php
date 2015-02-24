@@ -23,6 +23,7 @@
     {{ HTML::style('css/slider.css') }}
     {{ HTML::style('css/jquery.raty.css') }}
     {{ HTML::style('css/bootstrap-formhelpers.min.css') }}
+    {{ HTML::style('css/map-icons.min.css') }}
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
@@ -193,10 +194,10 @@
 
     <div id="footer">
         <div class="container-fluid">
-            <div class="pull-left text-center">
-                @lang('layout.copyright')<br/>@lang('layout.authorship')
+            <div class="pull-left text-center top-buffer-5">
+                <small>@lang('layout.copyright') | @lang('layout.authorship')</small>
             </div>
-            <div class="pull-right top-buffer-15">
+            <div class="pull-right top-buffer-5">
                 <a class="footer-links" href="{{ url('terminos-de-uso') }}" title="@lang('layout.user_terms')">@lang('layout.user_terms')</a> / <a class="footer-links" href="{{ url('politica-de-privacidad') }}" title="@lang('layout.privacy')">@lang('layout.privacy')</a> / <a class="footer-links" href="{{ url('mapa-del-sitio') }}" title="@lang('layout.sitemap')">@lang('layout.sitemap')</a>
             </div>
         </div><!-- /.container -->

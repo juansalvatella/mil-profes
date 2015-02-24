@@ -6,67 +6,71 @@ class ReviewsController extends BaseController
     {
         if(Auth::check())
         {
-            $user = Auth::user();
+            $lesson_id = (int) Input::get('review_lesson_id');
+            $user = Confide::user();
             $student = $user->student()->first();
-            $student_id = $student->id;
+            $lesson_rating = Rating::where('student_id','=',''.$student->id)->where('teacher_lesson_id','=',''.$lesson_id)->get();
+
+            if ($lesson_rating->count() == 0) {
+                if(Input::has('review_comment'))
+                    $comment = (string) Input::get('review_comment');
+                else
+                    $comment = '';
+                if(Input::get('review_rating')!='undefined')
+                    $score = (float) Input::get('review_rating');
+                else
+                    $score = (float) 3.0;
+                $rating = new Rating();
+                $rating->value = $score;
+                $rating->student_id = $student->id;
+                $rating->comment = $comment;
+                $rating->teacher_lesson_id = $lesson_id;
+                $rating->save();
+
+                return 'Review saved';
+            } else {
+                return 'Reviewer already reviewed this lesson';
+            }
         }
         else
         {
-            $student_id = null;
+            return 'Reviewer is not an user';
         }
-
-        $lesson_id = (int) Input::get('review_lesson_id');
-
-        if(Input::get('review_comment'))
-            $comment = (string) Input::get('review_comment');
-        else
-            $comment = '';
-
-        if(Input::get('review_rating')!='undefined')
-            $score = (float) Input::get('review_rating');
-        else
-            $score = (float) 3.0;
-
-        $rating = new Rating();
-        $rating->value = $score;
-        $rating->student_id = $student_id;
-        $rating->comment = $comment;
-        $rating->teacher_lesson_id = $lesson_id;
-
-        return (string) $rating->save();
     }
 
     public function handleSchoolLessonNewReview()
     {
         if(Auth::check())
         {
-            $user = Auth::user();
+            $lesson_id = (int) Input::get('review_lesson_id');
+            $user = Confide::user();
             $student = $user->student()->first();
-            $student_id = $student->id;
+            $lesson_rating = SchoolLessonRating::where('student_id','=',''.$student->id)->where('school_lesson_id','=',''.$lesson_id)->get();
+
+            if ($lesson_rating->count() == 0) {
+                if(Input::has('review_comment'))
+                    $comment = (string) Input::get('review_comment');
+                else
+                    $comment = '';
+                if(Input::get('review_rating')!='undefined')
+                    $score = (float) Input::get('review_rating');
+                else
+                    $score = (float) 3.0;
+                $rating = new SchoolLessonRating();
+                $rating->value = $score;
+                $rating->student_id = $student->id;
+                $rating->comment = $comment;
+                $rating->school_lesson_id = $lesson_id;
+                $rating->save();
+
+                return 'Review saved';
+            } else {
+                return 'Reviewer already reviewed this lesson';
+            }
         }
         else
         {
-            $student_id = null;
+            return 'Reviewer is not an user';
         }
-
-        $lesson_id = (int) Input::get('review_lesson_id');
-
-        if(Input::get('review_comment'))
-            $comment = (string) Input::get('review_comment');
-        else
-            $comment = '';
-
-        if(Input::get('review_rating')!='undefined')
-            $score = (float) Input::get('review_rating');
-        else
-            $score = (float) 3.0;
-
-        $rating = new SchoolLessonRating();
-        $rating->value = $score;
-        $rating->student_id = $student_id;
-        $rating->comment = $comment;
-        $rating->school_lesson_id = $lesson_id;
-
-        return (string) $rating->save();
     }
 }

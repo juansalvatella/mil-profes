@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     //Header
     'logo' => '<span style="color:#777777;">mil</span>PROFES.',
@@ -13,7 +13,7 @@ return array(
     'register' => 'Registrarse',
 
     //Footer
-    'contact_logo' => '<span style="color:#e2e2e2;">mil</span>PROFES.',
+    'contact_logo' => '<span style="color:#ffffff;">mil</span><span style="color:#e2e2e2;">PROFES.</span>',
     'phone_title' => 'Teléfono: ',
     'phone' => '+34 655 56 25',
     'email_title' => 'E-Mail: ',
@@ -38,10 +38,10 @@ return array(
     'message_placeholder' => 'Tu mensaje',
 
     'copyright' => 'Copyrights 2015 &copy; All rights Reserved.',
-    'authorship' => 'Web Design <a href="http://e-nosis.com/" target="_blank">e-nosis</a> & Development <a href="http://www.softabit.com/" target="_blank">softabit</a>',
+    'authorship' => '<a href="http://e-nosis.com/" target="_blank">e-nosis</a> & <a href="http://www.softabit.com/" target="_blank">Network3.0</a>',
 
     'user_terms' => 'Términos de uso',
     'privacy' => 'Privacidad',
     'sitemap' => 'Mapa del sitio',
 
-);
+];

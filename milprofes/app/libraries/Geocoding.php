@@ -42,7 +42,7 @@ class Geocoding {
     {
         if ($distance_range=='rang2') {
             $min_distance = 0;
-            $max_distance = 20;
+            $max_distance = 50;
         } else if ($distance_range=='rang1') {
             $min_distance = 0;
             $max_distance = 5;
@@ -126,6 +126,27 @@ class Geocoding {
         }
 
         return $results;
+    }
+
+    public static function GMapCircle($Lat,$Lng,$Rad,$Detail=8){
+        $R    = 6371;
+        $pi   = pi();
+        $Lat  = ($Lat * $pi) / 180;
+        $Lng  = ($Lng * $pi) / 180;
+        $d    = $Rad / $R;
+        $points = array();
+        for($i = 0; $i <= 360; $i+=$Detail):
+            $brng = $i * $pi / 180;
+            $pLat = asin(sin($Lat)*cos($d) + cos($Lat)*sin($d)*cos($brng));
+            $pLng = (($Lng + atan2(sin($brng)*sin($d)*cos($Lat), cos($d)-sin($Lat)*sin($pLat))) * 180) / $pi;
+            $pLat = ($pLat * 180) /$pi;
+            $points[] = array($pLat,$pLng);
+        endfor;
+        require_once('PolylineEncoder.php');
+        $PolyEnc   = new PolylineEncoder($points);
+        $EncString = $PolyEnc->dpEncode();
+
+        return $EncString['Points'];
     }
 
 }

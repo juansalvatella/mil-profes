@@ -65,41 +65,37 @@ Route::post('/search/asearch','SearchController@search');
 
 
 //Register contact info requests
-Route::post('/phoneHandler/t_phone/{lesson_id}', function($lesson_id) {
-    if (!Session::has('teacher_tlf_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
+Route::post('request/info/teacher/{lesson_id}', function($lesson_id) {
+    if (!Session::has('t_visualized_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
     {
-        Session::put('teacher_tlf_'.$lesson_id, true); //record the visualization in the session array
+        Session::put('t_visualized_'.$lesson_id, true); //record the visualization in the session array
         Session::save();
         $visualization = new TeacherPhoneVisualization(); //register the visualization in database
-        if ($observer = Auth::user()) //if user is authenticated relate the user id with the visualization
+        if (Auth::check()) { //if user is authenticated relate the user id with the visualization
+            $observer = Confide::user();
             $visualization->user_id = $observer->id;
+        }
         $visualization->teacher_lesson_id = $lesson_id;
-        $visualization->save();
+
+        return (string) $visualization->save();
     }
-    //Obtain telephone to be displayed >>> Obtain the school table that has the telephone field
-    $lesson = TeacherLesson::findOrFail($lesson_id);
-    $teacher = $lesson->teacher()->first();
-    $observed_user = $teacher->user()->first();
-
-    return $observed_user->phone;
+    return 'Already saved in DB';
 });
-Route::post('/phoneHandler/s_phone/{lesson_id}', function($lesson_id) {
-
-    if (!Session::has('school_tlf_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
+Route::post('request/info/school/{lesson_id}', function($lesson_id) {
+    if (!Session::has('s_visualized_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
     {
-        Session::put('school_tlf_'.$lesson_id, true); //record the visualization in the session array
+        Session::put('s_visualized_'.$lesson_id, true); //record the visualization in the session array
         Session::save();
         $visualization = new SchoolPhoneVisualization(); //register the visualization in database
-        if ($observer = Auth::user()) //if user is authenticated relate the user id with the visualization
+        if (Auth::check()) { //if user is authenticated relate the user id with the visualization
+            $observer = Confide::user();
             $visualization->user_id = $observer->id;
+        }
         $visualization->school_lesson_id = $lesson_id;
-        $visualization->save();
-    }
-    //Obtain telephone to be displayed >>> Obtain the school table that has the telephone field
-    $lesson = SchoolLesson::findOrFail($lesson_id);
-    $observed_school = $lesson->school()->first();
 
-    return $observed_school->phone;
+        return (string) $visualization->save();
+    }
+    return 'Already saved in DB';
 });
 
 
