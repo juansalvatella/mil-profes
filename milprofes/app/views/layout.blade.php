@@ -175,40 +175,68 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 top-buffer-15">
+
                             <form method="POST" action="{{{ URL::to('users') }}}" accept-charset="UTF-8">
                                 <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                                 <fieldset>
-                                    <div class="form-group">
-                                        <label for="username">@lang('layout.register-username')</label>
-                                        <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" type="text" name="username" id="username" value="{{{ Input::old('username') }}}">
+
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label for="name">@lang('layout.register-realname')</label>
+                                            <input class="form-control" placeholder="{{{@trans('layout.register-realname-ph')}}}" type="text" name="name" id="name" value="">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="name">@lang('layout.register-realname')</label>
-                                        <input class="form-control" placeholder="{{{@trans('layout.register-realname-ph')}}}" type="text" name="name" id="name" value="">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label for="lastname">@lang('layout.register-reallastname')</label>
+                                            <input class="form-control" placeholder="{{{@trans('layout.register-reallastname-ph')}}}" type="text" name="lastname" id="lastname" value="">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="lastname">@lang('layout.register-reallastname')</label>
-                                        <input class="form-control" placeholder="{{{@trans('layout.register-reallastname-ph')}}}" type="text" name="lastname" id="lastname" value="">
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label for="address">@lang('layout.register-address')</label>
+                                            <input class="form-control" placeholder="{{{@trans('layout.register-address-ph')}}}" type="text" name="address" id="address" value="">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="address">@lang('layout.register-address')</label>
-                                        <input class="form-control" placeholder="{{{@trans('layout.register-address-ph')}}}" type="text" name="address" id="address" value="">
+                                </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="phone">@lang('layout.register-phone')</label>
+                                                <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" name="phone" id="phone" value="">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="phone">@lang('layout.register-phone')</label>
-                                        <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" name="phone" id="phone" value="">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="username">@lang('layout.register-username')</label>
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" type="text" name="username" id="username" value="{{{ Input::old('username') }}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="email">@lang('layout.register-email') <small>@lang('layout.register-required-confirmation')</small></label>
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-email') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="email">@lang('layout.register-email') <small>@lang('layout.register-required-confirmation')</small></label>
-                                        <input class="form-control" placeholder="{{{ @trans('layout.register-email') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">@lang('layout.register-password')</label>
-                                        <input class="form-control" placeholder="{{{ @trans('layout.register-password') }}}" type="password" name="password" id="password">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password_confirmation">@lang('layout.register-confirm-password')</label>
-                                        <input class="form-control" placeholder="{{{ @trans('layout.register-confirm-password-ph') }}}" type="password" name="password_confirmation" id="password_confirmation">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="password">@lang('layout.register-password')</label>
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-password') }}}" type="password" name="password" id="password">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="password_confirmation">@lang('layout.register-confirm-password')</label>
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-confirm-password-ph') }}}" type="password" name="password_confirmation" id="password_confirmation">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     @if (Session::get('error'))

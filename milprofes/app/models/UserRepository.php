@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * Class UserRepository
  *
@@ -31,13 +29,18 @@ class UserRepository
         $user->phone = array_get($input, 'phone');
         $user->address = array_get($input, 'address');
         $geocoded_user_address = Geocoding::geocode($user->address);
-        $user->lat = $geocoded_user_address[0]; //latitud
-        $user->lon = $geocoded_user_address[1]; //longitud
+        if($geocoded_user_address) {
+            $user->lat = $geocoded_user_address[0]; //latitud
+            $user->lon = $geocoded_user_address[1]; //longitud
+        } else {
+            $user->lat = (float) 0;
+            $user->lon = (float) 0;
+        }
 
         //Default values
         $user->avatar = 'default_avatar.png';
-        $user->availability = 'Default availability';
-        $user->description = 'Default user description';
+//        $user->availability = 'Default availability';
+        $user->description = '';
 
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's

@@ -7,8 +7,12 @@
           <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8">
               @if(Session::has('success'))
                   <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-              @elseif(Session::has('failure'))
+              @endif
+              @if(Session::has('failure'))
                   <div class="alert alert-danger" role="alert">{{ Session::get('failure') }}</div>
+              @endif
+              @if (Session::get('notice'))
+                  <div class="alert alert-success">{{{ Session::get('notice') }}}</div>
               @endif
           </div>
       </div>
