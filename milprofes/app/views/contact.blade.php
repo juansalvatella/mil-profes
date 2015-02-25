@@ -4,14 +4,14 @@
 <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
     <div class="container">
     
-        <div class="contact-title"><h3>@lang('contact.contact-us')</h3></div>
+        <div class="generic-title"><h3>@lang('contact.contact-us')</h3></div>
 
-        <div class="contact-subtitle">@lang('contact.ask-us')</div>
+        <div class="generic-subtitle">@lang('contact.ask-us')</div>
 
     </div>
 </div>
-<div class="container-fluid bottom-padding-100 background-gblack overflow-allowed">
-    <div class="container contact-box top-padding-50 bottom-padding-100 magic-align">
+<div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
+    <div class="container generic-box top-padding-50 bottom-padding-100 magic-align">
 
             {{ Form::open(array('action' => 'ContactController@getContactForm')) }}
 
