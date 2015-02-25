@@ -35,7 +35,7 @@ class UserRepository
         $user->lon = $geocoded_user_address[1]; //longitud
 
         //Default values
-        $user->avatar = 'default_avatar.jpg';
+        $user->avatar = 'default_avatar.png';
         $user->availability = 'Default availability';
         $user->description = 'Default user description';
 

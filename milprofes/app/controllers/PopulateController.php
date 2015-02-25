@@ -68,7 +68,7 @@ class PopulateController extends BaseController
             $add_encoded = Geocoding::geocode($user->address);
             $user->lat = $add_encoded[0]; //latitud
             $user->lon = $add_encoded[1]; //longitud
-            $user->avatar = 'default_avatar.jpg';
+            $user->avatar = 'default_avatar.png';
             $user->availability = 'Not implemented yet';
             $user->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, a';
             $user->username = 'username'.$i;
@@ -126,7 +126,7 @@ class PopulateController extends BaseController
             $add_encoded = Geocoding::geocode($school->address);
             $school->lat = $add_encoded[0]; //latitud
             $school->lon = $add_encoded[1]; //longitud
-            $school->logo = 'default_logo.jpg';
+            $school->logo = 'default_logo.png';
             $school->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, at auctor dui. Integer id interdum eros.';
             if(!($school->save()))
                 dd('No se ha podido poblar la tabla de academias');
@@ -276,7 +276,7 @@ class PopulateController extends BaseController
         $admin->name = 'Administrador';
         $admin->lastname = 'Network';
         $admin->phone = '622 70 63 10';
-        $admin->avatar = 'default_avatar.jpg';
+        $admin->avatar = 'default_avatar.png';
         $admin->availability = 'Not implemented yet';
         $admin->description = 'Mil Profes Admin';
         $admin->address = 'Plaça Catalunya 1, Barcelona';

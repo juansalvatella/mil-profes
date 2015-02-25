@@ -14,7 +14,7 @@ class AdminController extends BaseController
             $file->move($path, $filename);
             $school->logo = $filename;
         } else {
-            $school->logo = 'default_logo.jpg';
+            $school->logo = 'default_logo.png';
         }
         $school->name = Input::get('name');
         $school->address = Input::get('address');
