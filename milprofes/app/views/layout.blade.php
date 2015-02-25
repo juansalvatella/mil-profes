@@ -64,7 +64,7 @@
               <span aria-hidden="true">&times;</span>
               <span class="sr-only">Close</span>
           </button>
-          Utilizamos cookies propias y de terceros para ofrecer nuestros servicios y publicidad basada en tus intereses. Al usar nuestros servicios, aceptas el uso que hacemos de las cookies, según se describe en nuestra <a href="./cookies.html">Política de Privacidad</a>.
+          Utilizamos cookies propias y de terceros para ofrecer nuestros servicios y publicidad basada en tus intereses. Al usar nuestros servicios, aceptas el uso que hacemos de las cookies, según se describe en nuestra <a href="{{ url('politica-de-privacidad') }}">Política de Privacidad</a>.
         </div>
     @endif
 
