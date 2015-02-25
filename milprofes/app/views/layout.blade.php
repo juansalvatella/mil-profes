@@ -69,35 +69,33 @@
     @endif
 
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-      <div class="container">
+        <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ route('home') }}">@lang('layout.logo')</a>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed navbar-collapsed-btn" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <a class="navbar-brand" href="{{ route('home') }}">@lang('layout.logo')</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-            <div class="pull-left">
-                <ul class="nav navbar-nav">
-                    <li><a class="left-separator right-separator" href="{{ url('quienes-somos') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
-                    <li><a class="right-separator" href="{{ url('preguntas-frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
-                    <li><a class="right-separator" href="{{ url('contactanos') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
-                </ul>
-            </div>
-            <div id="loginbox" class="pull-right">
-                @if(Auth::check())
-                    <a class="right-separator" href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a>
-                    <a href="{{ url('users/logout') }}" title="Salir">Salir</a>
-                @else
-                    <a class="right-separator" href="{{ url('users/login') }}" title="@lang('layout.login')">@lang('layout.login')</a>
-                    <a href="{{ url('users/create') }}" title="@lang('layout.register')">@lang('layout.register')</a>
-                @endif
-            </div>
+            <ul class="nav navbar-nav text-center">
+                <li><a class="left-separator right-separator" href="{{ url('quienes/somos') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
+                <li><a class="right-separator" href="{{ url('preguntas/frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
+                <li><a class="right-separator" href="{{ url('contactanos') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right text-center">
+            @if(Auth::check())
+                <li class="text-center"><a class="right-separator" href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
+                <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
+            @else
+                <li><a class="right-separator" href="{{ url('users/login') }}" title="@lang('layout.login')">@lang('layout.login')</a></li>
+                <li><a href="{{ url('users/create') }}" title="@lang('layout.register')">@lang('layout.register')</a></li>
+            @endif
+            </ul>
         </div><!--/.nav-collapse -->
-      </div>
+        </div>
     </nav>
 
     <!-- /HEADER -->

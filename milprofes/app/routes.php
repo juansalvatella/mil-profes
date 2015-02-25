@@ -1,6 +1,5 @@
 <?php
 
-
 //Route Model Bindings
 Route::model('user','User');
 Route::model('teacher_review','Rating');
@@ -10,6 +9,9 @@ Route::model('school','School');
 Route::model('teacher_lesson','TeacherLesson');
 Route::model('school_lesson','SchoolLesson');
 
+//============
+// Main Pages
+//============
 
 //Home
 Route::get('/', array('as' => 'home', function()
@@ -32,7 +34,6 @@ Route::get('/', array('as' => 'home', function()
 
 }));
 Route::post('/','ContactController@getContactForm');
-
 //Profiles
 Route::get('profiles/teacher/{teacher}', function(Teacher $teacher) {
     $user = $teacher->user()->get(array('username','avatar','email','phone','address','description'));
@@ -56,13 +57,23 @@ Route::get('profiles/school/{school}', function(School $school) {
     }
     return View::make('school_details', compact('school','lessons'));
 });
-
 //Search
 Route::get('/search/results','SearchController@search');
 Route::post('search/results','SearchController@search');
 Route::post('/search','SearchController@search');
 Route::post('/search/asearch','SearchController@search');
-
+//Faqs
+Route::get('preguntas/frecuentes', function(){
+    return View::make('faqs');
+});
+//Who
+Route::get('quienes/somos', function() {
+    return View::make('who');
+});
+//Contact
+Route::get('contactanos', function() {
+    return View::make('contact');
+});
 
 //Register contact info requests
 Route::post('request/info/teacher/{lesson_id}', function($lesson_id) {
@@ -98,11 +109,9 @@ Route::post('request/info/school/{lesson_id}', function($lesson_id) {
     return 'Already saved in DB';
 });
 
-
 //Handle reviews
 Route::post('/reviews/handleReview','ReviewsController@handleNewReview');
 Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolLessonNewReview');
-
 
 //Populate and view tables. Database test tools. FOR TEST PURPOSES ONLY!!!
 Route::get('populate', 'PopulateController@populate');
@@ -166,7 +175,6 @@ Route::get('/list/{table}', function($table)
 });
 Route::get('lastpayment', 'UsersController@paymentIsCurrent');
 Route::get('ihavejustpaid', 'UsersController@updateLastPaymentDate');
-
 
 // Confide routes
 Route::get('users/create', function(){ return View::make('users_register'); });

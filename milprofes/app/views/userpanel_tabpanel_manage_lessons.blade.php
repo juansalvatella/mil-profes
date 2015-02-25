@@ -1,4 +1,4 @@
-<div class="container-fluid top-buffer-25">
+<div class="container-fluid top-padding-25 background-white bottom-padding-25">
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Tu disponibilidad semanal</h3>

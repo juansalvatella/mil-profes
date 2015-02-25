@@ -86,11 +86,13 @@
                 @endif
             </div>
 
+            <hr class="hr-sm-separator"/>
+
             <div class="row text-center top-buffer-15">
                 {{ Form::label('search_distance', 'Distancia') }}
             </div>
             {{--GoogleMap--}}
-            <div id="gmapDiv" class="row">
+            <div id="gmapDiv" class="row text-center">
                 <div class="staticMap">
                     <img class="staticMapImg" src="{{{ $MapImgURL }}}" alt="Área de búsqueda"/>
                 </div>
@@ -125,6 +127,8 @@
                     <div class="radio"><label>{{ Form::radio('search_distance', 'rang2', false, array('id'=>'sd_3')) }} @lang('search.distance3') </label></div>
                 @endif
             </div>
+
+            <hr class="hr-sm-separator"/>
 
             <div class="row text-center top-buffer-15">
                 {{ Form::label('subject', 'Categorías') }}
@@ -173,6 +177,8 @@
                 @endif
             </div>
 
+
+            <hr class="hr-sm-separator"/>
 
             <div id="price-tags">
 
@@ -297,11 +303,6 @@
             <span id="saveReviewAlert">Save review success/failure alert</span>
         </div>
 
-        <!--results-->
-        {{--<div class="search-total">--}}
-            {{--{{ $results->count() }} @choice('search.'.$prof_o_acad,$results->count()) {{ @trans('search.'.$subject) }} @choice('search.'.$prof_o_acad.'_found',$results->count())--}}
-        {{--</div>--}}
-
         <div class="panel panel-default mp-shadow">
             <div class="panel-body search-total">
                 @if($total_results==0)
@@ -315,7 +316,7 @@
         <div class="search-results-list">
             <div id="results-slice-{{ $slices_showing }}">
             @foreach($results as $result)
-                <div class="row bottom-buffer-35">
+                <div class="row">
                     <div class="col-sm-3">
                         <div class="row search-image-container">
                             @if($prof_o_acad=='profesor')
@@ -324,7 +325,7 @@
                                 <a href="{{ url('profiles/school/'.$result->school_id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->name }}" src="{{ asset('img/logos/'.$result->logo) }}"/></a>
                             @endif
                         </div>
-                        <div class="row text-center">
+                        <div class="row text-center profile-link">
                             @if($prof_o_acad=='profesor')
                                 <a href="{{ url('profiles/teacher/'.$result->teacher_id) }}">VER PERFIL</a>
                             @else
@@ -333,40 +334,40 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="row">
+                        <div class="row result-name">
                             @if($prof_o_acad=='profesor')
-                                {{{ $result->username }}}
+                                <span>{{{ $result->username }}}</span>
                             @else
-                                {{{ $result->name }}}
+                                <span>{{{ $result->name }}}</span>
                             @endif
                         </div>
-                        <div class="row">
+                        <div class="row result-subject">
                             @if($prof_o_acad=='profesor')
-                                <span class="span-teacher">PROFE. @lang('search.of_subject_'.$result->subject)</span>
+                                <span class="span-subject-teacher">&nbsp;PROFE. @lang('search.of_subject_'.$result->subject)&nbsp;</span>
                             @else
-                                <span class="span-school">ACADEMIA @lang('search.of_subject_'.$result->subject)</span>
+                                <span class="span-subject-school">&nbsp;ACADEMIA @lang('search.of_subject_'.$result->subject)&nbsp;</span>
                             @endif
                         </div>
-                        <div class="row">
+                        <div class="row result-distance">
                             Dentro de {{ $result->dist_to_user }} Km <img src="{{ asset('../img/marcador-distancia.png') }}"/>
                         </div>
-                        <div class="row">
+                        <div class="row result-description-title top-srs-separator">
                             DESCRIPCIÓN DE LA CLASE
                         </div>
-                        <div class="row">
+                        <div class="row result-description bottom-srs-separator">
                             <small>{{{ $result->description }}}</small>
                         </div>
-                        <div class="row">
+                        <div class="row result-availability-title">
                             @if($result->availability->count())
                                 DISPONIBILIDAD
                             @endif
                         </div>
-                        <div class="row">
+                        <div class="row result-availability">
                             @foreach($result->availability as $pick)
                                 @if($pick->day != '')
-                                <div class="col-sm-4 unpadded">
-                                    <small><span class="pick"><span class="pick-day">{{ $pick->day }}</span> <span class="pick-time">{{ substr($pick->start,0,-3) }} - {{ substr($pick->end,0,-3) }}</span></span></small>
-                                </div>
+                                    <div class="col-sm-4 unpadded">
+                                        <small><span class="pick"><span class="pick-day">&nbsp;{{ $pick->day }}&nbsp;</span> <span class="pick-time">&nbsp;{{ substr($pick->start,0,-3) }} - {{ substr($pick->end,0,-3) }}&nbsp;&nbsp;</span></span></small>
+                                    </div>
                                 @endif
                             @endforeach
                         </div>
@@ -411,18 +412,33 @@
                             @endif
                         </div>
                         <div class="row text-center">
-                            <div class="row">{{{ $result->price }}} €</div>
-                            @if($prof_o_acad=='profesor')
-                                <div class="row">por Hora</div>
+                            @if($result->price=='0')
+                                @if($prof_o_acad=='profesor')
+                                    <div class="row no-price-provided">Contáctame<br>para saber<br>el precio</div>
+                                @else
+                                    <div class="row no-price-provided">Contáctanos<br>para saber<br>el precio</div>
+                                @endif
                             @else
-                                <div class="row">por Curso</div>
+                                <div class="row price">
+                                    {{{ $result->price }}} €
+                                </div>
+                                @if($prof_o_acad=='profesor')
+                                    <div class="row per-unit">por Hora</div>
+                                @else
+                                    <div class="row per-unit">por Curso</div>
+                                @endif
                             @endif
                         </div>
-                        <div class="row text-center">
+                        {{--<script>--}}
+                            {{--$(document).ready(function($){--}}
+                                {{--$(".price").fitText();--}}
+                            {{--});--}}
+                        {{--</script>--}}
+                        <div class="row text-center top-buffer-15">
                                 @if($prof_o_acad=='profesor')
-                                    <a id="contact-me-{{ $result->id }}" class="btn btn-warning" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
+                                    <a id="contact-me-{{ $result->id }}" class="btn btn-info background-287AF9" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
                                 @else
-                                <a id="contact-me-{{ $result->id }}" class="btn btn-info" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
+                                    <a id="contact-me-{{ $result->id }}" class="btn btn-warning background-E79500" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctanos</a>
                                 @endif
                                 <script type="text/javascript">
                                     $(document).ready(function(){
@@ -445,20 +461,19 @@
                                         @endif
                                     });
                                 </script>
-
                         </div>
                     </div>
                 </div>
-
+                <div class="col-sm-12 text-right"><hr align="right" class="results-separator"/></div>
             @endforeach
             </div>
         </div>
 
-        <div class="col-sm-12 clear-left text-center" id="show-more-results-{{ $slices_showing }}">
+        <div class="col-sm-12 clear-left text-center show-more-link bottom-buffer-35" id="show-more-results-{{ $slices_showing }}">
         {{--Show more link--}}
         @if($display_show_more)
             <a href="#">
-                Mostrar más resultados<br>
+                MOSTRAR MAS RESULTADOS<br>
                 <i class="fa fa-angle-down"></i>
             </a>
 
@@ -483,10 +498,10 @@
                         function(data) { //handle the controller response
                             $('.search-results-list').append($(data).find('#results-slice-{{ $slices_showing+1 }}'));
                             $('#show-more-results-{{ $slices_showing }}').replaceWith($(data).find('#show-more-results-{{ $slices_showing+1 }}'));
-                        });
-                        var ninput = $('#current-slices-showing');
-                        var n = parseInt(ninput.val());
-                        ninput.val(n+1);
+                    });
+                    var ninput = $('#current-slices-showing');
+                    var n = parseInt(ninput.val());
+                    ninput.val(n+1);
                 });
             </script>
         @endif
@@ -504,7 +519,7 @@
         $(document).on({
             ajaxSend: function(evt, request, settings) {
                 if(!settings.url.match('^/request/info/')) {
-                    $body.addClass("loading").delay(4000).removeClass("loading");
+                    $body.addClass("loading");
                 }
             },
             ajaxStop: function() { $body.removeClass("loading"); },

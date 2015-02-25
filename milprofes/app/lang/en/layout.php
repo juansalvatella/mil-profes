@@ -3,7 +3,7 @@
 return [
 
     //Header
-    'logo' => '<span style="color:#777777;">mil</span>PROFES.',
+    'logo' => '<span style="color:#777777;">mil</span><span style="font-family:texgyreadventorregular,sans-serif;">PROFES.</span>',
 
     'who' => 'Quiénes somos',
 	'faq' => 'FAQs',
@@ -13,7 +13,7 @@ return [
     'register' => 'Registrarse',
 
     //Footer
-    'contact_logo' => '<span style="color:#ffffff;">mil</span><span style="color:#e2e2e2;">PROFES.</span>',
+    'contact_logo' => '<span style="color:#ffffff;">mil</span><span style="color:#e2e2e2;font-family:texgyreadventorregular,sans-serif;">PROFES.</span>',
     'phone_title' => 'Teléfono: ',
     'phone' => '+34 655 56 25',
     'email_title' => 'E-Mail: ',

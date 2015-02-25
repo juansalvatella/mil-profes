@@ -38,7 +38,7 @@
                 {{ $content_teacher }}
             </div>
             <div role="tabpanel" class="tab-pane" id="profile_tab">
-                <div class="container-fluid top-buffer-25">
+                <div class="container-fluid top-padding-25 bottom-padding-25 background-white">
                     <form class="form-horizontal" action="{{ action('UsersController@updateUser') }}" method="post" enctype="multipart/form-data" role="form">
                         <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                         <div class="form-group">
