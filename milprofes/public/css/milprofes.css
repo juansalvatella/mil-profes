@@ -853,3 +853,10 @@ body.loading .modal-loading { /*modal element will be visible */
     /*border:1px solid #9A9A9A;*/
 }
 /*END FAQS*/
+
+/* WHO */
+.who-logo {
+    font-size: 4.5em;
+}
+
+/*END WHO*/
