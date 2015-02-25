@@ -235,6 +235,25 @@ a, a:link, a:hover, a:active, a:visited {
 	color: #7c7c7c;
 }
 
+.login-modal-logo {
+    font-size: 2.5em;
+}
+
+.login-modal {
+    background-color: #f7f7f7;
+}
+
+.btn-login-send {
+    /*margin-top:0px;*/
+    min-width: 94px;
+    /*min-height: 60px;*/
+    /*line-height: 45px;*/
+    font-family: raleway-semibold, sans-serif;
+    color: #000;
+    background-color: #E79500;
+    border:1px solid #9A9A9A;
+}
+
 /************************ Layout - footer ************************/
 
 #footer-apps {
@@ -484,16 +503,7 @@ a, a:link, a:hover, a:active, a:visited {
     vertical-align: middle;
 }
 
-.best-img {
-
-}
-
-#recent-schools {
-
-}
 /************************ END HOME ************************/
-
-
 
 /*search*/
 .modal-loading {
@@ -858,5 +868,4 @@ body.loading .modal-loading { /*modal element will be visible */
 .who-logo {
     font-size: 4.5em;
 }
-
 /*END WHO*/

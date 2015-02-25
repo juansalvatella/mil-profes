@@ -90,8 +90,8 @@
                 <li class="text-center"><a class="right-separator" href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
                 <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
             @else
-                <li><a class="right-separator" href="{{ url('users/login') }}" title="@lang('layout.login')">@lang('layout.login')</a></li>
-                <li><a href="{{ url('users/create') }}" title="@lang('layout.register')">@lang('layout.register')</a></li>
+                <li><a data-target="#modal-login" data-toggle="modal" class="right-separator" href="#" title="@lang('layout.login')">@lang('layout.login')</a></li>
+                <li><a data-target="#modal-register" data-toggle="modal"  href="#" title="@lang('layout.register')">@lang('layout.register')</a></li>
             @endif
             </ul>
         </div><!--/.nav-collapse -->
@@ -101,6 +101,152 @@
     <!-- /HEADER -->
 
   	@yield('content')
+
+    <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="modal-login" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                {{--<div class="modal-header">--}}
+                    {{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>--}}
+                    {{--<h4 class="modal-title" id="myModalLabel">Modal title</h4>--}}
+                {{--</div>--}}
+                <div class="modal-body login-modal">
+                    <div class="row text-center bottom-srs-separator">
+                        <span class="login-modal-logo">@lang('layout.logo')</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 top-buffer-15">
+                            <form role="form" method="POST" action="{{{ URL::to('/users/login') }}}" accept-charset="UTF-8">
+                                <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <label for="email">@lang('layout.login-username')</label>
+                                        <input class="form-control" tabindex="1" placeholder="{{{ @trans('layout.login-username') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">
+                                            @lang('layout.login-password')
+                                        </label>
+                                        <input class="form-control" tabindex="2" placeholder="{{{ @trans('layout.login-password') }}}" type="password" name="password" id="password">
+                                        <p class="help-block">
+                                            <a href="{{{ URL::to('/users/forgot_password') }}}">@lang('layout.login-forgot-passwd')</a>
+                                        </p>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label for="remember">
+                                            <input tabindex="4" type="checkbox" name="remember" id="remember" value="1"><small>@lang('layout.login-remind-me')</small>
+                                        </label>
+                                    </div>
+                                    @if (Session::get('error'))
+                                        <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
+                                    @endif
+
+                                    @if (Session::get('notice'))
+                                        <div class="alert">{{{ Session::get('notice') }}}</div>
+                                    @endif
+                                    <div class="row text-center top-buffer-15">
+                                        <div class="form-group">
+                                            <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.login-send')</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">@lang('layout.login-cancel')</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {{--<div class="modal-footer">--}}
+                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+                    {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
+                {{--</div>--}}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {{--<div class="modal-header">--}}
+                {{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>--}}
+                {{--<h4 class="modal-title" id="myModalLabel">Modal title</h4>--}}
+                {{--</div>--}}
+                <div class="modal-body login-modal">
+                    <div class="row text-center bottom-srs-separator">
+                        <span class="login-modal-logo">@lang('layout.logo')</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 top-buffer-15">
+                            <form method="POST" action="{{{ URL::to('users') }}}" accept-charset="UTF-8">
+                                <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <label for="username">@lang('layout.register-username')</label>
+                                        <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" type="text" name="username" id="username" value="{{{ Input::old('username') }}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">@lang('layout.register-realname')</label>
+                                        <input class="form-control" placeholder="{{{@trans('layout.register-realname-ph')}}}" type="text" name="name" id="name" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname">@lang('layout.register-reallastname')</label>
+                                        <input class="form-control" placeholder="{{{@trans('layout.register-reallastname-ph')}}}" type="text" name="lastname" id="lastname" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">@lang('layout.register-address')</label>
+                                        <input class="form-control" placeholder="{{{@trans('layout.register-address-ph')}}}" type="text" name="address" id="address" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">@lang('layout.register-phone')</label>
+                                        <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" name="phone" id="phone" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">@lang('layout.register-email') <small>@lang('layout.register-required-confirmation')</small></label>
+                                        <input class="form-control" placeholder="{{{ @trans('layout.register-email') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">@lang('layout.register-password')</label>
+                                        <input class="form-control" placeholder="{{{ @trans('layout.register-password') }}}" type="password" name="password" id="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password_confirmation">@lang('layout.register-confirm-password')</label>
+                                        <input class="form-control" placeholder="{{{ @trans('layout.register-confirm-password-ph') }}}" type="password" name="password_confirmation" id="password_confirmation">
+                                    </div>
+
+                                    @if (Session::get('error'))
+                                        <div class="alert alert-error alert-danger">
+                                            @if (is_array(Session::get('error')))
+                                                {{ head(Session::get('error')) }}
+                                            @endif
+                                        </div>
+                                    @endif
+                                    @if (Session::get('failure'))
+                                        <div class="alert alert-error alert-danger">
+                                            {{ Session::get('failure') }}
+                                        </div>
+                                    @endif
+                                    @if (Session::get('notice'))
+                                        <div class="alert">{{ Session::get('notice') }}</div>
+                                    @endif
+
+                                    <div class="row text-center top-buffer-15">
+                                        <div class="form-group">
+                                            <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.register-register')</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">@lang('layout.register-cancel')</button>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                {{--<div class="modal-footer">--}}
+                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+                    {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
+                {{--</div>--}}
+            </div>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <div id="footer-apps">

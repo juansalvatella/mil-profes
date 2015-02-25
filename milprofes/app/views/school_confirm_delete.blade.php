@@ -1,4 +1,4 @@
-@extends('basic_template')
+@extends('layout')
 @section('content')
 <div class="container top-buffer-15 bottom-buffer-45">
     <div class="page-header">

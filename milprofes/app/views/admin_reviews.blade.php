@@ -1,4 +1,4 @@
-@extends('basic_template')
+@extends('layout')
 @section('content')
 
     <div class="page-header">

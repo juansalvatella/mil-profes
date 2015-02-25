@@ -1,4 +1,4 @@
-@extends('blank')
+@extends('layout')
 @section('content')
     <h3>{{ $table }}</h3>
     <table class="table table-striped">
