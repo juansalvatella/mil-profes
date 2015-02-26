@@ -1,4 +1,16 @@
 <?php
+    //check session status to decide wether to show cookies alert
+    if (!Session::has('new-session')) {
+        Session::put('new-session', true);
+        Session::save();
+    } else {
+        if(Session::get('new-session')==true) {
+            Session::put('new-session', false);
+            Session::save();
+        }
+    }
+?>
+<?php
     $last_teachers = Milprofes::getLastTeachers(12);
     $last_schools = Milprofes::getLastSchools(12);
 ?>

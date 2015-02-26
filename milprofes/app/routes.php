@@ -16,16 +16,6 @@ Route::model('school_lesson','SchoolLesson');
 //Home
 Route::get('/', array('as' => 'home', function()
 {
-    //check if new session to show cookies alert or not
-    if (!Session::has('new-session')) {
-        Session::put('new-session', true);
-        Session::save();
-    } else {
-        if(Session::get('new-session')==true) {
-            Session::put('new-session', false);
-            Session::save();
-        }
-    }
 
     $popular_teachers = Milprofes::getPopularTeachers(4);
     $popular_schools = Milprofes::getPopularSchools(4);
