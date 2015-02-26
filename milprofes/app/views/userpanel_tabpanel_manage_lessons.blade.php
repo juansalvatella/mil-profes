@@ -151,9 +151,9 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>€/hora</th>
+                        <th>Precio (€/hora)</th>
                         <th>Descripción</th>
-                        <th>Materia</th>
+                        <th>Categoría</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>

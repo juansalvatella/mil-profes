@@ -1019,3 +1019,38 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-bottom: 30px;
 }
 /*END PROFILES*/
+
+.magic-align-2 { margin-top: -145px; }
+
+.userpanel-img {
+    max-height: 50px;
+    max-width: 50px;
+}
+
+.profile-header {
+    padding-bottom: 9px;
+    margin: 40px 0px 20px;
+}
+
+.nav-tabs-profile > li.active > a, .nav-tabs-profile > li.active > a:hover, .nav-tabs-profile > li.active > a:focus {
+    background-color: #eeeeee !important;
+    -webkit-box-shadow: -7px -4px 4px 0 rgba(0,0,0,0.1);
+    -moz-box-shadow: -7px -4px 4px 0 rgba(0,0,0,0.1);
+    box-shadow: -7px -4px 4px 0 rgba(0,0,0,0.1);
+    border-top: 1px solid #A4A5A5;
+    border-left: 1px solid #A4A5A5;
+    border-right: 1px solid #A4A5A5;
+}
+
+.nav-tabs-profile {
+    border-bottom: 0 !important;
+}
+
+.profile-box {
+    -webkit-box-shadow: -7px -3px 5px 0 rgba(0,0,0,0.1);
+    -moz-box-shadow: -7px -3px 5px 0 rgba(0,0,0,0.1);
+    box-shadow: -7px -3px 5px 0 rgba(0,0,0,0.1);
+    border: 1px solid #A4A5A5;
+    background-color: #eeeeee;
+    color:#000;
+}
