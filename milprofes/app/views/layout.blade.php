@@ -279,6 +279,11 @@
 
                         </div>
                     </div>
+                    <div class="row text-left">
+                        <div class="col-xs-12 userterms-link">
+                            <small><a href="{{url('terminos-de-uso')}}">@lang('layout.register_user-terms')</a></small>
+                        </div>
+                    </div>
                 </div>
                 {{--<div class="modal-footer">--}}
                     {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}

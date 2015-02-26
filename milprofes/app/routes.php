@@ -16,12 +16,10 @@ Route::model('school_lesson','SchoolLesson');
 //Home
 Route::get('/', array('as' => 'home', function()
 {
-
     $popular_teachers = Milprofes::getPopularTeachers(4);
     $popular_schools = Milprofes::getPopularSchools(4);
 
     return View::make('home', compact('popular_schools','popular_teachers'));
-
 }));
 Route::post('/','ContactController@getContactForm');
 //Profiles
@@ -45,7 +43,20 @@ Route::get('profiles/school/{school}', function(School $school) {
     foreach($lessons as $l) {
         $l->availability = $l->availabilities()->get();
     }
-    return View::make('school_details', compact('school','lessons'));
+
+    //pagination by slices
+    $input = Input::all();
+    $lessons_per_slice = 2;
+    $total_results = $lessons->count();
+    $max_slices = ceil($total_results/$lessons_per_slice);
+    $slices_showing = Input::has('slices_showing') ? $input['slices_showing'] : 0;
+    $sl_offset = $slices_showing*$lessons_per_slice;
+    $sl_length = $lessons_per_slice;
+    $lessons = $lessons->slice($sl_offset,$sl_length);
+    ++$slices_showing;
+    $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
+
+    return View::make('school_details', compact('school','lessons','display_show_more','slices_showing','total_results'));
 });
 //Search
 Route::get('/search/results','SearchController@search');

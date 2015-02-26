@@ -70,5 +70,6 @@ return [
     'register-confirm-password-ph' => 'Repite tu contraseña',
     'register-register' => 'Registrarme',
     'register-cancel' => 'Cancelar',
+    'register_user-terms' => 'Ver Términos de uso',
 
 ];

@@ -254,6 +254,11 @@ a, a:link, a:hover, a:active, a:visited {
     border:1px solid #9A9A9A;
 }
 
+.userterms-link a, .userterms-link a:hover, .userterms-link a:active {
+    text-decoration: underline;
+    color: #000;
+}
+
 /************************ Layout - footer ************************/
 
 #footer-apps {
@@ -869,3 +874,60 @@ body.loading .modal-loading { /*modal element will be visible */
     font-size: 4.5em;
 }
 /*END WHO*/
+
+/* PROFILES */
+
+.profile-image {
+    display: inline-block;
+    float: left;
+    text-align: center;
+    overflow:hidden;
+    -webkit-box-shadow: -7px 8px 5px 0 rgba(0,0,0,0.2);
+    -moz-box-shadow: -7px 8px 5px 0 rgba(0,0,0,0.2);
+    box-shadow: -7px 8px 5px 0 rgba(0,0,0,0.2);
+    border: 1px solid #808080;
+    background-color: #EBEBEB;
+    height: 90px;
+    line-height: 86px;
+    width: 110px;
+}
+
+.profile-image img {
+    max-width:100%;
+    max-height:100%;
+    margin:auto;
+    vertical-align: middle;
+}
+
+.profile-title {
+    padding-left: 15px;
+    display: inline-block;
+    float: left;
+    font-family: raleway-semibold, sans-serif;
+}
+
+.profile-subtitle {
+    display: inline-block;
+    font-family: raleway-regular, sans-serif;
+}
+
+.school-rating {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.school-rating-span {
+    font-size:1.5em;
+    font-family: raleway-semibold, sans-serif;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(255, 169, 17);
+}
+
+.lesosn-subj_img-container {
+
+}
+
+.lesson-subj-img {
+
+}
+/*END PROFILES*/
