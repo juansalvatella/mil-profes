@@ -2,6 +2,9 @@
 
 return array(
 
+    'subtitle' => 'Academia',
+    'rating' => 'Valoración',
+
     'our_school' => 'Nuestra academia',
     'lessons' => 'Clases que ofrecemos',
     'lesson_of' => 'Clase',

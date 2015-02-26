@@ -8,7 +8,7 @@
 
             <div class="profile-title">
                 <h3>{{ $school->name }}</h3>
-                <div class="profile-subtitle">Academia</div>
+                <div class="profile-subtitle">@lang('school-profile.subtitle')</div>
             </div>
 
         </div>
@@ -18,12 +18,12 @@
 
             <div class="row">
                 <div class="col-xs-12 school-rating">
-                    <span class="school-rating-span">Valoración <span id="school-stars"></span></span>
+                    <span class="school-rating-span">@lang('school-profile.rating') <span id="school-stars"></span></span>
                     <script type="text/javascript">
                         $('#school-stars').raty({
                             readOnly: true,
                             half: true,
-                            score: {{ $school->getSchoolAvgRating() }}0
+                            score: {{ $school->getSchoolAvgRating() }}
                         });
                     </script>
                 </div>
@@ -58,10 +58,6 @@
                                     </div>
 
                                     <div class="col-xs-7 col-sm-5">
-
-                                        <div class="row result-name">
-                                                <span>{{{ $result->name }}}</span>
-                                        </div>
 
                                         <div class="row lesson-subject">
                                                 <span>@lang('school-profile.lesson_of') @lang('school-profile.of_subject_'.$result->subject()->pluck('name'))</span>

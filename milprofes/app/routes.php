@@ -24,21 +24,20 @@ Route::get('/', array('as' => 'home', function()
 Route::post('/','ContactController@getContactForm');
 //Profiles
 Route::get('profiles/teacher/{teacher}', function(Teacher $teacher) {
-    $user = $teacher->user()->get(array('username','avatar','email','phone','address','description'));
+    $user = $teacher->user()->get(array('username','avatar','email','phone','description'));
     foreach($user as $u) {
         $teacher->username = $u->username;
         $teacher->avatar = $u->avatar;
         $teacher->email = $u->email;
         $teacher->phone = $u->phone;
-        $teacher->address = $u->address;
         $teacher->description = $u->description;
         break;
     }
     $lessons = $teacher->lessons()->get();
     $teacher->availability = $teacher->availabilities()->get();
+
     return View::make('teacher_details', compact('teacher','lessons'));
 });
-
 Route::get('profiles/school/{school}', function(School $school) {
 
     $lessons = $school->lessons()->get();
@@ -46,7 +45,7 @@ Route::get('profiles/school/{school}', function(School $school) {
         $l->availability = $l->availabilities()->get();
     }
 
-    //pagination by slices
+    //pagination by slices (first page)
     $lessons_per_slice = 2;
     $total_results = $lessons->count();
     $max_slices = ceil($total_results/$lessons_per_slice);
