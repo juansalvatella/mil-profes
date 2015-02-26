@@ -38,7 +38,29 @@ Route::get('profiles/teacher/{teacher}', function(Teacher $teacher) {
     $teacher->availability = $teacher->availabilities()->get();
     return View::make('teacher_details', compact('teacher','lessons'));
 });
+
 Route::get('profiles/school/{school}', function(School $school) {
+
+    $lessons = $school->lessons()->get();
+    foreach($lessons as $l) {
+        $l->availability = $l->availabilities()->get();
+    }
+
+    //pagination by slices
+    $lessons_per_slice = 2;
+    $total_results = $lessons->count();
+    $max_slices = ceil($total_results/$lessons_per_slice);
+    $slices_showing = 0;
+    $sl_offset = $slices_showing*$lessons_per_slice;
+    $sl_length = $lessons_per_slice;
+    $lessons = $lessons->slice($sl_offset,$sl_length);
+    ++$slices_showing;
+    $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
+
+    return View::make('school_details', compact('school','lessons','display_show_more','slices_showing','total_results'));
+
+});
+Route::post('profiles/school/{school}', function(School $school) {
     $lessons = $school->lessons()->get();
     foreach($lessons as $l) {
         $l->availability = $l->availabilities()->get();
@@ -58,6 +80,7 @@ Route::get('profiles/school/{school}', function(School $school) {
 
     return View::make('school_details', compact('school','lessons','display_show_more','slices_showing','total_results'));
 });
+
 //Search
 Route::get('/search/results','SearchController@search');
 Route::post('search/results','SearchController@search');

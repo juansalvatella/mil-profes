@@ -877,6 +877,10 @@ body.loading .modal-loading { /*modal element will be visible */
 
 /* PROFILES */
 
+.profile-box {
+    padding: 25px 70px 50px 70px;
+}
+
 .profile-image {
     display: inline-block;
     float: left;
@@ -930,4 +934,47 @@ body.loading .modal-loading { /*modal element will be visible */
 .lesson-subj-img {
 
 }
+
+.school-description, .school-lessons {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.school-description span, .school-lessons span {
+    font-size:1.2em;
+    font-family: raleway-semibold, sans-serif;
+    border-bottom: 1px solid rgb(255, 169, 17);
+}
+
+.lesson-subject {
+    color: #000;
+    font-weight: 700;
+    font-size: 1.3em;
+}
+
+.lesson-description-title, .lesson-availability-title {
+    font-family: raleway-semibold, sans-serif;
+    font-size: 0.9em;
+    padding-top: 5px;
+}
+
+.lesson-availability span {
+    color: #ffffff;
+    border: 0;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.lessons-separator {
+    border:0;
+    width:68%;
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+    height: 1px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+
 /*END PROFILES*/
