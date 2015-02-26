@@ -5,7 +5,7 @@ return array(
     'subtitle' => 'Profesor',
     'rating' => 'Valoración',
 
-    'our_school' => 'Sobre mí',
+    'about_me' => 'Sobre mí',
     'lessons' => 'Clases que ofrecezco',
     'lesson_of' => 'Clase',
 

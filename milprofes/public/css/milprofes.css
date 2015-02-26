@@ -976,5 +976,46 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-bottom: 40px;
 }
 
+.teacher-description, .teacher-lessons {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
 
+.teacher-description span, .teacher-lessons span {
+    font-size:1.2em;
+    font-family: raleway-semibold, sans-serif;
+    border-bottom: 1px solid rgb(255, 169, 17);
+}
+
+.teacher-rating {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.teacher-rating-span {
+    font-size:1.5em;
+    font-family: raleway-semibold, sans-serif;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(255, 169, 17);
+}
+
+.subject-icon img {
+    max-width:50%;
+    max-height:50%;
+}
+
+.t-lesson-subject {
+    color: #000;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+.hr-teacher-profile {
+    border:0;
+    width:70%;
+    color: rgb(255, 169, 17);
+    background-color: rgb(255, 169, 17);
+    height: 1px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
 /*END PROFILES*/
