@@ -148,13 +148,13 @@
                                             <input tabindex="4" type="checkbox" name="remember" id="remember" value="1"><small>@lang('layout.login-remind-me')</small>
                                         </label>
                                     </div>
-                                    @if (Session::get('error'))
-                                        <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
-                                    @endif
+                                    {{--@if (Session::get('error'))--}}
+                                        {{--<div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>--}}
+                                    {{--@endif--}}
 
-                                    @if (Session::get('notice'))
-                                        <div class="alert">{{{ Session::get('notice') }}}</div>
-                                    @endif
+                                    {{--@if (Session::get('notice'))--}}
+                                        {{--<div class="alert">{{{ Session::get('notice') }}}</div>--}}
+                                    {{--@endif--}}
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
                                             <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.login-send')</button>
@@ -251,21 +251,21 @@
                                         </div>
                                     </div>
 
-                                    @if (Session::get('error'))
-                                        <div class="alert alert-error alert-danger">
-                                            @if (is_array(Session::get('error')))
-                                                {{ head(Session::get('error')) }}
-                                            @endif
-                                        </div>
-                                    @endif
-                                    @if (Session::get('failure'))
-                                        <div class="alert alert-error alert-danger">
-                                            {{ Session::get('failure') }}
-                                        </div>
-                                    @endif
-                                    @if (Session::get('notice'))
-                                        <div class="alert">{{ Session::get('notice') }}</div>
-                                    @endif
+                                    {{--@if (Session::get('error'))--}}
+                                        {{--<div class="alert alert-error alert-danger">--}}
+                                            {{--@if (is_array(Session::get('error')))--}}
+                                                {{--{{ head(Session::get('error')) }}--}}
+                                            {{--@endif--}}
+                                        {{--</div>--}}
+                                    {{--@endif--}}
+                                    {{--@if (Session::get('failure'))--}}
+                                        {{--<div class="alert alert-error alert-danger">--}}
+                                            {{--{{ Session::get('failure') }}--}}
+                                        {{--</div>--}}
+                                    {{--@endif--}}
+                                    {{--@if (Session::get('notice'))--}}
+                                        {{--<div class="alert">{{ Session::get('notice') }}</div>--}}
+                                    {{--@endif--}}
 
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
