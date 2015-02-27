@@ -5,14 +5,21 @@
 
       <div class="row">
           <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8">
+              @if (Session::get('notice'))
+                  <div class="alert alert-info">{{{ Session::get('notice') }}}</div>
+              @endif
               @if(Session::has('success'))
                   <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
               @endif
               @if(Session::has('failure'))
-                  <div class="alert alert-danger" role="alert">{{ Session::get('failure') }}</div>
+                  <div class="alert alert-error alert-danger" role="alert">{{ Session::get('failure') }}</div>
               @endif
-              @if (Session::get('notice'))
-                  <div class="alert alert-success">{{{ Session::get('notice') }}}</div>
+              @if (Session::get('error'))
+                  <div class="alert alert-error alert-danger">
+                      @if (is_array(Session::get('error')))
+                          {{ head(Session::get('error')) }}
+                      @endif
+                  </div>
               @endif
           </div>
       </div>

@@ -1,4 +1,5 @@
 <?php
+
 return array(
 
     'title' => 'F.A.Q.s',

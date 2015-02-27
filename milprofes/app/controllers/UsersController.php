@@ -40,7 +40,7 @@ class UsersController extends Controller
             }
 
             return Redirect::to('/')
-                ->with('notice', @trans('messages.account_created'));
+                ->with('notice', @trans('messages.user_just_registered'));
         } else {
             $error = $user->errors()->all(':message');
 

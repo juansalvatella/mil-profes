@@ -99,13 +99,12 @@ a, a:link, a:hover, a:active, a:visited {
 .bottom-padding-150 { padding-bottom: 150px; }
 .bottom-padding-200 { padding-bottom: 200px; }
 
-.margin-left-15 { margin-left: 15px; }
+/*.margin-left-15 { margin-left: 15px; }*/
 .left-buffer-25 { margin-left: 25px; }
 
 .background-white { background-color: #ffffff; }
 .background-287AF9 { background-color: #287AF9; color: #fff; font-weight: 700; }
 .background-E79500 { background-color: #E79500; color: #000; font-weight: 700; }
-
 
 /* GENERIC PAGES */
 .overflow-allowed { overflow: visible; }
@@ -142,107 +141,85 @@ a, a:link, a:hover, a:active, a:visited {
 }
 /* END GENERIC */
 
-/*
-*/
+/*======================================================*/
 /************************ LAYOUT ************************/
-/*
-*/
+/*======================================================*/
 
-/*********************** Layout - header ************************/
-
+/******************** Layout - header *******************/
 .mp-bgcolor {
 	background-color: #656565;
 }
-
 .mp-color {
 	color: #656565;
 }
-
 .navbar {
     margin-bottom: 0 !important;
     height:auto !important;
     /*position: fixed;*/
     /*width: 100%;*/
 }
-
 .navbar-collapse {
     background-color: rgb(255, 196, 35);
 }
-
 .navbar-inverse .navbar-toggle:hover {
     background-color: #333 !important;
 }
-
 .navbar-inverse .navbar-toggle:focus {
     background-color: rgb(255, 196, 35);
 }
-
 .navbar-inverse {
     padding-top: 15px;
     padding-bottom: 2px;
 	background-color: rgb(255, 196, 35);
 }
-
 .navbar-brand {
     color: #000000 !important;
     padding: 7px 15px 7px 15px; !important;
     font-size: 2.5em;
     font-weight: 300 !important;
 }
-
 .navbar-brand a:hover {
     color: #7c7c7c !important;
 }
-
 .nav li a {
     /*border-right: solid 1px #333;*/
     padding: 7px 15px 7px 15px; !important;
     color:#000000 !important;
 }
-
 .nav li a:hover {
     color: #7c7c7c !important;
 }
-
 .starter-template {
   padding: 40px 15px;
   text-align: center;
 }
-
 .alert-cookies {
 	color: #434343;
 	background-color: rgb(242, 243, 245);
 	margin-bottom: 0;
     /*position: fixed;*/
 }
-
 #loginbox a {
     line-height: 20px;
     padding: 7px 15px 7px 15px;
     display: inline-block;
     color: #000000;
 }
-
 .left-separator {
     border-left: solid 1px #333;
 }
-
 .right-separator {
     border-right: solid 1px #333;
 }
-
 #loginbox a:hover {
 	color: #7c7c7c;
 }
-
 .login-modal-logo {
     font-size: 2.5em;
 }
-
 .login-modal {
     background-color: #f7f7f7;
 }
-
 .btn-login-send {
     /*margin-top:0px;*/
     min-width: 94px;
@@ -253,14 +230,12 @@ a, a:link, a:hover, a:active, a:visited {
     background-color: #E79500;
     border:1px solid #9A9A9A;
 }
-
 .userterms-link a, .userterms-link a:hover, .userterms-link a:active {
     text-decoration: underline;
     color: #000;
 }
 
-/************************ Layout - footer ************************/
-
+/**************** Layout - footer ***************/
 #footer-apps {
     background:url(../img/home1.png) top left repeat;
     padding: 25px 0 25px 0;
@@ -271,20 +246,16 @@ a, a:link, a:hover, a:active, a:visited {
     left: 0;
     position: relative;
 }
-
 .footer-right-separator {
     border-right: solid 1px rgb(255, 169, 17);
 }
-
 .footer-left-separator {
     border-left: solid 1px rgb(255, 169, 17);
 }
-
 .footer-glyphicon {
     color: #0480be;
     font-size: 1.4em;
 }
-
 #footer-brand {
     font-size: 4.0em;
     font-weight: 300;
@@ -292,36 +263,29 @@ a, a:link, a:hover, a:active, a:visited {
     /*font-family: sans-serif;*/
     /*text-shadow: 2px 1px 1px #fff;*/
 }
-
 #footer-brand a {
     text-decoration: none;
     color: #000000;
 }
-
 .footer-contact {
     font-size: 1.1em;
     color: #ffffff;
 }
-
 #footer-follow {
     font-size: 1.2em;
     color: #ffffff;
 }
-
 #footer-follow a {
     font-size: 1.1em;
     color: #ffffff;
 }
-
 #footer-faicons {
     color: #ffffff;
     font-size: 1.4em;
 }
-
 #footer-faicons a {
     color: #ffffff;
 }
-
 #footer {
     background-color: rgb(255, 169, 17);
     padding: 15px 0 15px 0;
@@ -332,35 +296,27 @@ a, a:link, a:hover, a:active, a:visited {
     left: 0;
     position: relative;
 }
-
 #footer a {
 
 }
-
 .footer-links, .footer-links a {
     color: #000000;
 }
-
 .footer-links a:hover {
     color: #0480be;
 }
-
-
 .img-recientes {
     max-width: 95%;
     margin: 15px 0 0 0;
     padding: 0 0 0 0;
 }
-
 .unpadded {
     padding: 2px 2px 2px 2px !important;
 }
-
 .recent-selectors {
     padding: 0 2px 0 2px;
     margin-bottom:10px;
 }
-
 .last-image-container {
     margin-left: auto;
     margin-right: auto;
@@ -373,7 +329,6 @@ a, a:link, a:hover, a:active, a:visited {
     -moz-box-shadow: 0 8px 6px -10px black;
     box-shadow: 0 8px 6px -10px black;
 }
-
 .last-image-container img {
     max-width:100%;
     max-height:100%;
@@ -381,38 +336,28 @@ a, a:link, a:hover, a:active, a:visited {
     margin-bottom: auto;
     vertical-align: middle;
 }
-
 .recent-title {
     color:rgb(255, 169, 17);
     margin-bottom: 10px;
 }
-
 .contact-form-label {
     color:rgb(255, 169, 17);
     margin-top:5px;
 }
-
 .contact-form-submit-btn {
     margin-top: 15px;
     width: 100%;
 }
-
 .navbar-collapsed-btn {
     margin-top: 3px;
 }
-
-/*
-*/
 /************************ END LAYOUT ************************/
-/*
-*/
 
-/*
-*/
+
+
+/*====================================================*/
 /************************ HOME ************************/
-/*
-*/
-
+/*====================================================*/
 .home-splash {
     background:url(../img/home1.png) top left repeat;
 	/*background-size: cover;*/
@@ -424,7 +369,6 @@ a, a:link, a:hover, a:active, a:visited {
     left: 0;
     position: relative;
 }
-
 #welcome-responsive {
     margin-top: 10px;
 	/*font-size: 0.9em;*/
@@ -433,7 +377,6 @@ a, a:link, a:hover, a:active, a:visited {
 	color: rgb(255, 196, 35);
     text-align: center;
 }
-
 #find-responsive {
     margin-top: 20px;
     /*line-height: 200%;*/
@@ -441,20 +384,16 @@ a, a:link, a:hover, a:active, a:visited {
     color: rgb(255, 196, 35);
     text-align: center;
 }
-
 .home-actions {
 	margin-top: 15px;
 }
-
 .main-home-label {
     color:white;
     font-size:1.2em;
 }
-
 .btn-home-search {
     margin: 0 10px 5px 10px;
 }
-
 .chr {
     width: 100%;
     text-align: center;
@@ -462,20 +401,16 @@ a, a:link, a:hover, a:active, a:visited {
     line-height: 0.1em;
     margin: 10px 0 20px;
 }
-
 .popular-title-responsive {
     margin-bottom: 10px;
 }
-
 .names-responsive {
 
 }
-
 .central-text {
     background-color: #f4f4f4;
     padding:0 10px;
 }
-
 #home-featured {
     background-color: #f4f4f4;
     max-width: 100%;
@@ -486,7 +421,6 @@ a, a:link, a:hover, a:active, a:visited {
     left: 0;
     position: relative;
 }
-
 .best-image-container {
     margin-left: auto;
     margin-right: auto;
@@ -499,7 +433,6 @@ a, a:link, a:hover, a:active, a:visited {
     -moz-box-shadow: 0 8px 6px -10px black;
     box-shadow: 0 8px 6px -10px black;
 }
-
 .best-image-container img {
     max-width:100%;
     max-height:100%;
@@ -507,10 +440,9 @@ a, a:link, a:hover, a:active, a:visited {
     margin-bottom: auto;
     vertical-align: middle;
 }
-
 /************************ END HOME ************************/
 
-/*search*/
+/* SEARCH */
 .modal-loading {
     display:    none;
     position:   fixed;
@@ -521,46 +453,36 @@ a, a:link, a:hover, a:active, a:visited {
     width:      100%;
     background: rgba( 255, 255, 255, .8 ) url(../img/ajax-loader_blue.gif) 50% 50% no-repeat;
 }
-
 body.loading { /*turn off scrolling*/
     overflow: hidden;
 }
-
 body.loading .modal-loading { /*modal element will be visible */
     display: block;
 }
-
 #sub-header-menu {
     padding: 15px 0 15px 0;
     background-color: #0492da;
     color: #ffffff;
     margin-bottom: 25px;
 }
-
 .sub-header-textbox {
     color: #000000;
 }
-
 .sub-header-label {
     text-align: left;
 }
-
 #search-options-menu {
 
 }
-
 .radio {
     margin-left: 30px;
 }
-
 .radio label {
     padding-left: 0 !important;
 }
-
 #search-options-menu-container {
     padding: 5px 5px 5px 5px;
 }
-
 #gmapDiv {
     border: 1px solid #adadad;
     -webkit-border-radius: 5px;
@@ -572,7 +494,6 @@ body.loading .modal-loading { /*modal element will be visible */
     overflow: hidden;
     min-height: 172px;
 }
-
 .staticMap {
     overflow: hidden;
     width: 100%;
@@ -583,14 +504,12 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-right:auto;
     line-height: 168px;
 }
-
 .staticMap img {
     max-width:100%;
     max-height:100%;
     margin:auto;
     vertical-align: middle;
 }
-
 .hr-sm-separator {
     border:0;
     width:90%;
@@ -600,9 +519,7 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-top: 5px;
     margin-bottom: 1px;
 }
-
 .h4-like { font-size:18px; }
-
 .mp-shadow {
     -webkit-box-shadow: -7px 4px 5px 0 rgba(201,201,201,1);
     -moz-box-shadow: -7px 4px 5px 0 rgba(201,201,201,1);
@@ -610,18 +527,15 @@ body.loading .modal-loading { /*modal element will be visible */
     border: 1px solid #808080;
     background-color: #eeeeee;
 }
-
 .mp-submit-find {
     color:black;
     background-color: #ffffff;
     border: 1px solid rgb(255, 169, 17);
     width: 75%;
 }
-
 .search-total {
     padding: 10px 10px 10px 10px !important;
 }
-
 .dist-icon1 {
     color: #0480be;
     font-size: 1.4em;
@@ -637,7 +551,6 @@ body.loading .modal-loading { /*modal element will be visible */
     font-size: 1.1em;
     margin-right: 3px;
 }
-
 .search-image-container {
     margin-left:auto;
     margin-right:auto;
@@ -651,14 +564,12 @@ body.loading .modal-loading { /*modal element will be visible */
     -moz-box-shadow: 0 8px 6px -10px black;
     box-shadow: 0 8px 6px -10px black;
 }
-
 .search-image-container img {
     max-width:100%;
     max-height:100%;
     margin:auto;
     vertical-align: middle;
 }
-
 .contact-info-title1 {
     color: #0480be;
     font-size: 1.3em;
@@ -682,11 +593,9 @@ body.loading .modal-loading { /*modal element will be visible */
 .contact-info-mail {
     font-size: 1.1em;
 }
-
 .profile-link {
     padding-top: 8px;
 }
-
 .profile-link a, .profile-link a:active, .profile-link a:hover {
     color: #000000;
     text-decoration: none;
@@ -694,12 +603,10 @@ body.loading .modal-loading { /*modal element will be visible */
     font-family: raleway-semibold, sans-serif;
     font-size: 0.9em;
 }
-
 .result-name {
     font-weight: 700;
     font-size: 1.2em;
 }
-
 .result-subject span {
     color: #ffffff;
     font-weight: 700;
@@ -709,41 +616,33 @@ body.loading .modal-loading { /*modal element will be visible */
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
-
 .result-subject .span-subject-teacher {
     background-color: #41A4CD;
 }
-
 .result-subject .span-subject-school {
     background-color: #E84C3D;
 }
-
 .result-distance {
     font-weight: 700;
     font-size: 1.2em;
     padding-top: 8px;
     padding-bottom: 12px;
 }
-
 .top-srs-separator {
     border-top: 1px solid rgb(255, 169, 17);
 }
-
 .bottom-srs-separator {
     border-bottom: 1px solid rgb(255, 169, 17);
 }
-
 .result-description-title, .result-availability-title {
     font-family: raleway-semibold, sans-serif;
     font-size: 0.8em;
     padding-top: 5px;
 }
-
 .result-description {
     font-family: raleway-medium, sans-serif;
     padding-bottom: 8px;
 }
-
 .result-availability span {
     color: #ffffff;
     border: 0;
@@ -751,39 +650,33 @@ body.loading .modal-loading { /*modal element will be visible */
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
-
 .pick {
     font-family: raleway-semibold, sans-serif;
     padding-top: 1px;
     padding-bottom: 1px;
     background-color: #5CB85C;
 }
-
 .pick-day {
     display: inline-block;
     text-align: center;
     min-width: 34px;
     background-color: #00A651;
 }
-
 .pick-time {
     display: inline-block;
     text-align: center;
     min-width: 82px;
 }
-
 .price {
     margin-top: 10px;
     font-family: raleway-bold, sans-serif;
     font-size: 40px;
 }
-
 .per-unit {
     margin-top: -14px;
     font-family: raleway-semibold, sans-serif;
     font-size: 22px;
 }
-
 .results-separator {
     border:0;
     width:77%;
@@ -793,18 +686,16 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-top: 30px;
     margin-bottom: 40px;
 }
-
 .show-more-link a, .show-more-link a:hover, .show-more-link a:active {
     color:#000;
     font-family: raleway-semibold, sans-serif;
 }
-
 .no-price-provided {
     padding-top: 20px;
     font-family: raleway-semibold, sans-serif;
     font-size: 15px;
 }
-/* END SEARCH */
+/************** END SEARCH ****************/
 
 /* USER PANEL */
 .clear-left {
@@ -876,11 +767,9 @@ body.loading .modal-loading { /*modal element will be visible */
 /*END WHO*/
 
 /* PROFILES */
-
 .profile-box {
     padding: 25px 70px 50px 70px;
 }
-
 .profile-image {
     display: inline-block;
     float: left;
@@ -895,69 +784,58 @@ body.loading .modal-loading { /*modal element will be visible */
     line-height: 86px;
     width: 110px;
 }
-
 .profile-image img {
     max-width:100%;
     max-height:100%;
     margin:auto;
     vertical-align: middle;
 }
-
 .profile-title {
     padding-left: 15px;
     display: inline-block;
     float: left;
     font-family: raleway-semibold, sans-serif;
 }
-
 .profile-subtitle {
     display: inline-block;
     font-family: raleway-regular, sans-serif;
 }
-
 .school-rating {
     padding-top: 5px;
     padding-bottom: 5px;
 }
-
 .school-rating-span {
     font-size:1.5em;
     font-family: raleway-semibold, sans-serif;
     padding-bottom: 5px;
     border-bottom: 1px solid rgb(255, 169, 17);
 }
-
 .lesosn-subj_img-container {
 
 }
-
 .lesson-subj-img {
 
 }
-
+/*schools profile*/
 .school-description, .school-lessons {
     margin-top: 25px;
     margin-bottom: 10px;
 }
-
 .school-description span, .school-lessons span {
     font-size:1.2em;
     font-family: raleway-semibold, sans-serif;
     border-bottom: 1px solid rgb(255, 169, 17);
 }
-
 .lesson-subject {
     color: #000;
     font-weight: 700;
     font-size: 1.3em;
 }
-
 .lesson-description-title, .lesson-availability-title {
     font-family: raleway-semibold, sans-serif;
     font-size: 0.9em;
     padding-top: 5px;
 }
-
 .lesson-availability span {
     color: #ffffff;
     border: 0;
@@ -965,7 +843,6 @@ body.loading .modal-loading { /*modal element will be visible */
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
-
 .lessons-separator {
     border:0;
     width:68%;
@@ -975,35 +852,30 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-top: 30px;
     margin-bottom: 40px;
 }
-
+/*teachers profile*/
 .teacher-description, .teacher-lessons {
     margin-top: 25px;
     margin-bottom: 10px;
 }
-
 .teacher-description span, .teacher-lessons span {
     font-size:1.2em;
     font-family: raleway-semibold, sans-serif;
     border-bottom: 1px solid rgb(255, 169, 17);
 }
-
 .teacher-rating {
     padding-top: 5px;
     padding-bottom: 5px;
 }
-
 .teacher-rating-span {
     font-size:1.5em;
     font-family: raleway-semibold, sans-serif;
     padding-bottom: 5px;
     border-bottom: 1px solid rgb(255, 169, 17);
 }
-
 .subject-icon img {
     max-width:50%;
     max-height:50%;
 }
-
 .t-lesson-subject {
     color: #000;
     font-weight: 700;
@@ -1020,18 +892,16 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 /*END PROFILES*/
 
+/*USER PANEL*/
 .magic-align-2 { margin-top: -145px; }
-
 .userpanel-img {
     max-height: 50px;
     max-width: 50px;
 }
-
 .profile-header {
     padding-bottom: 9px;
     margin: 40px 0px 20px;
 }
-
 .nav-tabs-profile > li.active > a, .nav-tabs-profile > li.active > a:hover, .nav-tabs-profile > li.active > a:focus {
     background-color: #eeeeee !important;
     -webkit-box-shadow: -7px -4px 4px 0 rgba(0,0,0,0.1);
@@ -1041,11 +911,9 @@ body.loading .modal-loading { /*modal element will be visible */
     border-left: 1px solid #A4A5A5;
     border-right: 1px solid #A4A5A5;
 }
-
 .nav-tabs-profile {
     border-bottom: 0 !important;
 }
-
 .profile-box {
     -webkit-box-shadow: -7px -3px 5px 0 rgba(0,0,0,0.1);
     -moz-box-shadow: -7px -3px 5px 0 rgba(0,0,0,0.1);
@@ -1054,3 +922,16 @@ body.loading .modal-loading { /*modal element will be visible */
     background-color: #eeeeee;
     color:#000;
 }
+.become-teacher {
+    font-family: raleway-semibold, sans-serif;
+    font-size: 1.4em;
+}
+.panel-milprofes {
+    border-color: #A4A5A5;
+}
+.panel-milprofes > .panel-heading {
+    color: #000;
+    background-color: rgb(255, 169, 17);
+    border-color: #A4A5A5;
+}
+/* END USER PANEL */

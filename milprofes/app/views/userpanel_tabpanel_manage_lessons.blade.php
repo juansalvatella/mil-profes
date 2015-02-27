@@ -1,5 +1,5 @@
-<div class="container-fluid top-padding-25 background-white bottom-padding-25">
-    <div class="panel panel-info">
+<div class="container-fluid top-padding-25 bottom-padding-25">
+    <div class="panel panel-milprofes">
         <div class="panel-heading">
             <h3 class="panel-title">Tu disponibilidad semanal</h3>
         </div>
@@ -142,7 +142,7 @@
             </form>
         </div>
     </div>
-    <div class="panel panel-info">
+    <div class="panel panel-milprofes">
         <div class="panel-heading">
             <h3 class="panel-title">Tus clases</h3>
         </div>
