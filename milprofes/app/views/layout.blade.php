@@ -149,13 +149,13 @@
                                             <input tabindex="4" type="checkbox" name="remember" id="remember" value="1"><small>@lang('layout.login-remind-me')</small>
                                         </label>
                                     </div>
-                                    {{--@if (Session::get('error'))--}}
-                                        {{--<div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>--}}
-                                    {{--@endif--}}
+                                    @if (Session::get('error'))
+                                        <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
+                                    @endif
 
-                                    {{--@if (Session::get('notice'))--}}
-                                        {{--<div class="alert">{{{ Session::get('notice') }}}</div>--}}
-                                    {{--@endif--}}
+                                    @if (Session::get('notice'))
+                                        <div class="alert">{{{ Session::get('notice') }}}</div>
+                                    @endif
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
                                             <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.login-send')</button>
@@ -412,8 +412,8 @@
             <div class="pull-left text-center top-buffer-5">
                 <small>@lang('layout.copyright') | @lang('layout.authorship')</small>
             </div>
-            <div class="pull-right top-buffer-5">
-                <a class="footer-links" href="{{ url('terminos-de-uso') }}" title="@lang('layout.user_terms')">@lang('layout.user_terms')</a> | <a class="footer-links" href="{{ url('politica-de-privacidad') }}" title="@lang('layout.privacy')">@lang('layout.privacy')</a> | <a class="footer-links" href="{{ url('mapa-del-sitio') }}" title="@lang('layout.sitemap')">@lang('layout.sitemap')</a>
+            <div class="pull-right top-buffer-5 footer-links">
+                <a href="{{ url('terminos-de-uso') }}" title="@lang('layout.user_terms')">@lang('layout.user_terms')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('politica-de-privacidad') }}" title="@lang('layout.privacy')">@lang('layout.privacy')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('mapa-del-sitio') }}" title="@lang('layout.sitemap')">@lang('layout.sitemap')</a>
             </div>
         </div><!-- /.container -->
     </div><!-- /#footer -->

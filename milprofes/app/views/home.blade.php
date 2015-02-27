@@ -180,7 +180,7 @@
                 @foreach($popular_schools as $school)
                     <div class="col-xs-6 col-sm-3 names-responsive">
                         <div class="row best-image-container"><a href="{{ url('profiles/school/'.$school->id) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}"/></a></div>
-                        <div class="row top-buffer-5"><a href="{{ url('profiles/school/'.$school->id) }}">{{ $school->name }}</a></div>
+                        <div class="row best-name-container top-buffer-5"><a href="{{ url('profiles/school/'.$school->id) }}">{{ $school->name }}</a></div>
                     </div>
                 @endforeach
             </div>
@@ -195,7 +195,7 @@
                 @foreach($popular_teachers as $teacher)
                     <div class="col-xs-6 col-sm-3 names-responsive">
                         <div class="row best-image-container"><a href="{{ url('profiles/teacher/'.$teacher->id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}"/></a></div>
-                        <div class="row top-buffer-5"><a href="{{ url('profiles/teacher/'.$teacher->id) }}">{{ $teacher->username }}</a></div>
+                        <div class="row best-name-container top-buffer-5"><a href="{{ url('profiles/teacher/'.$teacher->id) }}">{{ $teacher->username }}</a></div>
                     </div>
                 @endforeach
             </div>

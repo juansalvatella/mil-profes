@@ -159,35 +159,55 @@ a, a:link, a:hover, a:active, a:visited {
     /*width: 100%;*/
 }
 .navbar-collapse {
-    background-color: rgb(255, 196, 35);
+    background-color: #FFC307;
 }
 .navbar-inverse .navbar-toggle:hover {
     background-color: #333 !important;
 }
 .navbar-inverse .navbar-toggle:focus {
-    background-color: rgb(255, 196, 35);
+    background-color: #FFC307;
 }
 .navbar-inverse {
     padding-top: 15px;
     padding-bottom: 2px;
-	background-color: rgb(255, 196, 35);
+	background-color: #FFC307;
+    border-bottom: 1px solid #F7E7B3;
 }
 .navbar-brand {
-    color: #000000 !important;
+    color: #494949 !important;
     padding: 7px 15px 7px 15px; !important;
-    font-size: 2.5em;
-    font-weight: 300 !important;
+    font-size: 2.7em;
+    font-family: raleway-light, sans-serif;
+}
+.profes-word {
+    font-family: texgyreadventorregular,sans-serif;
+    font-weight: 400;
+    color: #000;
+    margin-left: -6px;
+}
+.mil-word-2 {
+    color: #fff !important;
+    font-family: raleway-light, sans-serif;
+}
+.profes-word-2 {
+    font-family: texgyreadventorregular,sans-serif;
+    font-weight: 400;
+    color: #D6D6D6 !important;
+    margin-left: -9px;
 }
 .navbar-brand a:hover {
-    color: #7c7c7c !important;
+    color: #494949 !important;
 }
 .nav li a {
     /*border-right: solid 1px #333;*/
     padding: 7px 15px 7px 15px; !important;
     color:#000000 !important;
+    font-family: raleway-semibold, sans-serif;
+    font-size: 16px !important;
+    margin-top: 3px;
 }
 .nav li a:hover {
-    color: #7c7c7c !important;
+    color: #494949 !important;
 }
 .starter-template {
   padding: 40px 15px;
@@ -206,10 +226,10 @@ a, a:link, a:hover, a:active, a:visited {
     color: #000000;
 }
 .left-separator {
-    border-left: solid 1px #333;
+    border-left: solid 1px #555555;
 }
 .right-separator {
-    border-right: solid 1px #333;
+    border-right: solid 1px #555555;
 }
 #loginbox a:hover {
 	color: #7c7c7c;
@@ -245,12 +265,13 @@ a, a:link, a:hover, a:active, a:visited {
     top: 0;
     left: 0;
     position: relative;
+    font-family: raleway-semibold, sans-serif;
 }
 .footer-right-separator {
-    border-right: solid 1px rgb(255, 169, 17);
+    border-right: solid 1px #E79500;
 }
 .footer-left-separator {
-    border-left: solid 1px rgb(255, 169, 17);
+    border-left: solid 1px #E79500;
 }
 .footer-glyphicon {
     color: #0480be;
@@ -287,7 +308,9 @@ a, a:link, a:hover, a:active, a:visited {
     color: #ffffff;
 }
 #footer {
-    background-color: rgb(255, 169, 17);
+    background-color: #FFC307;
+    color: #000;
+    font-family: raleway-semibold, sans-serif;
     padding: 15px 0 15px 0;
     height: auto;
     width: 100%;
@@ -297,13 +320,19 @@ a, a:link, a:hover, a:active, a:visited {
     position: relative;
 }
 #footer a {
-
+    color: #000;
 }
-.footer-links, .footer-links a {
-    color: #000000;
+.netw-link, .enosis-link {
+    display: inline;
 }
-.footer-links a:hover {
-    color: #0480be;
+.enosis-link a:hover {
+    color: #FF0000 !important;
+}
+.footer-links {
+    font-size: 0.9em;
+}
+.footer-links a:hover, .netw-link a:hover {
+    color: #287AF9 !important;
 }
 .img-recientes {
     max-width: 95%;
@@ -337,11 +366,11 @@ a, a:link, a:hover, a:active, a:visited {
     vertical-align: middle;
 }
 .recent-title {
-    color:rgb(255, 169, 17);
+    color:#E79500;
     margin-bottom: 10px;
 }
 .contact-form-label {
-    color:rgb(255, 169, 17);
+    color:#E79500;
     margin-top:5px;
 }
 .contact-form-submit-btn {
@@ -373,26 +402,30 @@ a, a:link, a:hover, a:active, a:visited {
     margin-top: 10px;
 	/*font-size: 0.9em;*/
 	/*font-weight: 300;*/
+    font-family: raleway-semibold, sans-serif;
     line-height: 200%;
-	color: rgb(255, 196, 35);
+	color: #E79500;
     text-align: center;
 }
 #find-responsive {
     margin-top: 20px;
     /*line-height: 200%;*/
     /*font-size: 0.1em;*/
-    color: rgb(255, 196, 35);
+    color: #E79500;
     text-align: center;
+    font-family: raleway-semibold, sans-serif;
 }
 .home-actions {
 	margin-top: 15px;
 }
 .main-home-label {
-    color:white;
-    font-size:1.2em;
+    color: #fff;
+    font-family: raleway-semibold, sans-serif;
+    font-size:1.4em;
 }
 .btn-home-search {
     margin: 0 10px 5px 10px;
+    font-family: raleway-semibold, sans-serif;
 }
 .chr {
     width: 100%;
@@ -408,6 +441,7 @@ a, a:link, a:hover, a:active, a:visited {
 
 }
 .central-text {
+    font-family: raleway-semibold, sans-serif;
     background-color: #f4f4f4;
     padding:0 10px;
 }
@@ -439,6 +473,10 @@ a, a:link, a:hover, a:active, a:visited {
     margin-top: auto;
     margin-bottom: auto;
     vertical-align: middle;
+}
+.best-name-container a, .best-name-container a:active, .best-name-container a:hover {
+    color: #000;
+    text-decoration: none;
 }
 /************************ END HOME ************************/
 
@@ -763,6 +801,16 @@ body.loading .modal-loading { /*modal element will be visible */
 /* WHO */
 .who-logo {
     font-size: 4.5em;
+    color: #000;
+}
+.who-logo-mil {
+    color: #494949;
+    font-family: raleway-light, sans-serif;
+}
+.who-logo-profes {
+    font-family: texgyreadventorregular,sans-serif;
+    font-weight: 400;
+    margin-left: -12px;
 }
 /*END WHO*/
 

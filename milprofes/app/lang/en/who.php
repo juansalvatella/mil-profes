@@ -9,6 +9,6 @@ return array(
     'p2' => 'Entonces nos preguntamos: "¿Qué queremos transmitir a los demás? Alegría, confianza, motivación, pensar diferente... y con estos valores en mente estudiamos todas las ideas que teníamos para dar con aquella que realmente representa lo que somos. La trabajamos, la pulimos, la mejoramos... y así apareció finalmente nuestro primer proyecto: milProfes, el buscador de profesores particulares y academias.',
     'p3' => 'No importa si quieres estudiar para la escuela o universidad, bailar, pintar, hacer deporte... ¡Creemos que todas las materias son importantes y apasionantes! Por eso, milProfes fue concebido como una herramienta para facilitar que un alumno pueda aprender de un profesor o centro aquello que le apasiona.',
 
-    'logo' => '<span style="color:#777777;">mil</span><span style="font-family:texgyreadventorregular,sans-serif;">PROFES.</span>',
+    'logo' => '<span class="who-logo-mil">mil</span> <span class="who-logo-profes">PROFES.</span>',
 
 );

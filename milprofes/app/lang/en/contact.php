@@ -1,4 +1,5 @@
 <?php
+
 return array(
 
     'contact-us' => 'Contáctanos',

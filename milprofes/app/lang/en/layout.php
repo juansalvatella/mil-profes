@@ -3,7 +3,7 @@
 return [
 
     //Header
-    'logo' => '<span style="color:#777777;">mil</span><span style="font-family:texgyreadventorregular,sans-serif;">PROFES.</span>',
+    'logo' => 'mil <span class="profes-word">PROFES.</span>',
 
     'who' => 'Quiénes somos',
 	'faq' => 'FAQs',
@@ -13,7 +13,7 @@ return [
     'register' => 'Registrarse',
 
     //Footer
-    'contact_logo' => '<span style="color:#ffffff;">mil</span><span style="color:#e2e2e2;font-family:texgyreadventorregular,sans-serif;">PROFES.</span>',
+    'contact_logo' => '<span class="mil-word-2">mil</span> <span class="profes-word-2">PROFES.</span>',
     'phone_title' => 'Teléfono: ',
     'phone' => '+34 655 56 25',
     'email_title' => 'E-Mail: ',
@@ -38,7 +38,7 @@ return [
     'message_placeholder' => 'Tu mensaje',
 
     'copyright' => 'Copyrights 2015 &copy; All rights Reserved.',
-    'authorship' => '<a href="http://www.network30.com/" target="_blank">Network3.0</a> & <a href="http://e-nosis.com/" target="_blank">e-nosis</a>',
+    'authorship' => '<div class="netw-link"><a href="http://www.network30.com/" target="_blank">Network3.0</a></div> & <div class="enosis-link"><a href="http://e-nosis.com/" target="_blank">e-nosis</a></div>',
 
     'user_terms' => 'Términos de uso',
     'privacy' => 'Privacidad',
