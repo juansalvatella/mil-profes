@@ -133,13 +133,13 @@
                                 <fieldset>
                                     <div class="form-group">
                                         <label for="email">@lang('layout.login-username')</label>
-                                        <input class="form-control" tabindex="1" placeholder="{{{ @trans('layout.login-username') }}}" type="text" name="login-email" id="email" value="{{{ Input::old('email') }}}" required="required">
+                                        <input class="form-control" tabindex="1" placeholder="{{{ @trans('layout.login-username') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required="required">
                                     </div>
                                     <div class="form-group">
                                         <label for="password">
                                             @lang('layout.login-password')
                                         </label>
-                                        <input class="form-control" tabindex="2" placeholder="{{{ @trans('layout.login-password') }}}" type="password" name="login-password" id="password" required="required">
+                                        <input class="form-control" tabindex="2" placeholder="{{{ @trans('layout.login-password') }}}" type="password" name="password" id="password" required="required">
                                         <p class="help-block">
                                             <a href="{{{ URL::to('/users/forgot_password') }}}">@lang('layout.login-forgot-passwd')</a>
                                         </p>
@@ -257,21 +257,21 @@
                                         </div>
                                     </div>
 
-                                    {{--@if (Session::get('error'))--}}
-                                        {{--<div class="alert alert-error alert-danger">--}}
-                                            {{--@if (is_array(Session::get('error')))--}}
-                                                {{--{{ head(Session::get('error')) }}--}}
-                                            {{--@endif--}}
-                                        {{--</div>--}}
-                                    {{--@endif--}}
-                                    {{--@if (Session::get('failure'))--}}
-                                        {{--<div class="alert alert-error alert-danger">--}}
-                                            {{--{{ Session::get('failure') }}--}}
-                                        {{--</div>--}}
-                                    {{--@endif--}}
-                                    {{--@if (Session::get('notice'))--}}
-                                        {{--<div class="alert">{{ Session::get('notice') }}</div>--}}
-                                    {{--@endif--}}
+                                    @if (Session::get('error'))
+                                        <div class="alert alert-error alert-danger">
+                                            @if (is_array(Session::get('error')))
+                                                {{ head(Session::get('error')) }}
+                                            @endif
+                                        </div>
+                                    @endif
+                                    @if (Session::get('failure'))
+                                        <div class="alert alert-error alert-danger">
+                                            {{ Session::get('failure') }}
+                                        </div>
+                                    @endif
+                                    @if (Session::get('notice'))
+                                        <div class="alert">{{ Session::get('notice') }}</div>
+                                    @endif
 
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
