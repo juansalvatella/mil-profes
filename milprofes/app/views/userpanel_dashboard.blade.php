@@ -3,12 +3,6 @@
 
 <div class="container-fluid top-padding-25 bottom-padding-150 background-lamp">
 
-    @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-    @elseif(Session::has('failure'))
-        <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
-    @endif
-
     <div class="profile-header">
         <div class="container">
             <div class="row">
@@ -33,7 +27,13 @@
         </div>
     </div>
 
-
+    <div class="container">
+        @if(Session::has('success'))
+            <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
+        @elseif(Session::has('failure'))
+            <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
+        @endif
+    </div>
 
 </div>
 <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">

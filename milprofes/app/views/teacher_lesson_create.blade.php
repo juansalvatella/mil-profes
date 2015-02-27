@@ -1,6 +1,8 @@
 @extends('layout')
 @section('content')
 
+    <div class="container">
+
     <div class="page-header">
         <h1>Nueva clase</h1>
     </div>
@@ -52,4 +54,5 @@
         </div>
     </form>
 
+    </div>
 @stop
