@@ -40,14 +40,16 @@ class UsersController extends Controller
             }
 
             return Redirect::to('/')
-                ->with('notice', @trans('messages.user_just_registered'));
+                ->with('log-notice', @trans('messages.user_just_registered'))
+                ->with('show_login_modal',true);
         } else {
             $error = $user->errors()->all(':message');
 
             //return Redirect::action('UsersController@create')
             return Redirect::to('/')
                 ->withInput(Input::except('password'))
-                ->with('error', $error);
+                ->with('reg-error', $error)
+                ->with('show_register_modal', true);
         }
 
     }
@@ -57,10 +59,10 @@ class UsersController extends Controller
     public function login()
     {
         if (Confide::user()) {
-            return Redirect::to('/');
+            return Redirect::to('/')->with('show_login_modal',true);
         } else {
 //            return View::make(Config::get('confide::login_form'));
-            return Redirect::to('/');
+            return Redirect::to('/')->with('show_login_modal',true);
         }
     }
 
@@ -85,7 +87,8 @@ class UsersController extends Controller
             //return Redirect::action('UsersController@login')
             return Redirect::to('/')
                 ->withInput(Input::except('password'))
-                ->with('error', $err_msg);
+                ->with('log-error', $err_msg)
+                ->with('show_login_modal',true);
         }
     }
 
@@ -98,12 +101,14 @@ class UsersController extends Controller
             $notice_msg = @trans('messages.positive_confirmation');
             //return Redirect::action('UsersController@login')
             return Redirect::to('/')
-                ->with('notice', $notice_msg);
+                ->with('log-notice', $notice_msg)
+                ->with('show_login_modal',true);
         } else {
             $error_msg = @trans('messages.wrong_confirmation');
             //return Redirect::action('UsersController@login')
             return Redirect::to('/')
-                ->with('error', $error_msg);
+                ->with('log-error', $error_msg)
+                ->with('show_login_modal',true);
         }
     }
 
@@ -122,12 +127,14 @@ class UsersController extends Controller
             $notice_msg = @trans('messages.alerts.password_forgot');
             //return Redirect::action('UsersController@login')
             return Redirect::to('/')
-                ->with('notice', $notice_msg);
+                ->with('log-notice', $notice_msg)
+                ->with('show_login_modal',true);
         } else {
             $error_msg = @trans('messages.alerts.wrong_password_forgot');
             return Redirect::action('UsersController@doForgotPassword')
                 ->withInput()
-                ->with('error', $error_msg);
+                ->with('log-error', $error_msg)
+                ->with('show_login_modal',true);
         }
     }
 
@@ -156,12 +163,14 @@ class UsersController extends Controller
             $notice_msg = @trans('messages.alerts.password_reset');
             //return Redirect::action('UsersController@login')
             return Redirect::to('/')
-                ->with('notice', $notice_msg);
+                ->with('log-notice', $notice_msg)
+                ->with('show_login_modal',true);
         } else {
             $error_msg = @trans('messages.alerts.wrong_password_reset');
             return Redirect::action('UsersController@resetPassword', array('token'=>$input['token']))
                 ->withInput()
-                ->with('error', $error_msg);
+                ->with('log-error', $error_msg)
+                ->with('show_login_modal',true);
         }
     }
 
@@ -226,12 +235,12 @@ class UsersController extends Controller
                 //Is the input valid? new_password confirmed and meets requirements
                 if ($validator->fails()) {
                     Session::flash('validationErrors', $validator->messages());
-                    return Redirect::route('userpanel')->withInput()->with('failure','No fue posible cambiar la contraseña. Asegúrate de introducir el viejo password y que el nuevo y su confirmación coinciden');
+                    return Redirect::route('userpanel')->withInput()->with('failure','No fue posible cambiar la contraseña. Asegúrate de introducir una nueva contraseña adecuada.');
                 }
 
                 //Is the old password correct?
                 if(!Hash::check(Input::get('old_password'), $user->password)){
-                    return Redirect::route('userpanel')->withInput()->with('failure','El viejo password introducido no es correcto.');
+                    return Redirect::route('userpanel')->withInput()->with('failure','La contraseña actual introducida no es correcta.');
                 }
 
                 //Set new password
@@ -242,14 +251,18 @@ class UsersController extends Controller
                 $user->save();
                 Confide::logout();
 
-                return Redirect::to('/')->with('success','Tu contraseña se ha actualizado con éxito. Por favor, vuelve a iniciar sesión');
+                return Redirect::to('/')
+                    ->with('log-success','Tu contraseña se ha actualizado con éxito. Por favor, vuelve a iniciar sesión')
+                    ->with('show_login_modal',true);
             }
             if($user->save())
                 return Redirect::route('userpanel')->with('success', 'Tus datos se han actualizado con éxito');
             else
                 return Redirect::route('userpanel')->withInput()->with('failure', 'Error al actualizar tus datos');
         } else {
-            return Redirect::route('/')->with('failure', 'Al parecer tu sesión ha caducado, por favor, vuelve a iniciar sesión');
+            return Redirect::route('/')
+                ->with('log-notice', 'Al parecer tu sesión ha caducado, por favor, vuelve a iniciar sesión')
+                ->with('show_login_modal',true);
         }
     }
 
@@ -272,7 +285,9 @@ class UsersController extends Controller
                 return Redirect::route('userpanel')->with('success', 'Ahora ya eres profesor! Publica tus clases!');
             }
         } else {
-            return Redirect::route('/')->with('failure', 'Al parece tu sesión ha caducado. Vuelve a entrar.');
+            return Redirect::route('/')
+                ->with('log-notice', 'Al parece tu sesión ha caducado. Vuelve a entrar.')
+                ->with('show_login_modal',true);
         }
     }
 

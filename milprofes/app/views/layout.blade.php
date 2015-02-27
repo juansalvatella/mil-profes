@@ -67,7 +67,6 @@
 </head>
 
 <body>
-
     <!-- HEADER -->
 
     @if(Session::has('new-session') && Session::get('new-session')==true)
@@ -131,6 +130,18 @@
                             <form role="form" method="POST" action="{{{ URL::to('/users/login') }}}" accept-charset="UTF-8" id="login-form">
                                 <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                                 <fieldset>
+
+                                    @if (Session::get('log-success'))
+                                        <div class="alert alert-success">{{{ Session::get('log-success') }}}</div>
+                                    @endif
+                                    @if (Session::get('log-error'))
+                                        <div class="alert alert-error alert-danger">{{{ Session::get('log-error') }}}</div>
+                                    @endif
+                                    @if (Session::get('log-notice'))
+                                        <div class="alert">{{{ Session::get('log-notice') }}}</div>
+                                    @endif
+
+
                                     <div class="form-group">
                                         <label for="email">@lang('layout.login-username')</label>
                                         <input class="form-control" tabindex="1" placeholder="{{{ @trans('layout.login-username') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required="required">
@@ -149,13 +160,7 @@
                                             <input tabindex="4" type="checkbox" name="remember" id="remember" value="1"><small>@lang('layout.login-remind-me')</small>
                                         </label>
                                     </div>
-                                    @if (Session::get('error'))
-                                        <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
-                                    @endif
 
-                                    @if (Session::get('notice'))
-                                        <div class="alert">{{{ Session::get('notice') }}}</div>
-                                    @endif
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
                                             <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.login-send')</button>
@@ -198,17 +203,33 @@
                                 <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                                 <fieldset>
 
+                                @if (Session::get('reg-error'))
+                                    <div class="alert alert-error alert-danger">
+                                        @if (is_array(Session::get('reg-error')))
+                                            {{ head(Session::get('reg-error')) }}
+                                        @endif
+                                    </div>
+                                @endif
+                                @if (Session::get('reg-failure'))
+                                    <div class="alert alert-error alert-danger">
+                                        {{ Session::get('reg-failure') }}
+                                    </div>
+                                @endif
+                                @if (Session::get('reg-notice'))
+                                    <div class="alert">{{ Session::get('reg-notice') }}</div>
+                                @endif
+
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label for="name">@lang('layout.register-realname')</label>
-                                            <input class="form-control" placeholder="{{{@trans('layout.register-realname-ph')}}}" maxlength="20" type="text" name="name" id="name" value="" required="required">
+                                            <input class="form-control" placeholder="{{{@trans('layout.register-realname-ph')}}}" maxlength="20" type="text" name="name" id="name" value="{{{ Input::old('name') }}}" required="required">
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label for="lastname">@lang('layout.register-reallastname')</label>
-                                            <input class="form-control" placeholder="{{{@trans('layout.register-reallastname-ph')}}}" maxlength="40" type="text" name="lastname" id="lastname" value="" required="required">
+                                            <input class="form-control" placeholder="{{{@trans('layout.register-reallastname-ph')}}}" maxlength="40" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}">
                                         </div>
                                     </div>
                                 </div>
@@ -216,7 +237,7 @@
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <label for="address">@lang('layout.register-address')</label>
-                                            <input class="form-control" placeholder="{{{@trans('layout.register-address-ph')}}}" maxlength="150" type="text" name="address" id="address" value="" required="required">
+                                            <input class="form-control" placeholder="{{{@trans('layout.register-address-ph')}}}" maxlength="150" type="text" name="address" id="address" value="{{{ Input::old('address') }}}" required="required">
                                         </div>
                                     </div>
                                 </div>
@@ -224,7 +245,7 @@
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label for="phone">@lang('layout.register-phone')</label>
-                                                <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" pattern="^([0-9]){7,}$" maxlength="12" name="phone" id="phone" value="" required="required">
+                                                <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" pattern="^([0-9]){3,}$" maxlength="12" name="phone" id="phone" value="{{{ Input::old('phone') }}}">
                                             </div>
                                         </div>
                                     </div>
@@ -256,22 +277,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    @if (Session::get('error'))
-                                        <div class="alert alert-error alert-danger">
-                                            @if (is_array(Session::get('error')))
-                                                {{ head(Session::get('error')) }}
-                                            @endif
-                                        </div>
-                                    @endif
-                                    @if (Session::get('failure'))
-                                        <div class="alert alert-error alert-danger">
-                                            {{ Session::get('failure') }}
-                                        </div>
-                                    @endif
-                                    @if (Session::get('notice'))
-                                        <div class="alert">{{ Session::get('notice') }}</div>
-                                    @endif
 
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
@@ -431,5 +436,21 @@
             $("img.lazy").lazy();
         });
     </script>
+
+    @if(Session::get('show_login_modal'))
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#modal-login').modal('show');
+            });
+        </script>
+    @endif
+    @if(Session::get('show_register_modal'))
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#modal-register').modal('show');
+            });
+        </script>
+    @endif
+
   </body>
 </html>

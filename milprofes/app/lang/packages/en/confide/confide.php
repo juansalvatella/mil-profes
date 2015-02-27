@@ -32,7 +32,7 @@ return array(
         'account_created'        => 'Su cuenta ha sido creada satisfactoriamente.',
         'instructions_sent'      => 'Por favor, compruebe su e-mail para obtener las instrucciones sobre como confirmar su cuenta.',
         'too_many_attempts'      => 'Demasiados intentos. Inténtelo de nuevo en unos minutos.',
-        'wrong_credentials'      => 'Usuario, e-mail o contraseña incorrectos.',
+        'wrong_credentials'      => 'ID o contraseña incorrectos.',
         'not_confirmed'          => 'Su cuenta puede no estar confirmada. Compruebe su e-mail para acceder al enlace de activación.',
         'confirmation'           => '¡Su cuenta ha sido confirmada! Puede acceder ahora.',
         'wrong_confirmation'     => 'Código de confirmación incorrecto.',
@@ -41,7 +41,7 @@ return array(
         'password_reset'         => 'Su contraseña ha sido cambiada satisfactoriamente.',
         'wrong_password_reset'   => 'Contraseña incorrecta. Inténtelo de nuevo.',
         'wrong_token'            => 'La cadena de reseteo de contraseña no es válida.',
-        'duplicated_credentials' => 'Los credenciales introducidos están siendo actualmente usados. Inténtelo con información diferente.',
+        'duplicated_credentials' => 'El nombre de usuario o e-mail introducidos están actualmente en uso. Inténtalo con credenciales distintas.',
     ),
 
     'email' => array(

@@ -106,23 +106,23 @@
                     </div>
 
                     <div class="col-xs-12 form-group">
-                        <label class="col-xs-2 control-label" for="old_password">Viejo password</label>
+                        <label class="col-xs-2 control-label" for="old_password">Contraseña actual</label>
                         <div class="col-xs-10">
-                            <input class="form-control" placeholder="Viejo password" type="password" name="old_password" id="old_password">
+                            <input class="form-control" placeholder="Contraseña actual" type="password" name="old_password" id="old_password">
                         </div>
                     </div>
 
                     <div class="col-xs-12 form-group">
-                        <label class="col-xs-2 control-label" for="new_password">Nuevo password</label>
+                        <label class="col-xs-2 control-label" for="new_password">Nueva contraseña</label>
                         <div class="col-xs-10">
-                        <input class="form-control" placeholder="Nuevo password" type="password" name="new_password" id="new_password">
+                        <input class="form-control" placeholder="Nueva contraseña" type="password" name="new_password" id="new_password">
                         </div>
                     </div>
 
                     <div class="col-xs-12 form-group">
-                        <label class="col-xs-2 control-label" for="new_password_confirmation">Confirmar nuevo password</label>
+                        <label class="col-xs-2 control-label" for="new_password_confirmation">Confirmar nueva contraseña</label>
                         <div class="col-xs-10">
-                        <input class="form-control" placeholder="Confirmar nuevo password" type="password" name="new_password_confirmation" id="new_password_confirmation">
+                        <input class="form-control" placeholder="Repite la contraseña" type="password" name="new_password_confirmation" id="new_password_confirmation">
                         </div>
                     </div>
 
