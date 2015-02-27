@@ -5,6 +5,8 @@ return array(
     'subtitle' => 'Academia',
     'rating' => 'Valoración',
 
+    'per_unit' => 'por curso',
+
     'our_school' => 'Nuestra academia',
     'lessons' => 'Clases que ofrecemos',
     'lesson_of' => 'Clase',

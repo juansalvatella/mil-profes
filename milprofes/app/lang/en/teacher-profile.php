@@ -5,6 +5,8 @@ return array(
     'subtitle' => 'Profesor',
     'rating' => 'Valoración',
 
+    'per unit' => 'por hora',
+
     'about_me' => 'Sobre mí',
     'lessons' => 'Clases que ofrecezco',
     'lesson_of' => 'Clase',

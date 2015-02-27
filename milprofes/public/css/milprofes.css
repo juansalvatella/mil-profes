@@ -673,7 +673,7 @@ body.loading .modal-loading { /*modal element will be visible */
     font-size: 40px;
 }
 .per-unit {
-    margin-top: -14px;
+    margin-top: -8px;
     font-family: raleway-semibold, sans-serif;
     font-size: 22px;
 }

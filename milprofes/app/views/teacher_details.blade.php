@@ -136,17 +136,6 @@
                                 @endif
                             </div>
 
-                            {{--<div class="row text-center">--}}
-                                {{--@if($result->price=='0')--}}
-                                    {{--<div class="row no-price-provided">Contáctame<br>para saber<br>el precio</div>--}}
-                                {{--@else--}}
-                                    {{--<div class="row price">--}}
-                                        {{--{{{ $result->price }}} €--}}
-                                    {{--</div>--}}
-                                    {{--<div class="row per-unit">por Hora</div>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-
                         </div>
 
                     </div>

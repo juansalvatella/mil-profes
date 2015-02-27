@@ -128,7 +128,7 @@
                                                 <div class="row price">
                                                     {{{ $result->price }}} €
                                                 </div>
-                                                <div class="row per-unit">por Curso</div>
+                                                <div class="row per-unit">@lang('school-profile.per_unit')</div>
                                             @endif
                                         </div>
 

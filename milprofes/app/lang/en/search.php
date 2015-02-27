@@ -39,6 +39,9 @@ return array(
 	'profesor' => 'clase|clases',
 	'academia' => 'clase de academia|clases de academia',
 
+    'per_hour' => 'por hora',
+    'per_course' => 'por curso',
+
     'of_subject_escolar' => 'DE NIVEL ESCOLAR',
     'of_subject_cfp' => 'DE CFP',
     'of_subject_universitario' => 'DE NIVEL UNIVERSITARIO',

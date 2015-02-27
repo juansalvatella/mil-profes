@@ -17,11 +17,11 @@ return [
     'phone_title' => 'Teléfono: ',
     'phone' => '+34 655 56 25',
     'email_title' => 'E-Mail: ',
-    'email' => 'cuentanos@milprofes.es',
+    'email' => 'info@milprofes.com',
     'address_title' => '',
     'address' => 'España | Cataluña | Barcelona',
 
-    'follow_us' => 'Síguenos a: ',
+    'follow_us' => 'Síguenos en: ',
     'recent_results' => 'Recientes',
     'schools' => 'Academias',
     'teachers' => 'Profes.',
@@ -38,7 +38,7 @@ return [
     'message_placeholder' => 'Tu mensaje',
 
     'copyright' => 'Copyrights 2015 &copy; All rights Reserved.',
-    'authorship' => '<a href="http://e-nosis.com/" target="_blank">e-nosis</a> & <a href="http://www.softabit.com/" target="_blank">Network3.0</a>',
+    'authorship' => '<a href="http://www.network30.com/" target="_blank">Network3.0</a> & <a href="http://e-nosis.com/" target="_blank">e-nosis</a>',
 
     'user_terms' => 'Términos de uso',
     'privacy' => 'Privacidad',
@@ -70,6 +70,6 @@ return [
     'register-confirm-password-ph' => 'Repite tu contraseña',
     'register-register' => 'Registrarme',
     'register-cancel' => 'Cancelar',
-    'register_user-terms' => 'Ver Términos de uso',
+    'register_user-terms' => 'Ver términos de uso',
 
 ];

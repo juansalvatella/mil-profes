@@ -423,9 +423,9 @@
                                     {{{ $result->price }}} €
                                 </div>
                                 @if($prof_o_acad=='profesor')
-                                    <div class="row per-unit">por Hora</div>
+                                    <div class="row per-unit">@lang('search.per_hour')</div>
                                 @else
-                                    <div class="row per-unit">por Curso</div>
+                                    <div class="row per-unit">@lang('search.per_course')</div>
                                 @endif
                             @endif
                         </div>
