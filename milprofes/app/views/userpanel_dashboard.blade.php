@@ -85,7 +85,7 @@
                     </div>
 
                     <div class="col-xs-12 form-group">
-                        <label class="col-xs-2 control-label" for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
+                        <label class="col-xs-2 control-label" for="email">{{{ @trans('messages.e_mail') }}}</label>
                         <div class="col-xs-10">
                             <input class="form-control" placeholder="Tu e-mail" type="text" name="email" id="email" value="{{{ $user->email }}}">
                         </div>

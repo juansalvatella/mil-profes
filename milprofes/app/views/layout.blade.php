@@ -128,18 +128,18 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 top-buffer-15">
-                            <form role="form" method="POST" action="{{{ URL::to('/users/login') }}}" accept-charset="UTF-8">
+                            <form role="form" method="POST" action="{{{ URL::to('/users/login') }}}" accept-charset="UTF-8" id="login-form">
                                 <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                                 <fieldset>
                                     <div class="form-group">
                                         <label for="email">@lang('layout.login-username')</label>
-                                        <input class="form-control" tabindex="1" placeholder="{{{ @trans('layout.login-username') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+                                        <input class="form-control" tabindex="1" placeholder="{{{ @trans('layout.login-username') }}}" type="text" name="login-email" id="email" value="{{{ Input::old('email') }}}" required="required">
                                     </div>
                                     <div class="form-group">
                                         <label for="password">
                                             @lang('layout.login-password')
                                         </label>
-                                        <input class="form-control" tabindex="2" placeholder="{{{ @trans('layout.login-password') }}}" type="password" name="password" id="password">
+                                        <input class="form-control" tabindex="2" placeholder="{{{ @trans('layout.login-password') }}}" type="password" name="login-password" id="password" required="required">
                                         <p class="help-block">
                                             <a href="{{{ URL::to('/users/forgot_password') }}}">@lang('layout.login-forgot-passwd')</a>
                                         </p>
@@ -149,13 +149,13 @@
                                             <input tabindex="4" type="checkbox" name="remember" id="remember" value="1"><small>@lang('layout.login-remind-me')</small>
                                         </label>
                                     </div>
-                                    @if (Session::get('error'))
-                                        <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
-                                    @endif
+                                    {{--@if (Session::get('error'))--}}
+                                        {{--<div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>--}}
+                                    {{--@endif--}}
 
-                                    @if (Session::get('notice'))
-                                        <div class="alert">{{{ Session::get('notice') }}}</div>
-                                    @endif
+                                    {{--@if (Session::get('notice'))--}}
+                                        {{--<div class="alert">{{{ Session::get('notice') }}}</div>--}}
+                                    {{--@endif--}}
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
                                             <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.login-send')</button>
@@ -164,6 +164,11 @@
                                     </div>
                                 </fieldset>
                             </form>
+                            <script type="text/javascript">
+                                $(document).ready(function(){
+                                    $("#login-form").validator();
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -189,7 +194,7 @@
                     <div class="row">
                         <div class="col-xs-12 top-buffer-15">
 
-                            <form method="POST" action="{{{ URL::to('users') }}}" accept-charset="UTF-8">
+                            <form method="POST" action="{{{ URL::to('users') }}}" accept-charset="UTF-8" id="register-form">
                                 <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                                 <fieldset>
 
@@ -197,13 +202,13 @@
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label for="name">@lang('layout.register-realname')</label>
-                                            <input class="form-control" placeholder="{{{@trans('layout.register-realname-ph')}}}" type="text" name="name" id="name" value="">
+                                            <input class="form-control" placeholder="{{{@trans('layout.register-realname-ph')}}}" maxlength="20" type="text" name="name" id="name" value="" required="required">
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label for="lastname">@lang('layout.register-reallastname')</label>
-                                            <input class="form-control" placeholder="{{{@trans('layout.register-reallastname-ph')}}}" type="text" name="lastname" id="lastname" value="">
+                                            <input class="form-control" placeholder="{{{@trans('layout.register-reallastname-ph')}}}" maxlength="40" type="text" name="lastname" id="lastname" value="" required="required">
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +216,7 @@
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <label for="address">@lang('layout.register-address')</label>
-                                            <input class="form-control" placeholder="{{{@trans('layout.register-address-ph')}}}" type="text" name="address" id="address" value="">
+                                            <input class="form-control" placeholder="{{{@trans('layout.register-address-ph')}}}" maxlength="150" type="text" name="address" id="address" value="" required="required">
                                         </div>
                                     </div>
                                 </div>
@@ -219,7 +224,7 @@
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label for="phone">@lang('layout.register-phone')</label>
-                                                <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" name="phone" id="phone" value="">
+                                                <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" pattern="^([0-9]){7,}$" maxlength="12" name="phone" id="phone" value="" required="required">
                                             </div>
                                         </div>
                                     </div>
@@ -227,13 +232,13 @@
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label for="username">@lang('layout.register-username')</label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" type="text" name="username" id="username" value="{{{ Input::old('username') }}}">
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" pattern="^([_A-z0-9]){3,}$" maxlength="20" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required="required">
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label for="email">@lang('layout.register-email') <small>@lang('layout.register-required-confirmation')</small></label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-email') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-email') }}}" type="email" name="email" id="email" value="{{{ Input::old('email') }}}" required="required">
                                             </div>
                                         </div>
                                     </div>
@@ -241,13 +246,13 @@
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label for="password">@lang('layout.register-password')</label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-password') }}}" type="password" name="password" id="password">
+                                                <input class="form-control register-password" placeholder="{{{ @trans('layout.register-password') }}}" type="password" name="password" id="password" required="required">
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label for="password_confirmation">@lang('layout.register-confirm-password')</label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-confirm-password-ph') }}}" type="password" name="password_confirmation" id="password_confirmation">
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-confirm-password-ph') }}}" type="password" data-match=".register-password" name="password_confirmation" id="password_confirmation" required="required">
                                             </div>
                                         </div>
                                     </div>
@@ -277,6 +282,11 @@
 
                                 </fieldset>
                             </form>
+                            <script type="text/javascript">
+                                $(document).ready(function(){
+                                    $("#register-form").validator();
+                                });
+                            </script>
 
                         </div>
                     </div>
@@ -359,22 +369,37 @@
                             </div>
                         </div>
                         <div class="row">
-                            {{ Form::open(array('action' => 'ContactController@getContactForm')) }}
+                            {{ Form::open(array('action' => 'ContactController@getContactForm','id'=>'mini-contact')) }}
                             <div class="col-xs-6 text-left">
-                                {{ Form::label('contact_name', @trans('layout.contact_form_name'), array('class'=>'contact-form-label')) }}
-                                {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'))) }}
-                                {{ Form::label('contact_email', @trans('layout.contact_form_email'), array('class'=>'contact-form-label')) }}
-                                {{ Form::text('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.mail_placeholder'))) }}
-                                {{ Form::label('contact_subject', @trans('layout.contact_form_subject'), array('class'=>'contact-form-label')) }}
-                                {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.subject_placeholder'))) }}
+                                    {{ Form::label('contact_name', @trans('layout.contact_form_name'), array('class'=>'contact-form-label control-label')) }}
+                                {{--<div class="form-group">--}}
+                                    {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'),'required')) }}
+                                    {{--<span class="help-block with-errors"></div><div class="help-block with-errors"></span>--}}
+                                {{--</div>--}}
+                                    {{ Form::label('contact_email', @trans('layout.contact_form_email'), array('class'=>'contact-form-label control-label')) }}
+                                {{--<div class="form-group">--}}
+                                    {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.mail_placeholder'),'required')) }}
+                                    {{--<span class="help-block with-errors"></div><div class="help-block with-errors"></span>--}}
+                                {{--</div>--}}
+                                    {{ Form::label('contact_subject', @trans('layout.contact_form_subject'), array('class'=>'contact-form-label control-label')) }}
+                                {{--<div class="form-group">--}}
+                                    {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.subject_placeholder'),'required')) }}
+                                    {{--<span class="help-block with-errors"></div><div class="help-block with-errors"></span>--}}
+                                {{--</div>--}}
                             </div>
                             <div class="col-xs-6 text-left">
-                                {{ Form::label('contact_message', @trans('layout.contact_form_message'), array('class'=>'contact-form-label')) }}
-                                {{ Form::textarea('contact_message', '', array('rows' => 4, 'class'=>'form-control input-sm','placeholder'=>@trans('layout.message_placeholder'))) }}
+                                {{ Form::label('contact_message', @trans('layout.contact_form_message'), array('class'=>'contact-form-label control-label')) }}
+                                {{ Form::textarea('contact_message', '', array('rows' => 4, 'class'=>'form-control input-sm','placeholder'=>@trans('layout.message_placeholder'),'required')) }}
+                                {{--<span class="help-block with-errors"></div><div class="help-block with-errors"></span>--}}
                                 {{ Form::submit('Enviar', array('class' => 'btn btn-primary contact-form-submit-btn')) }}
                             </div>
                             {{ Form::close(); }}
                         </div>
+                        {{--<script type="text/javascript">--}}
+                            {{--$(document).ready(function(){--}}
+                                {{--$("#mini-contact").validator();--}}
+                            {{--});--}}
+                        {{--</script>--}}
                     </div>
                 </div>
 
@@ -397,8 +422,9 @@
 
     <!-- Bootstrap related JS -->
     {{ HTML::script('js/bootstrap.min.js') }}
-    {{ HTML::script('js/bootstrap-slider.js') }}
+    {{--{{ HTML::script('js/bootstrap-slider.js') }}--}}
     {{ HTML::script('js/bootstrap-formhelpers.min.js') }}
+    {{ HTML::script('js/validator.js') }}
 
     <script type="text/javascript">
         $(document).ready(function() {

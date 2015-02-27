@@ -15,11 +15,11 @@
                   <div class="alert alert-error alert-danger" role="alert">{{ Session::get('failure') }}</div>
               @endif
               @if (Session::get('error'))
-                  <div class="alert alert-error alert-danger">
-                      @if (is_array(Session::get('error')))
-                          {{ head(Session::get('error')) }}
-                      @endif
-                  </div>
+                  @if (is_array(Session::get('error')))
+                      <div class="alert alert-error alert-danger">{{ head(Session::get('error')) }}</div>
+                  @else
+                      <div class="alert alert-error alert-danger">{{ Session::get('error') }}</div>
+                  @endif
               @endif
           </div>
       </div>
@@ -179,7 +179,7 @@
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
                 @foreach($popular_schools as $school)
                     <div class="col-xs-6 col-sm-3 names-responsive">
-                        <div class="row best-image-container"><a href="{{ url('profiles/school/'.$school->id) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $school->name }}" src="" data-src="{{ asset('img/logos/'.$school->logo) }}"/></a></div>
+                        <div class="row best-image-container"><a href="{{ url('profiles/school/'.$school->id) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}"/></a></div>
                         <div class="row top-buffer-5"><a href="{{ url('profiles/school/'.$school->id) }}">{{ $school->name }}</a></div>
                     </div>
                 @endforeach
