@@ -45,6 +45,7 @@
     {{ HTML::script('js/jquery.raty.js') }}
     {{ HTML::script('js/jquery.fittext.js') }}
     {{ HTML::script('js/bootbox.min.js') }}
+    {{ HTML::script('js/jquery.lazy.min.js') }}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -148,13 +149,13 @@
                                             <input tabindex="4" type="checkbox" name="remember" id="remember" value="1"><small>@lang('layout.login-remind-me')</small>
                                         </label>
                                     </div>
-                                    {{--@if (Session::get('error'))--}}
-                                        {{--<div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>--}}
-                                    {{--@endif--}}
+                                    @if (Session::get('error'))
+                                        <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
+                                    @endif
 
-                                    {{--@if (Session::get('notice'))--}}
-                                        {{--<div class="alert">{{{ Session::get('notice') }}}</div>--}}
-                                    {{--@endif--}}
+                                    @if (Session::get('notice'))
+                                        <div class="alert">{{{ Session::get('notice') }}}</div>
+                                    @endif
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
                                             <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.login-send')</button>
@@ -338,12 +339,12 @@
                         </script>
                         <div id="recent-schools" class="row">
                         @foreach($last_schools as $school)
-                            <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profiles/school/'.$school->id) }}"><img class="img-thumbnail img-responsive img-recientes" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}"/></a></div></div>
+                            <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profiles/school/'.$school->id) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $school->name }}" src="" data-src="{{ asset('img/logos/'.$school->logo) }}"/></a></div></div>
                         @endforeach
                         </div>
                         <div id="recent-teachers" class="row">
                         @foreach($last_teachers as $teacher)
-                                <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profiles/teacher/'.$teacher->id) }}"><img class="img-thumbnail img-responsive img-recientes" alt="{{ $teacher->name }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}"/></a></div></div>
+                                <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profiles/teacher/'.$teacher->id) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $teacher->name }}" src="" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}"/></a></div></div>
                         @endforeach
                         </div>
 
@@ -399,5 +400,10 @@
     {{ HTML::script('js/bootstrap-slider.js') }}
     {{ HTML::script('js/bootstrap-formhelpers.min.js') }}
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("img.lazy").lazy();
+        });
+    </script>
   </body>
 </html>

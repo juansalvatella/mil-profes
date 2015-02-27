@@ -179,7 +179,7 @@
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
                 @foreach($popular_schools as $school)
                     <div class="col-xs-6 col-sm-3 names-responsive">
-                        <div class="row best-image-container"><a href="{{ url('profiles/school/'.$school->id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}"/></a></div>
+                        <div class="row best-image-container"><a href="{{ url('profiles/school/'.$school->id) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $school->name }}" src="" data-src="{{ asset('img/logos/'.$school->logo) }}"/></a></div>
                         <div class="row top-buffer-5"><a href="{{ url('profiles/school/'.$school->id) }}">{{ $school->name }}</a></div>
                     </div>
                 @endforeach

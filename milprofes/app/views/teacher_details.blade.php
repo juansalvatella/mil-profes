@@ -4,7 +4,7 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div class="profile-image"><img src="{{ asset('img/avatars/'.$teacher->avatar) }}" title="{{ $teacher->username }} logo" alt="{{ $teacher->username }}"></div>
+            <div class="profile-image"><img class="lazy" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}" src="" title="{{ $teacher->username }} logo" alt="{{ $teacher->username }}"></div>
 
             <div class="profile-title">
                 <h3>{{ $teacher->username }}</h3>
