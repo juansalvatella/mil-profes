@@ -13,16 +13,31 @@
 <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
     <div class="container generic-box top-padding-50 bottom-padding-100 magic-align">
 
-            {{ Form::open(array('action' => 'ContactController@getContactForm')) }}
+            @if (Session::get('success'))
+                <div class="row">
+                    <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
+                        <div class="alert alert-success">{{{ Session::get('success') }}}</div>
+                    </div>
+                </div>
+            @endif
+            @if (Session::get('error'))
+                <div class="row">
+                    <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
+                        <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
+                    </div>
+                </div>
+            @endif
+
+            {{ Form::open(array('action' => 'ContactController@getContactForm','id'=>'contact')) }}
 
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4">
 
                 {{ Form::label('contact_name', @trans('contact.contact_form_name'), array('class'=>'contact-contact-form-label')) }}
-                {{ Form::text('contact_name', '', array('class'=>'form-control','placeholder'=>@trans('contact.name_placeholder'))) }}
+                {{ Form::text('contact_name', '', array('class'=>'form-control','placeholder'=>@trans('contact.name_placeholder'),'required','maxlength'=>'50')) }}
                 {{ Form::label('contact_subject', @trans('contact.contact_form_subject'), array('class'=>'contact-contact-form-label')) }}
-                {{ Form::text('contact_subject', '', array('class'=>'form-control','placeholder'=>@trans('contact.subject_placeholder'))) }}
+                {{ Form::text('contact_subject', '', array('class'=>'form-control','placeholder'=>@trans('contact.subject_placeholder'),'required','maxlength'=>'50')) }}
                 {{ Form::label('contact_message', @trans('contact.contact_form_message'), array('class'=>'contact-contact-form-label')) }}
-                {{ Form::textarea('contact_message', '', array('rows' => 6, 'class'=>'form-control','placeholder'=>@trans('contact.message_placeholder'))) }}
+                {{ Form::textarea('contact_message', '', array('rows' => 6, 'class'=>'form-control','placeholder'=>@trans('contact.message_placeholder'),'required','maxlength'=>'1000')) }}
                 {{ Form::submit('Enviar', array('class' => 'btn btn-primary input-lg contact-form-submit-btn-2')) }}
 
             </div>
@@ -30,9 +45,9 @@
             <div class="col-xs-12  col-sm-4">
 
                 {{ Form::label('contact_lastname', @trans('contact.contact_form_lastname'), array('class'=>'contact-contact-form-label')) }}
-                {{ Form::text('contact_lastname', '', array('class'=>'form-control','placeholder'=>@trans('contact.lastname_placeholder'))) }}
+                {{ Form::text('contact_lastname', '', array('class'=>'form-control','placeholder'=>@trans('contact.lastname_placeholder'),'maxlength'=>'100')) }}
                 {{ Form::label('contact_email', @trans('contact.contact_form_email'), array('class'=>'contact-contact-form-label')) }}
-                {{ Form::text('contact_email', '', array('class'=>'form-control','placeholder'=>@trans('contact.mail_placeholder'))) }}
+                {{ Form::email('contact_email', '', array('class'=>'form-control','placeholder'=>@trans('contact.mail_placeholder'),'required')) }}
 
                 <div class="col-xs-12 text-left top-padding-25">
                     <div class="row top-buffer-15 contact-contact"><span class="glyphicon glyphicon-earphone contact-glyphicon"></span>&nbsp;&nbsp;&nbsp;&nbsp; @lang('layout.phone_title') @lang('layout.phone')</div>

@@ -21,7 +21,7 @@ Route::get('/', array('as' => 'home', function()
 
     return View::make('home', compact('popular_schools','popular_teachers'));
 }));
-Route::post('/','ContactController@getContactForm');
+Route::post('/contactanos','ContactController@getContactForm');
 Route::post('/','ContactController@getMiniContactForm');
 
 //Profiles

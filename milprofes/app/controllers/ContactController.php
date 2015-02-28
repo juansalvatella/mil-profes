@@ -25,14 +25,12 @@ class ContactController extends Controller {
             });
 
             return Redirect::back()
-                ->withInput()
                 ->with('minicontact-success', 'Tu mensaje ha sido enviado. ¡Muchas gracias!');
         }
         else
         {
             //return contact form with errors
             return Redirect::back()
-                ->withInput()
                 ->with('minicontact-error', 'Faltan campos por rellenar.');
         }
 
@@ -46,6 +44,7 @@ class ContactController extends Controller {
 
         $rules = array (
             'contact_name' => 'required|max:50',
+            'contact_lastname' => 'max:100',
             'contact_email' => 'required|email',
             'contact_subject' => 'required|max:50',
             'contact_message' => 'required|max:1000',
@@ -53,22 +52,21 @@ class ContactController extends Controller {
         $validator = Validator::make ($data, $rules);
 
         if ($validator -> passes()){
-            Mail::send('emails.feedback', $data, function($message) use ($data)
+            Mail::queue('emails.feedback_full', $data, function($message) use ($data)
             {
-                $message->from($data['contact_email'] , $data['contact_name']);
-                $message->to('moriana.mitxel@gmail.com', 'Mitxel Moriana')->subject('milProfes. feedback: '.$data['contact_subject']);
+                $message->from('mitxel@network30.com' , $data['contact_name']);
+//                $message->from($data['contact_email'] , $data['contact_name']);
+                $message->to('mitxel@network30.com', 'Mitxel Moriana')->subject('milProfes. feedback: '.$data['contact_subject']);
             });
 
-            return Redirect::to('/')
-                ->withInput()
+            return Redirect::to('contactanos')
                 ->with('success', 'Tu mensaje ha sido enviado. ¡Muchas gracias!');
         }
         else
         {
             //return contact form with errors
-            return Redirect::to('/')
-                ->withInput()
-                ->with('failure', '¡Error! Faltan campos por rellenar en el formulario de contacto.');
+            return Redirect::to('contactanos')
+                ->with('error', '¡Error! Faltan campos por rellenar en el formulario de contacto.');
         }
 
     }
