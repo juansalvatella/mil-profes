@@ -34,7 +34,7 @@
         <li role="presentation"><a href="#profile_tab" aria-controls="profile_tab" role="tab" data-toggle="tab">Mi Perfil</a></li>
     </ul>
 
-    <div class="tab-content container profile-box top-padding-50 bottom-padding-50" role="tabpanel">
+    <div class="tab-content container user-box top-padding-50 bottom-padding-50" role="tabpanel">
         <div role="tabpanel" class="tab-pane active" id="teacher_tab">
 
             <div class="col-xs-12">
@@ -52,76 +52,65 @@
         <div role="tabpanel" class="tab-pane" id="profile_tab">
 
             <div class="container-fluid top-padding-25 bottom-padding-25">
-                <form class="form-horizontal" action="{{ action('UsersController@updateUser') }}" method="post" enctype="multipart/form-data" role="form">
+                <form class="form-horizontal" action="{{ action('UsersController@updateUser') }}" method="post" enctype="multipart/form-data" role="form" id="user-data">
                     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+
+
+                    <div class="col-xs-12 bottom-buffer-35"><span class="school-rating-span">Mis datos personales</span></div>
 
                     <div class="col-xs-12 form-group">
                         <label class="col-xs-2 control-label" for="avatar">Mi imagen</label>
                         <div class="col-xs-10">
                             <input type="file" name="avatar"/>
+                            <div class="help-block with-errors">Sube una foto de como máximo 200 Kb</div>
                         </div>
                     </div>
 
                     <div class="col-xs-12 form-group">
-                        <label class="control-label col-xs-2" for="name">Nombre</label>
+                        <label class="control-label col-xs-2" for="name">Nombre (*)</label>
                         <div class="col-xs-10">
-                            <input class="form-control col-xs-10" placeholder="Tu nombre" type="text" name="name" id="name" value="{{{ $user->name }}}">
+                            <input class="form-control col-xs-10" placeholder="Tu nombre" type="text" name="name" id="name" value="{{{ $user->name }}}" maxlength="50" required="required">
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
                     <div class="col-xs-12 form-group">
                         <label class="control-label col-xs-2" for="lastname">Apellidos</label>
                         <div class="col-xs-10">
-                            <input class="form-control col-xs-10" placeholder="Tus apellidos" type="text" name="lastname" id="lastname" value="{{{ $user->lastname }}}">
+                            <input class="form-control col-xs-10" placeholder="Tus apellidos" type="text" name="lastname" id="lastname" value="{{{ $user->lastname }}}" maxlength="100">
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
                     <div class="col-xs-12 form-group">
-                        <label class="col-xs-2 control-label" for="address">Dirección</label>
+                        <label class="col-xs-2 control-label" for="address">Dirección (*)</label>
                         <div class="col-xs-10">
-                            <input class="form-control" placeholder="Mi calle, número, ciudad..." type="text" name="address" id="address" value="{{{ $user->address }}}">
+                            <input class="form-control" placeholder="Mi calle, número, ciudad..." type="text" name="address" id="address" value="{{{ $user->address }}}" maxlength="200" required="required">
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
                     <div class="col-xs-12 form-group">
-                        <label class="col-xs-2 control-label" for="email">{{{ @trans('messages.e_mail') }}}</label>
+                        <label class="col-xs-2 control-label" for="email">{{{ @trans('messages.e_mail') }}} (*)</label>
                         <div class="col-xs-10">
-                            <input class="form-control" placeholder="Tu e-mail" type="text" name="email" id="email" value="{{{ $user->email }}}">
+                            <input class="form-control" placeholder="Tu e-mail" type="email" name="email" id="email" value="{{{ $user->email }}}" required="required">
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
                     <div class="col-xs-12 form-group">
                         <label class="col-xs-2 control-label" for="phone">Teléfono</label>
                         <div class="col-xs-10">
-                            <input class="form-control" placeholder="Tu teléfono de contacto" type="text" name="phone" id="phone" value="{{{ $user->phone }}}">
+                            <input class="form-control" placeholder="Tu teléfono de contacto" type="text" name="phone" id="phone" value="{{{ $user->phone }}}" pattern="^([0-9]){5,}$" maxlength="20">
+                            <div class="help-block with-errors">Sólo números, sin espacios</div>
                         </div>
                     </div>
 
                     <div class="col-xs-12 form-group">
                         <label class="col-xs-2 control-label" for="description">Mi descripción</label>
                         <div class="col-xs-10">
-                            <textarea rows="3" placeholder="Descríbete..." class="form-control" name="description" id="description">{{ $user->description }}</textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 form-group">
-                        <label class="col-xs-2 control-label" for="old_password">Contraseña actual</label>
-                        <div class="col-xs-10">
-                            <input class="form-control" placeholder="Contraseña actual" type="password" name="old_password" id="old_password">
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 form-group">
-                        <label class="col-xs-2 control-label" for="new_password">Nueva contraseña</label>
-                        <div class="col-xs-10">
-                        <input class="form-control" placeholder="Nueva contraseña" type="password" name="new_password" id="new_password">
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 form-group">
-                        <label class="col-xs-2 control-label" for="new_password_confirmation">Confirmar nueva contraseña</label>
-                        <div class="col-xs-10">
-                        <input class="form-control" placeholder="Repite la contraseña" type="password" name="new_password_confirmation" id="new_password_confirmation">
+                            <textarea rows="3" placeholder="Descríbete..." class="form-control" name="description" id="description"  maxlength="450">{{ $user->description }}</textarea>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
@@ -130,7 +119,60 @@
                             <input type="submit" value="Actualizar datos" class="btn btn-primary"/>
                         </div>
                     </div>
+
                 </form>
+
+
+                <form class="form-horizontal" action="{{ action('UsersController@updateUserPasswd') }}" method="post" enctype="multipart/form-data" role="form" id="user-passwd">
+
+                    <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+
+                    <div class="col-xs-12 top-buffer-35 bottom-buffer-35"><span class="school-rating-span">Cambiar contraseña</span></div>
+
+                    <div class="col-xs-12 form-group">
+                        <label class="col-xs-2 control-label" for="old_password">Contraseña actual</label>
+                        <div class="col-xs-10">
+
+                            <input class="form-control" placeholder="Contraseña actual" type="password" name="old_password" id="old_password" required="required" pattern=".{6,}">
+                            <div class="help-block with-errors"></div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 form-group">
+                        <label class="col-xs-2 control-label" for="new_password">Nueva contraseña</label>
+                        <div class="col-xs-10">
+
+                                <input class="form-control reset-password" placeholder="Nueva contraseña" type="password" name="new_password" id="new_password" required="required" pattern=".{6,}">
+                                <div class="help-block with-errors">Mínimo 6 caracteres de longitud</div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 form-group">
+                        <label class="col-xs-2 control-label" for="new_password_confirmation">Confirmar nueva contraseña</label>
+                        <div class="col-xs-10">
+
+                                <input class="form-control" placeholder="Repite la contraseña" type="password" name="new_password_confirmation" id="new_password_confirmation" required="required" data-match=".reset-password">
+                                <div class="help-block with-errors"></div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-offset-2 col-xs-10">
+                            <input type="submit" value="Cambiar contraseña" class="btn btn-primary"/>
+                        </div>
+                    </div>
+
+                </form>
+
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $("#user-data").validator();
+                        $("#user-passwd").validator();
+                    });
+                </script>
             </div>
         </div>
 

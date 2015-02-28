@@ -243,7 +243,7 @@
                                             <div class="form-group">
                                                 <label for="phone">@lang('layout.register-phone')</label>
                                                 <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" pattern="^([0-9]){5,}$" maxlength="20" name="phone" id="phone" value="{{{ Input::old('phone') }}}">
-                                                <small><span class="help-block with-errors">Sólo números</span></small>
+                                                <small><span class="help-block with-errors">Sólo números, sin espacios</span></small>
                                             </div>
                                         </div>
                                     </div>
