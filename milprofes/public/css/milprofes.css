@@ -821,7 +821,7 @@ body.loading .modal-loading { /*modal element will be visible */
 
 /* PROFILES */
 .profile-box {
-    padding: 25px 70px 50px 70px;
+    padding: 25px 15px 100px 15px;
 }
 .profile-image {
     display: inline-block;
@@ -984,7 +984,7 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .panel-milprofes > .panel-heading {
     color: #000;
-    background-color: rgb(255, 169, 17);
+    background-color: #FFC307;
     border-color: #A4A5A5;
 }
 /* END USER PANEL */

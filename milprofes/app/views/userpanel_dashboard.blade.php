@@ -15,7 +15,6 @@
                         <div class="profile-subtitle">Panel de Control</div>
                     </div>
 
-                    {{--<h4><img src="{{ asset('img/avatars/'.$user->avatar) }}" class="userpanel-img">&nbsp;&nbsp;Bienvenid&#64;, {{ $user->name }}</h4>--}}
                 </div>
                 <div class="pull-right">
                     @if($user->hasRole("admin"))
