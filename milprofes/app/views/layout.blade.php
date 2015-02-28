@@ -117,10 +117,6 @@
     <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="modal-login" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                {{--<div class="modal-header">--}}
-                    {{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>--}}
-                    {{--<h4 class="modal-title" id="myModalLabel">Modal title</h4>--}}
-                {{--</div>--}}
                 <div class="modal-body login-modal">
                     <div class="row text-center bottom-srs-separator">
                         <span class="login-modal-logo">@lang('layout.logo')</span>
@@ -179,10 +175,6 @@
                         </div>
                     </div>
                 </div>
-                {{--<div class="modal-footer">--}}
-                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
-                    {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
-                {{--</div>--}}
             </div>
         </div>
     </div>
@@ -190,10 +182,6 @@
     <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {{--<div class="modal-header">--}}
-                {{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>--}}
-                {{--<h4 class="modal-title" id="myModalLabel">Modal title</h4>--}}
-                {{--</div>--}}
                 <div class="modal-body login-modal">
                     <div class="row text-center bottom-srs-separator">
                         <span class="login-modal-logo">@lang('layout.logo')</span>
@@ -315,10 +303,6 @@
                         </div>
                     </div>
                 </div>
-                {{--<div class="modal-footer">--}}
-                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
-                    {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
-                {{--</div>--}}
             </div>
         </div>
     </div>
@@ -390,35 +374,20 @@
                         <div class="row">
                             {{ Form::open(array('action' => 'ContactController@getContactForm','id'=>'mini-contact')) }}
                             <div class="col-xs-6 text-left">
-                                    {{ Form::label('contact_name', @trans('layout.contact_form_name'), array('class'=>'contact-form-label control-label')) }}
-                                {{--<div class="form-group">--}}
-                                    {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'),'required')) }}
-                                    {{--<span class="help-block with-errors"></div><div class="help-block with-errors"></span>--}}
-                                {{--</div>--}}
-                                    {{ Form::label('contact_email', @trans('layout.contact_form_email'), array('class'=>'contact-form-label control-label')) }}
-                                {{--<div class="form-group">--}}
-                                    {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.mail_placeholder'),'required')) }}
-                                    {{--<span class="help-block with-errors"></div><div class="help-block with-errors"></span>--}}
-                                {{--</div>--}}
-                                    {{ Form::label('contact_subject', @trans('layout.contact_form_subject'), array('class'=>'contact-form-label control-label')) }}
-                                {{--<div class="form-group">--}}
-                                    {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.subject_placeholder'),'required')) }}
-                                    {{--<span class="help-block with-errors"></div><div class="help-block with-errors"></span>--}}
-                                {{--</div>--}}
+                                {{ Form::label('contact_name', @trans('layout.contact_form_name'), array('class'=>'contact-form-label control-label')) }}
+                                {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'),'required','maxlength'=>'50')) }}
+                                {{ Form::label('contact_email', @trans('layout.contact_form_email'), array('class'=>'contact-form-label control-label')) }}
+                                {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.mail_placeholder'),'required')) }}
+                                {{ Form::label('contact_subject', @trans('layout.contact_form_subject'), array('class'=>'contact-form-label control-label')) }}
+                                {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.subject_placeholder'),'required','maxlength'=>'50')) }}
                             </div>
                             <div class="col-xs-6 text-left">
                                 {{ Form::label('contact_message', @trans('layout.contact_form_message'), array('class'=>'contact-form-label control-label')) }}
-                                {{ Form::textarea('contact_message', '', array('rows' => 4, 'class'=>'form-control input-sm','placeholder'=>@trans('layout.message_placeholder'),'required')) }}
-                                {{--<span class="help-block with-errors"></div><div class="help-block with-errors"></span>--}}
+                                {{ Form::textarea('contact_message', '', array('rows' => 4, 'class'=>'form-control input-sm','placeholder'=>@trans('layout.message_placeholder'),'required','maxlength'=>'1000')) }}
                                 {{ Form::submit('Enviar', array('class' => 'btn btn-primary contact-form-submit-btn')) }}
                             </div>
                             {{ Form::close(); }}
                         </div>
-                        {{--<script type="text/javascript">--}}
-                            {{--$(document).ready(function(){--}}
-                                {{--$("#mini-contact").validator();--}}
-                            {{--});--}}
-                        {{--</script>--}}
                     </div>
                 </div>
 
