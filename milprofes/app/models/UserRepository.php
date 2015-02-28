@@ -15,41 +15,37 @@ class UserRepository
      *
      * @return  User User object that may or may not be saved successfully. Check the id to make sure.
      */
-    public function signup($input)
+    public function signup($input, $geocoded_user_address)
     {
         $user = new User;
-
+        //Usual confide fields
         $user->username = array_get($input, 'username');
         $user->email    = array_get($input, 'email');
         $user->password = array_get($input, 'password');
-
         //Custom user fields
         $user->name = array_get($input, 'name');
-        $user->lastname= array_get($input, 'lastname');
-        $user->phone = array_get($input, 'phone');
+        $user->lastname= (array_get($input, 'lastname')) ? array_get($input, 'lastname') : '';
+        $user->phone = (array_get($input, 'phone')) ? array_get($input, 'phone') : '';
         $user->address = array_get($input, 'address');
-        $geocoded_user_address = Geocoding::geocode($user->address);
-        if($geocoded_user_address) {
-            $user->lat = $geocoded_user_address[0]; //latitud
-            $user->lon = $geocoded_user_address[1]; //longitud
-        } else {
-            $user->lat = (float) 0;
-            $user->lon = (float) 0;
-        }
+//        $geocoded_user_address = Geocoding::geocode($user->address);
+//        if($geocoded_user_address) {
+        $user->lat = $geocoded_user_address[0]; //latitud
+        $user->lon = $geocoded_user_address[1]; //longitud
+//        } else { //ERROR INESPERADO! asignar valores por defecto para evitar error en base de datos
+//            $user->lat = 0; //latitud
+//            $user->lon = 0; //longitud
+//        }
 
         //Default values
         $user->avatar = 'default_avatar.png';
-//        $user->availability = 'Default availability';
         $user->description = '';
 
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
         $user->password_confirmation = array_get($input, 'password_confirmation');
-
         // Generate a random confirmation code
         $user->confirmation_code     = md5(uniqid(mt_rand(), true));
-
         // Save if valid. Password field will be hashed before save
         $this->save($user);
 

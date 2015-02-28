@@ -86,7 +86,9 @@ return array(
 
 	'custom' => array(
 		'attribute-name' => array(
-			'rule-name' => 'custom-message',
+			'rule-name'         => 'custom-message',
+            'alpha_spaces'      => 'Los nombres sólo pueden contener letras y espacios.',
+            'numeric_spaces'    => 'El teléfono sólo puede contener números y espacios',
 		),
 	),
 

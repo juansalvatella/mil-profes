@@ -7,25 +7,56 @@ class UsersController extends Controller
     // @return  Illuminate\Http\Response
     public function create()
     {
-        return View::make(Config::get('confide::signup_form'));
+//        return View::make(Config::get('confide::signup_form'));
+        return Redirect::to('/')
+            ->with('show_register_modal',true);
     }
 
     //Stores new account
     // @return  Illuminate\Http\Response
     public function store()
     {
+        //basic form validation
+        $input = Input::all();
+        $rules = array(
+            'name' => 'required|alpha_spaces|max:50',
+            'lastname' => 'alpha_spaces|max:100',
+            'phone' => 'string|min:5|max:20',
+            'address' => 'required|string|max:200',
+            'username' => 'required|alpha_num|min:5|max:20',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        );
+        $validator =  Validator::make($input, $rules);
+
+        if($validator->fails()) {
+            return Redirect::to('/')
+                ->withInput(Input::except('password'))
+                ->with('reg-error', 'No se cumplimentaron los campos correctamente. Vuelve a intentarlo.')
+                ->with('show_register_modal', true);
+        }
+
+        //possible to geocode address validation
+        $geocode = Geocoding::geocode($input['address']);
+        if(!$geocode) {
+            return Redirect::to('/')
+                ->withInput(Input::except('password'))
+                ->with('reg-error', 'La dirección proporcionada no parece ser válida. Prueba escribiendo tu calle, número y ciudad.')
+                ->with('show_register_modal', true);
+        }
+
+        //basic validation done >>> try to register user
         $repo = App::make('UserRepository');
-        $user = $repo->signup(Input::all());
+        $user = $repo->signup($input, $geocode);
 
         if ($user->id) {
-
             //Make the user a student by default (add to student table and assign student role)
             $student = new Student();
             $student->user()->associate($user);
             $student->save();
             $student_role = Role::where('name','student')->first();
             $user->attachRole($student_role);
-
+            //send a confirmation mail
             if (Config::get('confide::signup_email')) {
                 Mail::queueOn(
                     Config::get('confide::email_queue'),

@@ -52,17 +52,17 @@ return array(
 
     'email' => array(
         'account_confirmation' => array(
-            'subject'   => 'Confirmación de cuenta',
+            'subject'   => 'Confirma tu cuenta en milProfes.',
             'greetings' => 'Hola :name',
-            'body'      => 'Por favor acceda al siguiente enlace para confirmar su cuenta.',
-            'farewell'  => 'Saludos',
+            'body'      => 'Accede al siguiente enlace para confirmar tu cuenta. Te recomendamos que copies y pegues la dirección directamente sobre la barra de direcciones de tu navegador.',
+            'farewell'  => '¡Te esperamos!',
         ),
 
         'password_reset' => array(
-            'subject'   => 'Reestablecer Contraseña',
+            'subject'   => 'Reestablecer contraseña de milProfes.',
             'greetings' => 'Hola :name',
-            'body'      => 'Acceda al siguiente enlace para cambiar su contraseña',
-            'farewell'  => 'Saludos',
+            'body'      => 'Acceda al siguiente enlace para restablecer tu contraseña. Te recomendamos que copies y pegues la dirección directamente sobre la barra de direcciones de tu navegador.',
+            'farewell'  => '¡Saludos!',
         ),
     ),
 
