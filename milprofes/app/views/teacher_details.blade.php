@@ -1,6 +1,9 @@
 @extends('layout')
 @section('content')
 
+    {{ Form::open(array('id' => 'postForm')) }}
+    {{ Form::close() }}
+
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
@@ -82,10 +85,6 @@
                                 <span>@lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject()->pluck('name'))</span>
                             </div>
 
-                            {{--<div class="row lesson-description-title">--}}
-                                {{--@lang('teacher-profile.lesson-description')--}}
-                            {{--</div>--}}
-
                             <div class="row result-description text-justify">
                                 <small>{{{ $result->description }}}</small>
                             </div>
@@ -117,7 +116,9 @@
                                             //registrar valoración en base de datos
                                             var lesson_id = {{ $result->id }};
                                             var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');
+                                            var postForm = $('form#postForm');
                                             $.post('/reviews/handleReview', {
+                                                _token: postForm.find('input[name=_token]').val(),
                                                 review_lesson_id: lesson_id,
                                                 review_rating: review_rating
                                             }, function (data) {
@@ -167,7 +168,10 @@
                     $(document).on("click", "#contact-me", function(e) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
-                        $.post('/request/info/teacher/{{$teacher->id}}',{},function(data){});
+                        var postForm = $('form#postForm');
+                        $.post('/request/info/teacher/{{$teacher->id}}',{
+                            _token: postForm.find('input[name=_token]').val()
+                        },function(data){});
                     });
                 </script>
 

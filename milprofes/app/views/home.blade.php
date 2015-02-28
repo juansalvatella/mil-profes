@@ -151,15 +151,6 @@
                       return true;
                   });
               </script>
-              {{--<button type="submit" class="btn btn-primary btn-lg btn-home-search" id="btn-search-both" value="@lang('home.both')">--}}
-                  {{--@lang('home.both')&nbsp;&nbsp;<i class="glyphicon glyphicon-search"></i>--}}
-              {{--</button>--}}
-              {{--<script type="text/javascript">--}}
-                  {{--$(document).on("click", "#btn-search-both", function() {--}}
-                      {{--$("#prof_o_acad").val('ambos');--}}
-                      {{--return true;--}}
-                  {{--});--}}
-              {{--</script>--}}
           </div>
       </div>
 

@@ -313,6 +313,9 @@
             </div>
         </div>
 
+
+        {{ Form::open(array('id' => 'aPostForm')) }}
+        {{ Form::close() }}
         <div class="search-results-list">
             <div id="results-slice-{{ $slices_showing }}">
             @foreach($results as $result)
@@ -392,8 +395,10 @@
                                         //registrar valoración en base de datos
                                         var lesson_id = {{ $result->id }};
                                         var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');
+                                        var aPostForm = $('form#aPostForm');
                                         @if($prof_o_acad=='profesor')
                                             $.post('/reviews/handleReview', {
+                                                _token: aPostForm.find('input[name=_token]').val(),
                                                 review_lesson_id: lesson_id,
                                                 review_rating: review_rating
                                             }, function (data) {
@@ -401,6 +406,7 @@
                                             });
                                         @else
                                             $.post('/reviews/handleSchoolLessonReview', {
+                                                _token: aPostForm.find('input[name=_token]').val(),
                                                 review_lesson_id: lesson_id,
                                                 review_rating: review_rating
                                             }, function (data) {
@@ -429,11 +435,6 @@
                                 @endif
                             @endif
                         </div>
-                        {{--<script>--}}
-                            {{--$(document).ready(function($){--}}
-                                {{--$(".price").fitText();--}}
-                            {{--});--}}
-                        {{--</script>--}}
                         <div class="row text-center top-buffer-15">
                                 @if($prof_o_acad=='profesor')
                                     <a id="contact-me-{{ $result->id }}" class="btn btn-info background-287AF9" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
@@ -454,10 +455,15 @@
                                     $(document).on("click", "#contact-me-{{ $result->id }}", function(e) {
                                         e.preventDefault();
                                         e.stopImmediatePropagation();
+                                        var aPostForm = $('form#aPostForm');
                                         @if($prof_o_acad=='profesor')
-                                            $.post('/request/info/teacher/{{$result->id}}',{},function(data){});
+                                            $.post('/request/info/teacher/{{$result->id}}',{
+                                                _token: aPostForm.find('input[name=_token]').val()
+                                            },function(data){});
                                         @else
-                                            $.post('/request/info/school/{{$result->id}}',{},function(data){});
+                                            $.post('/request/info/school/{{$result->id}}',{
+                                                _token: aPostForm.find('input[name=_token]').val()
+                                            },function(data){});
                                         @endif
                                     });
                                 </script>

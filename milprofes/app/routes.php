@@ -293,7 +293,7 @@ Route::get('teacher/edit/lesson/{lesson_id}', function($lesson_id)
     if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de editar clases de otros usuarios
         return View::make('teacher_lesson_edit', compact('lesson','subject'));
     else
-        return Redirect::route('userpanel')->with('failure', 'Error! Tu clase no ha sido encontrada');
+        return Redirect::route('userpanel')->with('failure', '¡Error! Tu clase no ha sido encontrada');
 });
 Route::post('teacher/edit/lesson/{teacher_id}', 'TeachersController@saveLesson');
 Route::get('teacher/delete/lesson/{lesson_id}', function($lesson_id)

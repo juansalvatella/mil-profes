@@ -1,6 +1,9 @@
 @extends('layout')
 @section('content')
 
+    {{ Form::open(array('id' => 'postForm')) }}
+    {{ Form::close() }}
+
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
@@ -110,7 +113,9 @@
                                                         //registrar valoración en base de datos
                                                         var lesson_id = {{ $result->id }};
                                                         var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');
+                                                        var postForm = $('form#postForm');
                                                         $.post('/reviews/handleSchoolLessonReview', {
+                                                                _token: postForm.find('input[name=_token]').val(),
                                                                 review_lesson_id: lesson_id,
                                                                 review_rating: review_rating
                                                             }, function (data) {
@@ -149,7 +154,10 @@
                                                 $(document).on("click", "#contact-me-{{ $result->id }}", function(e) {
                                                     e.preventDefault();
                                                     e.stopImmediatePropagation();
-                                                    $.post('/request/info/school/{{$result->id}}',{},function(data){});
+                                                    var postForm = $('form#postForm');
+                                                    $.post('/request/info/school/{{$result->id}}',{
+                                                        _token: postForm.find('input[name=_token]').val()
+                                                    },function(data){});
                                                 });
                                             </script>
 
