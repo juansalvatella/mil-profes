@@ -53,7 +53,7 @@
                         <label class="col-sm-2 control-label" for="price">Precio (€/hora)</label>
                         <div class="col-sm-10">
                             <input type="text" pattern="^([0-9\.,]){0,}$" placeholder="¿Cuál será el precio por hora de tu clase?" class="form-control" name="price" id="price"/>
-                            <div class="help-block with-errors">Introduce una cifra, por ej.: 15. Si lo prefieres, puedes dejarlo en blanco</div>
+                            <div class="help-block with-errors">Introduce una cifra, por ejemplo: 15. Si lo prefieres, puedes dejarlo en blanco</div>
                         </div>
                     </div>
                     <div class="form-group">

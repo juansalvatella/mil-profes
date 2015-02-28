@@ -48,35 +48,71 @@ class TeachersController extends BaseController
 
     public function saveLesson()
     {
-        $lesson = TeacherLesson::findOrFail(Input::get('lesson_id'));
-        $lesson->price = Input::get('price');
-        $lesson->description = Input::get('description');
+        $input = Input::all();
+        $rules = array(
+            'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario)$/'),
+            'price' => 'numeric',
+            'address' => 'required|string',
+            'description' => 'required|string|max:200',
+        );
+        $validator = Validator::make($input, $rules);
+        if($validator->fails()) {
+            return Redirect::back()
+                ->withInput()
+                ->with('error', '¡Error! No se pudo actualizar los datos de tu clase. Comprueba que todos los campos tengan valores válidos.');
+        }
 
-        $lesson->address = Input::get('address');
-        $geocoding = Geocoding::geocode(Input::get('address'));
-        $lesson->lat = $geocoding[0]; //latitud
-        $lesson->lon = $geocoding[1]; //longitud
+        $lesson_id = Input::get('lesson_id');
+        $lesson = TeacherLesson::findOrFail($lesson_id);
+        $lesson_teacher = $lesson->teacher()->first();
+        $user = Auth::user();
+        $teacher = $user->teacher()->first();
+        if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de editar la clase de otros profesores
+        {
+            $lesson->price = Input::get('price');
+            $lesson->description = Input::get('description');
+            $lesson->address = Input::get('address');
+            $geocoding = Geocoding::geocode(Input::get('address'));
+            if (!$geocoding) {
+                return Redirect::back()
+                    ->withInput()
+                    ->with('error', '¡Error! La dirección proporcionada parece no ser válida.');
+            }
+            $lesson->lat = $geocoding[0]; //latitud
+            $lesson->lon = $geocoding[1]; //longitud
 
-        $subject_name = Input::get('subject');
-        $subject = Subject::where('name',$subject_name)->first();
-        $lesson->subject()->associate($subject);
+            $subject_name = Input::get('subject');
+            $subject = Subject::where('name', $subject_name)->first();
+            $lesson->subject()->associate($subject);
 
-        if($lesson->save())
-            return Redirect::route('userpanel')->with('success', 'Datos de la clase actualizados con éxito');
-        else
-            return Redirect::route('userpanel')->with('failure', 'Error! No se pudo actualizar los datos de la clase');
+            if ($lesson->save())
+                return Redirect::route('userpanel')->with('success', 'Datos de la clase actualizados con éxito');
+            else
+                return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar los datos de la clase');
+        } else {
+            return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar los datos de la clase.');
+        }
+
     }
 
     public function deleteLesson()
     {
         $lesson_id = Input::get('lesson_id');
         $lesson = TeacherLesson::findOrFail($lesson_id);
-        $lesson->delete();
+        $lesson_teacher = $lesson->teacher()->first();
+        $user = Auth::user();
+        $teacher = $user->teacher()->first();
+        if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de eliminar la clase de otros profesores
+        {
+            $lesson->delete();
+            if($lesson->exists)
+                return Redirect::route('userpanel')->with('failure', '¡Error! La clase no pudo ser eliminada');
+            else
+                return Redirect::route('userpanel')->with('success', 'Clase eliminada con éxito');
+        } else {
+            return Redirect::route('userpanel')->with('failure', '¡Error! La clase no pudo ser eliminada.');
+        }
 
-        if($lesson->exists)
-            return Redirect::route('userpanel')->with('failure', 'Error! La clase no pudo ser eliminada');
-        else
-            return Redirect::route('userpanel')->with('success', 'Clase eliminada con éxito');
     }
 
     public function saveAvailability() {
