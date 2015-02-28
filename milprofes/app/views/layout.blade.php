@@ -372,7 +372,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            {{ Form::open(array('action' => 'ContactController@getContactForm','id'=>'mini-contact')) }}
+                            {{ Form::open(array('action' => 'ContactController@getMiniContactForm','id'=>'mini-contact')) }}
                             <div class="col-xs-6 text-left">
                                 {{ Form::label('contact_name', @trans('layout.contact_form_name'), array('class'=>'contact-form-label control-label')) }}
                                 {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'),'required','maxlength'=>'50')) }}
@@ -389,6 +389,17 @@
                             {{ Form::close(); }}
                         </div>
                     </div>
+                            @if (Session::get('minicontact-success'))
+                                <div class="col-xs-offset-0 col-xs-12 padded">
+                                    <div class="alert alert-success">{{{ Session::get('minicontact-success') }}}</div>
+                                </div>
+                            @endif
+                            @if (Session::get('minicontact-error'))
+                                <div class="col-xs-offset-0 col-xs-12 padded">
+                                    <div class="alert alert-error alert-danger">{{{ Session::get('minicontact-error') }}}</div>
+                                </div>
+                            @endif
+
                 </div>
 
             </div><!-- /.row -->

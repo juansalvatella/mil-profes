@@ -22,6 +22,8 @@ Route::get('/', array('as' => 'home', function()
     return View::make('home', compact('popular_schools','popular_teachers'));
 }));
 Route::post('/','ContactController@getContactForm');
+Route::post('/','ContactController@getMiniContactForm');
+
 //Profiles
 Route::get('profiles/teacher/{teacher}', function(Teacher $teacher) {
     $user = $teacher->user()->get(array('username','avatar','email','phone','description'));
