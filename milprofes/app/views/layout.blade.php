@@ -145,12 +145,14 @@
                                     <div class="form-group">
                                         <label for="email">@lang('layout.login-username')</label>
                                         <input class="form-control" tabindex="1" placeholder="{{{ @trans('layout.login-username') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required="required">
+                                        <small><span class="help-block with-errors"></span></small>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">
                                             @lang('layout.login-password')
                                         </label>
                                         <input class="form-control" tabindex="2" placeholder="{{{ @trans('layout.login-password') }}}" type="password" name="password" id="password" required="required">
+                                        <small><span class="help-block with-errors"></span></small>
                                         <p class="help-block">
                                             <a href="{{{ URL::to('/users/forgot_password') }}}">@lang('layout.login-forgot-passwd')</a>
                                         </p>
