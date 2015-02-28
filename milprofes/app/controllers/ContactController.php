@@ -66,7 +66,7 @@ class ContactController extends Controller {
         {
             //return contact form with errors
             return Redirect::to('contactanos')
-                ->with('error', '¡Error! Faltan campos por rellenar en el formulario de contacto.');
+                ->with('error', '¡Error! Faltan campos por rellenar.');
         }
 
     }

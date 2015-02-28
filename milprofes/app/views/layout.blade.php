@@ -375,28 +375,47 @@
                             {{ Form::open(array('action' => 'ContactController@getMiniContactForm','id'=>'mini-contact')) }}
                             <div class="col-xs-6 text-left">
                                 {{ Form::label('contact_name', @trans('layout.contact_form_name'), array('class'=>'contact-form-label control-label')) }}
-                                {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'),'required','maxlength'=>'50')) }}
+                                <div class="form-group">
+                                    {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'),'required','maxlength'=>'50')) }}
+                                    <small><small><span class="help-block with-errors"></span></small></small>
+                                </div>
                                 {{ Form::label('contact_email', @trans('layout.contact_form_email'), array('class'=>'contact-form-label control-label')) }}
-                                {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.mail_placeholder'),'required')) }}
+                                <div class="form-group">
+                                    {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.mail_placeholder'),'required')) }}
+                                    <small><small><span class="help-block with-errors"></span></small></small>
+                                </div>
                                 {{ Form::label('contact_subject', @trans('layout.contact_form_subject'), array('class'=>'contact-form-label control-label')) }}
-                                {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.subject_placeholder'),'required','maxlength'=>'50')) }}
+                                <div class="form-group">
+                                    {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.subject_placeholder'),'required','maxlength'=>'50')) }}
+                                    <small><small><span class="help-block with-errors"></span></small></small>
+                                </div>
                             </div>
                             <div class="col-xs-6 text-left">
                                 {{ Form::label('contact_message', @trans('layout.contact_form_message'), array('class'=>'contact-form-label control-label')) }}
-                                {{ Form::textarea('contact_message', '', array('rows' => 4, 'class'=>'form-control input-sm','placeholder'=>@trans('layout.message_placeholder'),'required','maxlength'=>'1000')) }}
-                                {{ Form::submit('Enviar', array('class' => 'btn btn-primary contact-form-submit-btn')) }}
+                                <div class="form-group">
+                                    {{ Form::textarea('contact_message', '', array('rows' => 5, 'class'=>'form-control input-sm','placeholder'=>@trans('layout.message_placeholder'),'required','maxlength'=>'1000')) }}
+                                    <small><small><span class="help-block with-errors"></span></small></small>
+                                </div>
+                                <div class="form-group">
+                                    {{ Form::submit('Enviar', array('class' => 'btn btn-primary contact-form-submit-btn')) }}
+                                </div>
                             </div>
                             {{ Form::close(); }}
+                            <script type="text/javascript">
+                                $(document).ready(function(){
+                                    $("#mini-contact").validator();
+                                });
+                            </script>
                         </div>
                     </div>
                             @if (Session::get('minicontact-success'))
                                 <div class="col-xs-offset-0 col-xs-12 padded">
-                                    <div class="alert alert-success">{{{ Session::get('minicontact-success') }}}</div>
+                                    <div class="alert alert-success smaller-alert">{{{ Session::get('minicontact-success') }}}</div>
                                 </div>
                             @endif
                             @if (Session::get('minicontact-error'))
                                 <div class="col-xs-offset-0 col-xs-12 padded">
-                                    <div class="alert alert-error alert-danger">{{{ Session::get('minicontact-error') }}}</div>
+                                    <div class="alert alert-error alert-danger smaller-alert">{{{ Session::get('minicontact-error') }}}</div>
                                 </div>
                             @endif
 
