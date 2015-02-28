@@ -13,7 +13,7 @@ class ContactController extends Controller {
             'contact_subject' => 'required|max:50',
             'contact_message' => 'required|max:1000',
         );
-        $validator = Validator::make ($data, $rules);
+        $validator = Validator::make($data, $rules);
 
         if ($validator -> passes()){
 

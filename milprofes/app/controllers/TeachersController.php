@@ -68,15 +68,45 @@ class TeachersController extends BaseController
     }
 
     public function saveAvailability() {
+
         $user = Confide::user();
         $teacher = $user->teacher()->first();
         $teacher_id = $teacher->id;
 
         $input = Input::all();
-//        $rules = array(
-//
-//        );
-//        $validator = Validator::make($input, $rules);
+        $rules = array(
+            'day1' => array('regex:/^(LUN|MAR|MIER|JUE|VIE|SAB|DOM|)$/'),
+            'day2' => array('regex:/^(LUN|MAR|MIER|JUE|VIE|SAB|DOM|)$/'),
+            'day3' => array('regex:/^(LUN|MAR|MIER|JUE|VIE|SAB|DOM|)$/'),
+            'day4' => array('regex:/^(LUN|MAR|MIER|JUE|VIE|SAB|DOM|)$/'),
+            'day5' => array('regex:/^(LUN|MAR|MIER|JUE|VIE|SAB|DOM|)$/'),
+            'day6' => array('regex:/^(LUN|MAR|MIER|JUE|VIE|SAB|DOM|)$/'),
+            'day7' => array('regex:/^(LUN|MAR|MIER|JUE|VIE|SAB|DOM|)$/'),
+            'day8' => array('regex:/^(LUN|MAR|MIER|JUE|VIE|SAB|DOM|)$/'),
+            'day9' => array('regex:/^(LUN|MAR|MIER|JUE|VIE|SAB|DOM|)$/'),
+            'start1' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'start2' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'start3' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'start4' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'start5' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'start6' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'start7' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'start8' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'start9' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'end1' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'end2' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'end3' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'end4' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'end5' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'end6' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'end7' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'end8' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+            'end9' => array('regex:/^([01]?[0-9]|2[0-3]):([0-5][0-9])$/'),
+        );
+        $validator = Validator::make($input, $rules);
+        if ($validator->fails()){
+            return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar tu disponibilidad.');
+        }
 
         $previous_picks = $teacher->availabilities()->get();
         if($previous_picks->count()!=9) //if teacher has never saved availability before, create 9 new picks with the input
@@ -90,21 +120,37 @@ class TeachersController extends BaseController
                 $pick->start = $input['start'.$i];
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('userpanel')->with('failure', 'Error! No se pudo actualizar tu disponibilidad');
+                    return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar tu disponibilidad.');
                 }
             }
-        } else { //if there exists 9 previous saved picks, update them with the input
+        } else { //if there exists 9 previous saved picks (even empty ones, in DB), update them with the input
+
+            $cleanInput = array();
+            $k=1;
+            for($j=1;$j<10;++$j){
+                if($input['day'.$j] != '') {
+                    $cleanInput['day'.$k] = $input['day'.$j];
+                    $cleanInput['start'.$k] = $input['start'.$j];
+                    $cleanInput['end'.$k] = $input['end'.$j];
+                    ++$k;
+                }
+            }
+            for($h=$k;$h<10;++$h) {
+                $cleanInput['day'.$h] = '';
+                $cleanInput['start'.$h] = '15:00';
+                $cleanInput['end'.$h] = '21:00';
+            }
             $i = 1;
             foreach($previous_picks as $pick)
             {
                 $pick = TeacherAvailability::findOrFail($pick->id);
                 $pick ->teacher_id = $teacher_id;
                 $pick->pick = ''.$i;
-                $pick->day = $input['day'.$i];
-                $pick->start = $input['start'.$i];
-                $pick->end = $input['end'.$i];
+                $pick->day = $cleanInput['day'.$i];
+                $pick->start = $cleanInput['start'.$i];
+                $pick->end = $cleanInput['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('userpanel')->with('failure', 'Error! No se pudo actualizar tu disponibilidad');
+                    return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar tu disponibilidad.');
                 }
                 ++$i;
             }

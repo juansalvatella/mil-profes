@@ -269,7 +269,6 @@ Route::get('userpanel/dashboard', array('as' => 'userpanel', function()
 Route::post('userpanel/dashboard', 'UsersController@updateUser');
 Route::get('userpanel/become/teacher','UsersController@becomeATeacher');
 
-
 //======================
 //Teacher control panels
 //======================

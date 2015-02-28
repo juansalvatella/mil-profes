@@ -45,7 +45,7 @@
 
 
                     <div class="teacher-lessons">
-                        @if($teacher->availability->count())
+                        @if($teacher->availability->first()->day != '')
                             <span>@lang('teacher-profile.availability')</span>
                         @endif
                     </div>
@@ -69,79 +69,86 @@
                     <div class="teacher-lessons">
                         <span class="teacher-lessons-label-span">@lang('teacher-profile.lessons')</span>
                     </div>
-
-                @foreach($lessons as $result)
-                    <div class="row top-buffer-5">
-
-                        <div class="col-xs-2 col-sm-2">
-                            <div class="row text-center subject-icon">
-                                <img title="Categoría" alt="Categoría" src="{{ asset('img/'.$result->subject()->pluck('name').'.png') }}"/>
+                @if ($lessons->isEmpty())
+                        <div class="row top-buffer-5">
+                            <div class="col-xs-12 col-sm-12">
+                                Aún no tengo clases publicadas
                             </div>
                         </div>
+                @else
+                    @foreach($lessons as $result)
+                        <div class="row top-buffer-5">
 
-                        <div class="col-xs-6 col-sm-6">
-
-                            <div class="row t-lesson-subject">
-                                <span>@lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject()->pluck('name'))</span>
+                            <div class="col-xs-2 col-sm-2">
+                                <div class="row text-center subject-icon">
+                                    <img title="Categoría" alt="Categoría" src="{{ asset('img/'.$result->subject()->pluck('name').'.png') }}"/>
+                                </div>
                             </div>
 
-                            <div class="row result-description text-justify">
-                                <small>{{{ $result->description }}}</small>
+                            <div class="col-xs-6 col-sm-6">
+
+                                <div class="row t-lesson-subject">
+                                    <span>@lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject()->pluck('name'))</span>
+                                </div>
+
+                                <div class="row result-description text-justify">
+                                    <small>{{{ $result->description }}}</small>
+                                </div>
+
                             </div>
 
-                        </div>
+                            <div class="col-xs-offset-1 col-xs-3 col-sm-offset-1 col-sm-3">
 
-                        <div class="col-xs-offset-1 col-xs-3 col-sm-offset-1 col-sm-3">
-
-                            <div class="row text-center">
-                                <span id="lesson-stars-{{$result->id}}" class="stars-container"></span>
-                                <script type="text/javascript">
-                                    $('#lesson-stars-{{$result->id}}').raty({
-                                        @if(!(Auth::check()))
-                                        readOnly: true,
-                                        @endif
-                                        half: true,
-                                        size: 15,
-                                        starHalf: '{{ url('/img') }}/star-half-small.png',
-                                        starOff : '{{ url('/img') }}/star-off-small.png',
-                                        starOn  : '{{ url('/img') }}/star-on-small.png',
-                                        score: {{ $result->getLessonAvgRating() }}
-                                    });
-                                </script>
-                                @if(Auth::check())
+                                <div class="row text-center">
+                                    <span id="lesson-stars-{{$result->id}}" class="stars-container"></span>
                                     <script type="text/javascript">
-                                        $(document).on("click", "#lesson-stars-{{$result->id}}", function(e) {
-                                            e.preventDefault();
-                                            e.stopImmediatePropagation();
-                                            //registrar valoración en base de datos
-                                            var lesson_id = {{ $result->id }};
-                                            var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');
-                                            var postForm = $('form#postForm');
-                                            $.post('/reviews/handleReview', {
-                                                _token: postForm.find('input[name=_token]').val(),
-                                                review_lesson_id: lesson_id,
-                                                review_rating: review_rating
-                                            }, function (data) {
-                                                $('#lesson-stars-{{$result->id}}').raty({
-                                                    readOnly:true,
-                                                    half:true,
-                                                    size: 15,
-                                                    starHalf: '{{ url('/img') }}/star-half-small.png',
-                                                    starOff : '{{ url('/img') }}/star-off-small.png',
-                                                    starOn  : '{{ url('/img') }}/star-on-small.png',
-                                                    score:review_rating
-                                                });
-                                            });
+                                        $('#lesson-stars-{{$result->id}}').raty({
+                                            @if(!(Auth::check()))
+                                            readOnly: true,
+                                            @endif
+                                            half: true,
+                                            size: 15,
+                                            starHalf: '{{ url('/img') }}/star-half-small.png',
+                                            starOff : '{{ url('/img') }}/star-off-small.png',
+                                            starOn  : '{{ url('/img') }}/star-on-small.png',
+                                            score: {{ $result->getLessonAvgRating() }}
                                         });
                                     </script>
-                                @endif
+                                    @if(Auth::check())
+                                        <script type="text/javascript">
+                                            $(document).on("click", "#lesson-stars-{{$result->id}}", function(e) {
+                                                e.preventDefault();
+                                                e.stopImmediatePropagation();
+                                                //registrar valoración en base de datos
+                                                var lesson_id = {{ $result->id }};
+                                                var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');
+                                                var postForm = $('form#postForm');
+                                                $.post('/reviews/handleReview', {
+                                                    _token: postForm.find('input[name=_token]').val(),
+                                                    review_lesson_id: lesson_id,
+                                                    review_rating: review_rating
+                                                }, function (data) {
+                                                    $('#lesson-stars-{{$result->id}}').raty({
+                                                        readOnly:true,
+                                                        half:true,
+                                                        size: 15,
+                                                        starHalf: '{{ url('/img') }}/star-half-small.png',
+                                                        starOff : '{{ url('/img') }}/star-off-small.png',
+                                                        starOn  : '{{ url('/img') }}/star-on-small.png',
+                                                        score:review_rating
+                                                    });
+                                                });
+                                            });
+                                        </script>
+                                    @endif
+                                </div>
+
                             </div>
 
                         </div>
 
-                    </div>
-
-                @endforeach
+                    @endforeach
+                @endif
 
                 </div>
 
