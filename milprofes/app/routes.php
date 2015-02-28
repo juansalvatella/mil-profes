@@ -9,6 +9,9 @@ Route::model('school','School');
 Route::model('teacher_lesson','TeacherLesson');
 Route::model('school_lesson','SchoolLesson');
 
+//CSRF protection
+Route::when('*', 'csrf', array('post', 'put', 'delete'));
+
 //============
 // Main Pages
 //============
@@ -21,8 +24,6 @@ Route::get('/', array('as' => 'home', function()
 
     return View::make('home', compact('popular_schools','popular_teachers'));
 }));
-Route::post('/contactanos','ContactController@getContactForm');
-Route::post('/','ContactController@getMiniContactForm');
 
 //Profiles
 Route::get('profiles/teacher/{teacher}', function(Teacher $teacher) {
@@ -99,6 +100,8 @@ Route::get('quienes/somos', function() {
 Route::get('contactanos', function() {
     return View::make('contact');
 });
+Route::post('contactanos','ContactController@getContactForm');
+Route::post('/','ContactController@getMiniContactForm');
 
 //Register contact info requests
 Route::post('request/info/teacher/{lesson_id}', function($lesson_id) {
@@ -139,65 +142,68 @@ Route::post('/reviews/handleReview','ReviewsController@handleNewReview');
 Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolLessonNewReview');
 
 //Populate and view tables. Database test tools. FOR TEST PURPOSES ONLY!!!
-Route::get('populate', 'PopulateController@populate');
-Route::get('unpopulate', 'PopulateController@unpopulate');
-Route::get('/list/{table}', function($table)
-{
-    if($table=='students' || $table=='estudiantes')
-    {
-        $rows = Student::all();
-        $columns = Schema::getColumnListing('students');
-    }
-    elseif($table=='users' || $table=='usuarios')
-    {
-        $rows = User::all();
-        $columns = Schema::getColumnListing('users');
-    }
-    elseif($table=='teachers' || $table=='profesores')
-    {
-        $rows = Teacher::all();
-        $columns = Schema::getColumnListing('teachers');
-    }
-    elseif($table=='schools' || $table=='academias')
-    {
-        $rows = School::all();
-        $columns = Schema::getColumnListing('schools');
-    }
-    elseif($table=='teacherlessons' || $table=='clasesdeprofesores')
-    {
-        $rows = TeacherLesson::all();
-        $columns = Schema::getColumnListing('teacher_lessons');
-    }
-    elseif($table=='schoollessons' || $table=='clasesdeacademias')
-    {
-        $rows = SchoolLesson::all();
-        $columns = Schema::getColumnListing('school_lessons');
-    }
-    elseif($table=='subjects' || $table=='materias')
-    {
-        $rows = Subject::all();
-        $columns = Schema::getColumnListing('subjects');
-    }
-    elseif($table=='ratings')
-    {
-        $rows = Rating::all();
-        $columns = Schema::getColumnListing('ratings');
-    }
-    elseif($table=='teacherphones' || $table=='telefonosprofesores')
-    {
-        $rows = TeacherPhoneVisualization::all();
-        $columns = Schema::getColumnListing('teacher_lessons_phone_visualizations');
-    }
-    elseif($table=='schoolphones' || $table=='telefonosacademias')
-    {
-        $rows = SchoolPhoneVisualization::all();
-        $columns = Schema::getColumnListing('school_lessons_phone_visualizations');
-    }
-    else
-        return $table.' table not found';
 
-    return View::make('show_table_contents', compact('table','rows','columns'));
-});
+//Route::get('populate', 'PopulateController@populate');
+//Route::get('unpopulate', 'PopulateController@unpopulate');
+//Route::get('/list/{table}', function($table)
+//{
+//    if($table=='students' || $table=='estudiantes')
+//    {
+//        $rows = Student::all();
+//        $columns = Schema::getColumnListing('students');
+//    }
+//    elseif($table=='users' || $table=='usuarios')
+//    {
+//        $rows = User::all();
+//        $columns = Schema::getColumnListing('users');
+//    }
+//    elseif($table=='teachers' || $table=='profesores')
+//    {
+//        $rows = Teacher::all();
+//        $columns = Schema::getColumnListing('teachers');
+//    }
+//    elseif($table=='schools' || $table=='academias')
+//    {
+//        $rows = School::all();
+//        $columns = Schema::getColumnListing('schools');
+//    }
+//    elseif($table=='teacherlessons' || $table=='clasesdeprofesores')
+//    {
+//        $rows = TeacherLesson::all();
+//        $columns = Schema::getColumnListing('teacher_lessons');
+//    }
+//    elseif($table=='schoollessons' || $table=='clasesdeacademias')
+//    {
+//        $rows = SchoolLesson::all();
+//        $columns = Schema::getColumnListing('school_lessons');
+//    }
+//    elseif($table=='subjects' || $table=='materias')
+//    {
+//        $rows = Subject::all();
+//        $columns = Schema::getColumnListing('subjects');
+//    }
+//    elseif($table=='ratings')
+//    {
+//        $rows = Rating::all();
+//        $columns = Schema::getColumnListing('ratings');
+//    }
+//    elseif($table=='teacherphones' || $table=='telefonosprofesores')
+//    {
+//        $rows = TeacherPhoneVisualization::all();
+//        $columns = Schema::getColumnListing('teacher_lessons_phone_visualizations');
+//    }
+//    elseif($table=='schoolphones' || $table=='telefonosacademias')
+//    {
+//        $rows = SchoolPhoneVisualization::all();
+//        $columns = Schema::getColumnListing('school_lessons_phone_visualizations');
+//    }
+//    else
+//        return $table.' table not found';
+//
+//    return View::make('show_table_contents', compact('table','rows','columns'));
+//});
+
+//payment handlers. future implementation
 Route::get('lastpayment', 'UsersController@paymentIsCurrent');
 Route::get('ihavejustpaid', 'UsersController@updateLastPaymentDate');
 
@@ -260,9 +266,7 @@ Route::get('userpanel/dashboard', array('as' => 'userpanel', function()
     else
         return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
 }));
-Route::group(array('before' => 'csrf'), function() {
-    Route::post('userpanel/dashboard', 'UsersController@updateUser');
-});
+Route::post('userpanel/dashboard', 'UsersController@updateUser');
 Route::get('userpanel/become/teacher','UsersController@becomeATeacher');
 
 
