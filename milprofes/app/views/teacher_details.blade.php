@@ -35,14 +35,15 @@
             <div class="row">
                 <div class="col-xs-6">
 
-                    <div class="teacher-description">
-                        <span>@lang('teacher-profile.about_me')</span>
-                    </div>
+                    @if($teacher->description != '')
+                        <div class="teacher-description">
+                            <span>@lang('teacher-profile.about_me')</span>
+                        </div>
 
-                    <div class="teacher-description-text text-justify">
-                        <span>{{ $teacher->description }}</span>
-                    </div>
-
+                        <div class="teacher-description-text text-justify">
+                            <span>{{ $teacher->description }}</span>
+                        </div>
+                    @endif
 
                     <div class="teacher-lessons">
                         @if($teacher->availability->first()->day != '')
