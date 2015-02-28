@@ -147,7 +147,8 @@ class UsersController extends Controller
     // @return  Illuminate\Http\Response
     public function forgotPassword()
     {
-        return View::make(Config::get('confide::forgot_password_form'));
+//        return View::make(Config::get('confide::forgot_password_form'));
+        return View::make('forgot_password');
     }
 
     // Attempt to send change password link to the given email
@@ -174,7 +175,8 @@ class UsersController extends Controller
     // @return  Illuminate\Http\Response
     public function resetPassword($token)
     {
-        return View::make(Config::get('confide::reset_password_form'))
+//        return View::make(Config::get('confide::reset_password_form'))
+        return View::make('reset_password')
                 ->with('token', $token);
     }
 

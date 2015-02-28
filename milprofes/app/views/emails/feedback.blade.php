@@ -17,5 +17,5 @@ $userIpAddress = Request::getClientIp();
     Date: {{{ $date_time }}}<br>
     User IP address: {{{ $userIpAddress }}}<br>
     Asunto: {{{ $subject }}}<br><br>
-    Mensaje: {{{ $message }}}
+    Mensaje: {{{ $message }}}<br>
 </p>

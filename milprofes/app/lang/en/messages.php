@@ -44,7 +44,7 @@ return array(
         'not_confirmed'          => 'Tu cuenta parece no estar confirmada. Comprueba tu e-mail para acceder al correo de confirmación.',
         'confirmation'           => '¡Tu cuenta ha sido confirmada. ¡Ya puedes acceder!',
         'wrong_confirmation'     => 'El enlace para la confirmación de tu cuenta parece no ser válido.',
-        'password_forgot'        => 'La información sobre el restablecimiento de tu contraseña te ha sido enviada por e-mail.',
+        'password_forgot'        => 'Te hemos enviado un correo con información sobre el restablecimiento de tu contraseña.',
         'wrong_password_forgot'  => 'Usuario no encontrado.',
         'password_reset'         => 'Tu contraseña ha sido restablecida satisfactoriamente.',
         'wrong_password_reset'   => 'Contraseña incorrecta. Inténtalo de nuevo.',

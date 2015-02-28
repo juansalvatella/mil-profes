@@ -57,8 +57,8 @@
     html: false,
     disable: true,
     errors: {
-      match: 'Does not match',
-      minlength: 'Not long enough'
+      match: 'No coincide',
+      minlength: 'Demasiado corto'
     }
   }
 

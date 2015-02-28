@@ -14,10 +14,10 @@ $userIpAddress = Request::getClientIp();
 
 <p>
     Nombre: {{{ $name }}}<br>
-    Apellidos: {{{ $lastname }}}
+    Apellidos: {{{ $lastname }}}<br>
     E-mail: {{{ $email }}}<br>
     Date: {{{ $date_time }}}<br>
     User IP address: {{{ $userIpAddress }}}<br>
     Asunto: {{{ $subject }}}<br><br>
-    Mensaje: {{{ $message }}}
+    Mensaje: {{{ $message }}}<br>
 </p>
