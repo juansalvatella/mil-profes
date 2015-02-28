@@ -27,14 +27,6 @@
         </div>
     </div>
 
-    <div class="container">
-        @if(Session::has('success'))
-            <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-        @elseif(Session::has('failure'))
-            <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
-        @endif
-    </div>
-
 </div>
 <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
     <!-- Nav tabs -->
@@ -44,8 +36,16 @@
     </ul>
 
     <div class="tab-content container profile-box top-padding-50 bottom-padding-50" role="tabpanel">
-
         <div role="tabpanel" class="tab-pane active" id="teacher_tab">
+
+            <div class="col-xs-12">
+                @if(Session::has('success'))
+                    <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
+                @elseif(Session::has('failure'))
+                    <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
+                @endif
+            </div>
+
 
             {{ $content_teacher }}
 

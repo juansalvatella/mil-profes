@@ -4,19 +4,31 @@ class TeachersController extends BaseController
 {
     public function createLesson()
     {
-        //FALTA VALIDATION DEL FORM
-        //price > 0
-        //description not empty, min max chars
-        //subject one of the accepted 7 types
-        //address found and coded by google api
+        $input = Input::all();
+        $rules = array(
+            'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario)$/'),
+            'price' => 'numeric',
+            'address' => 'required|string',
+            'description' => 'required|string|max:200',
+        );
+        $validator = Validator::make($input, $rules);
+        if($validator->fails()) {
+            return Redirect::to('teacher/create/lesson')
+                ->withInput()
+                ->with('error', '¡Error! Los datos introducidos parecen no ser válidos. Asegúrate de haber rellenado bien los campos');
+        }
 
         $lesson = new TeacherLesson();
         $lesson->price = Input::get('price');
         $lesson->description = Input::get('description');
 
-        //FALTA VALIDAR LA GEOCODIFICACION
         $lesson->address = Input::get('address');
         $geocoding = Geocoding::geocode(Input::get('address'));
+        if(!$geocoding){
+            return Redirect::to('teacher/create/lesson')
+                ->withInput()
+                ->with('error', '¡Error! La dirección proporcionada parece no ser válida.');
+        }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
 
@@ -31,7 +43,7 @@ class TeachersController extends BaseController
         if($lesson->save())
             return Redirect::route('userpanel')->with('success', 'Clase creada con éxito');
         else
-            return Redirect::route('userpanel')->with('failure', 'Error! No se pudo crear la clase');
+            return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo crear la clase. Ponte en contacto con nosotros si el problema persiste.');
     }
 
     public function saveLesson()

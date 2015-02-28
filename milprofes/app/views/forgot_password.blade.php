@@ -21,10 +21,9 @@
                     <div class="form-group">
                         <label class="control-label" for="email">E-mail:</label>
 
-                        {{--<div class="input-group">--}}
                         <input class="form-control top-buffer-5" placeholder="Tu e-mail" type="email" name="email" id="email" value="{{{ Input::old('email') }}}" required="required">
                         <div class="help-block with-errors">&nbsp;</div>
-                        {{--</div>--}}
+
                     </div>
                 </div>
                 <div class="col-xs-12">
