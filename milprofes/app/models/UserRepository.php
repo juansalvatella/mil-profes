@@ -27,14 +27,8 @@ class UserRepository
         $user->lastname= (array_get($input, 'lastname')) ? array_get($input, 'lastname') : '';
         $user->phone = (array_get($input, 'phone')) ? array_get($input, 'phone') : '';
         $user->address = array_get($input, 'address');
-//        $geocoded_user_address = Geocoding::geocode($user->address);
-//        if($geocoded_user_address) {
         $user->lat = $geocoded_user_address[0]; //latitud
         $user->lon = $geocoded_user_address[1]; //longitud
-//        } else { //ERROR INESPERADO! asignar valores por defecto para evitar error en base de datos
-//            $user->lat = 0; //latitud
-//            $user->lon = 0; //longitud
-//        }
 
         //Default values
         $user->avatar = 'default_avatar.png';
