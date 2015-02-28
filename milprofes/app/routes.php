@@ -266,7 +266,8 @@ Route::get('userpanel/dashboard', array('as' => 'userpanel', function()
     else
         return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
 }));
-Route::post('userpanel/dashboard', 'UsersController@updateUser');
+Route::post('userpanel/dashboard/update/info', 'UsersController@updateUser');
+Route::post('userpanel/dashboard/update/passwd', 'UsersController@updateUserPasswd');
 Route::get('userpanel/become/teacher','UsersController@becomeATeacher');
 
 //======================

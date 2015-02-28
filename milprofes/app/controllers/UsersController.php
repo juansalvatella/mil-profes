@@ -216,15 +216,76 @@ class UsersController extends Controller
         return Redirect::to('/');
     }
 
+    public function updateUserPasswd()
+    {
+        if($user = Confide::user()){
+
+            $input = Input::all();
+            $rules = array(
+                'old_password'                  => 'required',
+                'new_password'                  => 'required|min:6|confirmed|different:old_password',
+                'new_password_confirmation'     => 'required|min:6|different:old_password|same:new_password'
+            );
+            $validator = Validator::make($input, $rules);
+            //Is the input valid? new_password confirmed and meets requirements
+            if ($validator->fails()) {
+                Session::flash('validationErrors', $validator->messages());
+                return Redirect::route('userpanel')
+                    ->withInput()
+                    ->with('failure','No fue posible cambiar la contraseña. Asegúrate de introducir una nueva contraseña adecuada y diferente a la actual.');
+            }
+            //Is the old password correct?
+            if(!Hash::check(Input::get('old_password'), $user->password)){
+                return Redirect::route('userpanel')
+                    ->withInput()
+                    ->with('failure','La contraseña actual no es la correcta.');
+            }
+            //Set new password
+            $user->password = Input::get('new_password');
+            $user->password_confirmation = Input::get('new_password_confirmation');
+
+            $user->touch();
+            $user->save();
+            Confide::logout();
+
+            return Redirect::to('/')
+                ->with('log-success','Tu contraseña se ha actualizado con éxito. Por favor, accede con tu nueva contraseña.')
+                ->with('show_login_modal',true);
+
+        } else {
+
+            return Redirect::route('/')
+                ->with('log-notice', 'No se fue posible actualizar tu contraseña. Tu sesión ha caducado, por favor, vuelve a iniciar sesión e inténtalo de nuevo.')
+                ->with('show_login_modal',true);
+
+        }
+    }
+
     public function updateUser()
     {
         if($user = Confide::user())
         {
+            $input = Input::all();
+            $rules = array(
+                'avatar'        => 'image|max:200',
+                'name'          => 'required|alpha_spaces|max:50',
+                'lastname'      => 'alpha_spaces|max:100',
+                'address'       => 'required|string|max:200',
+                'email'         => 'required|email',
+                'phone'         => 'string|min:5|max:20',
+                'description'   => 'string|max:250',
+            );
+            $validator = Validator::make($input, $rules);
+            if($validator->fails()) {
+                return Redirect::route('userpanel')
+                    ->withInput()
+                    ->with('failure','No fue posible actualizar tus datos. Asegúrate de cumplir con los requisitos de cada campo.');
+            }
+
             if(Input::hasFile('avatar')) {
-                //falta validar que sea una imagen!!!
                 $file = Input::file('avatar');
                 $file_extension = Input::file('avatar')->getClientOriginalExtension();
-                $filename = Str::random(20) . '.' . $file_extension;
+                $filename = Str::random(30) . '.' . $file_extension;
                 $path = public_path() . '/img/avatars/';
                 $file->move($path, $filename);
                 $user->avatar = $filename;
@@ -241,6 +302,12 @@ class UsersController extends Controller
             {
                 $user->address = Input::get('address');
                 $geocoding = Geocoding::geocode($user->address);
+                if(!$geocoding)
+                {
+                    return Redirect::route('userpanel')
+                        ->withInput()
+                        ->with('failure','No fue posible actualizar tus datos. La dirección proporcioada no parece ser válida.');
+                }
                 $user->lat = $geocoding[0]; //latitud
                 $user->lon = $geocoding[1]; //longitud
             }
@@ -256,45 +323,14 @@ class UsersController extends Controller
             {
                 $user->description = Input::get('description');
             }
-            if(Input::has('new_password'))
-            {
-                $rules = array(
-                    'old_password'                  => 'required',
-                    'new_password'                  => 'required|confirmed|different:old_password',
-                    'new_password_confirmation'     => 'required|different:old_password|same:new_password'
-                );
-                $validator = Validator::make(Input::all(), $rules);
-
-                //Is the input valid? new_password confirmed and meets requirements
-                if ($validator->fails()) {
-                    Session::flash('validationErrors', $validator->messages());
-                    return Redirect::route('userpanel')->withInput()->with('failure','No fue posible cambiar la contraseña. Asegúrate de introducir una nueva contraseña adecuada.');
-                }
-
-                //Is the old password correct?
-                if(!Hash::check(Input::get('old_password'), $user->password)){
-                    return Redirect::route('userpanel')->withInput()->with('failure','La contraseña actual introducida no es correcta.');
-                }
-
-                //Set new password
-                $user->password = Input::get('new_password');
-                $user->password_confirmation = Input::get('new_password_confirmation');
-
-                $user->touch();
-                $user->save();
-                Confide::logout();
-
-                return Redirect::to('/')
-                    ->with('log-success','Tu contraseña se ha actualizado con éxito. Por favor, vuelve a iniciar sesión')
-                    ->with('show_login_modal',true);
-            }
-            if($user->save())
+            if($user->save()) {
                 return Redirect::route('userpanel')->with('success', 'Tus datos se han actualizado con éxito');
-            else
+            } else {
                 return Redirect::route('userpanel')->withInput()->with('failure', 'Error al actualizar tus datos');
+            }
         } else {
             return Redirect::route('/')
-                ->with('log-notice', 'Al parecer tu sesión ha caducado, por favor, vuelve a iniciar sesión')
+                ->with('log-notice', 'No fue posible actualizar tus datos. Tu sesión ha caducado, por favor, vuelve a iniciar sesión e inténtalo de nuevo.')
                 ->with('show_login_modal',true);
         }
     }
