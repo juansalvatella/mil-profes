@@ -50,7 +50,7 @@
             {{ Form::label('', @trans('home.what_to_learn'), array('class'=>'main-home-label')) }}
               <div class="input-group">
                 <div class="input-group-btn">
-                  <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown">
+                  <button type="button" class="btn btn-default btn-lg dropdown-toggle btn-pick-subject" data-toggle="dropdown">
                     <input name="subject" id="subject" type="hidden" value="all">
                     <span id="subject-name">{{ @trans('home.subject_all') }}</span>
                     <span class="caret"></span>

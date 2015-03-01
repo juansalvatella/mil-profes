@@ -493,6 +493,9 @@ a, a:link, a:hover, a:active, a:visited {
     color: #000;
     text-decoration: none;
 }
+.btn-pick-subject {
+    height: 46px !important;
+}
 /************************ END HOME ************************/
 
 /* SEARCH */
@@ -803,7 +806,7 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-bottom: 40px;
 }
 .faqs-btn {
-    margin-top:0px;
+    margin-top: 0;
     min-width: 190px;
     min-height: 60px;
     line-height: 45px;
@@ -962,7 +965,7 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .profile-header {
     padding-bottom: 9px;
-    margin: 40px 0px 20px;
+    margin: 40px 0 20px;
 }
 .nav-tabs-profile > li.active > a, .nav-tabs-profile > li.active > a:hover, .nav-tabs-profile > li.active > a:focus {
     background-color: #eeeeee !important;
