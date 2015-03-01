@@ -252,9 +252,19 @@ a, a:link, a:hover, a:active, a:visited {
     /*line-height: 45px;*/
     font-family: raleway-semibold, sans-serif;
     color: #000;
-    background-color: #E79500;
-    border:1px solid #9A9A9A;
+    background-color: #ffa500;
+    border:1px solid #b4b4b4;
 }
+.btn-login-send:hover,
+.btn-login-send:focus,
+.btn-login-send.focus,
+.btn-login-send:active,
+.btn-login-send.active,
+.open > .dropdown-toggle.btn-login-send {
+    background-color: #E79500 !important;
+    border:1px solid #9A9A9A !important;
+}
+
 .userterms-link a, .userterms-link a:hover, .userterms-link a:active {
     text-decoration: underline;
     color: #000;
