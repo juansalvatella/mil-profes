@@ -166,9 +166,10 @@
                     $(document).ready(function(){
                         $("#contact-me").popover({
                             html: true,
-                            content:    '<div class="text-center contact-info-title1">Teléfono</div>'+
+                            content:    ''+
+@if($teacher->phone != '')  '<div class="text-center contact-info-title1">Teléfono</div>'+
                             '<div class="text-center contact-info-tel">{{ $teacher->phone }}</div>'+
-                            '<hr class="contact-info-hr">'+
+                            '<hr class="contact-info-hr">'+ @endif
                             '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
                             '<div class="text-center contact-info-mail">{{ $teacher->email  }}</div>'
                         });

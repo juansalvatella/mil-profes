@@ -204,8 +204,9 @@ Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolL
 //});
 
 //payment handlers. future implementation
-Route::get('lastpayment', 'UsersController@paymentIsCurrent');
-Route::get('ihavejustpaid', 'UsersController@updateLastPaymentDate');
+
+//Route::get('lastpayment', 'UsersController@paymentIsCurrent');
+//Route::get('ihavejustpaid', 'UsersController@updateLastPaymentDate');
 
 // Confide routes
 Route::get('users/create', function(){ return View::make('users_register'); });
