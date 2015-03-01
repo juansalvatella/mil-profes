@@ -492,6 +492,7 @@ a, a:link, a:hover, a:active, a:visited {
 .best-name-container a, .best-name-container a:active, .best-name-container a:hover {
     color: #000;
     text-decoration: none;
+    font-family: raleway-medium, sans-serif;
 }
 .btn-pick-subject {
     height: 46px !important;
