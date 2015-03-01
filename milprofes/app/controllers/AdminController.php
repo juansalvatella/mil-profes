@@ -24,6 +24,9 @@ class AdminController extends BaseController
         $school->phone2 = Input::get('phone2');
         $school->description = Input::get('description');
         $geocoding = Geocoding::geocode($school->address);
+        if(!$geocoding){
+            return Redirect::to('admin/schools')->with('failure', 'No se pudo crear la acadamia. Fallo al guardar la dirección.');
+        }
         $school->lat = $geocoding[0]; //latitud
         $school->lon = $geocoding[1]; //longitud
 
@@ -67,6 +70,9 @@ class AdminController extends BaseController
         {
             $school->address = Input::get('address');
             $geocoding = Geocoding::geocode($school->address);
+            if(!$geocoding){
+                return Redirect::to('admin/schools')->with('failure', 'No se pudo modificar los datos de la acadamia. Fallo al guardar la dirección.');
+            }
             $school->lat = $geocoding[0]; //latitud
             $school->lon = $geocoding[1]; //longitud
         }
@@ -84,10 +90,13 @@ class AdminController extends BaseController
         $lesson->description = Input::get('description');
         $lesson->address = Input::get('address');
         $geocoding = Geocoding::geocode(Input::get('address'));
+        $school_id = Input::get('school_id');
+        if(!$geocoding){
+            return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Error al guardar la dirección de la clase');
+        }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
 
-        $school_id = Input::get('school_id');
         $school = School::findOrFail($school_id);
         $subject_name = Input::get('subject');
         $subject = Subject::where('name',$subject_name)->first();
@@ -126,6 +135,9 @@ class AdminController extends BaseController
         $lesson->description = Input::get('description');
         $lesson->address = Input::get('address');
         $geocoding = Geocoding::geocode(Input::get('address'));
+        if(!$geocoding){
+            return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Error al guardar la dirección de la clase');
+        }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
 
