@@ -709,20 +709,24 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .pick {
     font-family: raleway-semibold, sans-serif;
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     background-color: #5CB85C;
+    height: 17px;
+    display: inline-block;
 }
 .pick-day {
     display: inline-block;
     text-align: center;
     min-width: 34px;
     background-color: #00A651;
+    height: 17px;
 }
 .pick-time {
     display: inline-block;
     text-align: center;
     min-width: 82px;
+    height: 17px;
 }
 .price {
     margin-top: 10px;
