@@ -12,6 +12,7 @@
     </div>
     <div class="container" style="margin-top: 15px;">
         <form action="{{ action('AdminController@deleteLesson') }}" method="post" role="form">
+            <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
             <input type="hidden" name="school_id" value="{{ $school->id }}"/>
             <input type="hidden" name="lesson_id" value="{{ $lesson->id }}"/>
             <input type="submit" class="btn btn-danger" value="Confirmar"/>

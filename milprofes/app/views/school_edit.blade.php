@@ -1,11 +1,16 @@
 @extends('layout')
 @section('content')
 
+    <div class="container">
+
     <div class="page-header">
         <h1>Editar academia <small>{{ $school->name }}</small></h1>
     </div>
 
+
+
     <form class="form-horizontal" action="{{ action('AdminController@saveSchool') }}" method="post" enctype="multipart/form-data" role="form">
+        <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
         <input type="hidden" name="id" value="{{ $school->id }}">
         <div class="form-group">
             <div class="col-sm-2 control-label">
@@ -68,5 +73,7 @@
             </div>
         </div>
     </form>
+
+    </div>
 
 @stop

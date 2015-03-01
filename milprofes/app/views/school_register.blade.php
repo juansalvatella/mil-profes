@@ -1,11 +1,14 @@
 @extends('layout')
 @section('content')
 
+    <div class="container">
+
     <div class="page-header">
         <h1>Nueva academia</h1>
     </div>
 
     <form class="form-horizontal" action="{{ action('AdminController@createSchool') }}" method="post" enctype="multipart/form-data" role="form">
+        <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
         <div class="form-group">
             <label class="col-sm-2 control-label" for="logo">Logotipo</label>
             <div class="col-sm-10">
@@ -61,5 +64,7 @@
             </div>
         </div>
     </form>
+
+    </div>
 
 @stop

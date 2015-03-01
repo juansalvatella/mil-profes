@@ -14,6 +14,8 @@
         </div>
     </div>
 
+    <div class="container">
+
     @if(Session::has('success'))
         <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
     @elseif(Session::has('failure'))
@@ -76,5 +78,7 @@
             </div>
         </div>
     @endif
+
+    </div>
 
 @stop

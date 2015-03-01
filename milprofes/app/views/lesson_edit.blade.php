@@ -8,6 +8,7 @@
     </div>
 
     <form class="form-horizontal" action="{{ action('AdminController@saveLesson') }}" method="post" role="form">
+        <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
         <input type="hidden" name="school_id" value="{{ $school->id }}">
         <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
         <div class="form-group">
