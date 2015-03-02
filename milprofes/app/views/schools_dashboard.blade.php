@@ -18,8 +18,12 @@
 
     @if(Session::has('success'))
         <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-    @elseif(Session::has('failure'))
+    @endif
+    @if(Session::has('failure'))
         <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
+    @endif
+    @if(Session::has('error'))
+        <div class="alert alert-warning" role="alert">{{ Session::get('error') }}</div>
     @endif
 
     <div class="panel panel-default">

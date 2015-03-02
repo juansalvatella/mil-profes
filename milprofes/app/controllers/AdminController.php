@@ -9,7 +9,7 @@ class AdminController extends BaseController
         {
             $file = Input::file('logo');
             $file_extension = Input::file('logo')->getClientOriginalExtension();
-            $filename = Str::random(20).'.'.$file_extension;
+            $filename = Str::random(30).'.'.$file_extension;
             $path = public_path().'/img/logos/';
             $file->move($path, $filename);
             $school->logo = $filename;
@@ -25,7 +25,10 @@ class AdminController extends BaseController
         $school->description = Input::get('description');
         $geocoding = Geocoding::geocode($school->address);
         if(!$geocoding){
-            return Redirect::to('admin/schools')->with('failure', 'No se pudo crear la acadamia. Fallo al guardar la dirección.');
+//            return Redirect::to('admin/schools')
+            return Redirect::back()
+                ->withInput()
+                ->with('failure', 'No se pudo crear la acadamia. Fallo al guardar la dirección.');
         }
         $school->lat = $geocoding[0]; //latitud
         $school->lon = $geocoding[1]; //longitud
@@ -71,7 +74,10 @@ class AdminController extends BaseController
             $school->address = Input::get('address');
             $geocoding = Geocoding::geocode($school->address);
             if(!$geocoding){
-                return Redirect::to('admin/schools')->with('failure', 'No se pudo modificar los datos de la acadamia. Fallo al guardar la dirección.');
+//                return Redirect::to('admin/schools')
+                return Redirect::back()
+                    ->withInput()
+                    ->with('failure', 'No se pudo modificar los datos de la acadamia. Fallo al guardar la dirección.');
             }
             $school->lat = $geocoding[0]; //latitud
             $school->lon = $geocoding[1]; //longitud
@@ -92,7 +98,10 @@ class AdminController extends BaseController
         $geocoding = Geocoding::geocode(Input::get('address'));
         $school_id = Input::get('school_id');
         if(!$geocoding){
-            return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Error al guardar la dirección de la clase');
+//            return Redirect::route('lessons', array('school_id' => $school_id))
+            return Redirect::back()
+                ->withInput()
+                ->with('failure', 'No se pudo crear nueva clase. Error al guardar la dirección.');
         }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
@@ -136,7 +145,10 @@ class AdminController extends BaseController
         $lesson->address = Input::get('address');
         $geocoding = Geocoding::geocode(Input::get('address'));
         if(!$geocoding){
-            return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Error al guardar la dirección de la clase');
+//            return Redirect::route('lessons', array('school_id' => $school_id))
+            return Redirect::back()
+                ->withInput()
+                ->with('failure', 'No se puedo actualizar datos. Error al guardar la nueva dirección.');
         }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud

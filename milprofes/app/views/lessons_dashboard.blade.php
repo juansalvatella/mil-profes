@@ -23,11 +23,10 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Precio</th>
-                <th>Descripción</th>
+                <th>Precio (€/curso)</th>
+                <th>Descripción de la clase</th>
                 <th>Materia</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -38,8 +37,7 @@
                     <td>{{ $subjects[$lesson->id]->name }}</td>
                     <td>
                         <a href="{{ url('admin/edit/lesson',array($lesson->id)) }}" class="btn btn-default">Modificar clase</a>
-                    </td>
-                    <td>
+                        &nbsp;
                         <a href="{{ url('admin/delete/lesson',array($lesson->id)) }}" class="btn btn-danger">Eliminar clase</a>
                     </td>
                 </tr>
