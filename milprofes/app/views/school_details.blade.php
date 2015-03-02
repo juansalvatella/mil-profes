@@ -33,7 +33,7 @@
             </div>
 
             <div class="row">
-
+@if($school->description != '')
                 <div class="col-xs-12 school-description">
                     <span>@lang('school-profile.our_school')</span>
                 </div>
@@ -41,12 +41,18 @@
                 <div class="col-xs-12 school-description-text text-justify">
                     <span>{{ $school->description }}</span>
                 </div>
-
+@endif
                 <div class="col-xs-12 school-lessons">
                     <span class="school-lessons-label-span">@lang('school-profile.lessons')</span>
                 </div>
             </div>
-
+            @if ($lessons->isEmpty())
+                <div class="row top-buffer-5">
+                    <div class="col-xs-12 col-sm-12">
+                        Estamos publicando nuestras clases. Visita nuestro perfil en unos minutos.
+                    </div>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-xs-12">
                     <div class="search-results-list">
@@ -144,11 +150,14 @@
                                                 $(document).ready(function(){
                                                     $("#contact-me-{{ $result->id }}").popover({
                                                         html: true,
-                                                        content:    '<div class="text-center contact-info-title1">Teléfono</div>'+
+                                                        content:    ''+
+     @if($school->phone == '' && $school->email == '')  'Nuestra información de contacto aún no está disponible.'+ @endif
+                            @if ($school->phone != '')  '<div class="text-center contact-info-title1">Teléfono</div>'+
                                                         '<div class="text-center contact-info-tel">{{ $school->phone }}</div>'+
-                                                        '<hr class="contact-info-hr">'+
-                                                        '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
-                                                        '<div class="text-center contact-info-mail">{{ $school->email  }}</div>'
+                                                        '<hr class="contact-info-hr">'+ @endif
+                            @if($school->email != '')   '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
+                                                        '<div class="text-center contact-info-mail">{{ $school->email  }}</div>'+ @endif
+                                                        ''
                                                     });
                                                 });
                                                 $(document).on("click", "#contact-me-{{ $result->id }}", function(e) {
