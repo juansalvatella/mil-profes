@@ -241,9 +241,12 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .login-modal-logo {
     font-size: 2.5em;
+    color: #494949;
+    font-family: raleway-light,sans-serif;
 }
 .login-modal {
     background-color: #f7f7f7;
+    border-radius: 5px;
 }
 .btn-login-send {
     min-width: 94px;
@@ -279,6 +282,18 @@ a, a:link, a:hover, a:active, a:visited {
     border-color: #E79500;
     color: #000 !important;
 }
+
+/*.btn-milprofes:focus,*/
+/*.btn-login-send:focus,*/
+/*.lasts-btn-schools:focus,*/
+/*.lasts-btn-teachers:focus,*/
+/*.contact-form-submit-btn:focus,*/
+/*.contact-form-submit-btn-2:focus,*/
+/*.faqs-btn:focus {*/
+    /*background-color: #E79500;*/
+    /*border-color: #E79500;*/
+    /*color: #000 !important;*/
+/*}*/
 
 .userterms-link a, .userterms-link a:hover, .userterms-link a:active {
     text-decoration: underline;
