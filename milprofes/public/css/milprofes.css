@@ -441,7 +441,22 @@ a, a:link, a:hover, a:active, a:visited {
 .btn-home-search {
     margin: 0 10px 5px 10px;
     font-family: raleway-semibold, sans-serif;
+    background-color: #287AF9;
+    color: #fff;
+    border-color: #287AF9;
 }
+.btn-home-search:hover,
+.btn-home-search:focus,
+.btn-home-search.focus,
+.btn-home-search:active,
+.btn-home-search.active,
+.open > .dropdown-toggle.btn-home-search {
+    background-color: #E79500;
+    color:#000;
+    border-color: #E79500;
+}
+
+
 .chr {
     width: 100%;
     text-align: center;
