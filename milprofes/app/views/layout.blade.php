@@ -376,24 +376,24 @@
                             <div class="col-xs-6 text-left">
                                 {{ Form::label('contact_name', @trans('layout.contact_form_name'), array('class'=>'contact-form-label control-label')) }}
                                 <div class="form-group">
-                                    {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'),'required','maxlength'=>'50')) }}
+                                    {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellene este campo.')) }}
                                     <small><small><span class="help-block with-errors"></span></small></small>
                                 </div>
                                 {{ Form::label('contact_email', @trans('layout.contact_form_email'), array('class'=>'contact-form-label control-label')) }}
                                 <div class="form-group">
-                                    {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.mail_placeholder'),'required')) }}
+                                    {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.mail_placeholder'),'required','data-error'=>'Introduce una dirección de correo.')) }}
                                     <small><small><span class="help-block with-errors"></span></small></small>
                                 </div>
                                 {{ Form::label('contact_subject', @trans('layout.contact_form_subject'), array('class'=>'contact-form-label control-label')) }}
                                 <div class="form-group">
-                                    {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.subject_placeholder'),'required','maxlength'=>'50')) }}
+                                    {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.subject_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellene este campo.')) }}
                                     <small><small><span class="help-block with-errors"></span></small></small>
                                 </div>
                             </div>
                             <div class="col-xs-6 text-left">
                                 {{ Form::label('contact_message', @trans('layout.contact_form_message'), array('class'=>'contact-form-label control-label')) }}
                                 <div class="form-group">
-                                    {{ Form::textarea('contact_message', '', array('rows' => 5, 'class'=>'form-control input-sm','placeholder'=>@trans('layout.message_placeholder'),'required','maxlength'=>'1000')) }}
+                                    {{ Form::textarea('contact_message', '', array('rows' => 5, 'class'=>'form-control input-sm','placeholder'=>@trans('layout.message_placeholder'),'required','maxlength'=>'1000','data-error'=>'Rellene este campo.')) }}
                                     <small><small><span class="help-block with-errors"></span></small></small>
                                 </div>
                                 <div class="form-group">
@@ -467,7 +467,6 @@
 
     {{--<script src="http://js.maxmind.com/js/country.js" type="text/javascript"></script>--}}
     {{--<script src="http://js.maxmind.com/js/geoip.js" type="text/javascript" ></script>--}}
-    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
 </body>
 </html>

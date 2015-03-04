@@ -88,6 +88,7 @@
               });
           }
       </script>
+      <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
       <div class="row text-center top-buffer-15">
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
