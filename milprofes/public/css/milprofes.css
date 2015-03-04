@@ -792,6 +792,10 @@ body.loading .modal-loading { /*modal element will be visible */
 /* END USER PANEL */
 
 /* CONTACT */
+.contact-form-container {
+    background: #EEE url(../img/contacto_img.png) top center no-repeat;
+    background-size: contain;
+}
 #contact-follow {
     font-size: 1.2em;
     color: #000;

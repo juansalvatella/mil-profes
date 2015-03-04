@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
-    <div class="container generic-box top-padding-50 bottom-padding-100 magic-align">
+    <div class="container generic-box top-padding-50 bottom-padding-100 magic-align contact-form-container">
 
             @if (Session::get('success'))
                 <div class="row">
