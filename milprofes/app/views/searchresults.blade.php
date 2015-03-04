@@ -437,9 +437,9 @@
                         </div>
                         <div class="row text-center top-buffer-15">
                                 @if($prof_o_acad=='profesor')
-                                    <a id="contact-me-{{ $result->id }}" class="btn btn-info background-287AF9" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
+                                    <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
                                 @else
-                                    <a id="contact-me-{{ $result->id }}" class="btn btn-warning background-E79500" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctanos</a>
+                                    <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctanos</a>
                                 @endif
                                 <script type="text/javascript">
                                     $(document).ready(function(){

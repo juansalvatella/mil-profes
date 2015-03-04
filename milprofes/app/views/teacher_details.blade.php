@@ -163,7 +163,7 @@
 
             <div class="row text-center">
 
-                <a id="contact-me" class="btn btn-primary background-287AF9" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
+                <a id="contact-me" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
                 <script type="text/javascript">
                     $(document).ready(function(){
                         $("#contact-me").popover({

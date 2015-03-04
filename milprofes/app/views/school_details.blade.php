@@ -149,7 +149,7 @@
 
                                         <div class="row text-center top-buffer-15">
 
-                                            <a id="contact-me-{{ $result->id }}" class="btn btn-primary background-287AF9" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctanos</a>
+                                            <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctanos</a>
                                             <script type="text/javascript">
                                                 $(document).ready(function(){
                                                     $("#contact-me-{{ $result->id }}").popover({

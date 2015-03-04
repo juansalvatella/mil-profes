@@ -332,8 +332,8 @@
                         <div class="row recent-title">@lang('layout.recent_results')</div>
 
                         <div class="row recent-selectors">
-                            <div class="pull-left"><a href="#" class="btn btn-primary lasts-btn-schools">@lang('layout.schools')</a></div>
-                            <div class="pull-right"><a href="#" class="btn btn-primary lasts-btn-teachers">@lang('layout.teachers')</a></div>
+                            <div class="pull-left"><a href="#" class="btn lasts-btn-schools">@lang('layout.schools')</a></div>
+                            <div class="pull-right"><a href="#" class="btn lasts-btn-teachers">@lang('layout.teachers')</a></div>
                         </div>
                         <script type="text/javascript">
                             $(document).ready(function() {
@@ -397,7 +397,7 @@
                                     <small><small><span class="help-block with-errors"></span></small></small>
                                 </div>
                                 <div class="form-group">
-                                    {{ Form::submit('Enviar', array('class' => 'btn btn-primary contact-form-submit-btn')) }}
+                                    {{ Form::submit('Enviar', array('class' => 'btn contact-form-submit-btn')) }}
                                 </div>
                             </div>
                             {{ Form::close(); }}

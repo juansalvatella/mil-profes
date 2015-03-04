@@ -75,7 +75,7 @@
 
             <div class="col-xs-12 col-sm-offset-2 col-sm-4 clear-left">
                 <div class="form-group">
-                    {{ Form::submit('Enviar', array('class' => 'btn btn-primary input-lg contact-form-submit-btn-2')) }}
+                    {{ Form::submit('Enviar', array('class' => 'btn input-lg contact-form-submit-btn-2')) }}
                 </div>
             </div>
 
