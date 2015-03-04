@@ -46,8 +46,10 @@
                     @endif
 
                     <div class="teacher-lessons">
-                        @if($teacher->availability->first()->day != '')
-                            <span>@lang('teacher-profile.availability')</span>
+                        @if(!$teacher->availability->isEmpty())
+                            @if($teacher->availability->first()->day != '')
+                                <span>@lang('teacher-profile.availability')</span>
+                            @endif
                         @endif
                     </div>
 
