@@ -497,6 +497,18 @@ a, a:link, a:hover, a:active, a:visited {
 .btn-pick-subject {
     height: 46px !important;
 }
+#mi-ubicacion {
+    margin-top: -12px;
+}
+#mi-ubicacion img {
+    margin-top: -4px;
+}
+#mi-ubicacion a, #mi-ubicacion a:hover, #mi-ubicacion a:active, #mi-ubicacion a:visited {
+    font-family: raleway-semibold, sans-serif;
+    font-size: 16px;
+    color: #E79501;
+    text-decoration: none;
+}
 /************************ END HOME ************************/
 
 /* SEARCH */

@@ -465,5 +465,9 @@
         </script>
     @endif
 
-  </body>
+    {{--<script src="http://js.maxmind.com/js/country.js" type="text/javascript"></script>--}}
+    {{--<script src="http://js.maxmind.com/js/geoip.js" type="text/javascript" ></script>--}}
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+</body>
 </html>

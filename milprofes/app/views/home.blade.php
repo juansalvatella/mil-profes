@@ -43,7 +43,51 @@
                   @endif
               </div>
           </div>
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8 text-left hidden" id="mi-ubicacion">
+              <a href="#" id="mi-ubicacion-link">
+                  <img src="{{ asset('img/marcador-distancia.png') }}">
+                  Usar mi ubicación actual
+              </a>
+          </div>
       </div>
+      <script type="text/javascript">
+          $(document).ready(function(){ // IP to Location Service Provided by Google
+              var checknavgeo = navigator.geolocation;
+              if(checknavgeo)
+                  $("#mi-ubicacion").removeClass('hidden');
+              $('#mi-ubicacion-link').click(function (e) {
+                  e.preventDefault();
+                  if (navigator && checknavgeo) {
+                      navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+                  } else {
+//                      printAddress(geoip_latitude(), geoip_longitude()); //MAXMIND
+                      $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
+                  }
+              });
+          });
+          function geo_success(position) {
+              printAddress(position.coords.latitude, position.coords.longitude);
+          }
+          function geo_error() {
+//              printAddress(geoip_latitude(), geoip_longitude()); //MAXMIND
+              $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
+          }
+          function printAddress(latitude, longitude) {
+              var geocoder = new google.maps.Geocoder();
+              var yourLocation = new google.maps.LatLng(latitude, longitude);
+              geocoder.geocode({ 'latLng': yourLocation }, function (results, status) {
+                  if(status == google.maps.GeocoderStatus.OK) {
+                      if(results[0]) {
+                          $('#user_address').val(''+results[0].formatted_address);
+                      } else {
+                          $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
+                      }
+                  } else {
+                      $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
+                  }
+              });
+          }
+      </script>
 
       <div class="row text-center top-buffer-15">
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
