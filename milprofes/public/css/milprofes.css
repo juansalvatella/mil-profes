@@ -530,7 +530,7 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 #sub-header-menu {
     padding: 15px 0 15px 0;
-    background-color: #0492da;
+    background-color: #287AF9;
     color: #ffffff;
     margin-bottom: 25px;
 }
@@ -629,38 +629,18 @@ body.loading .modal-loading { /*modal element will be visible */
     line-height: 156px;
     background-color: #EBEBEB;
     width: 100%;
-    -webkit-box-shadow: 0 8px 6px -10px black;
-    -moz-box-shadow: 0 8px 6px -10px black;
-    box-shadow: 0 8px 6px -10px black;
+    -webkit-box-shadow:-7px 4px 5px 0 rgba(201,201,201,1);
+    -moz-box-shadow:-7px 4px 5px 0 rgba(201,201,201,1);
+    box-shadow:-7px 4px 5px 0 rgba(201,201,201,1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 .search-image-container img {
     max-width:100%;
     max-height:100%;
     margin:auto;
     vertical-align: middle;
-}
-.contact-info-title1 {
-    color: #0480be;
-    font-size: 1.3em;
-}
-.contact-info-tel {
-    font-size: 1.3em;
-}
-.contact-info-hr {
-    border:0;
-    width:50%;
-    color:rgb(255, 169, 17);
-    background-color:rgb(255, 169, 17);
-    height: 1px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-.contact-info-title2 {
-    color: #0480be;
-    font-size: 1.1em;
-}
-.contact-info-mail {
-    font-size: 1.1em;
 }
 .profile-link {
     padding-top: 8px;
@@ -1031,3 +1011,38 @@ body.loading .modal-loading { /*modal element will be visible */
     color:#000;
 }
 /* END USER PANEL */
+
+/*POPOVERS*/
+.popover {
+    text-align: center;
+}
+.popover-title {
+    font-family: raleway-semibold, sans-serif;
+}
+.contact-info-title1 {
+    color: #0480be;
+    font-family: raleway-bold, sans-serif;
+    font-size: 18px;
+}
+.contact-info-tel {
+    font-family: raleway-bold, sans-serif;
+    font-size: 18px;
+}
+.contact-info-hr {
+    border:0;
+    width:50%;
+    color:rgb(255, 169, 17);
+    background-color:rgb(255, 169, 17);
+    height: 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.contact-info-title2 {
+    color: #0480be;
+    font-family: raleway-bold, sans-serif;
+    font-size: 15px;
+}
+.contact-info-mail {
+    font-family: raleway-bold, sans-serif;
+    font-size: 12px;
+}
