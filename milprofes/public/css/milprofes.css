@@ -386,7 +386,10 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .contact-form-label {
     color:#E79500;
-    margin-top:5px;
+    margin-top:0px;
+}
+#contact_message {
+    height:105px;
 }
 .contact-form-submit-btn {
     margin-top: 15px;
