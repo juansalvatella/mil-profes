@@ -331,11 +331,27 @@ a, a:link, a:hover, a:active, a:visited {
     color: #ffffff;
 }
 #footer-faicons {
-    color: #ffffff;
+    /*color: #ffffff;*/
     font-size: 1.4em;
 }
-#footer-faicons a {
-    color: #ffffff;
+/*#footer-faicons a {*/
+    /*color: #ffffff;*/
+/*}*/
+#footer-faicons a:hover {
+    color: #E79500 !important;
+    text-decoration: none;
+} /* , TW , LinkedIn  , Google+ */
+.fa-facebook-f {
+    color: #2d3a8b !important;
+}
+.fa-twitter {
+    color: #5ea9dd !important;
+}
+.fa-linkedin {
+    color: #0097bd !important;
+}
+.fa-google-plus {
+    color: #d44132 !important;
 }
 #footer {
     background-color: #FFC307;
