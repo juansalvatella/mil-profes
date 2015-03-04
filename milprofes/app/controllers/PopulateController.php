@@ -19,8 +19,8 @@ class PopulateController extends BaseController
 //        $this->makeSomeUsersTeachers(); //algunos serán, además, profesores
 //        $this->populateSchools(); //escuelas
 //        $this->populateSubjects(); //materias
-        $this->populateTeacherLessons(); //lecciones/clases con 1 profesor (docente) y 1 materia relacionados
-        $this->populateSchoolLessons(); //lecciones/clases con 1 academia (docente) y 1 materia relacionados
+//        $this->populateTeacherLessons(); //lecciones/clases con 1 profesor (docente) y 1 materia relacionados
+//        $this->populateSchoolLessons(); //lecciones/clases con 1 academia (docente) y 1 materia relacionados
 //        $this->populateRatings(); //ratings, con 1 clase (puntuada) y 1 estudiante (puntuador) relacionados
 //        $this->populateRoles();
 //        $this->populatePermissions();
@@ -69,7 +69,7 @@ class PopulateController extends BaseController
             $user->lat = $add_encoded[0]; //latitud
             $user->lon = $add_encoded[1]; //longitud
             $user->avatar = 'default_avatar.png';
-            $user->availability = 'Not implemented yet';
+//            $user->availability = 'Not implemented yet';
             $user->description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sem mi, pulvinar non sapien eget, rhoncus molestie nisi. Nam elit quam, iaculis sed tempor in, porta vitae elit. Nulla mattis ligula in nulla dignissim euismod at eu justo. Cras placerat leo vitae nisl bibendum, ut fringilla sapien laoreet. Proin nec varius enim. Quisque egestas arcu libero. Nulla facilisi. Cras a imperdiet justo. Etiam eu nisl erat. Suspendisse fermentum tristique justo. In quis finibus augue, a';
             $user->username = 'username'.$i;
             $user->email = 'estudiante'.$str.'@email.com';
@@ -163,7 +163,7 @@ class PopulateController extends BaseController
             $lesson->address = $user->address;
             $lesson->lat = $user->lat;
             $lesson->lon = $user->lon;
-            $lesson->availability = 'Lunes a Viernes de 17 a 21h';
+//            $lesson->availability = 'Lunes a Viernes de 17 a 21h';
             $lesson->teacher()->associate($teacher);
             $lesson->subject()->associate($subject);
             if(!($lesson->save()))
@@ -187,7 +187,7 @@ class PopulateController extends BaseController
             $lesson->address = $school->address;
             $lesson->lat = $school->lat;
             $lesson->lon = $school->lon;
-            $lesson->availability = 'Lunes a Viernes de 17 a 21h';
+//            $lesson->availability = 'Lunes a Viernes de 17 a 21h';
             $lesson->school()->associate($school);
             $lesson->subject()->associate($subject);
             if(!($lesson->save()))
@@ -273,18 +273,18 @@ class PopulateController extends BaseController
     {
         $admin = new User();
 
-        $admin->name = 'Administrador';
+        $admin->name = 'Administrador2';
         $admin->lastname = 'Network';
         $admin->phone = '622 70 63 10';
         $admin->avatar = 'default_avatar.png';
-        $admin->availability = 'Not implemented yet';
-        $admin->description = 'Mil Profes Admin';
+//        $admin->availability = 'Not implemented yet';
+        $admin->description = 'Descripción';
         $admin->address = 'Plaça Catalunya 1, Barcelona';
         $add_encoded = Geocoding::geocode($admin->address);
         $admin->lat = $add_encoded[0]; //latitud
         $admin->lon = $add_encoded[1]; //longitud
 
-        $admin->username = 'admin';
+        $admin->username = 'admin2';
         $admin->email = 'mitxel@network30.com';
         $admin->password = 'passwordtest1234';
         $admin->password_confirmation = 'passwordtest1234';
