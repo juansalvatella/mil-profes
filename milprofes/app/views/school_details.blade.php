@@ -71,18 +71,22 @@
                                         <div class="row lesson-subject">
                                                 <span>@lang('school-profile.lesson_of') @lang('school-profile.of_subject_'.$result->subject()->pluck('name'))</span>
                                         </div>
+                                        
+                                        @if($result->description != '')
+                                            <div class="row lesson-description-title">
+                                                @lang('school-profile.lesson-description')
+                                            </div>
 
-                                        <div class="row lesson-description-title">
-                                            @lang('school-profile.lesson-description')
-                                        </div>
-
-                                        <div class="row result-description bottom-srs-separator text-justify">
-                                            <small>{{{ $result->description }}}</small>
-                                        </div>
+                                            <div class="row result-description bottom-srs-separator text-justify">
+                                                <small>{{{ $result->description }}}</small>
+                                            </div>
+                                        @endif
 
                                         <div class="row lesson-availability-title">
-                                            @if($result->availability->count())
-                                                @lang('school-profile.availability')
+                                            @if(!$result->availability->isEmpty())
+                                                @if($result->availability->first()->day != '')
+                                                    <span>@lang('school-profile.availability')</span>
+                                                @endif
                                             @endif
                                         </div>
 
