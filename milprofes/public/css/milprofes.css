@@ -299,14 +299,13 @@ a, a:link, a:hover, a:active, a:visited {
     /*background-color: #E79500;*/
     /*border-color: #E79500;*/
     /*color: #000 !important;*/
-
-    /*background-color: #287af9;*/
-    /*border-color: #287af9;*/
-    /*color: #fff !important;*/
-    /*font-family: raleway-bold, sans-serif;*/
-    /*-webkit-box-shadow: -7px 4px 5px 0 rgba(255, 255, 255, 0.50);*/
-    /*-moz-box-shadow: -7px 4px 5px 0 rgba(255, 255, 255, 0.50);*/
-    /*box-shadow: -7px 4px 5px 0 rgba(255, 255, 255, 0.50);*/
+    background-color: #287af9;
+    border-color: #287af9;
+    color: #fff !important;
+    font-family: raleway-bold, sans-serif;
+    -webkit-box-shadow: -4px 4px 4px 0 rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: -4px 4px 4px 0 rgba(0, 0, 0, 0.10);
+    box-shadow: -4px 4px 4px 0 rgba(0, 0, 0, 0.10);
 }
 
 .userterms-link a, .userterms-link a:hover, .userterms-link a:active {
