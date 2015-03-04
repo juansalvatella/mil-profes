@@ -71,7 +71,7 @@
                                         <div class="row lesson-subject">
                                                 <span>@lang('school-profile.lesson_of') @lang('school-profile.of_subject_'.$result->subject()->pluck('name'))</span>
                                         </div>
-                                        
+
                                         @if($result->description != '')
                                             <div class="row lesson-description-title">
                                                 @lang('school-profile.lesson-description')

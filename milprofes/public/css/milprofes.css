@@ -342,12 +342,14 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .enosis-link a:hover {
     color: #FF0000 !important;
+    text-decoration: underline !important;
 }
 .footer-links {
     font-size: 0.9em;
 }
 .footer-links a:hover, .netw-link a:hover {
     color: #287AF9 !important;
+    text-decoration: underline !important;
 }
 .img-recientes {
     max-width: 95%;
