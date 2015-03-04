@@ -289,17 +289,25 @@ a, a:link, a:hover, a:active, a:visited {
     color: #000 !important;
 }
 
-/*.btn-milprofes:focus,*/
-/*.btn-login-send:focus,*/
-/*.lasts-btn-schools:focus,*/
-/*.lasts-btn-teachers:focus,*/
-/*.contact-form-submit-btn:focus,*/
-/*.contact-form-submit-btn-2:focus,*/
-/*.faqs-btn:focus {*/
+.btn-milprofes:focus,
+.btn-login-send:focus,
+.lasts-btn-schools:focus,
+.lasts-btn-teachers:focus,
+.contact-form-submit-btn:focus,
+.contact-form-submit-btn-2:focus,
+.faqs-btn:focus {
     /*background-color: #E79500;*/
     /*border-color: #E79500;*/
     /*color: #000 !important;*/
-/*}*/
+
+    /*background-color: #287af9;*/
+    /*border-color: #287af9;*/
+    /*color: #fff !important;*/
+    /*font-family: raleway-bold, sans-serif;*/
+    /*-webkit-box-shadow: -7px 4px 5px 0 rgba(255, 255, 255, 0.50);*/
+    /*-moz-box-shadow: -7px 4px 5px 0 rgba(255, 255, 255, 0.50);*/
+    /*box-shadow: -7px 4px 5px 0 rgba(255, 255, 255, 0.50);*/
+}
 
 .userterms-link a, .userterms-link a:hover, .userterms-link a:active {
     text-decoration: underline;

@@ -118,6 +118,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-body login-modal">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div class="row text-center bottom-srs-separator">
                         <span class="login-modal-logo">@lang('layout.logo')</span>
                     </div>
@@ -183,6 +184,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body login-modal">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div class="row text-center bottom-srs-separator">
                         <span class="login-modal-logo">@lang('layout.logo')</span>
                     </div>
