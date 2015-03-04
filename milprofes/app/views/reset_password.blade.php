@@ -22,7 +22,7 @@
                         <div class="col-xs-12">
                             <div class="form-group">
                                 <label for="password">{{{ Lang::get('confide::confide.password') }}}</label>
-                                <input class="form-control reset-password" placeholder="{{{ Lang::get('confide::confide.password') }}}" type="password" name="password" id="password" required="required" pattern=".{6,}">
+                                <input class="form-control reset-password" placeholder="{{{ Lang::get('confide::confide.password') }}}" type="password" name="password" id="password" required="required" pattern=".{6,}" data-error="Introduce una contraseña de al menos 6 caracteres.">
                                 <span class="help-block with-errors">Mínimo 6 caracteres de longitud</span>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                         <div class="col-xs-12">
                             <div class="form-group">
                                 <label for="password_confirmation">{{{ Lang::get('confide::confide.password_confirmation') }}}</label>
-                                <input class="form-control" placeholder="{{{ Lang::get('confide::confide.password_confirmation') }}}" type="password" name="password_confirmation" id="password_confirmation" required="required" data-match=".reset-password">
+                                <input class="form-control" placeholder="{{{ Lang::get('confide::confide.password_confirmation') }}}" type="password" name="password_confirmation" id="password_confirmation" required="required" data-match=".reset-password" data-error="Rellene este campo." data-match-error="No coincide.">
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>

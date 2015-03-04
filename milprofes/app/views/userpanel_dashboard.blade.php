@@ -69,7 +69,7 @@
                     <div class="col-xs-12 form-group">
                         <label class="control-label col-xs-2" for="name">Nombre (*)</label>
                         <div class="col-xs-10">
-                            <input class="form-control col-xs-10" placeholder="Tu nombre" type="text" name="name" id="name" value="{{{ $user->name }}}" maxlength="50" required="required">
+                            <input class="form-control col-xs-10" placeholder="Tu nombre" type="text" name="name" id="name" value="{{{ $user->name }}}" maxlength="50" required="required" data-error="Rellene este campo.">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                     <div class="col-xs-12 form-group">
                         <label class="col-xs-2 control-label" for="address">Dirección (*)</label>
                         <div class="col-xs-10">
-                            <input class="form-control" placeholder="Mi calle, número, ciudad..." type="text" name="address" id="address" value="{{{ $user->address }}}" maxlength="200" required="required">
+                            <input class="form-control" placeholder="Mi calle, número, ciudad..." type="text" name="address" id="address" value="{{{ $user->address }}}" maxlength="200" required="required" data-error="Rellene este campo.">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                     <div class="col-xs-12 form-group">
                         <label class="col-xs-2 control-label" for="email">{{{ @trans('messages.e_mail') }}} (*)</label>
                         <div class="col-xs-10">
-                            <input class="form-control" placeholder="Tu e-mail" type="email" name="email" id="email" value="{{{ $user->email }}}" required="required">
+                            <input class="form-control" placeholder="Tu e-mail" type="email" name="email" id="email" value="{{{ $user->email }}}" required="required" data-error="Introduce una dirección válida de correo electrónico.">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                         <label class="col-xs-2 control-label" for="old_password">Contraseña actual</label>
                         <div class="col-xs-10">
 
-                            <input class="form-control" placeholder="Contraseña actual" type="password" name="old_password" id="old_password" required="required" pattern=".{6,}">
+                            <input class="form-control" placeholder="Contraseña actual" type="password" name="old_password" id="old_password" required="required" pattern=".{6,}" data-error="Introduce tu contraseña actual.">
                             <div class="help-block with-errors"></div>
 
                         </div>
@@ -143,7 +143,7 @@
                         <label class="col-xs-2 control-label" for="new_password">Nueva contraseña</label>
                         <div class="col-xs-10">
 
-                                <input class="form-control reset-password" placeholder="Nueva contraseña" type="password" name="new_password" id="new_password" required="required" pattern=".{6,}">
+                                <input class="form-control reset-password" placeholder="Nueva contraseña" type="password" name="new_password" id="new_password" required="required" pattern=".{6,}" data-error="Introduce una contraseña de al menos 6 caracteres.">
                                 <div class="help-block with-errors">Mínimo 6 caracteres de longitud</div>
 
                         </div>
@@ -153,7 +153,7 @@
                         <label class="col-xs-2 control-label" for="new_password_confirmation">Confirmar nueva contraseña</label>
                         <div class="col-xs-10">
 
-                                <input class="form-control" placeholder="Repite la contraseña" type="password" name="new_password_confirmation" id="new_password_confirmation" required="required" data-match=".reset-password">
+                                <input class="form-control" placeholder="Repite la contraseña" type="password" name="new_password_confirmation" id="new_password_confirmation" required="required" data-match=".reset-password" data-error="Rellene este campo." data-match-error="No coincide.">
                                 <div class="help-block with-errors"></div>
 
                         </div>

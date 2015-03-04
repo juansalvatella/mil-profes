@@ -52,21 +52,21 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="price">Precio (€/hora)</label>
                         <div class="col-sm-10">
-                            <input type="text" pattern="^([0-9\.,]){0,}$" placeholder="¿Cuál será el precio por hora de tu clase?" class="form-control" name="price" id="price"/>
+                            <input type="text" pattern="^([0-9\.,]){0,}$" placeholder="¿Cuál será el precio por hora de tu clase?" class="form-control" name="price" id="price" data-error="Introduce una cifra, por ejemplo: 15"/>
                             <div class="help-block with-errors">Introduce una cifra, por ejemplo: 15. Si lo prefieres, puedes dejarlo en blanco</div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="address">Lugar (*)</label>
                         <div class="col-sm-10">
-                            <input type="text" placeholder="¿Dónde darás la clase?" class="form-control" name="address" id="address" value="{{ $user->address }}" required="required"/>
+                            <input type="text" placeholder="¿Dónde darás la clase?" class="form-control" name="address" id="address" value="{{ $user->address }}" required="required" data-error="Rellene este campo."/>
                             <div class="help-block with-errors">Introduce calle, número, ciudad...</div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="description">Descripción breve (*)</label>
                         <div class="col-sm-10">
-                            <textarea rows="2" class="form-control" name="description" id="description" placeholder="Describe los contenidos de tu clase" required="required" maxlength="200"></textarea>
+                            <textarea rows="2" class="form-control" name="description" id="description" placeholder="Describe los contenidos de tu clase" required="required" maxlength="200" data-error="Rellene este campo."></textarea>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>

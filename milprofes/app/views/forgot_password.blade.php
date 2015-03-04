@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label class="control-label" for="email">E-mail:</label>
 
-                        <input class="form-control top-buffer-5" placeholder="Tu e-mail" type="email" name="email" id="email" value="{{{ Input::old('email') }}}" required="required">
+                        <input class="form-control top-buffer-5" placeholder="Tu e-mail" type="email" name="email" id="email" value="{{{ Input::old('email') }}}" required="required" data-error="Introduce tu dirección de correo.">
                         <div class="help-block with-errors">&nbsp;</div>
 
                     </div>
