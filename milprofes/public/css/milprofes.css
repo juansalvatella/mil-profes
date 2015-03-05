@@ -399,16 +399,22 @@ a, a:link, a:hover, a:active, a:visited {
 .netw-link, .enosis-link {
     display: inline;
 }
-.enosis-link a:hover {
-    color: #FF0000 !important;
-    text-decoration: underline !important;
+.netw-link a {
+    color: #287AF9 !important;
 }
-.footer-links {
+.enosis-link a {
+    color: #FF0000 !important;
+}
+.enosis-link a:hover, .netw-link a:hover {
+    text-decoration: underline;
+}
+.footer-links a {
+    color: #000;
     font-size: 0.9em;
 }
-.footer-links a:hover, .netw-link a:hover {
+.footer-links a:hover {
     color: #287AF9 !important;
-    text-decoration: underline !important;
+    text-decoration: none;
 }
 .img-recientes {
     max-width: 95%;
