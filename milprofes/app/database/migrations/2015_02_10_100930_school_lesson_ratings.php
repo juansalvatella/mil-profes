@@ -5,6 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class SchoolLessonRatings extends Migration {
 
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
 	public function up()
 	{
 		Schema::create('school_lesson_ratings', function(Blueprint $table)
@@ -25,6 +30,11 @@ class SchoolLessonRatings extends Migration {
 
 	}
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
 	public function down()
 	{
 

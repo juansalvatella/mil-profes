@@ -16,6 +16,7 @@ class AdminController extends BaseController
         } else {
             $school->logo = 'default_logo.png';
         }
+
         $school->name = Input::get('name');
         $school->address = Input::get('address');
         $school->cif = Input::get('cif');
@@ -33,8 +34,47 @@ class AdminController extends BaseController
         $school->lat = $geocoding[0]; //latitud
         $school->lon = $geocoding[1]; //longitud
 
-        if($school->save())
+        if($school->save()) {
+
+            if (Input::hasFile('pics')) {
+                $all_uploads = Input::file('pics');
+                if (!is_array($all_uploads)) {
+                    $all_uploads = array($all_uploads);
+                }
+
+                foreach ($all_uploads as $upload) {
+                    if (!is_a($upload, 'Symfony\Component\HttpFoundation\File\UploadedFile')) {
+                        continue;
+                    }
+                    $validator = Validator::make(
+                        array('file' => $upload),
+                        array('file' => 'image')
+                    );
+
+                    if ($validator->fails()) {
+                        $img = $upload->getClientOriginalName();
+                        return Redirect::to('admin/schools')
+                            ->with('success', 'Academia creada con éxito.')
+                            ->with('error', 'Error al adjuntar la imagen de perfil: ' . $img);
+                    } else {
+                        $file_extension = $upload->getClientOriginalExtension();
+                        $filename = Str::random(30) . '.' . $file_extension;
+                        $path = public_path() . '/img/pics/';
+                        $upload->move($path, $filename);
+                        $pic = new Pic();
+                        $pic->pic = $filename;
+                        $pic->school()->associate($school);
+                        if(!$pic->save()){
+                            return Redirect::to('admin/schools')
+                                ->with('success', 'Academia creada con éxito.')
+                                ->with('error', 'Error al adjuntar la imagen de perfil: ' . $img);
+                        }
+                    }
+                }
+            }
+
             return Redirect::to('admin/schools')->with('success', 'Academia creada con éxito');
+        }
         else
             return Redirect::to('admin/schools')->with('failure', 'Error! No se pudo crear la academia');
     }

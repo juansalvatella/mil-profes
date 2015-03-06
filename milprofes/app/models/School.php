@@ -9,6 +9,11 @@ class School extends Eloquent
         return $this->hasMany('SchoolLesson');
     }
 
+    public function pics()
+    {
+        return $this->hasMany('Pic');
+    }
+
     public function getSchoolAvgRating()
     {
         $lessons = $this->lessons;

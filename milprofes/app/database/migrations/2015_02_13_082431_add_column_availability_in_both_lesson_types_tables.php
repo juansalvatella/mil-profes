@@ -5,6 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddColumnAvailabilityInBothLessonTypesTables extends Migration {
 
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
 	public function up()
 	{
 //		Schema::table('teacher_lessons',function($table){
@@ -15,6 +20,11 @@ class AddColumnAvailabilityInBothLessonTypesTables extends Migration {
 //		});
 	}
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
 	public function down()
 	{
 //		Schema::table('teacher_lessons',function($table){

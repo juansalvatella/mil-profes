@@ -5,6 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateViewSchoolsAvgRatings extends Migration {
 
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         DB::statement('
@@ -19,6 +24,11 @@ class CreateViewSchoolsAvgRatings extends Migration {
         ;');
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         DB::statement('DROP VIEW schools_average_ratings;');
