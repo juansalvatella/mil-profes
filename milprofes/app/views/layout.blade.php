@@ -1,16 +1,4 @@
 <?php
-    //check session status to decide wether to show cookies alert
-    if (!Session::has('new-session')) {
-        Session::put('new-session', true);
-        Session::save();
-    } else {
-        if(Session::get('new-session')==true) {
-            Session::put('new-session', false);
-            Session::save();
-        }
-    }
-?>
-<?php
     $last_teachers = Milprofes::getLastTeachers(12);
     $last_schools = Milprofes::getLastSchools(12);
 ?>
@@ -46,6 +34,7 @@
     {{ HTML::script('js/jquery.fittext.js') }}
     {{ HTML::script('js/bootbox.min.js') }}
     {{ HTML::script('js/jquery.lazy.min.js') }}
+    {{ HTML::script('js/consent.js') }}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -69,16 +58,22 @@
 <body>
     <!-- HEADER -->
 
-    @if(Session::has('new-session') && Session::get('new-session')==true)
-        <!-- Cookies alert //-->
-        <div class="alert alert-dismissible alert-cookies" role="alert">
-          <button type="button" class="close" data-dismiss="alert">
-              <span aria-hidden="true">&times;</span>
-              <span class="sr-only">Close</span>
-          </button>
-          Utilizamos cookies propias y de terceros para ofrecer nuestros servicios y publicidad basada en tus intereses. Al usar nuestros servicios, aceptas el uso que hacemos de las cookies, según se describe en nuestra <a href="{{ url('politica-de-privacidad') }}">Política de Privacidad</a>.
-        </div>
-    @endif
+    <!-- Cookies info //-->
+    <div class="alert alert-dismissible alert-cookies" id="cookieBanner" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+        {{--<div id="cookieBannerClose"><a href="#">x</a></div>--}}
+        Uso de cookies: Utilizamos cookies propias y de terceros para ofrecer nuestros servicios y publicidad basada en tus intereses.
+        Al usar nuestros servicios, aceptas el uso que hacemos de las cookies, según se describe en nuestra
+        <a class="noconsent" href="{{ url('politica-de-privacidad') }}">Política de Privacidad</a>.
+        {{--<div id="cookieBannerActions">--}}
+            {{--<a href="#">Acepto</a>--}}
+            {{--&mdash;--}}
+            {{--<a class="denyConsent noconsent" href="#">No autorizo el uso de cookies</a>--}}
+        {{--</div>--}}
+    </div>
 
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="container">
