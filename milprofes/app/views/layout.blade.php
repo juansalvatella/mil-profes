@@ -158,7 +158,7 @@
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
                                             <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.login-send')</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">@lang('layout.login-cancel')</button>
+                                            <button type="button" class="btn btn-login-send" data-dismiss="modal">@lang('layout.login-cancel')</button>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -280,7 +280,7 @@
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
                                             <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.register-register')</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">@lang('layout.register-cancel')</button>
+                                            <button type="button" class="btn btn-login-send" data-dismiss="modal">@lang('layout.register-cancel')</button>
                                         </div>
                                     </div>
 
