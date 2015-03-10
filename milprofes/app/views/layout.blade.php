@@ -12,7 +12,7 @@
     <meta name="author" content="">
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('img/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
 
     <title>MilProfes</title>
 
