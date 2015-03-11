@@ -271,7 +271,7 @@ class SearchController extends BaseController
         $MapRadius = $max_radius/1000;
         $MapFill   = 'd65441';
         $MapBorder = 'd22f1a';
-        $MapWidth  = 198;
+        $MapWidth  = 300;//198;
         $MapHeight = 170;
         $EncString = Geocoding::GMapCircle($MapLat,$MapLng, $MapRadius); // Encode a circle over Earth
         $MapAPI = 'http://maps.google.com/maps/api/staticmap?';
