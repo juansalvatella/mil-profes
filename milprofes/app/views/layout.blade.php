@@ -264,7 +264,7 @@
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label for="password">@lang('layout.register-password')</label>
-                                                <input class="form-control register-password" placeholder="{{{ @trans('layout.register-password') }}}" type="password" pattern=".{6,}" name="password" id="password" required="required" data-error="Rellene este campo.">
+                                                <input class="form-control register-password" placeholder="{{{ @trans('layout.register-password') }}}" type="password" pattern=".{6,}" name="password" id="password" required="required" data-error="Al menos 6 caracteres de longitud.">
                                                 <small><span class="help-block with-errors">Mínimo 6 de longitud</span></small>
                                             </div>
                                         </div>
