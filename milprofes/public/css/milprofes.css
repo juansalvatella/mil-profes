@@ -264,7 +264,15 @@ a, a:link, a:hover, a:active, a:visited {
     border-color: #287af9;
     color: #fff;
 }
-
+.btn.disabled:hover, .btn[disabled]:hover, fieldset[disabled] .btn:hover {
+    pointer-events: none;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.65;
+    background-color: #287af9;
+    border-color: #287af9;
+    color: #fff !important;
+}
 .btn-milprofes,
 .lasts-btn-schools,
 .lasts-btn-teachers,
