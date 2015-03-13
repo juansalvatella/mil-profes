@@ -445,11 +445,14 @@
                                     $(document).ready(function(){
                                         $("#contact-me-{{ $result->id }}").popover({
                                             html: true,
-                                            content:    '<div class="text-center contact-info-title1">Teléfono</div>'+
-                                                        '<div class="text-center contact-info-tel">{{ $result->phone }}</div>'+
-                                                        '<hr class="contact-info-hr">'+
-                                                        '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
-                                                        '<div class="text-center contact-info-mail">{{ $result->email  }}</div>'
+                                            content:    ''+
+    @if($result->phone == '' && $result->email == '')  'Nuestra información de contacto aún no está disponible.'+ @endif
+                            @if($result->phone != '')  '<div class="text-center contact-info-title1">Teléfono</div>'+
+                                                        '<div class="text-center contact-info-tel">{{ $result->phone }}</div>'+ @endif
+    @if($result->phone != '' && $result->email != '')   '<hr class="contact-info-hr">'+  @endif
+                            @if($result->email != '')   '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
+                                                        '<div class="text-center contact-info-mail">{{ $result->email  }}</div>'+ @endif
+                                                        ''
                                         });
                                     });
                                     $(document).on("click", "#contact-me-{{ $result->id }}", function(e) {

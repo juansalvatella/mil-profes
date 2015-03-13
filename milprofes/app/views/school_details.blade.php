@@ -157,9 +157,9 @@
                                                         content:    ''+
      @if($school->phone == '' && $school->email == '')  'Nuestra información de contacto aún no está disponible.'+ @endif
                             @if ($school->phone != '')  '<div class="text-center contact-info-title1">Teléfono</div>'+
-                                                        '<div class="text-center contact-info-tel">{{ $school->phone }}</div>'+
-                                                        '<hr class="contact-info-hr">'+ @endif
-                            @if($school->email != '')   '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
+                                                        '<div class="text-center contact-info-tel">{{ $school->phone }}</div>'+ @endif
+     @if($school->phone != '' && $school->email != '')  '<hr class="contact-info-hr">'+ @endif
+                             @if($school->email != '')  '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
                                                         '<div class="text-center contact-info-mail">{{ $school->email  }}</div>'+ @endif
                                                         ''
                                                     });
