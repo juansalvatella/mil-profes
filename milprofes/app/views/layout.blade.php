@@ -248,7 +248,7 @@
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label for="username">@lang('layout.register-username')</label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" pattern="^([_A-z0-9]){5,}$" maxlength="20" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required="required" data-error="Rellene este campo.">
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" pattern="^([_A-z0-9]){5,}$" maxlength="20" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required="required" data-error="Al menos 5 caracteres con letras o numeros.">
                                                 <small><span class="help-block with-errors">Mínimo 5 con números, letras o guion bajo</span></small>
                                             </div>
                                         </div>
