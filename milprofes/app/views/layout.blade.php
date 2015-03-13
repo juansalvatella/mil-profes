@@ -51,6 +51,9 @@
             $(".names-responsive").fitText();
             $("#recent-responsive").fitText();
             $("#contact-responsive").fitText();
+            $("#footer-brand-responsive").fitText(0.56);
+            $(".footer-contact").fitText(1.67);
+            $("#footer-follow").fitText(1.72);
         });
     </script>
 </head>
@@ -249,7 +252,7 @@
                                             <div class="form-group">
                                                 <label for="username">@lang('layout.register-username')</label>
                                                 <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" pattern="^([_A-z0-9]){5,}$" maxlength="20" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required="required" data-error="Al menos 5 caracteres con letras o numeros.">
-                                                <small><span class="help-block with-errors">Mínimo 5 con números, letras o guion bajo</span></small>
+                                                <small><span class="help-block with-errors">Mínimo 5 caracters (letras, números, guion bajo)</span></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
@@ -309,9 +312,9 @@
         <div class="container-fluid">
             <div class="row text-center">
 
-                <div class="col-xs-12 col-sm-offset-0 col-sm-4 bottom-padding">
+                <div class="col-xs-12 col-sm-offset-0 col-sm-4 bottom-padding footer-section-1">
                     <div class="col-xs-offset-1 col-xs-10">
-                        <div class="row text-left"><a id="footer-brand" href="{{ route('home') }}">@lang('layout.contact_logo')</a></div>
+                        <div class="row text-left" id="footer-brand-responsive"><a id="footer-brand" href="{{ route('home') }}">@lang('layout.contact_logo')</a></div>
                         <div class="row">
                             <div class="col-xs-offset-1 col-xs-10 text-left">
                                 <div class="row top-buffer-15 footer-contact"><span class="glyphicon glyphicon-earphone footer-glyphicon"></span>&nbsp;&nbsp;&nbsp;&nbsp; @lang('layout.phone_title') @lang('layout.phone')</div>
@@ -323,7 +326,7 @@
                     </div>
                 </div>
 
-                <div class="col-xs-12 col-sm-4 footer-left-separator footer-right-separator bottom-padding">
+                <div class="col-xs-12 col-sm-4 footer-left-separator footer-right-separator bottom-padding footer-section-2">
                     <div id="recent-responsive" class="col-xs-offset-2 col-xs-8 text-center">
 
                         <div class="row recent-title">@lang('layout.recent_results')</div>
@@ -361,7 +364,7 @@
                     </div>
                 </div>
 
-                <div class="col-xs-12 col-sm-4 bottom-padding">
+                <div class="col-xs-12 col-sm-4 bottom-padding footer-section-3">
                     <div class="col-xs-offset-0 col-xs-12 text-center">
                         <div class="row recent-title">
                             <div id="contact-responsive" class="col-xs-offset-2 col-xs-8">

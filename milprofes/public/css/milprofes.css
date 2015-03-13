@@ -322,6 +322,13 @@ a, a:link, a:hover, a:active, a:visited {
 }
 
 /**************** Layout - footer ***************/
+.footer-section-1 {
+}
+.footer-section-2 {
+    min-height: 286px;
+}
+.footer-section-3 {
+}
 #footer-apps {
     background:url(../img/home1.png) top left repeat;
     padding: 25px 0 25px 0;
@@ -344,22 +351,20 @@ a, a:link, a:hover, a:active, a:visited {
     font-size: 1.4em;
 }
 #footer-brand {
-    font-size: 4.0em;
+    /*font-size: 4.0em;*/
     font-weight: 300;
     color:#000;
-    /*font-family: sans-serif;*/
-    /*text-shadow: 2px 1px 1px #fff;*/
 }
 #footer-brand a {
     text-decoration: none;
     color: #000000;
 }
 .footer-contact {
-    font-size: 1.1em;
+    /*font-size: 1.1em;*/
     color: #ffffff;
 }
 #footer-follow {
-    font-size: 1.2em;
+    /*font-size: 1.2em;*/
     color: #ffffff;
 }
 #footer-follow a {
@@ -367,16 +372,12 @@ a, a:link, a:hover, a:active, a:visited {
     color: #ffffff;
 }
 #footer-faicons {
-    /*color: #ffffff;*/
     font-size: 1.4em;
 }
-/*#footer-faicons a {*/
-    /*color: #ffffff;*/
-/*}*/
 #footer-faicons a:hover {
     color: #E79500 !important;
     text-decoration: none;
-} /* , TW , LinkedIn  , Google+ */
+}
 .fa-facebook-f {
     color: #2d3a8b !important;
 }
@@ -416,9 +417,13 @@ a, a:link, a:hover, a:active, a:visited {
 .enosis-link a:hover, .netw-link a:hover {
     text-decoration: underline;
 }
+.footer-links {
+    text-align: center;
+}
 .footer-links a {
     color: #000;
     font-size: 0.9em;
+    display: inline-block;
 }
 .footer-links a:hover {
     color: #287AF9 !important;
