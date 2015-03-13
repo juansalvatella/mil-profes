@@ -273,7 +273,7 @@ class UsersController extends Controller
                 'address'       => 'required|string|max:200',
                 'email'         => 'required|email',
                 'phone'         => 'string|min:5|max:20',
-                'description'   => 'string|max:250',
+                'description'   => 'string|max:450',
             );
             $validator = Validator::make($input, $rules);
             if($validator->fails()) {
