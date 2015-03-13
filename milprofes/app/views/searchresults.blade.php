@@ -355,7 +355,7 @@
                             Dentro de {{ $result->dist_to_user }} Km <img src="{{ asset('../img/marcador-distancia.png') }}"/>
                         </div>
                         <div class="row result-description-title top-srs-separator">
-                            DESCRIPCIÓN DE LA CLASE
+                            @if($prof_o_acad=='profesor') DESCRIPCIÓN DE LA CLASE @else DESCRIPCIÓN DEL CURSO @endif
                         </div>
                         <div class="row result-description bottom-srs-separator">
                             <small>{{{ $result->description }}}</small>

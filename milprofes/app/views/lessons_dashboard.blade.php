@@ -18,13 +18,13 @@
     </div>
 
     @if ($lessons->isEmpty())
-        <p>No existen clases de esta academia.</p>
+        <p>No existen cursos de esta academia.</p>
     @else
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Precio (€/curso)</th>
-                <th>Descripción de la clase</th>
+                <th>Descripción del curso</th>
                 <th>Materia</th>
                 <th>Acciones</th>
             </tr>

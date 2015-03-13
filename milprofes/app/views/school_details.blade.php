@@ -49,7 +49,7 @@
             @if ($lessons->isEmpty())
                 <div class="row top-buffer-5">
                     <div class="col-xs-12 col-sm-12">
-                        Estamos publicando nuestras clases. Visita nuestro perfil en unos minutos.
+                        Estamos publicando nuestros cursos. Visita nuestro perfil en unos minutos.
                     </div>
                 </div>
             @endif
