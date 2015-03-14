@@ -31,7 +31,7 @@
                         <div class="col-xs-12">
                             <div class="form-group">
                                 <label for="password_confirmation">{{{ Lang::get('confide::confide.password_confirmation') }}}</label>
-                                <input class="form-control" placeholder="{{{ Lang::get('confide::confide.password_confirmation') }}}" type="password" name="password_confirmation" id="password_confirmation" required="required" data-match=".reset-password" data-error="Rellene este campo." data-match-error="No coincide.">
+                                <input class="form-control" placeholder="{{{ Lang::get('confide::confide.password_confirmation') }}}" type="password" name="password_confirmation" id="password_confirmation" required="required" data-match=".reset-password" data-error="Rellena este campo." data-match-error="No coincide.">
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>

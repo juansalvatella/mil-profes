@@ -69,7 +69,7 @@
                     <div class="col-xs-12 form-group">
                         <label class="control-label col-xs-2" for="name">Nombre (*)</label>
                         <div class="col-xs-10">
-                            <input class="form-control col-xs-10" placeholder="Tu nombre" type="text" name="name" id="name" value="{{{ $user->name }}}" maxlength="50" required="required" data-error="Rellene este campo.">
+                            <input class="form-control col-xs-10" placeholder="Tu nombre" type="text" name="name" id="name" value="{{{ $user->name }}}" maxlength="50" required="required" data-error="Rellena este campo.">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                     <div class="col-xs-12 form-group">
                         <label class="col-xs-2 control-label" for="address">Dirección (*)</label>
                         <div class="col-xs-10">
-                            <input class="form-control" placeholder="Mi calle, número, ciudad..." type="text" name="address" id="address" value="{{{ $user->address }}}" maxlength="200" required="required" data-error="Rellene este campo.">
+                            <input class="form-control" placeholder="Mi calle, número, ciudad..." type="text" name="address" id="address" value="{{{ $user->address }}}" maxlength="200" required="required" data-error="Rellena este campo.">
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                         <label class="col-xs-2 control-label" for="new_password_confirmation">Confirmar nueva contraseña</label>
                         <div class="col-xs-10">
 
-                                <input class="form-control" placeholder="Repite la contraseña" type="password" name="new_password_confirmation" id="new_password_confirmation" required="required" data-match=".reset-password" data-error="Rellene este campo." data-match-error="No coincide.">
+                                <input class="form-control" placeholder="Repite la contraseña" type="password" name="new_password_confirmation" id="new_password_confirmation" required="required" data-match=".reset-password" data-error="Rellena este campo." data-match-error="No coincide.">
                                 <div class="help-block with-errors"></div>
 
                         </div>

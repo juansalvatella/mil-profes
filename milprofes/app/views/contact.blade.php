@@ -34,17 +34,17 @@
 
                 {{ Form::label('contact_name', @trans('contact.contact_form_name'), array('class'=>'contact-contact-form-label')) }}
                 <div class="form-group">
-                    {{ Form::text('contact_name', '', array('class'=>'form-control','placeholder'=>@trans('contact.name_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellene este campo.')) }}
+                    {{ Form::text('contact_name', '', array('class'=>'form-control','placeholder'=>@trans('contact.name_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
                     <small><span class="help-block with-errors"></span></small>
                 </div>
                 {{ Form::label('contact_subject', @trans('contact.contact_form_subject'), array('class'=>'contact-contact-form-label')) }}
                 <div class="form-group">
-                    {{ Form::text('contact_subject', '', array('class'=>'form-control','placeholder'=>@trans('contact.subject_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellene este campo.')) }}
+                    {{ Form::text('contact_subject', '', array('class'=>'form-control','placeholder'=>@trans('contact.subject_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
                     <small><span class="help-block with-errors"></span></small>
                 </div>
                 {{ Form::label('contact_message', @trans('contact.contact_form_message'), array('class'=>'contact-contact-form-label')) }}
                 <div class="form-group">
-                    {{ Form::textarea('contact_message', '', array('rows' => 6, 'class'=>'form-control','placeholder'=>@trans('contact.message_placeholder'),'required','maxlength'=>'1000','data-error'=>'Rellene este campo.')) }}
+                    {{ Form::textarea('contact_message', '', array('rows' => 6, 'class'=>'form-control','placeholder'=>@trans('contact.message_placeholder'),'required','maxlength'=>'1000','data-error'=>'Rellena este campo.')) }}
                     <small><span class="help-block with-errors"></span></small>
                 </div>
 
