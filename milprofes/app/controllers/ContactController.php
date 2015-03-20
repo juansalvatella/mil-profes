@@ -19,9 +19,9 @@ class ContactController extends Controller {
 
             Mail::queue('emails.feedback', $data, function($message) use ($data)
             {
-                $message->from('mitxel@network30.com' , $data['contact_name']);
+                $message->from('info@milprofes.com' , 'milProfes.'); //$data['contact_name']
 //                $message->from($data['contact_email'] , $data['contact_name']);
-                $message->to('mitxel@network30.com', 'Mitxel Moriana')->subject('milProfes. feedback: '.$data['contact_subject']);
+                $message->to('info@milprofes.com', 'milProfes.')->subject('milProfes. feedback: '.$data['contact_subject']);
             });
 
             return Redirect::back()
@@ -54,9 +54,9 @@ class ContactController extends Controller {
         if ($validator -> passes()){
             Mail::queue('emails.feedback_full', $data, function($message) use ($data)
             {
-                $message->from('mitxel@network30.com' , $data['contact_name']);
+                $message->from('info@milprofes.com' , 'milProfes.'); //$data['contact_name']
 //                $message->from($data['contact_email'] , $data['contact_name']);
-                $message->to('mitxel@network30.com', 'Mitxel Moriana')->subject('milProfes. feedback: '.$data['contact_subject']);
+                $message->to('info@milprofes.com', 'milProfes.')->subject('milProfes. feedback: '.$data['contact_subject']);
             });
 
             return Redirect::to('contactanos')

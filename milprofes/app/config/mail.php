@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'mitxel@network30.com', 'name' => 'Mitxel Moriana'),
+	'from' => array('address' => 'info@milprofes.com', 'name' => 'milProfes.'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'mitxel@network30.com',
+	'username' => 'info@milprofes.com',
 
 	/*
 	|--------------------------------------------------------------------------

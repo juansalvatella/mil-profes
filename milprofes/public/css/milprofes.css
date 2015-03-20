@@ -104,7 +104,8 @@ a, a:link, a:hover, a:active, a:visited {
     padding: 7px !important;
     font-size: 0.9em !important;
 }
-/*.margin-left-15 { margin-left: 15px; }*/
+
+.clear-left { clear:left; }
 .left-buffer-25 { margin-left: 25px; }
 
 .background-white { background-color: #ffffff; }
@@ -123,12 +124,8 @@ a, a:link, a:hover, a:active, a:visited {
     margin-top: 30px;
     margin-bottom: 40px;
 }
-.background-lamp {
-    background: #B9B9B9 url(../img/fondo-header.jpg) top center no-repeat;
-}
-.background-gblack {
-    background: #000 url(../img/home1.png) top left repeat;
-}
+.background-lamp { background: #B9B9B9 url(../img/fondo-header.jpg) top center no-repeat; }
+.background-gblack { background: #000 url(../img/home1.png) top left repeat; }
 .generic-title {
     font-family: raleway-semibold, sans-serif;
     margin-left: -15px;
@@ -166,17 +163,15 @@ a, a:link, a:hover, a:active, a:visited {
 .navbar {
     margin-bottom: 0 !important;
     height:auto !important;
-    /*position: fixed;*/
-    /*width: 100%;*/
 }
-.navbar-collapse {
+.navbar-inverse .navbar-toggle.collapsed:hover {
+    background-color: #333;
+}
+.navbar-inverse .navbar-toggle.collapsed {
     background-color: #FFC307;
 }
-.navbar-inverse .navbar-toggle:hover {
-    background-color: #333 !important;
-}
-.navbar-inverse .navbar-toggle:focus {
-    background-color: #FFC307;
+.navbar-inverse .navbar-toggle {
+    background-color: #333;
 }
 .navbar-inverse {
     padding-top: 15px;
@@ -210,7 +205,6 @@ a, a:link, a:hover, a:active, a:visited {
     color: #494949 !important;
 }
 .nav li a {
-    /*border-right: solid 1px #333;*/
     padding: 7px 15px 7px 15px; !important;
     color:#000000 !important;
     font-family: raleway-semibold, sans-serif;
@@ -257,9 +251,6 @@ a, a:link, a:hover, a:active, a:visited {
 .btn-login-send {
     min-width: 94px;
     font-family: raleway-semibold, sans-serif;
-    /*background-color: #ffa500;*/
-    /*border:1px solid #b4b4b4;*/
-    /*color: #000;*/
     background-color: #287af9;
     border-color: #287af9;
     color: #fff;
@@ -304,13 +295,6 @@ a, a:link, a:hover, a:active, a:visited {
 .contact-form-submit-btn:focus,
 .contact-form-submit-btn-2:focus,
 .faqs-btn:focus {
-    /*background-color: #E79500;*/
-    /*border-color: #E79500;*/
-    /*color: #000 !important;*/
-    /*background-color: #287af9;*/
-    /*border-color: #287af9;*/
-    /*color: #fff !important;*/
-    /*font-family: raleway-bold, sans-serif;*/
     -webkit-box-shadow: -4px 4px 4px 0 rgba(0, 0, 0, 0.10);
     -moz-box-shadow: -4px 4px 4px 0 rgba(0, 0, 0, 0.10);
     box-shadow: -4px 4px 4px 0 rgba(0, 0, 0, 0.10);
@@ -360,11 +344,9 @@ a, a:link, a:hover, a:active, a:visited {
     color: #000000;
 }
 .footer-contact {
-    /*font-size: 1.1em;*/
     color: #ffffff;
 }
 #footer-follow {
-    /*font-size: 1.2em;*/
     color: #ffffff;
 }
 #footer-follow a {
@@ -481,7 +463,6 @@ a, a:link, a:hover, a:active, a:visited {
 /************************ END LAYOUT ************************/
 
 
-
 /*====================================================*/
 /************************ HOME ************************/
 /*====================================================*/
@@ -538,8 +519,6 @@ a, a:link, a:hover, a:active, a:visited {
     color:#000;
     border-color: #E79500;
 }
-
-
 .chr {
     width: 100%;
     text-align: center;
@@ -638,9 +617,6 @@ body.loading .modal-loading { /*modal element will be visible */
 .sub-header-label {
     text-align: left;
 }
-#search-options-menu {
-
-}
 .radio {
     margin-left: 30px;
 }
@@ -688,7 +664,9 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-top: 5px;
     margin-bottom: 1px;
 }
-.h4-like { font-size:18px; }
+.h4-like {
+    font-size:18px;
+}
 .mp-shadow {
     -webkit-box-shadow: -7px 4px 5px 0 rgba(201,201,201,1);
     -moz-box-shadow: -7px 4px 5px 0 rgba(201,201,201,1);
@@ -849,12 +827,6 @@ body.loading .modal-loading { /*modal element will be visible */
     font-size: 15px;
 }
 /************** END SEARCH ****************/
-
-/* USER PANEL */
-.clear-left {
-    clear:left;
-}
-/* END USER PANEL */
 
 /* CONTACT */
 .contact-form-container {
@@ -1172,22 +1144,7 @@ body.loading .modal-loading { /*modal element will be visible */
     display: block;
 }
 
-/*cookies*/
+/*cookies alert*/
 #cookieBanner {
 	display: none;
-	/*font-size: 14px;*/
-	/*width: 900px;*/
-	/*margin: 0 auto;*/
-	/*padding: 12px;*/
-	/*background-color: #ddd;*/
-	/*border-bottom: solid 1px #ccc;*/
 }
-/*#cookieBannerClose {*/
-	/*float: right;*/
-	/*font-weight: bold;*/
-	/*padding: 4px;*/
-/*}*/
-/*#cookieBannerActions {*/
-	/*text-align: center;*/
-	/*padding-top: 4px;*/
-/*}*/
