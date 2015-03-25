@@ -341,7 +341,7 @@ class UsersController extends Controller
         {
             if($user->hasRole('teacher'))
             { //Advertir de que ya es profesor!
-                return Redirect::route('userpanel')->with('success', 'Ya eres profesor! Publica tus clases!');
+                return Redirect::route('userpanel')->with('success', 'Ya eres profe.! Publica tus clases!');
             } else { //Añadir a tabla de profesores
                 $teacher = new Teacher();
                 $teacher->user()->associate($user);
@@ -351,7 +351,7 @@ class UsersController extends Controller
                 $teacher_role = Role::where('name', 'teacher')->first();
                 $user->attachRole($teacher_role);
 
-                return Redirect::route('userpanel')->with('success', 'Ahora ya eres profesor! Publica tus clases!');
+                return Redirect::route('userpanel')->with('success', 'Ahora ya eres profe.! Publica tus clases!');
             }
         } else {
             return Redirect::route('/')
