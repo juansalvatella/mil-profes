@@ -53,11 +53,12 @@ class SearchController extends BaseController
                         ->leftJoin('users', 'users.id', '=', 'teachers.user_id')
                         ->leftJoin('teachers_average_ratings','teachers_average_ratings.teacher_id','=','teachers.id')
                         ->leftJoin('ratings','ratings.teacher_lesson_id','=','teacher_lessons.id')
-                        ->groupBy('teacher_lessons.id')
                         ->where('subject_id', $subj_id)
                         ->whereRaw("MATCH(teacher_lessons.description) AGAINST(? IN BOOLEAN MODE)", array($keywords))
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
+                        ->groupBy('teacher_lessons.id')
+                        ->distinct()
                         ->get(array('teacher_lessons.*', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating'));
                 } else {
                     $results = DB::table('teacher_lessons')
@@ -65,10 +66,11 @@ class SearchController extends BaseController
                         ->leftJoin('users', 'users.id', '=', 'teachers.user_id')
                         ->leftJoin('teachers_average_ratings','teachers_average_ratings.teacher_id','=','teachers.id')
                         ->leftJoin('ratings','ratings.teacher_lesson_id','=','teacher_lessons.id')
-                        ->groupBy('teacher_lessons.id')
                         ->where('subject_id', $subj_id)
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
+                        ->groupBy('teacher_lessons.id')
+                        ->distinct()
                         ->get(array('teacher_lessons.*', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating'));
                 }
             } else { //search all subjects
