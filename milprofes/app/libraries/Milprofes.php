@@ -85,7 +85,7 @@ class Milprofes
     {
         if($prof_o_acad=='profesor') {
             if ($price_range == 'rang0') {
-                $min_price = 0;
+                $min_price = 0.01;
                 $max_price = 9.99;
             } else if ($price_range == 'rang1') {
                 $min_price = 10;
@@ -105,7 +105,7 @@ class Milprofes
             }
         } else { //academias
             if ($price_range == 'rang0') {
-                $min_price = 0;
+                $min_price = 0.01;
                 $max_price = 150;
             } else if ($price_range == 'rang1') {
                 $min_price = 150;
