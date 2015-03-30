@@ -54,6 +54,9 @@
             $("#footer-brand-responsive").fitText(0.56);
             $(".footer-contact").fitText(1.67);
             $("#footer-follow").fitText(1.72);
+            $(".school-rating-span").fitText(1.3);
+            $(".teacher-rating-span").fitText(1.3);
+            $(".contact-who-logo-container").fitText();
         });
     </script>
 
@@ -66,7 +69,6 @@
 
         ga('create', 'UA-61042823-1', 'auto');
         ga('send', 'pageview');
-
     </script>
 </head>
 
@@ -92,31 +94,31 @@
 
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed navbar-collapsed-btn" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ route('home') }}">@lang('layout.logo')</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav text-center">
-                <li><a class="left-separator right-separator" href="{{ url('quienes/somos') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
-                <li><a class="right-separator" href="{{ url('preguntas/frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
-                <li><a class="right-separator" href="{{ url('contactanos') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right text-center">
-            @if(Auth::check())
-                <li class="text-center"><a class="right-separator" href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
-                <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
-            @else
-                <li><a data-target="#modal-login" data-toggle="modal" class="right-separator" href="#" title="@lang('layout.login')">@lang('layout.login')</a></li>
-                <li><a data-target="#modal-register" data-toggle="modal"  href="#" title="@lang('layout.register')">@lang('layout.register')</a></li>
-            @endif
-            </ul>
-        </div><!--/.nav-collapse -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed navbar-collapsed-btn" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ route('home') }}">@lang('layout.logo')</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav text-center">
+                    <li><a class="left-separator right-separator" href="{{ url('quienes/somos') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
+                    <li><a class="right-separator" href="{{ url('preguntas/frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
+                    <li><a class="right-separator" href="{{ url('contactanos') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right text-center">
+                @if(Auth::check())
+                    <li class="text-center"><a class="right-separator" href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
+                    <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
+                @else
+                    <li><a data-target="#modal-login" data-toggle="modal" class="right-separator" href="#" title="@lang('layout.login')">@lang('layout.login')</a></li>
+                    <li><a data-target="#modal-register" data-toggle="modal"  href="#" title="@lang('layout.register')">@lang('layout.register')</a></li>
+                @endif
+                </ul>
+            </div><!--/.nav-collapse -->
         </div>
     </nav>
 
@@ -344,8 +346,8 @@
                         <div class="row recent-title">@lang('layout.recent_results')</div>
 
                         <div class="row recent-selectors">
-                            <div class="pull-left"><a href="#" class="btn lasts-btn-schools">@lang('layout.schools')</a></div>
-                            <div class="pull-right"><a href="#" class="btn lasts-btn-teachers">@lang('layout.teachers')</a></div>
+                            <div class="unpadded col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left"><a href="#" class="btn lasts-btn-schools">@lang('layout.schools')</a></div>
+                            <div class="unpadded col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right"><a href="#" class="btn lasts-btn-teachers">@lang('layout.teachers')</a></div>
                         </div>
                         <script type="text/javascript">
                             $(document).ready(function() {
@@ -477,6 +479,17 @@
         </script>
     @endif
 
+    <script type="text/javascript">
+        $('body').on('click', function (e) {
+            $('[data-toggle="popover"]').each(function () {
+                //the 'is' for buttons that trigger popups
+                //the 'has' for icons within a button that triggers a popup
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                    $(this).popover('hide');
+                }
+            });
+        });
+    </script>
     {{--<script src="http://js.maxmind.com/js/country.js" type="text/javascript"></script>--}}
     {{--<script src="http://js.maxmind.com/js/geoip.js" type="text/javascript" ></script>--}}
 

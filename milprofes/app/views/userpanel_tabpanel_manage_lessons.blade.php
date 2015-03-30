@@ -8,12 +8,12 @@
 
                 <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
 
-                <div class="col-xs-4">Día</div>
-                <div class="col-xs-4">De</div>
-                <div class="col-xs-4">a</div>
+                <div class="col-xs-12 col-sm-12 col-md-4">Día</div>
+                <div class="col-xs-12 col-sm-12 hidden-sm hidden-xs col-md-4">De</div>
+                <div class="col-xs-12 col-sm-12 hidden-xs hidden-sm col-md-4">a</div>
 
-                <div class="col-xs-4 clear-left">
-                    <div class="form-group">
+                <div class="col-xs-12 col-sm-12 col-md-4 clear-left">
+                    <div class="">
                         <select class="form-control" id="day1" name="day1">
                             <option value="" @if($picks[0]['day']=='') selected="selected" @endif > </option>
                             <option value="LUN" @if($picks[0]['day']=='LUN') selected="selected" @endif >Lunes</option>
@@ -26,14 +26,16 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-xs-4">
+                <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">De</div>
+                <div class="col-xs-12 col-sm-12 col-md-4">
                     @if($picks[0]['day']=='')
                         <div class="bfh-timepicker" data-time="15:00" data-name="start1"></div>
                     @else
                         <div class="bfh-timepicker" data-time="{{ substr($picks[0]['start'],0,-3) }}" data-name="start1"></div>
                     @endif
                 </div>
-                <div class="col-xs-4">
+                <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">a</div>
+                <div class="col-xs-12 col-sm-12 col-md-4">
                     @if($picks[0]['day']=='')
                         <div class="bfh-timepicker" data-time="21:00" data-name="end1"></div>
                     @else
@@ -41,14 +43,16 @@
                     @endif
                 </div>
 
-                <div class="col-xs-12 clear-left @if($n_picks_set>1) hidden @endif " id="avail-controls1">
+                <div class="col-xs-12 clear-left @if($n_picks_set>1) hidden @endif top-buffer-10" id="avail-controls1">
                     <a href="#" id="avail-control-add1" class="btn btn-default"><i class="glyphicon glyphicon-plus-sign"></i> Añadir</a>
                 </div>
 
                 @for($i=2,$h=1;$i<9;++$i,++$h)
                     <div @if($i>$n_picks_set) class="hidden" @endif id="avail{{$i}}">
-                        <div class="col-xs-4 clear-left">
-                            <div class="form-group">
+                        <div class="col-xs-12 col-sm-12 hidden-md hidden-lg top-buffer-15">Día</div>
+                        <div class="hidden-xs hidden-sm col-md-12 col-lg-12 top-buffer-5"></div>
+                        <div class="col-xs-12 col-sm-12 col-md-4 clear-left">
+                            <div class="">
                                 <select class="form-control" id="day{{$i}}" name="day{{$i}}">
                                     <option value="" @if($picks[$h]['day']=='') selected="selected" @endif > </option>
                                     <option value="LUN" @if($picks[$h]['day']=='LUN') selected="selected" @endif >Lunes</option>
@@ -61,14 +65,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">De</div>
+                        <div class="col-xs-12 col-sm-12 col-md-4">
                             @if($picks[$h]['day']=='')
                                 <div class="bfh-timepicker" data-time="15:00" data-name="start{{$i}}"></div>
                             @else
                                 <div class="bfh-timepicker" data-time="{{ substr($picks[$h]['start'],0,-3) }}" data-name="start{{$i}}"></div>
                             @endif
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">a</div>
+                        <div class="col-xs-12 col-sm-12 col-md-4">
                             @if($picks[$h]['day']=='')
                                 <div class="bfh-timepicker" data-time="21:00" data-name="end{{$i}}"></div>
                             @else
@@ -76,14 +82,15 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-xs-12 @if(!($i==$n_picks_set)) hidden @endif clear-left" id="avail-controls{{$i}}">
+                    <div class="col-xs-12 @if(!($i==$n_picks_set)) hidden @endif clear-left top-buffer-10" id="avail-controls{{$i}}">
                         <a href="#" id="avail-control-add{{$i}}" class="btn btn-default"><i class="glyphicon glyphicon-plus-sign"></i> Añadir</a> <a href="#" id="avail-control-del{{$i}}" class="btn btn-default"><i class="glyphicon glyphicon-minus-sign"></i> Eliminar</a>
                     </div>
                 @endfor
 
                     <div @if(9>$n_picks_set) class="hidden" @endif id="avail9">
-                        <div class="col-xs-4 clear-left">
-                            <div class="form-group">
+                        <div class="col-xs-12 col-sm-12 hidden-md hidden-lg top-buffer-15">Día</div>
+                        <div class="col-xs-12 col-sm-12 col-md-4 clear-left">
+                            <div class="">
                                 <select class="form-control" id="day9" name="day9">
                                     <option value="" @if($picks[8]['day']=='') selected="selected" @endif > </option>
                                     <option value="LUN" @if($picks[8]['day']=='LUN') selected="selected" @endif >Lunes</option>
@@ -96,14 +103,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">De</div>
+                        <div class="col-xs-12 col-sm-12 col-md-4">
                             @if($picks[8]['day']=='')
                                 <div class="bfh-timepicker" data-time="15:00" data-name="start9"></div>
                             @else
                                 <div class="bfh-timepicker" data-time="{{ substr($picks[8]['start'],0,-3) }}" data-name="start9"></div>
                             @endif
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">a</div>
+                        <div class="col-xs-12 col-sm-12 col-md-4">
                             @if($picks[8]['day']=='')
                                 <div class="bfh-timepicker" data-time="21:00" data-name="end9"></div>
                             @else
@@ -111,7 +120,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-xs-12 @if(!($n_picks_set==9)) hidden @endif clear-left" id="avail-controls9">
+                    <div class="col-xs-12 top-buffer-10 @if(!($n_picks_set==9)) hidden @endif clear-left" id="avail-controls9">
                         <a href="#" id="avail-control-del9" class="btn btn-default"><i class="glyphicon glyphicon-minus-sign"></i> Eliminar</a>
                     </div>
 
@@ -136,7 +145,7 @@
                 });
                 </script>
 
-                <div class="col-xs-12">
+                <div class="col-xs-12 top-buffer-10">
                     <input type="submit" value="Guardar cambios" class="btn btn-primary pull-right"/>
                 </div>
             </form>
@@ -151,18 +160,18 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Precio (€/hora)</th>
+                        <th class="hidden-xs">Precio (€/hora)</th>
                         <th>Descripción</th>
-                        <th>Categoría</th>
+                        <th class="hidden-xs">Categoría</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($lessons as $lesson)
                         <tr>
-                            <td>{{ $lesson->price }}</td>
+                            <td class="hidden-xs">{{ $lesson->price }}</td>
                             <td>{{ $lesson->description }}</td>
-                            <td>{{ $subjects[$lesson->id]->name }}</td>
+                            <td class="hidden-xs">{{ $subjects[$lesson->id]->name }}</td>
                             <td>
                                 <a href="{{ url('teacher/edit/lesson',array($lesson->id)) }}" class="btn btn-default bottom-buffer-5">Modificar detalles</a>
                                 &nbsp;
@@ -179,7 +188,7 @@
             @else
                 <div class="pull-left">Aún no tienes clases publicadas.</div>
             @endif
-                <a href="{{ url('teacher/create/lesson') }}" class="btn btn-primary pull-right">Nueva clase</a>
+                <a href="{{ url('teacher/create/lesson') }}" class="btn btn-primary pull-right top-buffer-10">Nueva clase</a>
             </div>
         </div>
     </div>

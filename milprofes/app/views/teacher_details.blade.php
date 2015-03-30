@@ -20,8 +20,8 @@
         <div class="container generic-box profile-box magic-align">
 
             <div class="row">
-                <div class="col-xs-12 teacher-rating">
-                    <span class="teacher-rating-span">@lang('teacher-profile.rating') <span id="teacher-stars"></span></span>
+                <div class="col-xs-offset-1 col-xs-10 teacher-rating">
+                    <span class="teacher-rating-span"><span class="vcorrect">@lang('teacher-profile.rating')</span> <span id="teacher-stars"></span></span>
                     <script type="text/javascript">
                         $('#teacher-stars').raty({
                             readOnly: true,
@@ -33,7 +33,7 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5 col-lg-offset-1 col-lg-4">
 
                     @if($teacher->description != '')
                         <div class="teacher-description">
@@ -57,9 +57,7 @@
                         <div class="col-xs-12 lesson-availability">
                             @foreach($teacher->availability as $pick)
                                 @if($pick->day != '')
-                                    <div class="col-sm-4 unpadded">
-                                        <small><span class="pick"><span class="pick-day">&nbsp;{{ $pick->day }}&nbsp;</span> <span class="pick-time">&nbsp;{{ substr($pick->start,0,-3) }} - {{ substr($pick->end,0,-3) }}&nbsp;&nbsp;</span></span></small>
-                                    </div>
+                                    <small><span class="pick"><span class="pick-day">&nbsp;{{ $pick->day }}&nbsp;</span> <span class="pick-time">&nbsp;{{ substr($pick->start,0,-3) }} - {{ substr($pick->end,0,-3) }}&nbsp;&nbsp;</span></span></small>
                                 @endif
                             @endforeach
                         </div>
@@ -67,7 +65,7 @@
 
                 </div>
 
-                <div class="col-xs-6">
+                <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5 col-lg-offset-1 col-lg-5">
 
                     <div class="teacher-lessons">
                         <span class="teacher-lessons-label-span">@lang('teacher-profile.lessons')</span>
@@ -88,7 +86,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-6 col-sm-6">
+                            <div class="col-xs-9 col-sm-6">
 
                                 <div class="row t-lesson-subject">
                                     <span>@lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject()->pluck('name'))</span>
@@ -100,7 +98,7 @@
 
                             </div>
 
-                            <div class="col-xs-offset-1 col-xs-3 col-sm-offset-1 col-sm-3">
+                            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-3 col-lg-offset-1 col-lg-3">
 
                                 <div class="row text-center">
                                     <span id="lesson-stars-{{$result->id}}" class="stars-container"></span>
@@ -145,7 +143,12 @@
                                         </script>
                                     @endif
                                 </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="col-xs-12 hidden-sm hidden-md hidden-lg specialsep">
+                                    &nbsp;
+                                </div>
                             </div>
 
                         </div>
@@ -163,7 +166,7 @@
 
             <div class="row text-center">
 
-                <a id="contact-me" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
+                <a id="contact-me" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="top" title="Contacto">Contáctame</a>
                 <script type="text/javascript">
                     $(document).ready(function(){
                         $("#contact-me").popover({

@@ -68,6 +68,7 @@ a, a:link, a:hover, a:active, a:visited {
      text-decoration: none;
 }
 
+.top-buffer-4 { margin-top:4px; }
 .top-buffer-5 { margin-top:5px; }
 .top-buffer-10 { margin-top:10px; }
 .top-buffer-15 { margin-top:15px; }
@@ -106,6 +107,8 @@ a, a:link, a:hover, a:active, a:visited {
 }
 
 .clear-left { clear:left; }
+
+.left-buffer-15 { margin-left: 15px; }
 .left-buffer-25 { margin-left: 25px; }
 
 .background-white { background-color: #ffffff; }
@@ -664,9 +667,6 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-top: 5px;
     margin-bottom: 1px;
 }
-.h4-like {
-    font-size:18px;
-}
 .mp-shadow {
     -webkit-box-shadow: -7px 4px 5px 0 rgba(201,201,201,1);
     -moz-box-shadow: -7px 4px 5px 0 rgba(201,201,201,1);
@@ -678,10 +678,11 @@ body.loading .modal-loading { /*modal element will be visible */
     color:black;
     background-color: #ffffff;
     border: 1px solid rgb(255, 169, 17);
-    width: 75%;
+    min-width: 63px;
 }
 .search-total {
     padding: 10px 10px 10px 10px !important;
+    font-size: 18px;
 }
 .dist-icon1 {
     color: #0480be;
@@ -784,6 +785,7 @@ body.loading .modal-loading { /*modal element will be visible */
     background-color: #5CB85C;
     height: 17px;
     display: inline-block;
+    min-width: 116px;
 }
 .pick-day {
     display: inline-block;
@@ -791,8 +793,10 @@ body.loading .modal-loading { /*modal element will be visible */
     min-width: 34px;
     background-color: #00A651;
     height: 17px;
+    border:0;
 }
 .pick-time {
+    border:0;
     display: inline-block;
     text-align: center;
     min-width: 82px;
@@ -891,21 +895,75 @@ body.loading .modal-loading { /*modal element will be visible */
 
 /* WHO */
 .who-logo {
-    font-size: 4.5em;
+    /*font-size: 70px;*/
     color: #000;
+    display: inline-block;
 }
 .who-logo-mil {
     color: #494949;
     font-family: raleway-light, sans-serif;
+    display: inline-block;
+    min-width: 40px;
 }
 .who-logo-profes {
     font-family: texgyreadventorregular,sans-serif;
     font-weight: 400;
     margin-left: -12px;
+    display: inline-block;
 }
 /*END WHO*/
 
 /* PROFILES */
+.carousel {
+    height: 300px;
+}
+.carousel-inner {
+    height: 300px;
+    border: 1px solid #737575;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.carousel-indicators li {
+    border: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+.carousel-indicators .active {
+    border: 0;
+    background-color: rgba(0,0,0,0.8);
+}
+.carousel-indicators {
+    bottom: -36px;
+}
+.carousel-control:hover {
+    color: #737575 !important;
+    text-decoration: none;
+    outline: 0px none;
+    opacity: 0.9 !important;
+}
+.carousel-control:focus {
+    color: #FFF;
+    opacity: 0.5;
+}
+.carousel-control.left {
+    background-image: none;
+}
+.carousel-control.right {
+    background-image: none;
+}
+.carousel-inner > .item > .carousel-table > img, .carousel-inner > .item > .carousel-table > a > img {
+    width: 100%;
+    line-height: 1;
+    max-width: 100%;
+    height: 5px;
+}
+.carousel-table {
+    display: table;
+    height: 300px;
+    width: 100%;
+}
+
 .profile-image {
     display: inline-block;
     float: left;
@@ -932,6 +990,11 @@ body.loading .modal-loading { /*modal element will be visible */
     float: left;
     font-family: raleway-semibold, sans-serif;
 }
+.profile-maintitle {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
 .profile-subtitle {
     display: inline-block;
     font-family: raleway-regular, sans-serif;
@@ -942,10 +1005,14 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-bottom: 25px;
 }
 .school-rating-span {
-    font-size:1.5em;
+    font-size:16px !important;
     font-family: raleway-semibold, sans-serif;
     padding-bottom: 5px;
     border-bottom: 1px solid rgb(255, 169, 17);
+}
+.vcorrect {
+    position: relative;
+    bottom: -4px;
 }
 .lesosn-subj_img-container {
 
@@ -980,13 +1047,12 @@ body.loading .modal-loading { /*modal element will be visible */
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
+.specialsep {
+   padding: 0 0 10px 0;
+}
 .lessons-separator {
-    border:0;
-    width:68%;
-    color: #CCCCCC;
-    background-color: #CCCCCC;
-    height: 1px;
-    margin-top: 30px;
+    border-bottom: 1px solid #CCCCCC;
+    padding-top: 30px;
     margin-bottom: 40px;
 }
 /*teachers profile*/
@@ -1053,7 +1119,7 @@ body.loading .modal-loading { /*modal element will be visible */
     border-bottom: 0 !important;
 }
 .profile-box {
-    padding: 25px 70px 100px 70px;
+    padding: 25px 0 100px 0;
     -webkit-box-shadow: -7px -3px 5px 0 rgba(0,0,0,0.1);
     -moz-box-shadow: -7px -3px 5px 0 rgba(0,0,0,0.1);
     box-shadow: -7px -3px 5px 0 rgba(0,0,0,0.1);

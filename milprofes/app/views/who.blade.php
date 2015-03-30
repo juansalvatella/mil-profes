@@ -21,8 +21,12 @@
 
                 <div class="col-xs-12 text-justify">@lang('who.p3')<br><br></div>
 
-                <div class="col-xs-12 text-center top-buffer-35">
-                    <span class="who-logo">@lang('who.logo')</span>
+                <div class="col-xs-12 top-buffer-35">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 text-center contact-who-logo-container">
+                            <span class="who-logo">@lang('who.logo')</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

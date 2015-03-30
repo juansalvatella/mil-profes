@@ -30,7 +30,7 @@
             @endif
 
 
-            <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+            <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 
                 <form class="form-horizontal" action="{{ action('TeachersController@saveLesson') }}" method="post" role="form" id="edit-l-form">
                     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">

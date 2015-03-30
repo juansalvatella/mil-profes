@@ -46,30 +46,49 @@
     {{--sub-header search options--}}
     <div id="sub-header-menu" class="container-fluid">
         <div class="row">
-            <div class="col-sm-offset-2 col-sm-10">
-                <div class="col-sm-4">{{ Form::label('keywords', 'Busco clases de:') }}</div>
-                <div class="col-sm-4">{{ Form::label('user_address', 'Estoy en:') }}</div>
-                <div class="col-sm-2">&nbsp;</div>
+            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 
-                <div class="col-sm-4 clear-left">{{ Form::text('keywords', $keywords, array('class'=>'form-control')) }}</div>
-                <div class="col-sm-4">{{ Form::text('user_address', $user_address, array('class'=>'form-control')) }}</div>
-                <div class="col-sm-2">{{ Form::submit('Encontrar',array('id'=>'btn-submit-search','class'=>'form-control mp-submit-find')) }}</div>
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $(document).on("click", "#btn-submit-search", function(e) {
-                            var ninput = $('#current-slices-showing');
-                            ninput.val(0);
-                            return true;
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                    <div class="">
+                        <div class="">{{ Form::label('keywords', 'Busco clases de:') }}</div>
+                    </div>
+                    <div class="">
+                        <div class="">{{ Form::text('keywords', $keywords, array('class'=>'form-control')) }}</div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                    <div class="">
+                        <div class="">{{ Form::label('user_address', 'Estoy en:') }}</div>
+                    </div>
+                    <div class="">
+                        <div class="">{{ Form::text('user_address', $user_address, array('class'=>'form-control')) }}</div>
+                    </div>
+                </div>
+                <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-4 col-md-2 col-lg-2">
+                    <div class="top-buffer-4">
+                        <div class="">{{ Form::label('', '') }}</div>
+                    </div>
+                    <div class="">
+                        {{ Form::submit('Encontrar',array('id'=>'btn-submit-search','class'=>'form-control mp-submit-find')) }}
+                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            $(document).on("click", "#btn-submit-search", function(e) {
+                                var ninput = $('#current-slices-showing');
+                                ninput.val(0);
+                                return true;
+                            });
                         });
-                    });
-                </script>
+                    </script>
+                </div>
+
             </div>
         </div>
     </div>
 
 <div class="container-fluid">
 
-    <div id="search-options-menu" class="col-sm-2 well mp-shadow">
+    <div id="search-options-menu" class="col-xs-0 hidden-xs col-sm-0 hidden-sm col-md-2 well mp-shadow">
         <div id="search-options-menu-container">
 
             <div class="row text-center">
@@ -297,7 +316,7 @@
 
     {{ Form::close() }}
 
-    <div class="col-xs-8" id="results-main-content">
+    <div class="col-xs-12 col-sm-10 col-md-8 co-lg-8" id="results-main-content">
 
         <div id="saveReviewAlertDiv" class="bb-alert alert alert-info" style="display:none;position: fixed;top: 25%;right: 0px;margin-bottom: 0px;font-size: 1.2em;padding: 1em 1.3em;z-index: 2000;">
             <span id="saveReviewAlert">Save review success/failure alert</span>
@@ -305,11 +324,13 @@
 
         <div class="panel panel-default mp-shadow">
             <div class="panel-body search-total">
+                <div class="row"><div class="col-xs-12">
                 @if($total_results==0)
-                    <span class="h4-like"><strong>No se encontraron resultados</strong></span>
+                    <span><strong>No se encontraron resultados</strong></span>
                 @else
-                    <span class="h4-like"><strong>{{ $total_results }} @choice('search.results',$total_results) cerca de ti</strong></span>
+                    <span><strong>{{ $total_results }} @choice('search.results',$total_results) cerca de ti</strong></span>
                 @endif
+                </div></div>
             </div>
         </div>
 
@@ -320,7 +341,7 @@
             <div id="results-slice-{{ $slices_showing }}">
             @foreach($results as $result)
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-xs-12 col-sm-3 col-md-3">
                         <div class="row search-image-container">
                             @if($prof_o_acad=='profesor')
                                 <a href="{{ url('profiles/teacher/'.$result->teacher_id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->username }}" src="{{ asset('img/avatars/'.$result->avatar) }}"/></a>
@@ -336,7 +357,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-xs-12 col-sm-5 col-md-6">
                         <div class="row result-name">
                             @if($prof_o_acad=='profesor')
                                 <span>{{{ $result->username }}}</span>
@@ -368,14 +389,19 @@
                         <div class="row result-availability">
                             @foreach($result->availability as $pick)
                                 @if($pick->day != '')
-                                    <div class="col-sm-4 unpadded">
-                                        <small><span class="pick"><span class="pick-day">&nbsp;{{ $pick->day }}&nbsp;</span> <span class="pick-time">&nbsp;{{ substr($pick->start,0,-3) }} - {{ substr($pick->end,0,-3) }}&nbsp;&nbsp;</span></span></small>
-                                    </div>
+                                    <small><span class="pick"><span class="pick-day">&nbsp;{{ $pick->day }}&nbsp;</span> <span class="pick-time">&nbsp;{{ substr($pick->start,0,-3) }} - {{ substr($pick->end,0,-3) }}&nbsp;&nbsp;</span></span></small>
                                 @endif
                             @endforeach
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 hidden-md hidden-lg specialsep">
+                                &nbsp;
+                            </div>
+                        </div>
+
                         <div class="row text-center">
                             <span id="lesson-stars-{{$result->id}}"></span>
                             <script type="text/javascript">
@@ -437,9 +463,9 @@
                         </div>
                         <div class="row text-center top-buffer-15">
                                 @if($prof_o_acad=='profesor')
-                                    <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctame</a>
+                                    <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="top" title="Contacto">Contáctame</a>
                                 @else
-                                    <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="left" title="Contacto">Contáctanos</a>
+                                    <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="top" title="Contacto">Contáctanos</a>
                                 @endif
                                 <script type="text/javascript">
                                     $(document).ready(function(){
@@ -473,7 +499,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 text-right"><hr align="right" class="results-separator"/></div>
+                <!-- separator -->
+                <div class="col-xs-12">
+                    <div class="col-xs-offset-0 col-sm-offset-2 col-xs-12 col-sm-8 lessons-separator">&nbsp;</div>
+                </div>
             @endforeach
             </div>
         </div>

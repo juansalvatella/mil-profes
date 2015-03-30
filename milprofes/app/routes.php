@@ -58,9 +58,9 @@ Route::get('profiles/school/{school}', function(School $school) {
     $lessons = $lessons->slice($sl_offset,$sl_length);
     ++$slices_showing;
     $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
+    $slpics = $school->pics()->get(array('pic'));
 
-    return View::make('school_details', compact('school','lessons','display_show_more','slices_showing','total_results'));
-
+    return View::make('school_details', compact('school','slpics','lessons','display_show_more','slices_showing','total_results'));
 });
 Route::post('profiles/school/{school}', function(School $school) {
     $lessons = $school->lessons()->get();
@@ -79,8 +79,9 @@ Route::post('profiles/school/{school}', function(School $school) {
     $lessons = $lessons->slice($sl_offset,$sl_length);
     ++$slices_showing;
     $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
+    $slpics = $school->pics()->get();
 
-    return View::make('school_details', compact('school','lessons','display_show_more','slices_showing','total_results'));
+    return View::make('school_details', compact('school','slpics','lessons','display_show_more','slices_showing','total_results'));
 });
 
 //Search
