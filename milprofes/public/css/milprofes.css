@@ -375,6 +375,10 @@ a, a:link, a:hover, a:active, a:visited {
 .fa-google-plus {
     color: #d44132 !important;
 }
+.fa-youtube {
+    color: #e52d27 !important;
+    font-size: 1.2em !important;
+}
 #footer {
     background-color: #FFC307;
     color: #000;
