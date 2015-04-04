@@ -90,16 +90,32 @@ Route::post('search/results','SearchController@search');
 Route::post('/search','SearchController@search');
 Route::post('/search/asearch','SearchController@search');
 //Faqs
-Route::get('preguntas/frecuentes', function(){
+Route::get('respuestas', function(){
     return View::make('faqs');
 });
 //Who
-Route::get('quienes/somos', function() {
+Route::get('somos', function() {
     return View::make('who');
 });
 //Contact
 Route::get('contactanos', function() {
     return View::make('contact');
+});
+//Aviso legal
+Route::get('condiciones', function() {
+    return View::make('aviso_legal');
+});
+//Cookies
+Route::get('cookies', function() {
+    return View::make('cookies');
+});
+//Política de privacidad
+Route::get('privacidad', function() {
+    return View::make('politica_privacidad');
+});
+//Mapa del sitio
+Route::get('mapa', function() {
+    return View::make('mapa');
 });
 Route::post('contactanos','ContactController@getContactForm');
 Route::post('/','ContactController@getMiniContactForm');
@@ -430,8 +446,7 @@ Route::get('admin/edit/lesson/{lesson_id}', function($lesson_id)
     return View::make('lesson_edit', compact('lesson','school','subject','picks','n_picks_set'));
 });
 Route::post('admin/edit/lesson/{school_id}', 'AdminController@saveLesson');
-Route::get('admin/delete/lesson/{lesson_id}', function($lesson_id)
-{
+Route::get('admin/delete/lesson/{lesson_id}', function($lesson_id) {
     $lesson = SchoolLesson::findOrFail($lesson_id);
     $school = $lesson->school()->first();
     $subject = $lesson->subject()->first();
@@ -439,3 +454,4 @@ Route::get('admin/delete/lesson/{lesson_id}', function($lesson_id)
     return View::make('lesson_confirm_delete', compact('lesson','school','subject'));
 });
 Route::post('admin/delete/lesson/{school_id}', 'AdminController@deleteLesson');
+Route::post('load-school-profile-pics','AdminController@loadProfilePics');

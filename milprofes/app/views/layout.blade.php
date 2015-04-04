@@ -81,15 +81,12 @@
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">Close</span>
         </button>
-        {{--<div id="cookieBannerClose"><a href="#">x</a></div>--}}
-        Uso de cookies: Utilizamos cookies propias y de terceros para ofrecer nuestros servicios y publicidad basada en tus intereses.
-        Al usar nuestros servicios, aceptas el uso que hacemos de las cookies, según se describe en nuestra
-        <a class="noconsent" href="{{ url('politica-de-privacidad') }}">Política de Privacidad</a>.
-        {{--<div id="cookieBannerActions">--}}
-            {{--<a href="#">Acepto</a>--}}
-            {{--&mdash;--}}
-            {{--<a class="denyConsent noconsent" href="#">No autorizo el uso de cookies</a>--}}
-        {{--</div>--}}
+        Este sitio web utiliza cookies propias y de terceros para mejorar nuestros servicios y mostrarle publicidad relacionada con sus preferencias mediante el análisis de sus hábitos de navegación.
+        Si está de acuerdo pulse <a href="#">Acepto</a> o siga navegando. Puede cambiar la configuración u obtener más información haciendo click en <a class="noconsent" href="{{ url('cookies') }}">más información</a>.
+        {{--Ejemplos de enlaces relacionados con aceptación de cookies--}}
+        {{--<a href="#">Acepto</a>--}}
+        {{--<a class="noconsent" href="{{ url('politica-de-privacidad') }}">Política de Privacidad</a>--}}
+        {{--<a class="denyConsent noconsent" href="#">No autorizo el uso de cookies</a>--}}
     </div>
 
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -105,8 +102,8 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav text-center">
-                    <li><a class="left-separator right-separator" href="{{ url('quienes/somos') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
-                    <li><a class="right-separator" href="{{ url('preguntas/frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
+                    <li><a class="left-separator right-separator" href="{{ url('somos') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
+                    <li><a class="right-separator" href="{{ url('respuestas') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
                     <li><a class="right-separator" href="{{ url('contactanos') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right text-center">
@@ -313,7 +310,7 @@
                     </div>
                     <div class="row text-left">
                         <div class="col-xs-12 userterms-link">
-                            <small><a href="{{url('terminos-de-uso')}}">@lang('layout.register_user-terms')</a></small>
+                            <small><a href="{{url('condiciones')}}">@lang('layout.register_user-terms')</a></small>
                         </div>
                     </div>
                 </div>
@@ -336,7 +333,7 @@
                                 <div class="row top-buffer-10 footer-contact"><span class="glyphicon glyphicon-home footer-glyphicon"></span>&nbsp;&nbsp;&nbsp;&nbsp; @lang('layout.address_title') @lang('layout.address')</div>
                             </div>
                         </div>
-                        <div class="row top-buffer-25 text-left" id="footer-follow">@lang('layout.follow_us')&nbsp;&nbsp;&nbsp;&nbsp;<span id="footer-faicons"><a href="{{ Config::get('constants.social-links.facebook') }}" class="fa fa-facebook-f"></a>&nbsp;&nbsp;<a href="{{ Config::get('constants.social-links.twitter') }}" class="fa fa-twitter"></a>&nbsp;&nbsp;<a href="{{ Config::get('constants.social-links.linkedin') }}" class="fa fa-linkedin"></a>&nbsp;&nbsp;<a href="{{ Config::get('constants.social-links.googleplus') }}" rel="publisher" class="fa fa-google-plus"></a>&nbsp;&nbsp;<a href="{{ Config::get('constants.social-links.youtube') }}" class="fa fa-youtube"></a></span></div>
+                        <div class="row top-buffer-25 text-left" id="footer-follow">@lang('layout.follow_us')&nbsp;&nbsp;&nbsp;&nbsp;<span id="footer-faicons"><a target="_blank" href="{{ Config::get('constants.social-links.facebook') }}" class="fa fa-facebook-f"></a>&nbsp;&nbsp;<a target="_blank" href="{{ Config::get('constants.social-links.twitter') }}" class="fa fa-twitter"></a>&nbsp;&nbsp;<a target="_blank" href="{{ Config::get('constants.social-links.linkedin') }}" class="fa fa-linkedin"></a>&nbsp;&nbsp;<a target="_blank" href="{{ Config::get('constants.social-links.googleplus') }}" rel="publisher" class="fa fa-google-plus"></a>&nbsp;&nbsp;<a target="_blank" href="{{ Config::get('constants.social-links.youtube') }}" class="fa fa-youtube"></a></span></div>
                     </div>
                 </div>
 
@@ -445,7 +442,7 @@
                 <small>@lang('layout.copyright') | @lang('layout.authorship')</small>
             </div>
             <div class="pull-right top-buffer-5 footer-links">
-                <a href="{{ url('terminos-de-uso') }}" title="@lang('layout.user_terms')">@lang('layout.user_terms')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('politica-de-privacidad') }}" title="@lang('layout.privacy')">@lang('layout.privacy')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('mapa-del-sitio') }}" title="@lang('layout.sitemap')">@lang('layout.sitemap')</a>
+                <a href="{{ url('condiciones') }}" title="@lang('layout.user_terms')">@lang('layout.user_terms')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('privacidad') }}" title="@lang('layout.privacy')">@lang('layout.privacy')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('cookies') }}" title="@lang('layout.cookies')">@lang('layout.cookies')</a>{{--&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('mapa') }}" title="@lang('layout.sitemap')">@lang('layout.sitemap')</a>--}}
             </div>
         </div><!-- /.container -->
     </div><!-- /#footer -->

@@ -40,8 +40,9 @@ return [
     'copyright' => 'Copyrights 2015 &copy; All rights Reserved.',
     'authorship' => '<div class="netw-link"><a href="http://www.network30.com/" target="_blank">Network3.0</a></div> & <div class="enosis-link"><a href="http://e-nosis.com/" target="_blank">e-nosis</a></div>',
 
-    'user_terms' => 'Términos de uso',
-    'privacy' => 'Privacidad',
+    'user_terms' => 'Condiciones de uso',
+    'privacy' => 'Política de privacidad',
+    'cookies' => 'Política de cookies',
     'sitemap' => 'Mapa del sitio',
 
     'login-username' => 'E-mail o Nombre de usuario',
@@ -70,6 +71,6 @@ return [
     'register-confirm-password-ph' => 'Repite tu contraseña',
     'register-register' => 'Registrarme',
     'register-cancel' => 'Cancelar',
-    'register_user-terms' => 'Ver términos de uso',
+    'register_user-terms' => 'Ver condiciones de uso',
 
 ];
