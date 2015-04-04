@@ -26,6 +26,7 @@ class UsersController extends Controller
             'username' => 'required|alpha_num|min:5|max:20',
             'email' => 'required|email',
             'password' => 'required|min:6',
+            'terms' => 'required|accepted',
         );
         $validator =  Validator::make($input, $rules);
 

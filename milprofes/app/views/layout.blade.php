@@ -225,14 +225,14 @@
                                 @endif
 
                                 <div class="row">
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="name">@lang('layout.register-realname')</label>
                                             <input class="form-control" placeholder="{{{@trans('layout.register-realname-ph')}}}" maxlength="50" type="text" name="name" id="name" value="{{{ Input::old('name') }}}" required="required" data-error="Rellena este campo.">
                                             <small><span class="help-block with-errors"></span></small>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="lastname">@lang('layout.register-reallastname')</label>
                                             <input class="form-control" placeholder="{{{@trans('layout.register-reallastname-ph')}}}" maxlength="100" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}">
@@ -250,7 +250,7 @@
                                     </div>
                                 </div>
                                     <div class="row">
-                                        <div class="col-xs-6">
+                                        <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="phone">@lang('layout.register-phone')</label>
                                                 <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" pattern="^([0-9]){5,}$" maxlength="20" name="phone" id="phone" value="{{{ Input::old('phone') }}}" data-error="Sólo números, sin espacios.">
@@ -259,33 +259,44 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xs-6">
+                                        <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="username">@lang('layout.register-username')</label>
                                                 <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" pattern="^([_A-z0-9]){5,}$" maxlength="20" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required="required" data-error="Al menos 5 caracteres con letras o números.">
                                                 <small><span class="help-block with-errors">Mínimo 5 caracters (letras, números, guion bajo)</span></small>
                                             </div>
                                         </div>
-                                        <div class="col-xs-6">
+                                        <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="email">@lang('layout.register-email') <small>@lang('layout.register-required-confirmation')</small></label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-email') }}}" type="email" name="email" id="email" value="{{{ Input::old('email') }}}" required="required" data-error="Introduce una dirección de correo.">
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-email-ph') }}}" type="email" name="email" id="email" value="{{{ Input::old('email') }}}" required="required" data-error="Introduce una dirección de correo válida.">
                                                 <small><span class="help-block with-errors"></span></small>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xs-6">
+                                        <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="password">@lang('layout.register-password')</label>
-                                                <input class="form-control register-password" placeholder="{{{ @trans('layout.register-password') }}}" type="password" pattern=".{6,}" name="password" id="password" required="required" data-error="Al menos 6 caracteres de longitud.">
+                                                <input class="form-control register-password" placeholder="{{{ @trans('layout.register-password-ph') }}}" type="password" pattern=".{6,}" name="password" id="password" required="required" data-error="Al menos 6 caracteres de longitud.">
                                                 <small><span class="help-block with-errors">Mínimo 6 de longitud</span></small>
                                             </div>
                                         </div>
-                                        <div class="col-xs-6">
+                                        <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="password_confirmation">@lang('layout.register-confirm-password')</label>
                                                 <input class="form-control" placeholder="{{{ @trans('layout.register-confirm-password-ph') }}}" type="password" data-match=".register-password" name="password_confirmation" id="password_confirmation" required="required" data-error="Rellena este campo." data-match-error="No coincide.">
+                                                <small><span class="help-block with-errors"></span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input value="1" type="checkbox" name="terms" id="terms" data-error="Debes aceptar las condiciones de uso para registrarte" required="required">
+                                                    He leído y acepto las <a target="_blank" href="{{url('condiciones')}}">@lang('layout.register_user-terms')</a>
+                                                </label>
                                                 <small><span class="help-block with-errors"></span></small>
                                             </div>
                                         </div>
@@ -308,11 +319,11 @@
 
                         </div>
                     </div>
-                    <div class="row text-left">
-                        <div class="col-xs-12 userterms-link">
-                            <small><a href="{{url('condiciones')}}">@lang('layout.register_user-terms')</a></small>
-                        </div>
-                    </div>
+                    {{--<div class="row text-left">--}}
+                        {{--<div class="col-xs-12 userterms-link">--}}
+                            {{--<small><a href="{{url('condiciones')}}">@lang('layout.register_user-terms')</a></small>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                 </div>
             </div>
         </div>
