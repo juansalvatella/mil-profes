@@ -35,6 +35,7 @@
     {{ HTML::script('js/bootbox.min.js') }}
     {{ HTML::script('js/jquery.lazy.min.js') }}
     {{ HTML::script('js/consent.js') }}
+    {{ HTML::script('js/milprofes.js') }}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -112,7 +113,7 @@
                     <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
                 @else
                     <li><a data-target="#modal-login" data-toggle="modal" class="right-separator" href="#" title="@lang('layout.login')">@lang('layout.login')</a></li>
-                    <li><a data-target="#modal-register" data-toggle="modal"  href="#" title="@lang('layout.register')">@lang('layout.register')</a></li>
+                    <li><a id="register-link" data-target="#modal-register" data-toggle="modal"  href="#" title="@lang('layout.register')">@lang('layout.register')</a></li>
                 @endif
                 </ul>
             </div><!--/.nav-collapse -->
@@ -304,8 +305,8 @@
 
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
-                                            <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.register-register')</button>
-                                            <button type="button" class="btn btn-login-send" data-dismiss="modal">@lang('layout.register-cancel')</button>
+                                            <button id="register-submit-button" tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.register-register')</button>
+                                            <button id="register-cancel-button" type="button" class="btn btn-login-send" data-dismiss="modal">@lang('layout.register-cancel')</button>
                                         </div>
                                     </div>
 
@@ -500,6 +501,7 @@
     </script>
     {{--<script src="http://js.maxmind.com/js/country.js" type="text/javascript"></script>--}}
     {{--<script src="http://js.maxmind.com/js/geoip.js" type="text/javascript" ></script>--}}
+    {{ HTML::script('js/analytics.js') }}
 
 </body>
 </html>
