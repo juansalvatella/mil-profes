@@ -93,9 +93,6 @@
     <!-- JS Responsive text containers -->
     <script>
         $(document).ready(function($){
-            $("#welcome-responsive").fitText(1.9);
-            $("#find-responsive").fitText(1.9);
-            $(".popular-title-responsive").fitText(3.0);
             $(".names-responsive").fitText();
             $("#recent-responsive").fitText();
             $("#contact-responsive").fitText();
@@ -210,7 +207,7 @@
                                         <input class="form-control" tabindex="2" placeholder="{{{ @trans('layout.login-password') }}}" type="password" name="password" id="password" required="required" data-error="Rellena este campo.">
                                         <small><span class="help-block with-errors"></span></small>
                                         <p class="help-block">
-                                            <a href="{{{ URL::to('/users/forgot_password') }}}">@lang('layout.login-forgot-passwd')</a>
+                                            <a href="{{{ URL::to('/users/forgot-password') }}}">@lang('layout.login-forgot-passwd')</a>
                                         </p>
                                     </div>
                                     <div class="checkbox">

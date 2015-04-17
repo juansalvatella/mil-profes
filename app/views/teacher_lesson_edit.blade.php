@@ -5,9 +5,9 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div class="generic-title"><h3>Editar clase</h3></div>
+            <div><h1 class="generic-title">Editar clase</h1></div>
 
-            <div class="generic-subtitle">Edita los datos de tu clase</div>
+            <div><h2 class="generic-subtitle">Edita los datos de tu clase</h2></div>
 
         </div>
     </div>

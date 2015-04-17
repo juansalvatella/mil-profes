@@ -11,8 +11,8 @@
                     <div class="profile-image"><img src="{{ asset('img/avatars/'.$user->avatar) }}" title="{{ $user->username }} logo" alt="{{ $user->username }}"></div>
 
                     <div class="profile-title">
-                        <h3>Bienvenid&#64;, {{ $user->name }}</h3>
-                        <div class="profile-subtitle">Panel de Control</div>
+                        <div><h1 class="profile-maintitle">Mi panel de control</h1></div>
+                        <div><h2 class="profile-subtitle">Profe. {{ $user->name }}</h2></div>
                     </div>
 
                 </div>

@@ -4,9 +4,9 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div class="generic-title"><h3>@lang('aviso_legal.title')</h3></div>
+            <div><h1 class="generic-title">@lang('aviso_legal.title')</h1></div>
 
-            <div class="generic-subtitle">@lang('aviso_legal.subtitle')</div>
+            <div><h2 class="generic-subtitle">@lang('aviso_legal.subtitle')</h2></div>
 
         </div>
     </div>

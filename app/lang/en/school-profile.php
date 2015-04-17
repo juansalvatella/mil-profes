@@ -2,7 +2,7 @@
 
 return array(
 
-    'subtitle' => 'Academia',
+    'subtitle' => 'Perfil de academia',
     'rating' => 'Valoración',
 
     'per_unit' => 'por curso',

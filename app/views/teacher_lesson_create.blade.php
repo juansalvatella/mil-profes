@@ -4,9 +4,9 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div class="generic-title"><h3>Nueva clase</h3></div>
+            <div><h1 class="generic-title">Nueva clase</h1></div>
 
-            <div class="generic-subtitle">Introduce los detalles de tu nueva clase</div>
+            <div><h2 class="generic-subtitle">Introduce los detalles de tu nueva clase</h2></div>
 
         </div>
     </div>

@@ -3,10 +3,10 @@
 
 <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
     <div class="container">
-    
-        <div class="generic-title"><h3>@lang('contact.contact-us')</h3></div>
 
-        <div class="generic-subtitle">@lang('contact.ask-us')</div>
+        <div><h1 class="generic-title">@lang('contact.contact-us')</h1></div>
+
+        <div><h2 class="generic-subtitle">@lang('contact.ask-us')</h2></div>
 
     </div>
 </div>

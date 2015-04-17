@@ -4,9 +4,9 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div class="generic-title"><h3>Confirmar eliminación</h3></div>
+            <div><h1 class="generic-title">Confirmar eliminación</h1></div>
 
-            <div class="generic-subtitle">Confirma la eliminación de tu clase</div>
+            <div><h2 class="generic-subtitle">Confirma la eliminación de tu clase</h2></div>
 
         </div>
     </div>

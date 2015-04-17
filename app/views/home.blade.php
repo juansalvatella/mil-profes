@@ -25,8 +25,8 @@
       </div>
 
       <div class="row">
-          <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8" id="welcome-responsive">
-              @lang('home.welcome')
+          <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8">
+              <h1 id="welcome-responsive">@lang('home.welcome')</h1>
           </div>
       </div>
 
@@ -169,8 +169,8 @@
       </div><!-- /.row -->
 
       <div class="row text-center">
-          <div id="find-responsive" class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8">
-              @lang('home.find')
+          <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8">
+              <h1 id="find-responsive">@lang('home.find')</h1>
           </div>
       </div>
 
@@ -208,7 +208,7 @@
     <div class="container">
         <div class="row text-center top-buffer-35">
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8 popular-title-responsive">
-                <div class="chr"><span class="central-text">&nbsp;&nbsp;&nbsp;&nbsp;@lang('home.more_popular_schools')&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+                <div class="chr"><h2 class="central-text">&nbsp;&nbsp;&nbsp;&nbsp;@lang('home.more_popular_schools')&nbsp;&nbsp;&nbsp;&nbsp;</h2></div>
             </div>
         </div>
         <div class="row text-center">
@@ -222,8 +222,8 @@
             </div>
         </div>
         <div class="row text-center top-buffer-45">
-            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8 popular-title-responsive">
-                <div class="chr"><span class="central-text">&nbsp;&nbsp;&nbsp;&nbsp;@lang('home.more_popular_teachers')&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
+                <div class="chr"><h2 class="central-text">&nbsp;&nbsp;&nbsp;&nbsp;@lang('home.more_popular_teachers')&nbsp;&nbsp;&nbsp;&nbsp;</h2></div>
             </div>
         </div>
         <div class="row text-center">

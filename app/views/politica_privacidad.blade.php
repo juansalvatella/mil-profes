@@ -4,9 +4,9 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div class="generic-title"><h3>@lang('politica_privacidad.title')</h3></div>
+            <div><h1 class="generic-title">@lang('politica_privacidad.title')</h1></div>
 
-            <div class="generic-subtitle">@lang('politica_privacidad.subtitle')</div>
+            <div><h2 class="generic-subtitle">@lang('politica_privacidad.subtitle')</h2></div>
 
         </div>
     </div>

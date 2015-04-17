@@ -2,7 +2,7 @@
 
 return array(
 
-    'subtitle' => 'Profe.',
+    'subtitle' => 'Perfil de profe.',
     'rating' => 'Valoración',
 
     'per unit' => 'por hora',

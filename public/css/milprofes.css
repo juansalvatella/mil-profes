@@ -1,3 +1,30 @@
+@media(max-width:500px){
+    #welcome-responsive { font-size: 14px; }
+    #find-responsive { font-size: 24px; }
+    .central-text { font-size: 13px; }
+    .profile-maintitle { font-size: 16px; }
+    .profile-subtitle { font-size: 14px; }
+}
+@media(min-width:500px){
+    #welcome-responsive, #find-responsive {  font-size: 24px;  }
+    .central-text { font-size: 20px; }
+    .profile-maintitle { font-size: 20px; }
+    .profile-subtitle { font-size: 16px; }
+}
+@media(min-width:992px){
+    #welcome-responsive, #find-responsive {  font-size: 26px;  }
+    .central-text { font-size: 20px; }
+    .profile-maintitle { font-size: 20px; }
+    .profile-subtitle { font-size: 16px; }
+}
+@media(min-width:1200px){
+    #welcome-responsive {  font-size: 40px;  }
+    #find-responsive {  font-size: 36px;  }
+    .central-text { font-size: 25px; }
+    .profile-maintitle { font-size: 24px; }
+    .profile-subtitle { font-size: 20px; }
+}
+
 html, body {
     height: 100%;
 }
@@ -142,7 +169,7 @@ a, a:link, a:hover, a:active, a:visited {
     font-family: raleway-semibold, sans-serif;
     margin-left: -15px;
 }
-.generic-title h3 {
+.generic-title {
     font-size: 30px;
 }
 .generic-subtitle {
@@ -495,8 +522,6 @@ a, a:link, a:hover, a:active, a:visited {
 }
 #welcome-responsive {
     margin-top: 10px;
-	/*font-size: 0.9em;*/
-	/*font-weight: 300;*/
     font-family: raleway-semibold, sans-serif;
     line-height: 200%;
 	color: #E79500;
@@ -504,8 +529,8 @@ a, a:link, a:hover, a:active, a:visited {
 }
 #find-responsive {
     margin-top: 20px;
-    /*line-height: 200%;*/
-    /*font-size: 0.1em;*/
+    margin-bottom: 0;
+    padding: 0;
     color: #E79500;
     text-align: center;
     font-family: raleway-semibold, sans-serif;
@@ -552,6 +577,8 @@ a, a:link, a:hover, a:active, a:visited {
     font-family: raleway-semibold, sans-serif;
     background-color: #f4f4f4;
     padding:0 10px;
+    display: inline;
+    line-height: 1px;
 }
 #home-featured {
     background-color: #f4f4f4;
@@ -1009,12 +1036,12 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .profile-maintitle {
     margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 1.5em;
+    margin-bottom: 13px;
 }
 .profile-subtitle {
     display: inline-block;
     font-family: raleway-regular, sans-serif;
+    margin: 0;
 }
 .school-rating {
     padding-top: 5px;

@@ -164,10 +164,12 @@ class UsersController extends Controller
                 ->with('show_login_modal',true);
         } else {
             $error_msg = @trans('messages.alerts.wrong_password_forgot');
-            return Redirect::action('UsersController@doForgotPassword')
+//            return Redirect::action('UsersController@doForgotPassword')
+            return Redirect::back()
                 ->withInput()
-                ->with('log-error', $error_msg)
-                ->with('show_login_modal',true);
+                ->with('error', $error_msg);
+//                ->with('log-error', $error_msg)
+//                ->with('show_login_modal',true);
         }
     }
 

@@ -9,8 +9,8 @@
         <div class="container">
             <div class="profile-image"><img class="lazy" data-src="{{ asset('img/logos/'.$school->logo) }}" src="" title="{{ $school->name }} logo" alt="{{ $school->name }}"></div>
             <div class="profile-title">
-                <div class="profile-maintitle">{{ $school->name }}</div>
-                <div class="profile-subtitle">@lang('school-profile.subtitle')</div>
+                <h1 class="profile-maintitle">{{ $school->name }}</h1>
+                <h2 class="profile-subtitle">@lang('school-profile.subtitle')</h2>
             </div>
         </div>
     </div>

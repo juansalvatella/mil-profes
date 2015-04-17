@@ -4,9 +4,9 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div class="generic-title"><h3>Nueva contraseña</h3></div>
+            <div><h1 class="generic-title">Nueva contraseña</h1></div>
 
-            <div class="generic-subtitle">Introduce tu nueva contraseña</div>
+            <div><h2 class="generic-subtitle">Introduce tu nueva contraseña</h2></div>
 
         </div>
     </div>
