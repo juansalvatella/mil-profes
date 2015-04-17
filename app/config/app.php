@@ -126,6 +126,7 @@ return array(
 		'Zizaco\Confide\ServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
         'Torann\GeoIP\GeoIPServiceProvider',
+        'Cviebrock\EloquentSluggable\SluggableServiceProvider',
 
 	),
 

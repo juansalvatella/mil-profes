@@ -272,7 +272,7 @@
                                     e.preventDefault();
                                     e.stopImmediatePropagation();
                                     var form = $('form#hiddenVar');
-                                    $.post('/profiles/school/{{$school->id}}',
+                                    $.post('/academia/{{$school->slug}}',
                                             {
                                                 _token: form.find('input[name=_token]').val(),
                                                 slices_showing: form.find('input[name=slices_showing]').val()

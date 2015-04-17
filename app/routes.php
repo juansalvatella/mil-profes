@@ -26,23 +26,23 @@ Route::get('/', array('as' => 'home', function()
 }));
 
 //Profiles
-Route::get('profiles/teacher/{teacher}', function(Teacher $teacher) {
-    $user = $teacher->user()->get(array('username','avatar','email','phone','description'));
-    foreach($user as $u) {
-        $teacher->username = $u->username;
-        $teacher->avatar = $u->avatar;
-        $teacher->email = $u->email;
-        $teacher->phone = $u->phone;
-        $teacher->description = $u->description;
-        break;
-    }
+Route::get('profe/{user_slug}', function($user_slug) {
+    $user = User::findBySlug($user_slug);
+    $teacher = $user->teacher()->first();
+    //if passing by ID: $user = $teacher->user()->get(array('username','avatar','email','phone','description'));
+    $teacher->slug = $user_slug;
+    $teacher->username = $user->username;
+    $teacher->avatar = $user->avatar;
+    $teacher->email = $user->email;
+    $teacher->phone = $user->phone;
+    $teacher->description = $user->description;
     $lessons = $teacher->lessons()->get();
     $teacher->availability = $teacher->availabilities()->get();
 
     return View::make('teacher_details', compact('teacher','lessons'));
 });
-Route::get('profiles/school/{school}', function(School $school) {
-
+Route::get('academia/{school_slug}', function($school_slug) {
+    $school = School::findBySlug($school_slug);
     $lessons = $school->lessons()->get();
     foreach($lessons as $l) {
         $l->availability = $l->availabilities()->get();
@@ -62,7 +62,8 @@ Route::get('profiles/school/{school}', function(School $school) {
 
     return View::make('school_details', compact('school','slpics','lessons','display_show_more','slices_showing','total_results'));
 });
-Route::post('profiles/school/{school}', function(School $school) {
+Route::post('academia/{school_slug}', function($school_slug) {
+    $school = School::findBySlug($school_slug);
     $lessons = $school->lessons()->get();
     foreach($lessons as $l) {
         $l->availability = $l->availabilities()->get();
@@ -85,20 +86,21 @@ Route::post('profiles/school/{school}', function(School $school) {
 });
 
 //Search
-Route::get('/search/results','SearchController@search');
-Route::post('search/results','SearchController@search');
-Route::post('/search','SearchController@search');
-Route::post('/search/asearch','SearchController@search');
+Route::get('resultados','SearchController@search');
+Route::post('resultados','SearchController@search');
+//Route::post('resultados/async','SearchController@search');
+//Route::post('/search','SearchController@search');
+
 //Faqs
-Route::get('respuestas', function(){
+Route::get('preguntas-frecuentes', function(){
     return View::make('faqs');
 });
 //Who
-Route::get('somos', function() {
+Route::get('milprofes', function() {
     return View::make('who');
 });
 //Contact
-Route::get('contactanos', function() {
+Route::get('contacta', function() {
     return View::make('contact');
 });
 //Aviso legal
@@ -285,6 +287,7 @@ Route::get('userpanel/dashboard', array('as' => 'userpanel', function()
         return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
 }));
 Route::post('userpanel/dashboard/update/info', 'UsersController@updateUser');
+Route::post('userpanel/dashboard/update/avatar', 'UsersController@updateAvatar');
 Route::post('userpanel/dashboard/update/passwd', 'UsersController@updateUserPasswd');
 Route::get('userpanel/become/teacher','UsersController@becomeATeacher');
 

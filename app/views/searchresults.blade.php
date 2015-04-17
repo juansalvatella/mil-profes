@@ -7,7 +7,7 @@
             var soForm = $('form#newSearchForm');
             var ninput = $('#current-slices-showing');
             ninput.val(0);
-            $.post('/search/asearch',
+            $.post('/resultados',
                 {
                 _token: soForm.find('input[name=_token]').val(),
                 user_lat: soForm.find('input[name=user_lat]').val(),
@@ -289,7 +289,7 @@
                     var ninput = $('#current-slices-showing');
                     ninput.val(0);
                     var soForm = $('form#newSearchForm');
-                    $.post('/search/asearch',
+                    $.post('/resultados',
                         {
                             _token: soForm.find('input[name=_token]').val(),
                             user_lat: soForm.find('input[name=user_lat]').val(),
@@ -345,16 +345,16 @@
                     <div class="col-xs-12 col-sm-3 col-md-3">
                         <div class="row search-image-container">
                             @if($prof_o_acad=='profesor')
-                                <a href="{{ url('profiles/teacher/'.$result->teacher_id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->username }}" src="{{ asset('img/avatars/'.$result->avatar) }}"/></a>
+                                <a href="{{ url('profe/'.$result->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->username }}" src="{{ asset('img/avatars/'.$result->avatar) }}"/></a>
                             @else
-                                <a href="{{ url('profiles/school/'.$result->school_id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->name }}" src="{{ asset('img/logos/'.$result->logo) }}"/></a>
+                                <a href="{{ url('academia/'.$result->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->name }}" src="{{ asset('img/logos/'.$result->logo) }}"/></a>
                             @endif
                         </div>
                         <div class="row text-center profile-link">
                             @if($prof_o_acad=='profesor')
-                                <a href="{{ url('profiles/teacher/'.$result->teacher_id) }}">VER PERFIL</a>
+                                <a href="{{ url('profe/'.$result->slug) }}">VER PERFIL</a>
                             @else
-                                <a href="{{ url('profiles/school/'.$result->school_id) }}">VER PERFIL</a>
+                                <a href="{{ url('academia/'.$result->slug) }}">VER PERFIL</a>
                             @endif
                         </div>
                     </div>
@@ -521,7 +521,7 @@
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     var soForm = $('form#newSearchForm');
-                    $.post('/search/asearch',
+                    $.post('/resultados',
                         {
                             _token: soForm.find('input[name=_token]').val(),
                             user_lat: soForm.find('input[name=user_lat]').val(),

@@ -100,6 +100,15 @@ a, a:link, a:hover, a:active, a:visited {
 .bottom-padding-150 { padding-bottom: 150px; }
 .bottom-padding-200 { padding-bottom: 200px; }
 
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
 .padded { padding: 10px 15px 0 15px; }
 .smaller-alert {
     padding: 7px !important;
@@ -584,8 +593,12 @@ a, a:link, a:hover, a:active, a:visited {
 #mi-ubicacion {
     margin-top: -12px;
 }
-#mi-ubicacion img {
-    margin-top: -4px;
+#mi-ubicacion-marcador {
+    width: 13px;
+    height: 19px;
+    background-image: url(../img/marcador-distancia.png);
+    background-size: contain;
+    display: inline-block;
 }
 #mi-ubicacion a, #mi-ubicacion a:hover, #mi-ubicacion a:active, #mi-ubicacion a:visited {
     font-family: raleway-semibold, sans-serif;
@@ -1156,6 +1169,63 @@ body.loading .modal-loading { /*modal element will be visible */
     background-color: #eeeeee;
     color:#000;
 }
+#canvasContainer, #funcsContainer {
+    position: relative;
+    clear: both;
+}
+#canvasContainer {
+    /*height: 300px;*/
+    overflow: hidden;
+}
+.jcrop-holder {
+    margin: 0 auto;
+}
+.imgCanvas {
+    display: inline-block;
+    /*height: 300px;*/
+    /*width: auto;*/
+    /*max-width: 100%;*/
+}
+.jcrop-keymgr {
+    opacity: 0;
+}
+#funcsContainer {
+    margin-top: 5px;
+    height: 192px;
+}
+#previewContainer, #btnsContainer {
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+#previewTitle {
+    padding-top: 8px;
+    padding-bottom: 4px;
+    width: 160px;
+    clear: both;
+    margin: 0 auto;
+}
+#previewContainer {
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    border: 1px rgba(0, 0, 0, 0.4) solid;
+    background-color: white;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+}
+#btnsContainer {
+    text-align: center;
+}
+/*#newCanvas {*/
+    /*display: block;*/
+    /*max-width:100%;*/
+    /*max-height:100%;*/
+/*}*/
 /* END USER PANEL */
 
 /*POPOVERS*/

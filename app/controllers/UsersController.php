@@ -262,13 +262,65 @@ class UsersController extends Controller
         }
     }
 
+    public function updateAvatar() {
+        if($user = Confide::user())
+        {
+            $input = Input::all();
+            $rules = array(
+                'avatar' => 'required|string',
+                'x' => 'required|string',
+                'y' => 'required|string',
+                'w' => 'required|string',
+                'h' => 'required|string'
+            );
+            $validator = Validator::make($input, $rules);
+//            dd($input);
+//            dd($validator->passes());
+            if($validator->fails()) {
+                return Redirect::route('userpanel')
+                    ->with('failure','No ha sido posible actualizar tu foto de perfil. Inténtalo de nuevo.');
+            } else {
+                $targ_w = $targ_h = 160;
+                $jpeg_quality = 90;
+//                dd($input['avatar']);
+                $file = preg_replace('#^data:image/[^;]+;base64,#', '', $input['avatar']);
+//                dd($file);
+                $file = base64_decode($file);
+//                dd($file);
+                $path = public_path() . '/img/avatars/';
+                $filename = Str::random(30) . '.jpg';
+
+                $img_r = imagecreatefromstring($file);
+                if ($img_r == false) {
+                    return Redirect::route('userpanel')->withInput()->with('failure', 'Error al actualizar tu imagen de perfil: asegúrate de que tu imagen es del tipo PNG, JPG o GIF.');
+                }
+                $dst_r = ImageCreateTrueColor($targ_w, $targ_h);
+                imagecopyresampled($dst_r, $img_r, 0, 0, $input['x'], $input['y'], $targ_w, $targ_h, $input['w'], $input['h']);
+                header('Content-type: image/jpeg');
+                imagejpeg($dst_r, $path . $filename , $jpeg_quality);
+                imagedestroy($img_r);
+
+                $user->avatar = $filename;
+                if ($user->save()) {
+                    return Redirect::route('userpanel')->with('success', 'Tu imagen de perfil se ha actualizado con éxito');
+                } else {
+                    return Redirect::route('userpanel')->withInput()->with('failure', 'Error al actualizar tu imagen de perfil. Inténtalo de nuevo.');
+                }
+            }
+        } else {
+            return Redirect::route('/')
+                ->with('log-notice', 'No ha sido posible actualizar tu imagen de perfil porque tu sesión ha caducado. Por favor, vuelve a iniciar sesión e inténtalo de nuevo.')
+                ->with('show_login_modal',true);
+        }
+    }
+
     public function updateUser()
     {
         if($user = Confide::user())
         {
             $input = Input::all();
             $rules = array(
-                'avatar'        => 'image|max:200',
+//                'avatar'        => 'image|max:200',
                 'name'          => 'required|alpha_spaces|max:50',
                 'lastname'      => 'alpha_spaces|max:100',
                 'address'       => 'required|string|max:200',
@@ -280,17 +332,17 @@ class UsersController extends Controller
             if($validator->fails()) {
                 return Redirect::route('userpanel')
                     ->withInput()
-                    ->with('failure','No fue posible actualizar tus datos. Asegúrate de cumplir con los requisitos de cada campo.');
+                    ->with('failure','No ha sido posible actualizar tus datos. Asegúrate de haber rellenado los campos correctamente.');
             }
 
-            if(Input::hasFile('avatar')) {
-                $file = Input::file('avatar');
-                $file_extension = Input::file('avatar')->getClientOriginalExtension();
-                $filename = Str::random(30) . '.' . $file_extension;
-                $path = public_path() . '/img/avatars/';
-                $file->move($path, $filename);
-                $user->avatar = $filename;
-            }
+//            if(Input::hasFile('avatar')) {
+//                $file = Input::file('avatar');
+//                $file_extension = Input::file('avatar')->getClientOriginalExtension();
+//                $filename = Str::random(30) . '.' . $file_extension;
+//                $path = public_path() . '/img/avatars/';
+//                $file->move($path, $filename);
+//                $user->avatar = $filename;
+//            }
             if(Input::get('name') != $user->name)
             {
                 $user->name = Input::get('name');

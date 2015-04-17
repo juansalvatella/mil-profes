@@ -5,16 +5,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+    <meta name="Content-Language" content="es" />
+    <meta name="author" content="Milprofes S.L.">
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+@if(Request::is('/') || Request::is('milprofes') || Request::is('preguntas-frecuentes') || Request::is('contacta') || Request::is('profe/*') || Request::is('academia/*'))
+    <meta name="robots" content="index,follow"/>
+@else
+    <meta name="robots" content="noindex,nofollow"/>
+@endif
+@if(Request::is('/'))
+    <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes. "/>
+    <title>Profesores particulares y academias</title>
+@elseif(Request::is('milprofes'))
+    <meta name="Description" content="Milprofes está formado por un grupo de jóvenes unidos por la pasión y ambición por crear."/>
+    <title>MilProfes</title>
+@elseif(Request::is('preguntas-frecuentes'))
+    <meta name="Description" content="Encuentra respuesta a todas las preguntas que tengas del funcionamiento de la página web de Milprofes en el apartado de preguntas frecuentes. "/>
+    <title>Respuestas a las preguntas frecuentes de Milprofes</title>
+@elseif(Request::is('contacta'))
+    <meta name="Description" content="Contacta con el equipo de Milprofes a través de nuestro formulario. Estaremos encantados de responderte."/>
+    <title>Contacta con el equipo de Milprofes</title>
+@elseif(Request::is('profe/*') && isset($teacher->description) && isset($teacher->username))
+    <meta name="Description" content="{{{ $teacher->description }}}"/>
+    <title>{{{ $teacher->username }}} | Milprofes</title>
+@elseif(Request::is('academia/*') && isset($school->description) && isset($school->name))
+    <meta name="Description" content="{{{ $school->description }}}"/>
+    <title>{{{ $school->name }}} | Milprofes</title>
+@elseif(Request::is('resultados') && isset($subject) && isset($user_address))
+    @if($subject == 'all')
+        <?php $subject2 = 'todo'; ?>
+    @elseif($subject == 'universitario')
+        <?php $subject2 = 'nivel universitario'; ?>
+    @elseif($subject == 'musica')
+        <?php $subject2 = 'música'; ?>
+    @elseif($subject == 'cfp')
+        <?php $subject2 = 'CFP'; ?>
+    @else
+        <?php $subject2 = strtolower($subject); ?>
+    @endif
+    <title>Clases particulares de {{{ $subject2 }}} cerca de {{{ $user_address }}}</title>
+@elseif(Request::is('userpanel/*') || Request::is('teacher/*'))
+    <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes. "/>
+    <title>Mi Panel de Control | Milprofes</title>
+@else
+    <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes. "/>
+    <title>Profesores particulares y academias</title>
+@endif
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
-
-    <title>MilProfes</title>
 
     <!-- CSS -->
     {{ HTML::style('css/bootstrap.min.css') }}
@@ -36,6 +77,12 @@
     {{ HTML::script('js/jquery.lazy.min.js') }}
     {{ HTML::script('js/consent.js') }}
     {{ HTML::script('js/milprofes.js') }}
+
+    {{--CSS and JS for specific pages--}}
+@if(Request::is('userpanel/dashboard'))
+    {{ HTML::style('css/jquery.Jcrop.min.css') }}
+    {{ HTML::script('js/jquery.Jcrop.min.js') }}
+@endif
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -71,9 +118,11 @@
         ga('create', 'UA-61042823-1', 'auto');
         ga('send', 'pageview');
     </script>
+
 </head>
 
 <body>
+
     <!-- HEADER -->
 
     <!-- Cookies info //-->
@@ -103,9 +152,9 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav text-center">
-                    <li><a class="left-separator right-separator" href="{{ url('somos') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
-                    <li><a class="right-separator" href="{{ url('respuestas') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
-                    <li><a class="right-separator" href="{{ url('contactanos') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
+                    <li><a class="left-separator right-separator" href="{{ url('milprofes') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
+                    <li><a class="right-separator" href="{{ url('preguntas-frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
+                    <li><a class="right-separator" href="{{ url('contacta') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right text-center">
                 @if(Auth::check())
@@ -375,12 +424,12 @@
                         </script>
                         <div id="recent-schools" class="row">
                         @foreach($last_schools as $school)
-                            <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profiles/school/'.$school->id) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $school->name }}" src="" data-src="{{ asset('img/logos/'.$school->logo) }}"/></a></div></div>
+                            <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('academia/'.$school->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $school->name }}" src="" data-src="{{ asset('img/logos/'.$school->logo) }}"/></a></div></div>
                         @endforeach
                         </div>
                         <div id="recent-teachers" class="row">
                         @foreach($last_teachers as $teacher)
-                                <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profiles/teacher/'.$teacher->id) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $teacher->name }}" src="" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}"/></a></div></div>
+                                <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $teacher->name }}" src="" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}"/></a></div></div>
                         @endforeach
                         </div>
 

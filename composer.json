@@ -11,7 +11,8 @@
 		"way/generators": "~2.0",
 		"zizaco/confide": "~4.0@dev",
 		"zizaco/entrust": "1.2.*@dev",
-		"torann/geoip": "0.1.*@dev"
+		"torann/geoip": "0.1.*@dev",
+		"cviebrock/eloquent-sluggable": "2.*"
 	},
 	"autoload": {
 		"classmap": [

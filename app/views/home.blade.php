@@ -45,8 +45,8 @@
           </div>
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8 text-left hidden" id="mi-ubicacion">
               <a href="#" id="mi-ubicacion-link">
-                  <img src="{{ asset('img/marcador-distancia.png') }}">
-                  Usar mi ubicación actual
+                  <div id="mi-ubicacion-marcador"></div>
+                  @lang('home.location')
               </a>
           </div>
       </div>
@@ -215,8 +215,8 @@
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
                 @foreach($popular_schools as $school)
                     <div class="col-xs-6 col-sm-3 names-responsive">
-                        <div class="row best-image-container"><a href="{{ url('profiles/school/'.$school->id) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}"/></a></div>
-                        <div class="row best-name-container top-buffer-5"><a href="{{ url('profiles/school/'.$school->id) }}">{{ $school->name }}</a></div>
+                        <div class="row best-image-container"><a href="{{ url('academia/'.$school->slug) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}"/></a></div>
+                        <div class="row best-name-container top-buffer-5"><a href="{{ url('academia/'.$school->slug) }}">{{ $school->name }}</a></div>
                     </div>
                 @endforeach
             </div>
@@ -230,8 +230,8 @@
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
                 @foreach($popular_teachers as $teacher)
                     <div class="col-xs-6 col-sm-3 names-responsive">
-                        <div class="row best-image-container"><a href="{{ url('profiles/teacher/'.$teacher->id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}"/></a></div>
-                        <div class="row best-name-container top-buffer-5"><a href="{{ url('profiles/teacher/'.$teacher->id) }}">{{ $teacher->username }}</a></div>
+                        <div class="row best-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}"/></a></div>
+                        <div class="row best-name-container top-buffer-5"><a href="{{ url('profe/'.$teacher->slug) }}">{{ $teacher->username }}</a></div>
                     </div>
                 @endforeach
             </div>

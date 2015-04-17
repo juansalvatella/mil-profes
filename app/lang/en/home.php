@@ -26,6 +26,8 @@ return array(
     'subject_all' => 'De todo',
     'find' => 'Encontrar:',
 
+    'location' => 'Usar mi ubicación actual',
+
     'schools' => 'Academias',
     'teachers' => 'Profes.',
     'both' => 'Ambos',

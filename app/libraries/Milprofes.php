@@ -16,6 +16,7 @@ class Milprofes
         {
             $lt->username = $lt->user->username;
             $lt->avatar = $lt->user->avatar;
+            $lt->slug = $lt->user->slug;
         }
         return $last_teachers;
     }
@@ -43,6 +44,7 @@ class Milprofes
         {
             $lt->username = $lt->user->username;
             $lt->avatar = $lt->user->avatar;
+            $lt->slug = $lt->user->slug;
         }
 
         return $popular_teachers;

@@ -1,12 +1,24 @@
 <?php
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Confide\ConfideUserInterface;
 use Zizaco\Entrust\HasRole;
 
-class User extends Eloquent implements ConfideUserInterface {
+class User extends Eloquent implements ConfideUserInterface, SluggableInterface {
 
-	use ConfideUser, HasRole;
+	use ConfideUser, HasRole, SluggableTrait;
+
+    protected $sluggable = array(
+        'build_from' => 'username',
+        'save_to'    => 'slug',
+    );
+// if slug build_from = fullname instead of username, then uncomment this method
+//    public function getFullnameAttribute()
+//    {
+//        return $this->name . ' ' . $this->lastname;
+//    }
 
 	protected $fillable = [];
 
