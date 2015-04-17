@@ -3,7 +3,7 @@
     $last_schools = Milprofes::getLastSchools(12);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
     <meta http-equiv="Content-Language" content="es" />
