@@ -6,8 +6,8 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
-    <meta name="Content-Language" content="es" />
-    <meta name="author" content="Milprofes S.L.">
+    <meta http-equiv="Content-Language" content="es" />
+    <meta name="author" content="Milprofes S.L." />
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 @if(Request::is('/') || Request::is('milprofes') || Request::is('preguntas-frecuentes') || Request::is('contacta') || Request::is('profe/*') || Request::is('academia/*'))
