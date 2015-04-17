@@ -57,15 +57,15 @@
                 </div>
 
                 <form class="form-horizontal">
-                    <div class="col-xs-12 form-group">
+                    <div class="col-xs-12 form-group" id="file-input">
                         <div class="col-xs-12 col-sm-2 control-label">
                             <label class="" for="avatar">Mi imagen de perfil</label>
                         </div>
                         <div class="col-xs-12 col-offset-sm-2 col-sm-10">
                             <span class="btn btn-default btn-file btn-file-user1">
-                            Nueva imagen<input type="file" name="avatar" id="avatar"/>
+                            Nueva imagen<input type="file" name="avatar" id="avatar" />
                             </span>
-                            <div class="help-block with-errors"><small>Puedes utilizar imágenes del tipo JPG, PNG o GIF</small></div>
+                            <div class="help-block with-errors"><small id="file-input-error">Puedes utilizar imágenes del tipo JPG, PNG o GIF y tamaño inferior a 1 MB.</small></div>
                         </div>
                     </div>
                 </form>
@@ -292,7 +292,9 @@
 
     //Generate new canvas, preview and init jcrop
     function readURL(input) {
-        if (input.files && input.files[0]) {
+        if (input.files && input.files[0] && input.files[0].size < 1048576) {
+            $('#file-input').removeClass('has-error');
+            $('#file-input-error').html('Puedes utilizar imágenes del tipo JPG, PNG o GIF y tamaño inferior a 1 MB.');
             var reader = new FileReader();
             reader.onload = function (e) {
                 //Remove previous content
@@ -342,6 +344,9 @@
             };
             reader.readAsDataURL(input.files[0]);
             $('#cropModal').modal('show');
+        } else if(! input.files[0].size < 1048576) {
+            $('#file-input').addClass('has-error');
+            $('#file-input-error').html('La imagen elegida supera el tamaño máximo de 1 MB.');
         }
     }
 
