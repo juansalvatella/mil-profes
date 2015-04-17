@@ -82,7 +82,7 @@
 
                             <div class="col-xs-2 col-sm-2">
                                 <div class="row text-center subject-icon">
-                                    <img title="Categoría" alt="Categoría" src="{{ asset('img/'.$result->subject()->pluck('name').'.png') }}"/>
+                                    <img alt="Categoría {{{ $result->subject()->pluck('name') }}}" src="{{ asset('img/'.$result->subject()->pluck('name').'.png') }}"/>
                                 </div>
                             </div>
 
