@@ -315,7 +315,7 @@
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="email">@lang('layout.register-email') <small>@lang('layout.register-required-confirmation')</small></label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-email-ph') }}}" type="email" name="email" id="email" value="{{{ Input::old('email') }}}" required="required" data-error="Introduce una dirección de correo válida.">
+                                                <input class="form-control" placeholder="{{{ @trans('layout.register-email-ph') }}}" type="email" name="email" id="email2" value="{{{ Input::old('email') }}}" required="required" data-error="Introduce una dirección de correo válida.">
                                                 <small><span class="help-block with-errors"></span></small>
                                             </div>
                                         </div>
@@ -324,7 +324,7 @@
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="password">@lang('layout.register-password')</label>
-                                                <input class="form-control register-password" placeholder="{{{ @trans('layout.register-password-ph') }}}" type="password" pattern=".{6,}" name="password" id="password" required="required" data-error="Al menos 6 caracteres de longitud.">
+                                                <input class="form-control register-password" placeholder="{{{ @trans('layout.register-password-ph') }}}" type="password" pattern=".{6,}" name="password" id="password2" required="required" data-error="Al menos 6 caracteres de longitud.">
                                                 <small><span class="help-block with-errors">Mínimo 6 de longitud</span></small>
                                             </div>
                                         </div>

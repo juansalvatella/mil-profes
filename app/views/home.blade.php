@@ -92,7 +92,7 @@
 
       <div class="row text-center top-buffer-15">
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
-            {{ Form::label('subject', @trans('home.what_to_learn'), array('class'=>'main-home-label')) }}
+            <span class="main-home-label">{{ @trans('home.what_to_learn') }}</span>
               <div class="input-group">
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-default btn-lg dropdown-toggle btn-pick-subject" data-toggle="dropdown">
