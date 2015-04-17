@@ -9,3 +9,4 @@ app/_ide_helpers.php
 app/config/local
 app/config/production
 app/config/testing
+vendor/
