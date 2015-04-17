@@ -5,8 +5,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
-    <meta http-equiv="Content-Language" content="es" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="author" content="Milprofes S.L." />
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -421,12 +420,12 @@
                         </script>
                         <div id="recent-schools" class="row">
                         @foreach($last_schools as $school)
-                            <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('academia/'.$school->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $school->name }}" src="" data-src="{{ asset('img/logos/'.$school->logo) }}"/></a></div></div>
+                            <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('academia/'.$school->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}" data-src="{{ asset('img/logos/'.$school->logo) }}" /></a></div></div>
                         @endforeach
                         </div>
                         <div id="recent-teachers" class="row">
                         @foreach($last_teachers as $teacher)
-                                <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $teacher->name }}" src="" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}"/></a></div></div>
+                                <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}" /></a></div></div>
                         @endforeach
                         </div>
 
@@ -497,7 +496,7 @@
     <div id="footer">
         <div class="container-fluid">
             <div class="pull-left text-center top-buffer-5">
-                <small>@lang('layout.copyright') | @lang('layout.authorship')</small>
+                <small>@lang('layout.copyright')</small> | <div class="netw-link"><a href="http://www.network30.com/" target="_blank"><small>Network3.0</small></a></div><small> & </small><div class="enosis-link"><a href="http://e-nosis.com/" target="_blank"><small>e-nosis</small></a></div>
             </div>
             <div class="pull-right top-buffer-5 footer-links">
                 <a href="{{ url('condiciones') }}" title="@lang('layout.user_terms')">@lang('layout.user_terms')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('privacidad') }}" title="@lang('layout.privacy')">@lang('layout.privacy')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('cookies') }}" title="@lang('layout.cookies')">@lang('layout.cookies')</a>{{--&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('mapa') }}" title="@lang('layout.sitemap')">@lang('layout.sitemap')</a>--}}

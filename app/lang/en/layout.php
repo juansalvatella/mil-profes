@@ -38,7 +38,7 @@ return [
     'message_placeholder' => 'Tu mensaje',
 
     'copyright' => 'Copyrights 2015 &copy; All rights Reserved.',
-    'authorship' => '<div class="netw-link"><a href="http://www.network30.com/" target="_blank">Network3.0</a></div> & <div class="enosis-link"><a href="http://e-nosis.com/" target="_blank">e-nosis</a></div>',
+    'authorship' => '',
 
     'user_terms' => 'Condiciones de uso',
     'privacy' => 'Política de privacidad',

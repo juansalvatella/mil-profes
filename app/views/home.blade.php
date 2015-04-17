@@ -92,7 +92,7 @@
 
       <div class="row text-center top-buffer-15">
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
-            {{ Form::label('', @trans('home.what_to_learn'), array('class'=>'main-home-label')) }}
+            {{ Form::label('subject', @trans('home.what_to_learn'), array('class'=>'main-home-label')) }}
               <div class="input-group">
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-default btn-lg dropdown-toggle btn-pick-subject" data-toggle="dropdown">
@@ -215,7 +215,7 @@
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
                 @foreach($popular_schools as $school)
                     <div class="col-xs-6 col-sm-3 names-responsive">
-                        <div class="row best-image-container"><a href="{{ url('academia/'.$school->slug) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}"/></a></div>
+                        <div class="row best-image-container"><a href="{{ url('academia/'.$school->slug) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}" /></a></div>
                         <div class="row best-name-container top-buffer-5"><a href="{{ url('academia/'.$school->slug) }}">{{ $school->name }}</a></div>
                     </div>
                 @endforeach
@@ -230,7 +230,7 @@
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
                 @foreach($popular_teachers as $teacher)
                     <div class="col-xs-6 col-sm-3 names-responsive">
-                        <div class="row best-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}"/></a></div>
+                        <div class="row best-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }} "/></a></div>
                         <div class="row best-name-container top-buffer-5"><a href="{{ url('profe/'.$teacher->slug) }}">{{ $teacher->username }}</a></div>
                     </div>
                 @endforeach
