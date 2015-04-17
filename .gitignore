@@ -1,0 +1,11 @@
+.idea/
+public/img/pics
+public/img/logos/
+public/img/avatars/
+*.gitkeep
+*.lock
+app/storage
+app/_ide_helpers.php
+app/config/local
+app/config/production
+app/config/testing
