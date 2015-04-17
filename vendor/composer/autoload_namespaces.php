@@ -42,6 +42,7 @@ return array(
     'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
     'GeoIp2' => array($vendorDir . '/geoip2/geoip2/src'),
     'File' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Cviebrock\\EloquentSluggable' => array($vendorDir . '/cviebrock/eloquent-sluggable/src'),
     'Crypt' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'ClassPreloader' => array($vendorDir . '/classpreloader/classpreloader/src'),
     'Carbon' => array($vendorDir . '/nesbot/carbon/src'),
