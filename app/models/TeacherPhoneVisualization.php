@@ -12,7 +12,7 @@ class TeacherPhoneVisualization extends Eloquent
     }
 
     public function lesson() {
-        return $this->belongsTo('TeacherlLesson','teacher_lesson_id');
+        return $this->belongsTo('TeacherLesson','teacher_lesson_id');
     }
 
 }
