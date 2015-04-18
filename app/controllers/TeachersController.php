@@ -8,7 +8,7 @@ class TeachersController extends BaseController
         $input['price'] = str_replace(',','.',$input['price']);
         $rules = array(
             'title' => 'required|string|max:50',
-            'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario)$/'),
+            'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario|salud)$/'),
             'price' => 'numeric',
             'address' => 'required|string',
             'description' => 'required|string|max:200',
@@ -55,7 +55,7 @@ class TeachersController extends BaseController
         $input['price'] = str_replace(',','.',$input['price']);
         $rules = array(
             'title' => 'required|string|max:50',
-            'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario)$/'),
+            'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario|salud)$/'),
             'price' => 'numeric',
             'address' => 'required|string',
             'description' => 'required|string|max:200',

@@ -50,6 +50,7 @@
                     <option value="música" @if($subject->name=='música') selected="selected" @endif>Música</option>
                     <option value="idiomas" @if($subject->name=='idiomas') selected="selected" @endif>Idiomas</option>
                     <option value="deportes" @if($subject->name=='deportes') selected="selected" @endif>Deportes</option>
+                    <option value="salud" @if($subject->name=='salud') selected="selected" @endif>Salud y bienestar</option>
                 </select>
             </div>
         </div>

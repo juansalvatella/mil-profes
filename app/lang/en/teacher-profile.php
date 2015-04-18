@@ -18,6 +18,7 @@ return array(
     'of_subject_musica' => 'de música',
     'of_subject_idiomas' => 'de idiomas',
     'of_subject_deportes' => 'de deportes',
+    'of_subject_salud' => 'de salud y bienestar',
 
     'lesson-description' => '',
     'availability' => 'Disponibilidad',

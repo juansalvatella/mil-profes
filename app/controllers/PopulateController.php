@@ -136,7 +136,7 @@ class PopulateController extends BaseController
 
     private function populateSubjects()
     {
-        $esenciales = array('escolar','cfp','universitario','artes','música','idiomas','deportes');
+        $esenciales = array('escolar','cfp','universitario','artes','música','idiomas','deportes','salud');
         for ($i=0;$i<sizeof($esenciales);++$i)
         {
             $subject = new Subject();

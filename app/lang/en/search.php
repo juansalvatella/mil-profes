@@ -14,6 +14,7 @@ return array(
     'musica' => 'Música',
     'idiomas' => 'Idiomas',
     'deportes' => 'Deportes',
+    'salud' => 'Salud y bienestar',
     'all' => 'Todas',
 
     'schools' => 'Academias',
@@ -49,5 +50,6 @@ return array(
     'of_subject_musica' => 'DE MÚSICA',
     'of_subject_idiomas' => 'DE IDIOMAS',
     'of_subject_deportes' => 'DE DEPORTES',
+    'of_subject_salud' => 'DE SALUD Y BIENESTAR',
 
 );

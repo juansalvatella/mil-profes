@@ -108,6 +108,7 @@
                     <li><a href="#" id="action-musica">{{ @trans('home.subject_musica') }}</a></li>
                     <li><a href="#" id="action-idiomas">{{ @trans('home.subject_idiomas') }}</a></li>
                     <li><a href="#" id="action-deportes">{{ @trans('home.subject_deportes') }}</a></li>
+                    <li><a href="#" id="action-salud">{{ @trans('home.subject_salud') }}</a></li>
                     <li><a href="#" id="action-all">{{ @trans('home.subject_all') }}</a></li>
                   </ul>
                 </div><!-- /btn-group -->
@@ -153,6 +154,12 @@
                     $("#subject").val("deportes");
                     $("#subject-name").text("{{@trans('home.subject_deportes')}}");
                     $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_deportes')}}");
+                  });
+                  $("#action-salud").click(function(e){
+                      e.preventDefault();
+                      $("#subject").val("salud");
+                      $("#subject-name").text("{{@trans('home.subject_salud')}}");
+                      $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_salud')}}");
                   });
                   $("#action-all").click(function(e){
                     e.preventDefault();

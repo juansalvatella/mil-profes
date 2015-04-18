@@ -15,6 +15,7 @@ return array(
     'keywords_placeholder_musica' => 'clarinete, contrabajo, piano, violín...',
     'keywords_placeholder_idiomas' => 'inglés, francés, italiano, cingalés...',
     'keywords_placeholder_deportes' => 'karate, aerobic, natación, ajedrez...',
+    'keywords_placeholder_salud' => 'yoga, coaching, meditación, pilates...',
     'keywords_placeholder_all' => 'baile, informática, diseño industrial, música oriental...',
     'subject_escolar' => 'Escolar',
 	'subject_cfp' => 'CFP',
@@ -23,6 +24,7 @@ return array(
 	'subject_musica' => 'Música',
 	'subject_idiomas' => 'Idiomas',
 	'subject_deportes' => 'Deportes',
+    'subject_salud' => 'Salud y bienestar',
     'subject_all' => 'De todo',
     'find' => 'Encontrar:',
 

@@ -7,10 +7,21 @@ class SearchController extends BaseController
 
     public function search()
     {
-        //to config file
-        $results_per_slice = 6;
+        $results_per_slice = 6; //TODO: put this var in constants file
 
+        //form validation
         $input = Input::all();
+        $rules = array(
+            'user_address' => 'string',
+            'subject' => 'string',
+            'keywords' => 'string',
+            'prof_o_acad' => 'in:academia,profesor'
+        );
+        $validator =  Validator::make($input, $rules);
+        if($validator->fails())
+            return Redirect::to('/');
+
+        //prepare all vars
         $address = Input::has('user_address') ? $input['user_address'] : '';
         $check_address = ($address=='') ? false : true;
         $prof_o_acad = Input::has('prof_o_acad') ? $input['prof_o_acad'] : 'academia';
@@ -38,7 +49,7 @@ class SearchController extends BaseController
             }
         }
         if(!$check_address) { //if address not provided or geocoding fails default to Barcelona
-            $user_address = 'Barcelona';
+            $user_address = 'Barcelona'; //TODO: put this 3 vars in constants file
             $user_lat = 41.3850639;
             $user_lon = 2.1734035;
         }
@@ -273,7 +284,7 @@ class SearchController extends BaseController
 
         /* GMap Static image generation */
         $Zoom = $config['zoom'];
-        $Marker = 'http://s9.postimg.org/bmqh3803v/marcador_mapa.png'; //TEMPORARY STORAGE ¡¡¡¡¡¡¡¡¡CHANGE IT!!!!!!!!!
+        $Marker = asset('img/marcador-mapa.png');
         $MapLat    = $user_lat;
         $MapLng    = $user_lon;
         $MapRadius = $max_radius/1000;

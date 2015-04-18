@@ -24,6 +24,7 @@
             <thead>
             <tr>
                 <th>Precio (€/curso)</th>
+                <th>Nombre del curso</th>
                 <th>Descripción del curso</th>
                 <th>Materia</th>
                 <th>Acciones</th>
@@ -33,6 +34,7 @@
             @foreach($lessons as $lesson)
                 <tr>
                     <td>{{ $lesson->price }}</td>
+                    <td>{{ $lesson->title }}</td>
                     <td>{{ $lesson->description }}</td>
                     <td>{{ $subjects[$lesson->id]->name }}</td>
                     <td>

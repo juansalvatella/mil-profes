@@ -49,6 +49,7 @@
                     <option value="música">Música</option>
                     <option value="idiomas">Idiomas</option>
                     <option value="deportes">Deportes</option>
+                    <option value="salud">Salud y bienestar</option>
                 </select>
             </div>
         </div>

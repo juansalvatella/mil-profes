@@ -51,6 +51,7 @@
                                 <option value="musica">Música</option>
                                 <option value="idiomas">Idiomas</option>
                                 <option value="deportes">Deportes</option>
+                                <option value="salud">Salud y bienestar</option>
                             </select>
                             <input type="hidden" class="form-control">
                             <div class="help-block with-errors">¿En qué categoría clasificarías tu clase?</div>
