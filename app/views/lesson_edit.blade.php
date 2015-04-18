@@ -22,6 +22,12 @@
         <input type="hidden" name="school_id" value="{{ $school->id }}">
         <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
         <div class="form-group">
+            <label class="col-sm-2 control-label" for="title">Título</label>
+            <div class="col-sm-10">
+                <input type="text" placeholder="¿Cuál es el título de la clase?" class="form-control" name="title" id="title" value="{{{ $lesson->title }}}" />
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-sm-2 control-label" for="price">Precio (€/curso)</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="price" id="price" value="{{ $lesson->price }}"/>

@@ -52,7 +52,7 @@
                         <div class="col-xs-12 col-sm-12 hidden-md hidden-lg top-buffer-15">Día</div>
                         <div class="hidden-xs hidden-sm col-md-12 col-lg-12 top-buffer-5"></div>
                         <div class="col-xs-12 col-sm-12 col-md-4 clear-left">
-                            <div class="">
+                            <div>
                                 <select class="form-control" id="day{{$i}}" name="day{{$i}}">
                                     <option value="" @if($picks[$h]['day']=='') selected="selected" @endif > </option>
                                     <option value="LUN" @if($picks[$h]['day']=='LUN') selected="selected" @endif >Lunes</option>
@@ -160,18 +160,20 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th class="hidden-xs">Precio (€/hora)</th>
-                        <th>Descripción</th>
+                        <th class="min-width-150">Clase</th>
+                        <th class="hidden-xs">Precio<br>(€/hora)</th>
                         <th class="hidden-xs">Categoría</th>
-                        <th>Acciones</th>
+                        <th class="hidden-xs hidden-sm">Descripción</th>
+                        <th class="min-width-300">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($lessons as $lesson)
                         <tr>
-                            <td class="hidden-xs">{{ $lesson->price }}</td>
-                            <td>{{ $lesson->description }}</td>
-                            <td class="hidden-xs">{{ $subjects[$lesson->id]->name }}</td>
+                            <td>{{{ $lesson->title }}}</td>
+                            <td class="hidden-xs">{{{ $lesson->price }}}</td>
+                            <td class="hidden-xs">{{{ $subjects[$lesson->id]->name }}}</td>
+                            <td class="hidden-xs hidden-sm">{{{ $lesson->description }}}</td>
                             <td>
                                 <a href="{{ url('teacher/edit/lesson',array($lesson->id)) }}" class="btn btn-default bottom-buffer-5">Modificar detalles</a>
                                 &nbsp;

@@ -119,7 +119,11 @@
 
                                             <div class="row">
                                                 <div class="col-xs-12 lesson-subject unpadded">
-                                                    <span>@lang('school-profile.lesson_of') @lang('school-profile.of_subject_'.$result->subject()->pluck('name'))</span>
+                                                    @if($result->title == '')
+                                                        <span>@lang('school-profile.lesson_of') @lang('school-profile.of_subject_'.$result->subject()->pluck('name'))</span>
+                                                    @else
+                                                        <span>{{{ $result->title }}}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 

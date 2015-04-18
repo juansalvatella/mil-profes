@@ -35,7 +35,6 @@ class AdminController extends BaseController
         $school->lon = $geocoding[1]; //longitud
 
         if($school->save()) {
-
             if (Input::hasFile('pics')) {
                 $all_uploads = Input::file('pics');
                 if (!is_array($all_uploads)) {
@@ -51,8 +50,8 @@ class AdminController extends BaseController
                         array('file' => 'image')
                     );
 
+                    $img = $upload->getClientOriginalName();
                     if ($validator->fails()) {
-                        $img = $upload->getClientOriginalName();
                         return Redirect::to('admin/schools')
                             ->with('success', 'Academia creada con éxito.')
                             ->with('error', 'Error al adjuntar la imagen de perfil: ' . $img);
@@ -72,7 +71,6 @@ class AdminController extends BaseController
                     }
                 }
             }
-
             return Redirect::to('admin/schools')->with('success', 'Academia creada con éxito');
         }
         else
@@ -132,7 +130,8 @@ class AdminController extends BaseController
     {
         $input = Input::all();
         $lesson = new SchoolLesson();
-        $lesson->price = Input::get('price');
+        $lesson->title = $input['title'];
+        $lesson->price = str_replace(',','.',$input['price']);
         $lesson->description = Input::get('description');
         $lesson->address = Input::get('address');
         $geocoding = Geocoding::geocode(Input::get('address'));
@@ -180,7 +179,8 @@ class AdminController extends BaseController
         $input = Input::all();
         $school_id = Input::get('school_id');
         $lesson = SchoolLesson::findOrFail(Input::get('lesson_id'));
-        $lesson->price = Input::get('price');
+        $lesson->title = $input['title'];
+        $lesson->price = str_replace(',','.',$input['price']);
         $lesson->description = Input::get('description');
         $lesson->address = Input::get('address');
         $geocoding = Geocoding::geocode(Input::get('address'));

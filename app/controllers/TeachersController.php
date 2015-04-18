@@ -5,7 +5,9 @@ class TeachersController extends BaseController
     public function createLesson()
     {
         $input = Input::all();
+        $input['price'] = str_replace(',','.',$input['price']);
         $rules = array(
+            'title' => 'required|string|max:50',
             'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario)$/'),
             'price' => 'numeric',
             'address' => 'required|string',
@@ -13,16 +15,17 @@ class TeachersController extends BaseController
         );
         $validator = Validator::make($input, $rules);
         if($validator->fails()) {
-            return Redirect::to('teacher/create/lesson')
+            return Redirect::back()
                 ->withInput()
-                ->with('error', '¡Error! Los datos introducidos parecen no ser válidos. Asegúrate de haber rellenado bien los campos');
+                ->with('error', '¡Error! Los datos introducidos parecen no ser válidos. Asegúrate de haber rellenado los campos correctamente.');
         }
 
         $lesson = new TeacherLesson();
-        $lesson->price = Input::get('price');
-        $lesson->description = Input::get('description');
+        $lesson->title = $input['title'];
+        $lesson->price = $input['price'];
+        $lesson->description = $input['description'];
 
-        $lesson->address = Input::get('address');
+        $lesson->address = $input['address'];
         $geocoding = Geocoding::geocode(Input::get('address'));
         if(!$geocoding){
             return Redirect::to('teacher/create/lesson')
@@ -34,7 +37,7 @@ class TeachersController extends BaseController
 
         $user = Confide::user();
         $teacher = $user->teacher()->first();
-        $subject_name = Input::get('subject');
+        $subject_name = $input['subject'];
         $subject = Subject::where('name',$subject_name)->first();
 
         $lesson->subject()->associate($subject);
@@ -49,7 +52,9 @@ class TeachersController extends BaseController
     public function saveLesson()
     {
         $input = Input::all();
+        $input['price'] = str_replace(',','.',$input['price']);
         $rules = array(
+            'title' => 'required|string|max:50',
             'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario)$/'),
             'price' => 'numeric',
             'address' => 'required|string',
@@ -59,20 +64,21 @@ class TeachersController extends BaseController
         if($validator->fails()) {
             return Redirect::back()
                 ->withInput()
-                ->with('error', '¡Error! No se pudo actualizar los datos de tu clase. Comprueba que todos los campos tengan valores válidos.');
+                ->with('error', '¡Error! No se pudo actualizar los datos de tu clase. Asegúrate de haber rellenado los campos correctamente.');
         }
 
-        $lesson_id = Input::get('lesson_id');
+        $lesson_id = $input['lesson_id'];
         $lesson = TeacherLesson::findOrFail($lesson_id);
         $lesson_teacher = $lesson->teacher()->first();
-        $user = Auth::user();
+        $user = Confide::user();
         $teacher = $user->teacher()->first();
         if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de editar la clase de otros profesores
         {
-            $lesson->price = Input::get('price');
-            $lesson->description = Input::get('description');
-            $lesson->address = Input::get('address');
-            $geocoding = Geocoding::geocode(Input::get('address'));
+            $lesson->title = $input['title'];
+            $lesson->price = $input['price'];
+            $lesson->description = $input['description'];
+            $lesson->address = $input['address'];
+            $geocoding = Geocoding::geocode($input['address']);
             if (!$geocoding) {
                 return Redirect::back()
                     ->withInput()
@@ -81,7 +87,7 @@ class TeachersController extends BaseController
             $lesson->lat = $geocoding[0]; //latitud
             $lesson->lon = $geocoding[1]; //longitud
 
-            $subject_name = Input::get('subject');
+            $subject_name = $input['subject'];
             $subject = Subject::where('name', $subject_name)->first();
             $lesson->subject()->associate($subject);
 
@@ -100,7 +106,7 @@ class TeachersController extends BaseController
         $lesson_id = Input::get('lesson_id');
         $lesson = TeacherLesson::findOrFail($lesson_id);
         $lesson_teacher = $lesson->teacher()->first();
-        $user = Auth::user();
+        $user = Confide::user();
         $teacher = $user->teacher()->first();
         if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de eliminar la clase de otros profesores
         {

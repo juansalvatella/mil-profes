@@ -10,3 +10,4 @@ app/config/local
 app/config/production
 app/config/testing
 vendor/
+bootstrap/compiled.php

@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#register-link').click(function(){
-    	ga('send', 'event', 'attempts', 'registration',);
+    	ga('send', 'event', 'attempts', 'registration','');
     });
     $('#register-submit-button').click(function(){
     	ga('send', 'event', 'actions', 'registration','submit');

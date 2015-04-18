@@ -89,7 +89,11 @@
                             <div class="col-xs-9 col-sm-6">
 
                                 <div class="row t-lesson-subject">
-                                    <span>@lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject()->pluck('name'))</span>
+                                    @if($result->title == '')
+                                        <span>@lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject()->pluck('name'))</span>
+                                    @else
+                                        <span>{{{ $result->title }}}</span>
+                                    @endif
                                 </div>
 
                                 <div class="row result-description text-justify">

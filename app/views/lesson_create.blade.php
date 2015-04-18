@@ -21,6 +21,12 @@
         <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
         <input type="hidden" name="school_id" value="{{ $school->id }}">
         <div class="form-group">
+            <label class="col-sm-2 control-label" for="title">Título</label>
+            <div class="col-sm-10">
+                <input type="text" placeholder="¿Cuál es el título de la clase?" class="form-control" name="title" id="title" />
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-sm-2 control-label" for="price">Precio (€/curso)</label>
             <div class="col-sm-10">
                 <input type="text" placeholder="¿Cuál es el precio por curso?" class="form-control" name="price" id="price"/>

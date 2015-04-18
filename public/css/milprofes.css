@@ -4,18 +4,24 @@
     .central-text { font-size: 13px; }
     .profile-maintitle { font-size: 16px; }
     .profile-subtitle { font-size: 14px; }
+    .min-width-150 { }
+    .min-width-300 { }
 }
 @media(min-width:500px){
     #welcome-responsive, #find-responsive {  font-size: 24px;  }
     .central-text { font-size: 20px; }
     .profile-maintitle { font-size: 20px; }
     .profile-subtitle { font-size: 16px; }
+    .min-width-150 { min-width: 150px; }
+    .min-width-300 { min-width: 290px; }
 }
 @media(min-width:992px){
     #welcome-responsive, #find-responsive {  font-size: 26px;  }
     .central-text { font-size: 20px; }
     .profile-maintitle { font-size: 20px; }
     .profile-subtitle { font-size: 16px; }
+    .min-width-150 { min-width: 150px; }
+    .min-width-300 { min-width: 290px; }
 }
 @media(min-width:1200px){
     #welcome-responsive {  font-size: 40px;  }
@@ -23,6 +29,8 @@
     .central-text { font-size: 25px; }
     .profile-maintitle { font-size: 24px; }
     .profile-subtitle { font-size: 20px; }
+    .min-width-150 { min-width: 150px; }
+    .min-width-300 { min-width: 290px; }
 }
 
 html, body {
@@ -808,7 +816,8 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .result-description-title, .result-availability-title {
     font-family: raleway-semibold, sans-serif;
-    font-size: 0.8em;
+    font-size: 12px;
+    text-transform: uppercase;
     padding-top: 5px;
 }
 .result-description {
@@ -1309,6 +1318,13 @@ body.loading .modal-loading { /*modal element will be visible */
     background: white;
     cursor: inherit;
     display: block;
+}
+#chars_feedback {
+    position: absolute;
+    right: 18px;
+    top: -16px;
+    font-size: 12px;
+    color: #949494;
 }
 
 /*cookies alert*/
