@@ -33,7 +33,7 @@ class ReplaceLessonsWith2otherLessonsTables extends Migration {
 
 			$table->timestamps();
 		});
-		DB::statement('ALTER TABLE teacher_lessons ADD FULLTEXT search(description)');
+		DB::statement('ALTER TABLE teacher_lessons ADD FULLTEXT search(description,title)');
 
 		Schema::create('school_lessons',function($table){
 			$table->increments('id');
@@ -48,7 +48,7 @@ class ReplaceLessonsWith2otherLessonsTables extends Migration {
 
 			$table->timestamps();
 		});
-		DB::statement('ALTER TABLE school_lessons ADD FULLTEXT search(description)');
+		DB::statement('ALTER TABLE school_lessons ADD FULLTEXT search(description,title)');
 
 		//Finally, we replace the old ratings-lesson reference with the new one in the pivot table
 		Schema::table('ratings', function($table)

@@ -58,7 +58,14 @@ class SearchController extends BaseController
         if($prof_o_acad=='profesor') {
             if ($check_subject) { //filter by subject
                 $subj_id = Subject::where('name', $subject)->pluck('id');
-                if($check_keywords) {
+                if($check_keywords) { //there are keywords
+                    $keywords = str_replace(',',' ',$keywords);
+                    $kw_array = explode(" ", $keywords);
+                    $searchStr = "";
+                    foreach($kw_array as $kw) {
+                        if($kw!='')
+                            $searchStr .= "+".$kw."* ";
+                    }
                     $results = DB::table('teacher_lessons')
                         ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
                         ->leftJoin('users', 'users.id', '=', 'teachers.user_id')
@@ -66,12 +73,12 @@ class SearchController extends BaseController
                         ->leftJoin('ratings','ratings.teacher_lesson_id','=','teacher_lessons.id')
                         ->groupBy('teacher_lessons.id')
                         ->where('subject_id', $subj_id)
-                        ->whereRaw("MATCH(teacher_lessons.description) AGAINST(? IN BOOLEAN MODE)", array($keywords))
+                        ->whereRaw("MATCH(teacher_lessons.description,teacher_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
                         ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating'));
-                } else {
+                } else { //no keywords
                     $results = DB::table('teacher_lessons')
                         ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
                         ->leftJoin('users', 'users.id', '=', 'teachers.user_id')
@@ -86,13 +93,20 @@ class SearchController extends BaseController
                 }
             } else { //search all subjects
                 if($check_keywords) {
+                    $keywords = str_replace(',',' ',$keywords);
+                    $kw_array = explode(" ", $keywords);
+                    $searchStr = "";
+                    foreach($kw_array as $kw) {
+                        if($kw!='')
+                            $searchStr .= "+".$kw."* ";
+                    }
                     $results = DB::table('teacher_lessons')
                         ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
                         ->leftJoin('users', 'users.id', '=', 'teachers.user_id')
                         ->leftJoin('teachers_average_ratings','teachers_average_ratings.teacher_id','=','teachers.id')
                         ->leftJoin('ratings','ratings.teacher_lesson_id','=','teacher_lessons.id')
                         ->groupBy('teacher_lessons.id')
-                        ->whereRaw("MATCH(teacher_lessons.description) AGAINST(? IN BOOLEAN MODE)", array($keywords))
+                        ->whereRaw("MATCH(teacher_lessons.description,teacher_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
@@ -114,13 +128,20 @@ class SearchController extends BaseController
             if ($check_subject) { //filter by subject
                 $subj_id = Subject::where('name', $subject)->pluck('id');
                 if($check_keywords) {
+                    $keywords = str_replace(',',' ',$keywords);
+                    $kw_array = explode(" ", $keywords);
+                    $searchStr = "";
+                    foreach($kw_array as $kw) {
+                        if($kw!='')
+                            $searchStr .= "+".$kw."* ";
+                    }
                     $results = DB::table('school_lessons')
                         ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
                         ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
                         ->leftJoin('school_lesson_ratings','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
                         ->groupBy('school_lessons.id')
                         ->where('subject_id', $subj_id)
-                        ->whereRaw("MATCH(school_lessons.description) AGAINST(? IN BOOLEAN MODE)", array($keywords))
+                        ->whereRaw("MATCH(school_lessons.description,school_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('school_avg_rating', 'DESC')
                         ->orderBy('school_lessons.id','ASC')
@@ -139,12 +160,19 @@ class SearchController extends BaseController
                 }
             } else { //search all subjects
                 if($check_keywords) {
+                    $keywords = str_replace(',',' ',$keywords);
+                    $kw_array = explode(" ", $keywords);
+                    $searchStr = "";
+                    foreach($kw_array as $kw) {
+                        if($kw!='')
+                            $searchStr .= "+".$kw."* ";
+                    }
                     $results = DB::table('school_lessons')
                         ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
                         ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
                         ->leftJoin('school_lesson_ratings','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
                         ->groupBy('school_lessons.id')
-                        ->whereRaw("MATCH(school_lessons.description) AGAINST(? IN BOOLEAN MODE)", array($keywords))
+                        ->whereRaw("MATCH(school_lessons.description,school_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('school_avg_rating', 'DESC')
                         ->orderBy('school_lessons.id','ASC')
