@@ -139,6 +139,26 @@ Route::post('request/info/teacher/{lesson_id}', function($lesson_id) {
     }
     return 'Already saved in DB';
 });
+Route::post('request/info/teacher/all/{teacher_id}', function($teacher_id) {
+    if (!Session::has('t_visualized_all_'.$teacher_id)) //if this Tlf visualization hasn't been recorded before (during the session)
+    {
+        Session::put('t_visualized_all_'.$teacher_id, true); //record the visualization in the session array
+        Session::save();
+        $visualization = new TeacherPhoneVisualization(); //register the visualization in database
+        if (Auth::check()) { //if user is authenticated relate the user id with the visualization
+            $observer = Confide::user();
+            $visualization->user_id = $observer->id;
+        }
+        //we choose the first lesson of this teacher as the receipt of the visualization (but it could have been any)
+        $teacher = Teacher::where('id','=',$teacher_id)->first();
+        $first_lesson = $teacher->lessons()->first();
+        $lesson_id = $first_lesson->id;
+        $visualization->teacher_lesson_id = $lesson_id;
+
+        return (string) $visualization->save();
+    }
+    return 'Already saved in DB';
+});
 Route::post('request/info/school/{lesson_id}', function($lesson_id) {
     if (!Session::has('s_visualized_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
     {

@@ -187,7 +187,7 @@
                         e.preventDefault();
                         e.stopImmediatePropagation();
                         var postForm = $('form#postForm');
-                        $.post('/request/info/teacher/{{$teacher->id}}',{
+                        $.post('/request/info/teacher/all/{{$teacher->id}}',{
                             _token: postForm.find('input[name=_token]').val()
                         },function(data){});
                     });
