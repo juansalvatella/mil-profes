@@ -31,7 +31,7 @@ class Milprofes
             $teacher_lessons = $t->lessons()->get();
             foreach($teacher_lessons as $l)
             {
-                $lesson_visualizations = count($l->visualizations());
+                $lesson_visualizations = count($l->visualizations()->get());
                 $total_visualizations += $lesson_visualizations;
             }
             $t->total_visualizations = $total_visualizations;
@@ -71,7 +71,7 @@ class Milprofes
             $school_lessons = $s->lessons;
             foreach($school_lessons as $l)
             {
-                $lesson_visualizations = count($l->visualizations());
+                $lesson_visualizations = count($l->visualizations()->get());
                 $total_visualizations += $lesson_visualizations;
             }
             $s->total_visualizations = $total_visualizations;
