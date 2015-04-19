@@ -12,7 +12,8 @@
 		"zizaco/confide": "~4.0@dev",
 		"zizaco/entrust": "1.2.*@dev",
 		"torann/geoip": "0.1.*@dev",
-		"cviebrock/eloquent-sluggable": "2.*"
+		"cviebrock/eloquent-sluggable": "2.*",
+        "watson/sitemap": "1.1.*"
 	},
 	"autoload": {
 		"classmap": [

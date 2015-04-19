@@ -127,6 +127,7 @@ return array(
 		'Zizaco\Entrust\EntrustServiceProvider',
         'Torann\GeoIP\GeoIPServiceProvider',
         'Cviebrock\EloquentSluggable\SluggableServiceProvider',
+        'Watson\Sitemap\SitemapServiceProvider',
 
 	),
 
@@ -198,6 +199,7 @@ return array(
 		'Confide' 			=> 'Zizaco\Confide\Facade',
 		'Entrust' 			=> 'Zizaco\Entrust\EntrustFacade',
         'GeoIP'             => 'Torann\GeoIP\GeoIPFacade',
+        'Sitemap'           => 'Watson\Sitemap\Facades\Sitemap',
 
 	),
 
