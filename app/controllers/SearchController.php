@@ -210,6 +210,7 @@ class SearchController extends BaseController
         $results = Geocoding::findWithinDistance($user_lat,$user_lon,$search_distance,$results); //filter results within distance boundaries
         $results = Milprofes::findWithinPrice($price,$prof_o_acad,$results);
 
+        //Get ratings, availabilities and subjects
         if($prof_o_acad=='profesor'){
             foreach($results as $result)
             {
@@ -256,6 +257,23 @@ class SearchController extends BaseController
                     $result->subject = SchoolLesson::findOrFail($result->id)->subject()->first()->name;
             }
         }
+
+        //Sort results by distance, lesson rating, teacher/school rating and id //TODO: posiblemente obsoleto cuando se implemente order by en página de resultados
+        if($prof_o_acad=='profesor') {
+            $results = $results->sortBy(function ($r) {
+                $lesson_rating_reversed = (string) round((500 - 100*$r->lesson_avg_rating), 0);
+                $teacher_rating_reversed = (string) round((500 - 100*$r->teacher_avg_rating), 0);
+                return sprintf('%s %s %s %s', ''.$r->dist_to_user, $lesson_rating_reversed, $teacher_rating_reversed, ''.$r->id);
+            });
+        } else {
+            $results = $results->sortBy(function($r) {
+                $lesson_rating_reversed = (string) round((500 - 100*$r->lesson_avg_rating), 0);
+                $school_rating_reversed = (string) round((500 - 100*$r->school_avg_rating), 0);
+//                echo(sprintf('%s %s %s %s - ', $distNormal, $lesson_rating_reversed, $school_rating_reversed, ''.$r->id));
+                return sprintf('%s %s %s %s', ''.$r->dist_to_user, $lesson_rating_reversed, $school_rating_reversed, ''.$r->id);
+            });
+        }
+//        dd($results->toArray());
 
         //no more filters, results sorted >>>> pagination of results
         $total_results = $results->count();
