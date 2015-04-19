@@ -14,13 +14,9 @@ return array(
 	*/
 
 	"password" => "Las contraseñas han de tener al menos 6 caracteres y coincidir con la confirmación.",
-
 	"user" => "No se encontró usuario con el e-mail proporcionado.",
-
 	"token" => "La clave de restablecimiento de contraseña es inválida.",
-
-	"sent" => "Recordatorio de contraseña enviado!",
-
-	"reset" => "La contraseña ha sido restablecida!",
+	"sent" => "¡Recordatorio de contraseña enviado!",
+	"reset" => "¡La contraseña ha sido restablecida!",
 
 );

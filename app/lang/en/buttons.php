@@ -12,5 +12,18 @@ return array(
     'send' => 'Enviar',
     'save' => 'Guardar',
     'delete' => 'Eliminar',
+    'continue' => 'Continuar',
+    'confirm' => 'Confirmar',
+    'add' => 'Añadir',
+    'create' => 'Crear',
+    'save_changes' => 'Guardar cambios',
+
+    //Milprofes. buttons
+    'new_lesson' => 'Nueva clase',
+    'new_course' => 'Nuevo curso',
+    'edit_course' => 'Editar curso',
+    'delete_course' => 'Eliminar curso',
+    'back_to_schools' => 'Volver a academias',
+
 
 );

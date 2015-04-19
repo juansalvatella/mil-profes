@@ -13,7 +13,7 @@
                 <div class="col-xs-12 col-sm-12 hidden-xs hidden-sm col-md-4">a</div>
 
                 <div class="col-xs-12 col-sm-12 col-md-4 clear-left">
-                    <div class="">
+                    <div>
                         <select class="form-control" id="day1" name="day1">
                             <option value="" @if($picks[0]['day']=='') selected="selected" @endif > </option>
                             <option value="LUN" @if($picks[0]['day']=='LUN') selected="selected" @endif >Lunes</option>

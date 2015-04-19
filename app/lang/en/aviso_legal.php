@@ -11,7 +11,7 @@ return array(
         <b>Milprofes</b> S.L.​, en adelante ​<b>Milprofes</b>​, con domicilio en Badalona, C/Plaza de la
         Asamblea de Catalunya número 4, 3º, 1ª y con C.I.F. número B66481243.
         <br/>
-        Para cualquier consulta o propuesta, contáctenos en el e-mail en​ <a href="mailto:info@milprofes.com">info@milprofes.com</a>
+        Para cualquier consulta o propuesta, contáctenos en el e-mail en​ <a target="_blank" href="mailto:info@milprofes.com">info@milprofes.com</a>
         o en el teléfono 902 00 88 04​.
         <br/>
         Esta página Web se rige por la normativa exclusivamente aplicable en España,
@@ -151,7 +151,7 @@ return array(
         ejercer sus derechos de acceso, rectificación, cancelación y oposición previstos en la
         ley mediante escrito firmado dirigido a <b>Milprofes</b>​, con domicilio en Badalona, C/Plaza
         de la Asamblea de Catalunya número 4, 3º, 1ª o mediante correo electrónico a la
-        dirección ​<a href="mailto:info@milprofes.com">info@milprofes.com</a>​ aportando copia de su DNI.
+        dirección ​<a target="_blank" href="mailto:info@milprofes.com">info@milprofes.com</a>​ aportando copia de su DNI.
     ',
 
     't8' => 'Comunicaciones de datos',

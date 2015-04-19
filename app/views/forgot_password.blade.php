@@ -4,9 +4,9 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div><h1 class="generic-title">Restablecer contraseña</h1></div>
+            <div><h1 class="generic-title">@lang('forgot_password.title')</h1></div>
 
-            <div><h2 class="generic-subtitle">Introduce tu dirección de correo electrónico</h2></div>
+            <div><h2 class="generic-subtitle">@lang('forgot_password.subtitle')</h2></div>
 
         </div>
     </div>
@@ -30,9 +30,9 @@
 
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label class="control-label" for="email">E-mail:</label>
+                        <label class="control-label" for="email">@lang('forms.forgot.email')</label>
 
-                        <input class="form-control top-buffer-5" placeholder="Tu e-mail" type="email" name="email" id="email" value="{{{ Input::old('email') }}}" required="required" data-error="Introduce tu dirección de correo.">
+                        <input class="form-control top-buffer-5" placeholder="@lang('forms.forgot.email-ph')" type="email" name="email" id="email" value="{{{ Input::old('email') }}}" required="required" data-error="@lang('forms.forgot.email-err')">
                         <div class="help-block with-errors">&nbsp;</div>
 
                     </div>
@@ -40,7 +40,7 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <span class="input-group-btn">
-                            <input class="btn btn-primary" type="submit" value="{{{ @trans('messages.forgot.submit') }}}">
+                            <input class="btn btn-primary" type="submit" value="@lang('buttons.continue')">
                         </span>
                     </div>
                 </div>
