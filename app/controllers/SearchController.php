@@ -260,11 +260,11 @@ class SearchController extends BaseController
 
         //Sort results by distance, lesson rating, teacher/school rating and id //TODO: posiblemente obsoleto cuando se implemente order by en página de resultados
         if($prof_o_acad=='profesor') {
-            $results = $results->sortBy(function ($r) {
+            $results = $results->sortBy(function($r) {
                 $distInt = $r->dist_to_user;  //distance is always lesser than 50 km, so we only need to left pad one space with one 0
                 $distStrPad = ($distInt < 10) ? '0'.$distInt : (string) $distInt;
-                $lesson_rating_reversed = (string) round((500 - 100*$r->lesson_avg_rating), 0);
-                $teacher_rating_reversed = (string) round((500 - 100*$r->teacher_avg_rating), 0);
+                $lesson_rating_reversed = str_pad((string) round((500 - 100*$r->lesson_avg_rating), 0),3,'0', STR_PAD_LEFT);
+                $teacher_rating_reversed = str_pad((string) round((500 - 100*$r->teacher_avg_rating), 0),3,'0', STR_PAD_LEFT);
                 $idStr = (string) $r->id; //id can be a number of any length, but I don't expect it to be a value over a 100 000 000
                 $idStrPad = str_pad($idStr, 9, '0', STR_PAD_LEFT);
 //                echo(sprintf('%s%s%s%s - ', $distStrPad, $lesson_rating_reversed, $teacher_rating_reversed, $idStrPad));
@@ -274,8 +274,8 @@ class SearchController extends BaseController
             $results = $results->sortBy(function($r) {
                 $distInt = $r->dist_to_user;
                 $distStrPad = ($distInt < 10) ? '0'.$distInt : (string) $distInt;
-                $lesson_rating_reversed = (string) round((500 - 100*$r->lesson_avg_rating), 0);
-                $school_rating_reversed = (string) round((500 - 100*$r->school_avg_rating), 0);
+                $lesson_rating_reversed = str_pad((string) round((500 - 100*$r->lesson_avg_rating), 0),3,'0', STR_PAD_LEFT);
+                $school_rating_reversed = str_pad((string) round((500 - 100*$r->school_avg_rating), 0),3,'0', STR_PAD_LEFT);
                 $idStr = (string) $r->id;
                 $idStrPad = str_pad($idStr, 9, '0', STR_PAD_LEFT);
 //                echo(sprintf('%s%s%s%s - ', $distStrPad, $lesson_rating_reversed, $school_rating_reversed, $idStrPad));
