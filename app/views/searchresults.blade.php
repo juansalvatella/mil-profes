@@ -387,8 +387,10 @@
                             <small>{{{ $result->description }}}</small>
                         </div>
                         <div class="row result-availability-title">
-                            @if($result->availability->count())
-                                DISPONIBILIDAD
+                            @if(!$result->availability->isEmpty())
+                                @if($result->availability->first()->day != '')
+                                    DISPONIBILIDAD
+                                @endif
                             @endif
                         </div>
                         <div class="row result-availability">
