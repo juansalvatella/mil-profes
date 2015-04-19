@@ -369,39 +369,37 @@ Route::get('admin/schools', function()
 
     return View::make('schools_dashboard', compact('schools','lessons'));
 });
-Route::get('admin/reviews', function()
-{
-    $schoolReviews = SchoolLessonRating::all();
-    $teacherReviews = Rating::all();
-    $reviews = $schoolReviews->merge($teacherReviews);
-    $reviews->sortByDesc(function ($review) {
-        return $review->created_at;
-    });
-    foreach($reviews as $review)
-    {
-        if($review->student_id) { //la valoración ha sido realizada por un usuario registrado
-            $user = Student::findOrFail($review->student_id)->user->first();
-            $review->valorador = $user->username;
-            $review->wasUser = true;
-        } else {
-            $review->valorador = 'Nombre';
-            $review->wasUser = false;
-        }
-        if($review->teacher_lesson_id) { //es una review de lesson de profesor
-            $user = TeacherLesson::findOrFail($review->teacher_lesson_id)->teacher->user->first();
-            $review->type = 'Profesor';
-            $review->valorado = $user->name;
-        } else { //es una review de lesson de academia
-            $school = SchoolLesson::findOrFail($review->school_lesson_id)->school->first();
-            $review->type = 'Academia';
-            $review->valorado = $school->name;
-        }
+Route::get('admin/teacher/reviews', function() {
+    $reviews = Rating::paginate(15);
+    foreach($reviews as $review) {
+        $lesson_reviewed = TeacherLesson::find($review->teacher_lesson_id);
+        $reviewed_user = $lesson_reviewed->teacher->user;
+
+        $review->lesson_reviewed = $lesson_reviewed->title;
+        $review->reviewed = $reviewed_user->username;
+        $review->slug = $reviewed_user->slug;
+        $review->reviewer = Student::find($review->student_id)->user->username;
     }
 
-    return View::make('admin_reviews', compact('reviews'));
-
+    return View::make('admin_teacher_reviews', compact('reviews'));
 });
-Route::get('admin/delete/review/{type}/{id}', 'AdminController@deleteReview');
+Route::get('admin/school/reviews', function() {
+    $reviews = SchoolLessonRating::paginate(15);
+    foreach($reviews as $review)
+    {
+        $lesson_reviewed = SchoolLesson::find($review->school_lesson_id);
+        $reviewed_school = $lesson_reviewed->school;
+
+        $review->lesson_reviewed = $lesson_reviewed->title;
+        $review->reviewed = $reviewed_school->name;
+        $review->slug = $reviewed_school->slug;
+        $review->reviewer = Student::find($review->student_id)->user->username;
+    }
+
+    return View::make('admin_school_reviews', compact('reviews'));
+});
+Route::get('admin/delete/teacher/review/{id}', 'AdminController@deleteTeacherReview');
+Route::get('admin/delete/school/review/{id}', 'AdminController@deleteSchoolReview');
 Route::get('admin/create/school', function(){ return View::make('school_register'); });
 Route::post('admin/create/school', 'AdminController@createSchool');
 Route::get('admin/edit/school/{school_id}', function($school_id)

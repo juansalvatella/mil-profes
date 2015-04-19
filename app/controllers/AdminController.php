@@ -235,18 +235,22 @@ class AdminController extends BaseController
             return Redirect::route('lessons',array('school_id' => $school_id))->with('success', 'Clase eliminada con éxito');
     }
 
-    public function deleteReview($type,$id)
-    {
-        if($type=='Profesor') {
-            $rating = Rating::findOrFail($id);
-        } else {
-            $rating = SchoolLessonRating::findOrFail($id);
-        }
+    public function deleteSchoolReview($id) {
+        $rating = SchoolLessonRating::findOrFail($id);
         $rating->delete();
         if($rating->exists)
-            return Redirect::to('admin/reviews')->with('failure', 'Error! La valoración no pudo ser eliminada');
+            return Redirect::to('admin/school/reviews')->with('failure', 'Error! La valoración no pudo ser eliminada');
         else
-            return Redirect::to('admin/reviews')->with('success', 'Valoración eliminada con éxito');
+            return Redirect::to('admin/school/reviews')->with('success', 'Valoración eliminada con éxito');
+    }
+
+    public function deleteTeacherReview($id) {
+        $rating = Rating::findOrFail($id);
+        $rating->delete();
+        if($rating->exists)
+            return Redirect::to('admin/teacher/reviews')->with('failure', 'Error! La valoración no pudo ser eliminada');
+        else
+            return Redirect::to('admin/teacher/reviews')->with('success', 'Valoración eliminada con éxito');
     }
 
 }

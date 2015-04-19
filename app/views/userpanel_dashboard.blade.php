@@ -18,8 +18,9 @@
                 </div>
                 <div class="pull-right">
                     @if($user->hasRole("admin"))
-                        <a href="{{ url('admin/reviews') }}" class="btn btn-primary">Administrar valoraciones</a>
-                        <a href="{{ url('admin/schools') }}" class="btn btn-warning">Administrar academias</a>
+                        <a href="{{ url('admin/school/reviews') }}" class="btn btn-primary btn-xs">Valoración academias</a>
+                        <a href="{{ url('admin/teacher/reviews') }}" class="btn btn-primary btn-xs">Valoración profes.</a>
+                        <a href="{{ url('admin/schools') }}" class="btn btn-warning btn-xs">Administrar academias</a>
                     @endif
                 </div>
             </div>

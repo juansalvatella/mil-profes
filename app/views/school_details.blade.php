@@ -182,7 +182,7 @@
                                                         readOnly: true,
                                                         @endif
                                                         half: true,
-                                                        score: {{ $result->getLessonAvgRating() }}0
+                                                        score: {{ $result->getLessonAvgRating() }}
                                                     });
                                                 </script>
                                                 @if(Auth::check())

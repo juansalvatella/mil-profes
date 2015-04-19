@@ -144,17 +144,17 @@ a, a:link, a:hover, a:active, a:visited {
     margin-right:-4px;
 }
 
-.padded { padding: 10px 15px 0 15px; }
 .smaller-alert {
     padding: 7px !important;
     font-size: 0.9em !important;
 }
 
 .clear-left { clear:left; }
-
+.float-right {float:right;}
+.float-left {float:left;}
+.padded { padding: 10px 15px 0 15px; }
 .left-buffer-15 { margin-left: 15px; }
 .left-buffer-25 { margin-left: 25px; }
-
 .background-white { background-color: #ffffff; }
 .background-287AF9 { background-color: #287AF9; color: #fff; font-weight: 700; }
 .background-E79500 { background-color: #E79500; color: #000; font-weight: 700; }
