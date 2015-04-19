@@ -75,7 +75,7 @@ class Geocoding {
                 $distance = $R*acos(sin($latr)*sin(deg2rad($location->lat))+cos($latr)*cos(deg2rad($location->lat))*cos(deg2rad($location->lon)-$lonr));
                 if ($distance >= $min_distance && $distance <= $max_distance) {
                     $dist_to_user = (ceil($distance) < 1) ? 1 : ceil($distance);
-                    $location->dist_to_user = $dist_to_user;
+                    $location->dist_to_user = (int) $dist_to_user;
                     return true;
                 }
             }); //Segundo filtro
