@@ -12,7 +12,7 @@
 
                     <div class="profile-title">
                         <div><h1 class="profile-maintitle">Mi panel de control</h1></div>
-                        <div><h2 class="profile-subtitle">Profe. {{ $user->name }}</h2></div>
+                        <div><h2 class="profile-subtitle">@if($user->hasRole('teacher'))Profe.@endif {{ $user->name }}</h2></div>
                     </div>
 
                 </div>
