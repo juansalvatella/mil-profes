@@ -13,7 +13,6 @@ class SitemapsController extends BaseController
         Sitemap::addSitemap(URL::route('sitemaps-teachers'));
         Sitemap::addSitemap(URL::route('sitemaps-schools'));
 
-        File::put(base_path().'/sitemaps_index.xml', Sitemap::xml());
         return Sitemap::renderSitemapIndex();
     }
 
