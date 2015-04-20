@@ -40,7 +40,7 @@
     @elseif($subject == 'musica')
         <?php $subject2 = 'música'; ?>
     @elseif($subject == 'cfp')
-        <?php $subject2 = 'CFP'; ?>
+        <?php $subject2 = 'formación profesional'; ?>
     @else
         <?php $subject2 = strtolower($subject); ?>
     @endif

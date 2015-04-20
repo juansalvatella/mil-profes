@@ -17,16 +17,16 @@ Route::when('*', 'csrf', array('post', 'put', 'delete'));
 //============
 
 //Home
-Route::get('/', array('as' => 'home', function()
+Route::get('/', ['as' => 'home', function()
 {
     $popular_teachers = Milprofes::getPopularTeachers(4);
     $popular_schools = Milprofes::getPopularSchools(4);
 
     return View::make('home', compact('popular_schools','popular_teachers'));
-}));
+}]);
 
 //Profiles
-Route::get('profe/{user_slug}', function($user_slug) {
+Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug) {
     $user = User::findBySlug($user_slug);
     $teacher = $user->teacher()->first();
     //if passing by ID: $user = $teacher->user()->get(array('username','avatar','email','phone','description'));
@@ -40,8 +40,9 @@ Route::get('profe/{user_slug}', function($user_slug) {
     $teacher->availability = $teacher->availabilities()->get();
 
     return View::make('teacher_details', compact('teacher','lessons'));
-});
-Route::get('academia/{school_slug}', function($school_slug) {
+}]);
+
+Route::get('academia/{school_slug}', ['as'=>'profiles-school', function($school_slug) {
     $school = School::findBySlug($school_slug);
     $lessons = $school->lessons()->get();
     foreach($lessons as $l) {
@@ -61,7 +62,8 @@ Route::get('academia/{school_slug}', function($school_slug) {
     $slpics = $school->pics()->get(array('pic'));
 
     return View::make('school_details', compact('school','slpics','lessons','display_show_more','slices_showing','total_results'));
-});
+}]);
+
 Route::post('academia/{school_slug}', function($school_slug) {
     $school = School::findBySlug($school_slug);
     $lessons = $school->lessons()->get();
@@ -86,40 +88,49 @@ Route::post('academia/{school_slug}', function($school_slug) {
 });
 
 //Search
-Route::get('resultados','SearchController@search');
+Route::get('resultados',['as'=>'results','uses'=>'SearchController@search']);
+
 Route::post('resultados','SearchController@search');
 //Route::post('resultados/async','SearchController@search');
 //Route::post('/search','SearchController@search');
 
 //Faqs
-Route::get('preguntas-frecuentes', function(){
+Route::get('preguntas-frecuentes',['as'=>'faqs', function(){
     return View::make('faqs');
-});
+}]);
+
 //Who
-Route::get('milprofes', function() {
+Route::get('milprofes',['as'=>'who', function() {
     return View::make('who');
-});
+}]);
+
 //Contact
-Route::get('contacta', function() {
+Route::get('contacta',['as'=>'contact', function() {
     return View::make('contact');
-});
+}]);
+
 //Aviso legal
-Route::get('condiciones', function() {
+Route::get('condiciones',['as'=>'terms', function() {
     return View::make('aviso_legal');
-});
+}]);
+
 //Cookies
-Route::get('cookies', function() {
+Route::get('cookies',['as'=>'cookies', function() {
     return View::make('cookies');
-});
+}]);
+
 //Política de privacidad
-Route::get('privacidad', function() {
+Route::get('privacidad',['as'=>'privacy', function() {
     return View::make('politica_privacidad');
-});
-//Mapa del sitio
-Route::get('mapa', function() {
+}]);
+
+//Mapa del sitio (sitemap)
+Route::get('mapa', ['as'=>'sitemap', function() {
     return View::make('mapa');
-});
+}]);
+
 Route::post('contactanos','ContactController@getContactForm');
+
 Route::post('/','ContactController@getMiniContactForm');
 
 //Register contact info requests
@@ -139,6 +150,7 @@ Route::post('request/info/teacher/{lesson_id}', function($lesson_id) {
     }
     return 'Already saved in DB';
 });
+
 Route::post('request/info/teacher/all/{teacher_id}', function($teacher_id) {
     if (!Session::has('t_visualized_all_'.$teacher_id)) //if this Tlf visualization hasn't been recorded before (during the session)
     {
@@ -159,6 +171,7 @@ Route::post('request/info/teacher/all/{teacher_id}', function($teacher_id) {
     }
     return 'Already saved in DB';
 });
+
 Route::post('request/info/school/{lesson_id}', function($lesson_id) {
     if (!Session::has('s_visualized_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
     {
@@ -178,10 +191,10 @@ Route::post('request/info/school/{lesson_id}', function($lesson_id) {
 
 //Handle reviews
 Route::post('/reviews/handleReview','ReviewsController@handleNewReview');
+
 Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolLessonNewReview');
 
 //Populate and view tables. Database test tools. FOR TEST PURPOSES ONLY!!!
-
 //Route::get('populate', 'PopulateController@populate');
 //Route::get('unpopulate', 'PopulateController@unpopulate');
 //Route::get('/list/{table}', function($table)
@@ -243,20 +256,28 @@ Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolL
 //});
 
 //payment handlers. future implementation
-
 //Route::get('lastpayment', 'UsersController@paymentIsCurrent');
 //Route::get('ihavejustpaid', 'UsersController@updateLastPaymentDate');
 
-// Confide routes
+// Authentication routes
 Route::get('users/create', function(){ return View::make('users_register'); });
+
 Route::post('users', 'UsersController@store');
+
 Route::get('users/login', function(){ return View::make('users_login'); });
+
 Route::post('users/login', 'UsersController@doLogin');
+
 Route::get('users/confirm/{code}', 'UsersController@confirm');
+
 Route::get('users/forgot-password', 'UsersController@forgotPassword');
+
 Route::post('users/forgot-password', 'UsersController@doForgotPassword');
+
 Route::get('users/reset-password/{token}', 'UsersController@resetPassword');
+
 Route::post('users/reset-password', 'UsersController@doResetPassword');
+
 Route::get('users/logout', 'UsersController@logout');
 
 
@@ -306,10 +327,15 @@ Route::get('userpanel/dashboard', array('as' => 'userpanel', function()
     else
         return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
 }));
+
 Route::post('userpanel/dashboard/update/info', 'UsersController@updateUser');
+
 Route::post('userpanel/dashboard/update/avatar', 'UsersController@updateAvatar');
+
 Route::post('userpanel/dashboard/update/passwd', 'UsersController@updateUserPasswd');
+
 Route::get('userpanel/become/teacher','UsersController@becomeATeacher');
+
 
 //======================
 //Teacher control panels
@@ -321,7 +347,9 @@ Route::get('teacher/create/lesson', function()
 
     return View::make('teacher_lesson_create',compact('user','teacher'));
 });
+
 Route::post('teacher/create/lesson', 'TeachersController@createLesson');
+
 Route::get('teacher/edit/lesson/{lesson_id}', function($lesson_id)
 {
     $lesson = TeacherLesson::findOrFail($lesson_id);
@@ -336,7 +364,9 @@ Route::get('teacher/edit/lesson/{lesson_id}', function($lesson_id)
     else
         return Redirect::route('userpanel')->with('failure', '¡Error! Tu clase no ha sido encontrada');
 });
+
 Route::post('teacher/edit/lesson/{teacher_id}', 'TeachersController@saveLesson');
+
 Route::get('teacher/delete/lesson/{lesson_id}', function($lesson_id)
 {
     $lesson = TeacherLesson::findOrFail($lesson_id);
@@ -351,7 +381,9 @@ Route::get('teacher/delete/lesson/{lesson_id}', function($lesson_id)
     else
         return Redirect::route('userpanel')->with('failure', 'Error! Tu clase no ha sido encontrada');
 });
+
 Route::post('teacher/delete/lesson/{teacher_id}', 'TeachersController@deleteLesson');
+
 Route::post('teacher/availability/save', 'TeachersController@saveAvailability');
 
 
@@ -369,6 +401,7 @@ Route::get('admin/schools', function()
 
     return View::make('schools_dashboard', compact('schools','lessons'));
 });
+
 Route::get('admin/teacher/reviews', function() {
     $reviews = Rating::paginate(15);
     foreach($reviews as $review) {
@@ -383,6 +416,7 @@ Route::get('admin/teacher/reviews', function() {
 
     return View::make('admin_teacher_reviews', compact('reviews'));
 });
+
 Route::get('admin/school/reviews', function() {
     $reviews = SchoolLessonRating::paginate(15);
     foreach($reviews as $review)
@@ -398,24 +432,35 @@ Route::get('admin/school/reviews', function() {
 
     return View::make('admin_school_reviews', compact('reviews'));
 });
+
 Route::get('admin/delete/teacher/review/{id}', 'AdminController@deleteTeacherReview');
+
 Route::get('admin/delete/school/review/{id}', 'AdminController@deleteSchoolReview');
-Route::get('admin/create/school', function(){ return View::make('school_register'); });
+
+Route::get('admin/create/school', function() {
+    return View::make('school_register');
+});
+
 Route::post('admin/create/school', 'AdminController@createSchool');
+
 Route::get('admin/edit/school/{school_id}', function($school_id)
 {
     $school = School::findOrFail($school_id);
 
     return View::make('school_edit', compact('school'));
 });
+
 Route::post('admin/edit/school/{school_id}','AdminController@saveSchool');
+
 Route::get('admin/delete/school/{school_id}',function($school_id)
 {
     $school = School::findOrFail($school_id);
 
     return View::make('school_confirm_delete',compact('school'));
 });
+
 Route::post('admin/delete/school/{school_id}','AdminController@deleteSchool');
+
 Route::get('admin/lessons/{school_id}', array('as' => 'lessons', function($school_id)
 {
     $school = School::findOrFail($school_id);
@@ -428,13 +473,16 @@ Route::get('admin/lessons/{school_id}', array('as' => 'lessons', function($schoo
 
     return View::make('lessons_dashboard', compact('school','lessons','subjects'));
 }));
+
 Route::get('admin/create/lesson/{school_id}', function($school_id)
 {
     $school = School::findOrFail($school_id);
 
     return View::make('lesson_create', compact('school'));
 });
+
 Route::post('admin/create/lesson/{school_id}', 'AdminController@createLesson');
+
 Route::get('admin/edit/lesson/{lesson_id}', function($lesson_id)
 {
     $lesson = SchoolLesson::findOrFail($lesson_id);
@@ -466,7 +514,9 @@ Route::get('admin/edit/lesson/{lesson_id}', function($lesson_id)
 
     return View::make('lesson_edit', compact('lesson','school','subject','picks','n_picks_set'));
 });
+
 Route::post('admin/edit/lesson/{school_id}', 'AdminController@saveLesson');
+
 Route::get('admin/delete/lesson/{lesson_id}', function($lesson_id) {
     $lesson = SchoolLesson::findOrFail($lesson_id);
     $school = $lesson->school()->first();
@@ -474,5 +524,15 @@ Route::get('admin/delete/lesson/{lesson_id}', function($lesson_id) {
 
     return View::make('lesson_confirm_delete', compact('lesson','school','subject'));
 });
+
 Route::post('admin/delete/lesson/{school_id}', 'AdminController@deleteLesson');
+
 Route::post('load-school-profile-pics','AdminController@loadProfilePics');
+
+
+//Sitemaps related routes
+Route::get('sitemap',['as'=>'sitemap', 'uses'=>'SitemapsController@index']);
+Route::get('sitemaps/main',['as'=>'sitemaps-main', 'uses'=>'SitemapsController@main']);
+Route::get('sitemaps/teachers',['as'=>'sitemaps-teachers', 'uses'=>'SitemapsController@teachers']);
+Route::get('sitemaps/schools',['as'=>'sitemaps-schools', 'uses'=>'SitemapsController@schools']);
+Route::get('render-sitemap','SitemapsController@renderXMLSitemap');
