@@ -11,4 +11,4 @@ app/config/production
 app/config/testing
 vendor/
 bootstrap/compiled.php
-sitemap.xml
+public/sitemap.xml

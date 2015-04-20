@@ -71,7 +71,7 @@ class SitemapsController extends BaseController
         $this->teachers();
         $this->schools();
 
-        File::put(base_path().'/sitemap.xml', Sitemap::xml());
+        File::put(public_path().'/sitemap.xml', Sitemap::xml());
 
         return 'Done!';
     }
