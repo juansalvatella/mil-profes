@@ -12,3 +12,5 @@ app/config/testing
 vendor/
 bootstrap/compiled.php
 public/sitemap.xml
+public/sitemaps/
+composer.phar

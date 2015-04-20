@@ -531,8 +531,4 @@ Route::post('load-school-profile-pics','AdminController@loadProfilePics');
 
 
 //Sitemaps related routes
-Route::get('sitemap',['as'=>'sitemap', 'uses'=>'SitemapsController@index']);
-Route::get('sitemaps/main',['as'=>'sitemaps-main', 'uses'=>'SitemapsController@main']);
-Route::get('sitemaps/teachers',['as'=>'sitemaps-teachers', 'uses'=>'SitemapsController@teachers']);
-Route::get('sitemaps/schools',['as'=>'sitemaps-schools', 'uses'=>'SitemapsController@schools']);
-Route::get('render-sitemap','SitemapsController@renderXMLSitemap');
+Route::get('render-sitemaps','SitemapsController@milprofes');
