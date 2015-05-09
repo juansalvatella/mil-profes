@@ -23,7 +23,7 @@ class UsersController extends Controller
             'lastname' => 'alpha_spaces|max:100',
             'phone' => 'string|min:5|max:20',
             'address' => 'required|string|max:200',
-            'username' => 'required|alpha_num|min:5|max:20',
+            'username' => 'required|alpha_dash|min:5|max:20',
             'email' => 'required|email',
             'password' => 'required|min:6',
             'terms' => 'required|accepted',
@@ -385,7 +385,7 @@ class UsersController extends Controller
             }
         } else {
             return Redirect::route('/')
-                ->with('log-notice', 'No fue posible actualizar tus datos. Tu sesión ha caducado, por favor, vuelve a iniciar sesión e inténtalo de nuevo.')
+                ->with('log-notice', 'Tu sesión ha caducado y no fue posible actualizar tus datos. Por favor, vuelve a acceder e inténtalo de nuevo.')
                 ->with('show_login_modal',true);
         }
     }
@@ -396,7 +396,7 @@ class UsersController extends Controller
         {
             if($user->hasRole('teacher'))
             { //Advertir de que ya es profesor!
-                return Redirect::route('userpanel')->with('success', 'Ya eres profe.! Publica tus clases!');
+                return Redirect::route('userpanel')->with('success', '¡Ya eres profe.! ¡Publica tus clases!');
             } else { //Añadir a tabla de profesores
                 $teacher = new Teacher();
                 $teacher->user()->associate($user);
@@ -406,11 +406,11 @@ class UsersController extends Controller
                 $teacher_role = Role::where('name', 'teacher')->first();
                 $user->attachRole($teacher_role);
 
-                return Redirect::route('userpanel')->with('success', 'Ahora ya eres profe.! Publica tus clases!');
+                return Redirect::route('userpanel')->with('success', '¡Ahora ya eres profe.! ¡Publica tus clases!');
             }
         } else {
             return Redirect::route('/')
-                ->with('log-notice', 'Al parece tu sesión ha caducado. Vuelve a entrar.')
+                ->with('log-notice', 'Al parece tu sesión ha caducado. Por favor, vuelve a acceder e inténtalo de nuevo.')
                 ->with('show_login_modal',true);
         }
     }

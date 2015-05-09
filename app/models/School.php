@@ -5,13 +5,13 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
 
 class School extends Eloquent implements SluggableInterface
 {
-    use SluggableTrait;
+    use SluggableTrait, SoftDeletingTrait;
 
     protected $sluggable = array(
         'build_from' => 'name',
         'save_to'    => 'slug',
     );
-
+    protected $dates = ['deleted_at'];
     protected $fillable = [];
 
     public function lessons()

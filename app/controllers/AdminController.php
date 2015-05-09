@@ -77,17 +77,27 @@ class AdminController extends BaseController
             return Redirect::to('admin/schools')->with('failure', 'Error! No se pudo crear la academia');
     }
 
+    public function deleteUser() {
+        $user_id = Input::get('id');
+        $user = User::findOrFail($user_id);
+        $user->delete();
+
+        if($user->trashed())
+            return Redirect::to('admin/schools')->with('success', 'Usuario eliminado con éxito');
+        else
+            return Redirect::to('admin/schools')->with('failure', '¡Error! El usuario no pudo ser eliminado.');
+    }
+
     public function deleteSchool()
     {
         $school_id = Input::get('id');
         $school = School::findOrFail($school_id);
-        $school->lessons()->delete();
         $school->delete();
 
-        if($school->exists)
-            return Redirect::to('admin/schools')->with('failure', 'Error! La academia no pudo ser eliminada');
-        else
+        if($school->trashed())
             return Redirect::to('admin/schools')->with('success', 'Academia eliminada con éxito');
+        else
+            return Redirect::to('admin/schools')->with('failure', 'Error! La academia no pudo ser eliminada');
     }
 
     public function saveSchool()

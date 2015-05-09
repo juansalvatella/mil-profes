@@ -77,7 +77,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
-                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating'));
+                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
                 } else { //no keywords
                     $results = DB::table('teacher_lessons')
                         ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
@@ -89,7 +89,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
-                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating'));
+                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
                 }
             } else { //search all subjects
                 if($check_keywords) {
@@ -110,7 +110,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
-                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating'));
+                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
                 } else {
                     $results = DB::table('teacher_lessons')
                         ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
@@ -121,7 +121,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
-                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating'));
+                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
                 }
             }
         } else {
@@ -145,7 +145,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('school_avg_rating', 'DESC')
                         ->orderBy('school_lessons.id','ASC')
-                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating'));
+                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.deleted_at'));
                 } else {
                     $results = DB::table('school_lessons')
                         ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
@@ -156,7 +156,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('school_avg_rating', 'DESC')
                         ->orderBy('school_lessons.id','ASC')
-                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating'));
+                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.deleted_at'));
                 }
             } else { //search all subjects
                 if($check_keywords) {
@@ -176,7 +176,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('school_avg_rating', 'DESC')
                         ->orderBy('school_lessons.id','ASC')
-                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating'));
+                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.deleted_at'));
                 } else {
                     $results = DB::table('school_lessons')
                         ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
@@ -186,11 +186,18 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('school_avg_rating', 'DESC')
                         ->orderBy('school_lessons.id','ASC')
-                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating'));
+                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.deleted_at'));
                 }
             }
         }
         $results = new Collection($results); //array to collection
+
+        //Filter soft deleted results (because a raw database search does not automatically do it!)
+        $results = $results->filter(function($result) {
+            if (! $result->deleted_at)
+                return true;
+            return false;
+        });
 
         //===============================================================================
         //  Filter results that belong to teachers whose payments are not up to date
@@ -282,7 +289,6 @@ class SearchController extends BaseController
                 return sprintf('%s%s%s%s', $distStrPad, $lesson_rating_reversed, $school_rating_reversed, $idStrPad);
             });
         }
-//        dd($results->toArray());
 
         //no more filters, results sorted >>>> pagination of results
         $total_results = $results->count();

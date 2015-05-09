@@ -8,7 +8,7 @@ use Zizaco\Entrust\HasRole;
 
 class User extends Eloquent implements ConfideUserInterface, SluggableInterface {
 
-	use ConfideUser, HasRole, SluggableTrait;
+	use ConfideUser, HasRole, SluggableTrait, SoftDeletingTrait;
 
     protected $sluggable = array(
         'build_from' => 'username',
@@ -17,8 +17,9 @@ class User extends Eloquent implements ConfideUserInterface, SluggableInterface 
 // if slug build_from = fullname instead of username, then uncomment this method
 //    public function getFullnameAttribute()
 //    {
-//        return $this->name . ' ' . $this->lastname;
+//        return $this->name.' '.$this->lastname;
 //    }
+    protected $dates = ['deleted_at'];
 
 	protected $fillable = [];
 
