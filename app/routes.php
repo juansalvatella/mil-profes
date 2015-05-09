@@ -32,6 +32,7 @@ Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug)
     //if passing by ID: $user = $teacher->user()->get(array('username','avatar','email','phone','description'));
     $teacher->slug = $user_slug;
     $teacher->username = $user->username;
+    $teacher->displayName = ucwords($user->name).' '.substr(ucwords($user->lastname),0,1).'.';
     $teacher->avatar = $user->avatar;
     $teacher->email = $user->email;
     $teacher->phone = $user->phone;

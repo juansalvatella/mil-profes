@@ -40,6 +40,8 @@ return array(
 	'profesor' => 'clase|clases',
 	'academia' => 'clase de academia|clases de academia',
 
+    'unit_per_hour' => '€/hora',
+    'unit_per_course' => '€/curso',
     'per_hour' => 'por hora',
     'per_course' => 'por curso',
 

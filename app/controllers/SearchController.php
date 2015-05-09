@@ -77,7 +77,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
-                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
+                        ->get(array('teacher_lessons.*', 'users.slug', 'users.name', 'users.lastname', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
                 } else { //no keywords
                     $results = DB::table('teacher_lessons')
                         ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
@@ -89,7 +89,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
-                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
+                        ->get(array('teacher_lessons.*', 'users.slug', 'users.name', 'users.lastname', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
                 }
             } else { //search all subjects
                 if($check_keywords) {
@@ -110,7 +110,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
-                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
+                        ->get(array('teacher_lessons.*', 'users.slug', 'users.name', 'users.lastname', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
                 } else {
                     $results = DB::table('teacher_lessons')
                         ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
@@ -121,7 +121,7 @@ class SearchController extends BaseController
                         ->orderBy('lesson_avg_rating', 'DESC')
                         ->orderBy('teacher_avg_rating', 'DESC')
                         ->orderBy('teacher_lessons.id','ASC')
-                        ->get(array('teacher_lessons.*', 'users.slug', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
+                        ->get(array('teacher_lessons.*', 'users.slug', 'users.name', 'users.lastname', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating','users.deleted_at'));
                 }
             }
         } else {
@@ -217,10 +217,12 @@ class SearchController extends BaseController
         $results = Geocoding::findWithinDistance($user_lat,$user_lon,$search_distance,$results); //filter results within distance boundaries
         $results = Milprofes::findWithinPrice($price,$prof_o_acad,$results);
 
-        //Get ratings, availabilities and subjects
+        //Get ratings, availabilities, display name and subjects
         if($prof_o_acad=='profesor'){
             foreach($results as $result)
             {
+                //get display name
+                $result->displayName = ucwords($result->name).' '.substr(ucwords($result->lastname),0,1).'.';
                 //round teacher avg rating
                 if($result->teacher_avg_rating)
                     $result->teacher_avg_rating = round((float) $result->teacher_avg_rating,1);

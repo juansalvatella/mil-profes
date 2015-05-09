@@ -211,9 +211,10 @@
                                                     <div class="row no-price-provided">Contáctanos<br>para saber<br>el precio</div>
                                                 @else
                                                     <div class="row price">
-                                                        {{{ $result->price }}} €
+                                                        {{-- + 0 removes zeros to the right of the decimal separator --}}
+                                                        {{{ str_replace('.', ',', $result->price + 0) }}}
                                                     </div>
-                                                    <div class="row per-unit">@lang('school-profile.per_unit')</div>
+                                                    <div class="row per-unit">@lang('school-profile.unit_per_course')</div>
                                                 @endif
                                             </div>
 

@@ -43,6 +43,7 @@ class Milprofes
         foreach($popular_teachers as $lt)
         {
             $lt->username = $lt->user->username;
+            $lt->displayName = ucwords($lt->user->name).' '.substr(ucwords($lt->user->lastname),0,1).'.';
             $lt->avatar = $lt->user->avatar;
             $lt->slug = $lt->user->slug;
         }

@@ -5,6 +5,7 @@ return array(
     'subtitle' => 'Perfil de academia',
     'rating' => 'Valoración',
 
+    'unit_per_course' => '€/curso',
     'per_unit' => 'por curso',
 
     'our_school' => 'Nuestra academia',

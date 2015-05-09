@@ -238,7 +238,7 @@
                 @foreach($popular_teachers as $teacher)
                     <div class="col-xs-6 col-sm-3 names-responsive">
                         <div class="row best-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }} "/></a></div>
-                        <div class="row best-name-container top-buffer-5"><a href="{{ url('profe/'.$teacher->slug) }}">{{ $teacher->username }}</a></div>
+                        <div class="row best-name-container top-buffer-5"><a href="{{ url('profe/'.$teacher->slug) }}">{{{ $teacher->displayName }}}</a></div>
                     </div>
                 @endforeach
             </div>

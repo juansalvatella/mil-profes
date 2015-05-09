@@ -345,7 +345,7 @@
                     <div class="col-xs-12 col-sm-3 col-md-3">
                         <div class="row search-image-container">
                             @if($prof_o_acad=='profesor')
-                                <a href="{{ url('profe/'.$result->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->username }}" src="{{ asset('img/avatars/'.$result->avatar) }}"/></a>
+                                <a href="{{ url('profe/'.$result->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{{ $result->displayName }}}" src="{{ asset('img/avatars/'.$result->avatar) }}"/></a>
                             @else
                                 <a href="{{ url('academia/'.$result->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->name }}" src="{{ asset('img/logos/'.$result->logo) }}"/></a>
                             @endif
@@ -361,7 +361,7 @@
                     <div class="col-xs-12 col-sm-5 col-md-6">
                         <div class="row result-name">
                             @if($prof_o_acad=='profesor')
-                                <span>{{{ $result->username }}}</span>
+                                <span>{{{ $result->displayName }}}</span>
                             @else
                                 <span>{{{ $result->name }}}</span>
                             @endif
@@ -459,12 +459,13 @@
                                 @endif
                             @else
                                 <div class="row price">
-                                    {{{ $result->price }}} €
+                                    {{-- + 0 removes zeros to the right of decimal separator --}}
+                                    {{{ str_replace('.', ',', $result->price + 0) }}}
                                 </div>
                                 @if($prof_o_acad=='profesor')
-                                    <div class="row per-unit">@lang('search.per_hour')</div>
+                                    <div class="row per-unit">@lang('search.unit_per_hour')</div>
                                 @else
-                                    <div class="row per-unit">@lang('search.per_course')</div>
+                                    <div class="row per-unit">@lang('search.unit_per_course')</div>
                                 @endif
                             @endif
                         </div>

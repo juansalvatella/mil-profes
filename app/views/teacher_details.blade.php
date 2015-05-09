@@ -7,10 +7,10 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div class="profile-image"><img class="lazy" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}" src="" title="{{ $teacher->username }} logo" alt="{{ $teacher->username }}"></div>
+            <div class="profile-image"><img class="lazy" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}" title="{{ $teacher->displayName }} logo" alt="{{ $teacher->username }}"></div>
 
             <div class="profile-title">
-                <h1 class="profile-maintitle">{{ $teacher->username }}</h1>
+                <h1 class="profile-maintitle">{{ $teacher->displayName }}</h1>
                 <h2 class="profile-subtitle">@lang('teacher-profile.subtitle')</h2>
             </div>
 
