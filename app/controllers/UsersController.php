@@ -71,6 +71,16 @@ class UsersController extends Controller
                 );
             }
 
+            //TODO: eliminar las siguientes líneas para hacerse profesor por defecto cuando se implante sistema de pago
+            //HACERSE PROFESOR POR DEFECTO
+            $teacher = new Teacher();
+            $teacher->user()->associate($user);
+            $teacher->save();
+            //Añadir rol(permisos) de profesor a usuario
+            $teacher_role = Role::where('name', 'teacher')->first();
+            $user->attachRole($teacher_role);
+            //ELIMINAR HASTA AQUÍ
+
             return Redirect::to('/')
                 ->with('log-notice', trans('messages.user_just_registered'))
                 ->with('show_login_modal',true);
@@ -402,7 +412,7 @@ class UsersController extends Controller
                 $teacher->user()->associate($user);
                 $teacher->save();
 
-                //Añadir rol(permisos) de profesor
+                //Añadir rol(permisos) de profesor a usuario
                 $teacher_role = Role::where('name', 'teacher')->first();
                 $user->attachRole($teacher_role);
 
