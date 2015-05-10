@@ -20,5 +20,6 @@ return array(
         'teacher' => 'Profe.',
     ],
 
-    '' => '',
+    'new-logo' => 'Nuevo logotipo',
+    'new-pics' => 'Nuevas imágenes',
 );

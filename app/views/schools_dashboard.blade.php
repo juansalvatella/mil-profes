@@ -47,7 +47,8 @@
                     <th>Logo</th>
                     <th>Desc</th>
                     <th>Geo</th>
-                    <th>Clases</th>
+                    <th>Cursos</th>
+                    <th>Perfil</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -56,21 +57,24 @@
                 @foreach($schools as $school)
                 <tr>
                     <td>{{ $school->name }}</td>
-                    <td>@if($school->address)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->address }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
-                    <td>@if($school->cif)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->cif }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
-                    <td>@if($school->email)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->email }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
-                    <td>@if($school->phone)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->phone }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
-                    <td>@if($school->phone2)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->phone2 }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
-                    <td>@if($school->logo)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->logo }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
-                    <td>@if($school->description)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->description }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
-                    <td>@if($school->lon)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->lat }},{{ $school->lon }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
-                    <td>{{ count($lessons[$school->id]) }} clase(s)</td>
-                    <td>
-                        <a href="{{ url('admin/lessons',array($school->id)) }}" class="btn btn-primary">Editar clases</a>
-                        <a href="{{ url('admin/edit/school',array($school->id)) }}" class="btn btn-success">Editar academia</a>
+                    <td class="text-center">@if($school->address)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->address }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
+                    <td class="text-center">@if($school->cif)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->cif }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
+                    <td class="text-center">@if($school->email)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->email }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
+                    <td class="text-center">@if($school->phone)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->phone }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
+                    <td class="text-center">@if($school->phone2)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->phone2 }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
+                    <td class="text-center">@if($school->logo)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->logo }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
+                    <td class="text-center">@if($school->description)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->description }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
+                    <td class="text-center">@if($school->lon)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->lat }},{{ $school->lon }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
+                    <td class="text-center">{{ count($lessons[$school->id]) }}</td>
+                    <td class="text-center">
+                        <a href="{{ url('academia',array($school->slug)) }}" class="btn-xs btn-success">Ver perfil</a>
                     </td>
-                    <td>
-                        <a href="{{ url('admin/delete/school',array($school->id)) }}" class="btn btn-danger">Eliminar academia</a>
+                    <td class="text-center">
+                        <a href="{{ url('admin/lessons',array($school->id)) }}" class="btn-xs btn-info">Editar cursos</a>
+                        <a href="{{ url('admin/edit/school',array($school->id)) }}" class="btn-xs btn-primary">Editar academia</a>
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ url('admin/delete/school',array($school->id)) }}" class="btn-xs btn-danger">Eliminar</a>
                     </td>
                 </tr>
                 @endforeach
@@ -78,7 +82,7 @@
         </table>
         <div class="panel panel-default">
             <div class="panel-body">
-                <p>{{ count($schools) }} academia(s) en total</p>
+                <p>{{ count($schools) }} academias en total</p>
             </div>
         </div>
     @endif

@@ -54,7 +54,7 @@ class AdminController extends BaseController
                     if ($validator->fails()) {
                         return Redirect::to('admin/schools')
                             ->with('success', 'Academia creada con éxito.')
-                            ->with('error', 'Error al adjuntar la imagen de perfil: ' . $img);
+                            ->with('error', 'Error al subir la imagen de perfil: ' . $img);
                     } else {
                         $file_extension = $upload->getClientOriginalExtension();
                         $filename = Str::random(30) . '.' . $file_extension;
@@ -66,7 +66,7 @@ class AdminController extends BaseController
                         if(!$pic->save()){
                             return Redirect::to('admin/schools')
                                 ->with('success', 'Academia creada con éxito.')
-                                ->with('error', 'Error al adjuntar la imagen de perfil: ' . $img);
+                                ->with('error', 'Error al subir la imagen de perfil: ' . $img);
                         }
                     }
                 }
@@ -130,10 +130,48 @@ class AdminController extends BaseController
             $school->lat = $geocoding[0]; //latitud
             $school->lon = $geocoding[1]; //longitud
         }
+        if (Input::hasFile('pics')) {
+            //TODO: implementar selector de modos (reemplazar o añadir)
+            $school->pics()->delete(); //TODO: sólo aplicar en modo reemplazar
+
+            $all_uploads = Input::file('pics');
+            if (!is_array($all_uploads)) {
+                $all_uploads = array($all_uploads);
+            }
+            foreach ($all_uploads as $upload) {
+                if (!is_a($upload, 'Symfony\Component\HttpFoundation\File\UploadedFile')) {
+                    continue;
+                }
+                $validator = Validator::make(
+                    array('file' => $upload),
+                    array('file' => 'image')
+                );
+                $img = $upload->getClientOriginalName();
+                if ($validator->fails()) {
+                    return Redirect::back()
+                        ->withInput()
+                        ->with('failure', 'Error al subir la imagen de perfil: ' . $img);
+                } else {
+                    $file_extension = $upload->getClientOriginalExtension();
+                    $filename = Str::random(30) . '.' . $file_extension;
+                    $path = public_path() . '/img/pics/';
+                    $upload->move($path, $filename);
+                    $pic = new Pic();
+                    $pic->pic = $filename;
+                    $pic->school()->associate($school);
+                    if(!$pic->save()){
+                        return Redirect::back()
+                            ->withInput()
+                            ->with('failure', 'Error al guardar la imagen de perfil: ' . $img);
+                    }
+                }
+            }
+        }
+
         if($school->save())
             return Redirect::to('admin/schools')->with('success', 'Datos de academia actualizados con éxito');
         else
-            return Redirect::to('admin/schools')->with('failure', 'Error! No se pudo actualizar datos de la academia');
+            return Redirect::to('admin/schools')->with('failure', '¡Error! No se pudo actualizar datos de la academia');
     }
 
     public function createLesson()

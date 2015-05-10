@@ -1331,3 +1331,8 @@ body.loading .modal-loading { /*modal element will be visible */
 #cookieBanner {
 	display: none;
 }
+
+img[class^='logo-prev'], img[class*=' logo-prev'],
+img[class^='pic-prev'], img[class*=' pic-prev'] {
+    margin-bottom:5px !important;
+}
