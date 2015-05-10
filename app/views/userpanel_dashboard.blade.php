@@ -125,7 +125,7 @@
 
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-12 col-sm-2 control-label">
-                            <label class="" for="email">{{{ @trans('messages.e_mail') }}} (*)</label>
+                            <label class="" for="email">{{{ trans('messages.e_mail') }}} (*)</label>
                         </div>
                         <div class="col-xs-12 col-offset-sm-2 col-sm-10">
                             <input class="form-control" placeholder="Tu e-mail" type="email" name="email" id="email" value="{{{ $user->email }}}" required="required" data-error="Introduce una dirección válida de correo electrónico.">

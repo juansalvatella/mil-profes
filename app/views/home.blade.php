@@ -35,11 +35,11 @@
       <div class="row text-center top-buffer-15">
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
               <div class="form-group">
-                  {{ Form::label('user_address', @trans('home.where_are_you'), array('class'=>'main-home-label')) }}
+                  {{ Form::label('user_address', trans('home.where_are_you'), array('class'=>'main-home-label')) }}
                   @if(Auth::check())
-                      {{ Form::text('user_address', Confide::user()->address, array('class'=>'form-control input-lg','placeholder'=>@trans('home.where_placeholder'))) }}
+                      {{ Form::text('user_address', Confide::user()->address, array('class'=>'form-control input-lg','placeholder'=>trans('home.where_placeholder'))) }}
                   @else
-                      {{ Form::text('user_address', '', array('class'=>'form-control input-lg','placeholder'=>@trans('home.where_placeholder'))) }}
+                      {{ Form::text('user_address', '', array('class'=>'form-control input-lg','placeholder'=>trans('home.where_placeholder'))) }}
                   @endif
               </div>
           </div>
@@ -92,80 +92,80 @@
 
       <div class="row text-center top-buffer-15">
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
-            <span class="main-home-label">{{ @trans('home.what_to_learn') }}</span>
+            <span class="main-home-label">{{ trans('home.what_to_learn') }}</span>
               <div class="input-group">
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-default btn-lg dropdown-toggle btn-pick-subject" data-toggle="dropdown">
                     <input name="subject" id="subject" type="hidden" value="all">
-                    <span id="subject-name">{{ @trans('home.subject_all') }}</span>
+                    <span id="subject-name">{{ trans('home.subject_all') }}</span>
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a href="#" id="action-escolar">{{ @trans('home.subject_escolar') }}</a></li>
-                    <li><a href="#" id="action-cfp">{{ @trans('home.subject_cfp') }}</a></li>
-                    <li><a href="#" id="action-universitario">{{ @trans('home.subject_universitario') }}</a></li>
-                    <li><a href="#" id="action-artes">{{ @trans('home.subject_artes') }}</a></li>
-                    <li><a href="#" id="action-musica">{{ @trans('home.subject_musica') }}</a></li>
-                    <li><a href="#" id="action-idiomas">{{ @trans('home.subject_idiomas') }}</a></li>
-                    <li><a href="#" id="action-deportes">{{ @trans('home.subject_deportes') }}</a></li>
-                    <li><a href="#" id="action-salud">{{ @trans('home.subject_salud') }}</a></li>
-                    <li><a href="#" id="action-all">{{ @trans('home.subject_all') }}</a></li>
+                    <li><a href="#" id="action-escolar">{{ trans('home.subject_escolar') }}</a></li>
+                    <li><a href="#" id="action-cfp">{{ trans('home.subject_cfp') }}</a></li>
+                    <li><a href="#" id="action-universitario">{{ trans('home.subject_universitario') }}</a></li>
+                    <li><a href="#" id="action-artes">{{ trans('home.subject_artes') }}</a></li>
+                    <li><a href="#" id="action-musica">{{ trans('home.subject_musica') }}</a></li>
+                    <li><a href="#" id="action-idiomas">{{ trans('home.subject_idiomas') }}</a></li>
+                    <li><a href="#" id="action-deportes">{{ trans('home.subject_deportes') }}</a></li>
+                    <li><a href="#" id="action-salud">{{ trans('home.subject_salud') }}</a></li>
+                    <li><a href="#" id="action-all">{{ trans('home.subject_all') }}</a></li>
                   </ul>
                 </div><!-- /btn-group -->
                 <script type="text/javascript">
                   $("#action-escolar").click(function(e){
                     e.preventDefault();
                     $("#subject").val("escolar");
-                    $("#subject-name").text("{{@trans('home.subject_escolar')}}");
-                    $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_escolar')}}");
+                    $("#subject-name").text("{{trans('home.subject_escolar')}}");
+                    $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_escolar')}}");
                   });
                   $("#action-cfp").click(function(e){
                     e.preventDefault();
                     $("#subject").val("cfp");
-                    $("#subject-name").text("{{@trans('home.subject_cfp')}}");
-                    $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_cfp')}}");
+                    $("#subject-name").text("{{trans('home.subject_cfp')}}");
+                    $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_cfp')}}");
                   });
                   $("#action-universitario").click(function(e){
                     e.preventDefault();
                     $("#subject").val("universitario");
-                    $("#subject-name").text("{{@trans('home.subject_universitario')}}");
-                    $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_universitario')}}");
+                    $("#subject-name").text("{{trans('home.subject_universitario')}}");
+                    $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_universitario')}}");
                   });
                   $("#action-artes").click(function(e){
                     e.preventDefault();
                     $("#subject").val("artes");
-                    $("#subject-name").text("{{@trans('home.subject_artes')}}");
-                    $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_artes')}}");
+                    $("#subject-name").text("{{trans('home.subject_artes')}}");
+                    $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_artes')}}");
                   });
                   $("#action-musica").click(function(e){
                     e.preventDefault();
                     $("#subject").val("musica");
-                    $("#subject-name").text("{{@trans('home.subject_musica')}}");
-                    $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_musica')}}");
+                    $("#subject-name").text("{{trans('home.subject_musica')}}");
+                    $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_musica')}}");
                   });
                   $("#action-idiomas").click(function(e){
                     e.preventDefault();
                     $("#subject").val("idiomas");
-                    $("#subject-name").text("{{@trans('home.subject_idiomas')}}");
-                    $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_idiomas')}}");
+                    $("#subject-name").text("{{trans('home.subject_idiomas')}}");
+                    $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_idiomas')}}");
                   });
                   $("#action-deportes").click(function(e){
                     e.preventDefault();
                     $("#subject").val("deportes");
-                    $("#subject-name").text("{{@trans('home.subject_deportes')}}");
-                    $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_deportes')}}");
+                    $("#subject-name").text("{{trans('home.subject_deportes')}}");
+                    $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_deportes')}}");
                   });
                   $("#action-salud").click(function(e){
                       e.preventDefault();
                       $("#subject").val("salud");
-                      $("#subject-name").text("{{@trans('home.subject_salud')}}");
-                      $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_salud')}}");
+                      $("#subject-name").text("{{trans('home.subject_salud')}}");
+                      $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_salud')}}");
                   });
                   $("#action-all").click(function(e){
                     e.preventDefault();
                     $("#subject").val("all");
-                    $("#subject-name").text("{{@trans('home.subject_all')}}");
-                    $("#keywords").attr("placeholder", "{{@trans('home.keywords_placeholder_all')}}");
+                    $("#subject-name").text("{{trans('home.subject_all')}}");
+                    $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_all')}}");
                   });
                 </script>
 

@@ -32,17 +32,17 @@
 
             <div class="row">
                 <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-6 col-md-offset-1 col-md-5 col-lg-offset-2 col-lg-4">
-                    {{ Form::label('contact_name', @trans('contact.contact_form_name'), array('class'=>'contact-contact-form-label')) }}
+                    {{ Form::label('contact_name', trans('contact.contact_form_name'), array('class'=>'contact-contact-form-label')) }}
                     <div class="form-group">
-                        {{ Form::text('contact_name', '', array('class'=>'form-control','placeholder'=>@trans('contact.name_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
+                        {{ Form::text('contact_name', '', array('class'=>'form-control','placeholder'=>trans('contact.name_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
                         <small><span class="help-block with-errors"></span></small>
                     </div>
                 </div>
 
                 <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
-                    {{ Form::label('contact_lastname', @trans('contact.contact_form_lastname'), array('class'=>'contact-contact-form-label')) }}
+                    {{ Form::label('contact_lastname', trans('contact.contact_form_lastname'), array('class'=>'contact-contact-form-label')) }}
                     <div class="form-group">
-                        {{ Form::text('contact_lastname', '', array('class'=>'form-control','placeholder'=>@trans('contact.lastname_placeholder'),'maxlength'=>'100')) }}
+                        {{ Form::text('contact_lastname', '', array('class'=>'form-control','placeholder'=>trans('contact.lastname_placeholder'),'maxlength'=>'100')) }}
                         <small><span class="help-block with-errors"></span></small>
                     </div>
                 </div>
@@ -50,17 +50,17 @@
 
             <div class="row">
                 <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-6 col-md-offset-1 col-md-5 col-lg-offset-2 col-lg-4">
-                    {{ Form::label('contact_subject', @trans('contact.contact_form_subject'), array('class'=>'contact-contact-form-label')) }}
+                    {{ Form::label('contact_subject', trans('contact.contact_form_subject'), array('class'=>'contact-contact-form-label')) }}
                     <div class="form-group">
-                        {{ Form::text('contact_subject', '', array('class'=>'form-control','placeholder'=>@trans('contact.subject_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
+                        {{ Form::text('contact_subject', '', array('class'=>'form-control','placeholder'=>trans('contact.subject_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
                         <small><span class="help-block with-errors"></span></small>
                     </div>
                 </div>
 
                 <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
-                    {{ Form::label('contact_email', @trans('contact.contact_form_email'), array('class'=>'contact-contact-form-label')) }}
+                    {{ Form::label('contact_email', trans('contact.contact_form_email'), array('class'=>'contact-contact-form-label')) }}
                     <div class="form-group">
-                        {{ Form::email('contact_email', '', array('class'=>'form-control','placeholder'=>@trans('contact.mail_placeholder'),'required','data-error'=>'Introduce una dirección válida de correo electrónico.')) }}
+                        {{ Form::email('contact_email', '', array('class'=>'form-control','placeholder'=>trans('contact.mail_placeholder'),'required','data-error'=>'Introduce una dirección válida de correo electrónico.')) }}
                         <small><span class="help-block with-errors"></span></small>
                     </div>
                 </div>
@@ -68,9 +68,9 @@
 
             <div class="row">
                 <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-6 col-md-offset-1 col-md-5 col-lg-offset-2 col-lg-4">
-                    {{ Form::label('contact_message', @trans('contact.contact_form_message'), array('class'=>'contact-contact-form-label')) }}
+                    {{ Form::label('contact_message', trans('contact.contact_form_message'), array('class'=>'contact-contact-form-label')) }}
                     <div class="form-group">
-                        {{ Form::textarea('contact_message', '', array('rows' => 6, 'class'=>'form-control','placeholder'=>@trans('contact.message_placeholder'),'required','maxlength'=>'1000','data-error'=>'Rellena este campo.')) }}
+                        {{ Form::textarea('contact_message', '', array('rows' => 6, 'class'=>'form-control','placeholder'=>trans('contact.message_placeholder'),'required','maxlength'=>'1000','data-error'=>'Rellena este campo.')) }}
                         <small><span class="help-block with-errors"></span></small>
                     </div>
                 </div>

@@ -196,14 +196,14 @@
 
                                     <div class="form-group">
                                         <label for="email">@lang('layout.login-username')</label>
-                                        <input class="form-control" tabindex="1" placeholder="{{{ @trans('layout.login-username') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required="required" data-error="Rellena este campo.">
+                                        <input class="form-control" tabindex="1" placeholder="{{{ trans('layout.login-username') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required="required" data-error="Rellena este campo.">
                                         <small><span class="help-block with-errors"></span></small>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">
                                             @lang('layout.login-password')
                                         </label>
-                                        <input class="form-control" tabindex="2" placeholder="{{{ @trans('layout.login-password') }}}" type="password" name="password" id="password" required="required" data-error="Rellena este campo.">
+                                        <input class="form-control" tabindex="2" placeholder="{{{ trans('layout.login-password') }}}" type="password" name="password" id="password" required="required" data-error="Rellena este campo.">
                                         <small><span class="help-block with-errors"></span></small>
                                         <p class="help-block">
                                             <a href="{{{ URL::to('/users/forgot-password') }}}">@lang('layout.login-forgot-passwd')</a>
@@ -274,14 +274,14 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="name">@lang('layout.register-realname')</label>
-                                            <input class="form-control" placeholder="{{{@trans('layout.register-realname-ph')}}}" maxlength="50" type="text" name="name" id="name" value="{{{ Input::old('name') }}}" required="required" data-error="Rellena este campo.">
+                                            <input class="form-control" placeholder="{{{trans('layout.register-realname-ph')}}}" maxlength="50" type="text" name="name" id="name" value="{{{ Input::old('name') }}}" required="required" data-error="Rellena este campo.">
                                             <small><span class="help-block with-errors"></span></small>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="lastname">@lang('layout.register-reallastname')</label>
-                                            <input class="form-control" placeholder="{{{@trans('layout.register-reallastname-ph')}}}" maxlength="100" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}">
+                                            <input class="form-control" placeholder="{{{trans('layout.register-reallastname-ph')}}}" maxlength="100" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}">
                                             <small><span class="help-block with-errors"></span></small>
                                         </div>
                                     </div>
@@ -290,7 +290,7 @@
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <label for="address">@lang('layout.register-address')</label>
-                                            <input class="form-control" placeholder="{{{@trans('layout.register-address-ph')}}}" maxlength="200" type="text" name="address" id="address" value="{{{ Input::old('address') }}}" required="required" data-error="Rellena este campo.">
+                                            <input class="form-control" placeholder="{{{trans('layout.register-address-ph')}}}" maxlength="200" type="text" name="address" id="address" value="{{{ Input::old('address') }}}" required="required" data-error="Rellena este campo.">
                                             <small><span class="help-block with-errors"></span></small>
                                         </div>
                                     </div>
@@ -299,7 +299,7 @@
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="phone">@lang('layout.register-phone')</label>
-                                                <input class="form-control" placeholder="{{{@trans('layout.register-phone-ph')}}}" type="text" pattern="^([0-9]){5,}$" maxlength="20" name="phone" id="phone" value="{{{ Input::old('phone') }}}" data-error="Sólo números, sin espacios.">
+                                                <input class="form-control" placeholder="{{{trans('layout.register-phone-ph')}}}" type="text" pattern="^([0-9]){5,}$" maxlength="20" name="phone" id="phone" value="{{{ Input::old('phone') }}}" data-error="Sólo números, sin espacios.">
                                                 <small><span class="help-block with-errors">Sólo números, sin espacios</span></small>
                                             </div>
                                         </div>
@@ -308,14 +308,14 @@
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="username">@lang('layout.register-username')</label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-username-ph') }}}" pattern="^([_A-z0-9]){5,}$" maxlength="20" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required="required" data-error="Al menos 5 caracteres con letras o números.">
+                                                <input class="form-control" placeholder="{{{ trans('layout.register-username-ph') }}}" pattern="^([_A-z0-9]){5,}$" maxlength="20" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required="required" data-error="Al menos 5 caracteres con letras o números.">
                                                 <small><span class="help-block with-errors">Mínimo 5 caracters (letras, números, guion bajo)</span></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="email">@lang('layout.register-email') <small>@lang('layout.register-required-confirmation')</small></label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-email-ph') }}}" type="email" name="email" id="email2" value="{{{ Input::old('email') }}}" required="required" data-error="Introduce una dirección de correo válida.">
+                                                <input class="form-control" placeholder="{{{ trans('layout.register-email-ph') }}}" type="email" name="email" id="email2" value="{{{ Input::old('email') }}}" required="required" data-error="Introduce una dirección de correo válida.">
                                                 <small><span class="help-block with-errors"></span></small>
                                             </div>
                                         </div>
@@ -324,14 +324,14 @@
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="password">@lang('layout.register-password')</label>
-                                                <input class="form-control register-password" placeholder="{{{ @trans('layout.register-password-ph') }}}" type="password" pattern=".{6,}" name="password" id="password2" required="required" data-error="Al menos 6 caracteres de longitud.">
+                                                <input class="form-control register-password" placeholder="{{{ trans('layout.register-password-ph') }}}" type="password" pattern=".{6,}" name="password" id="password2" required="required" data-error="Al menos 6 caracteres de longitud.">
                                                 <small><span class="help-block with-errors">Mínimo 6 de longitud</span></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="password_confirmation">@lang('layout.register-confirm-password')</label>
-                                                <input class="form-control" placeholder="{{{ @trans('layout.register-confirm-password-ph') }}}" type="password" data-match=".register-password" name="password_confirmation" id="password_confirmation" required="required" data-error="Rellena este campo." data-match-error="No coincide.">
+                                                <input class="form-control" placeholder="{{{ trans('layout.register-confirm-password-ph') }}}" type="password" data-match=".register-password" name="password_confirmation" id="password_confirmation" required="required" data-error="Rellena este campo." data-match-error="No coincide.">
                                                 <small><span class="help-block with-errors"></span></small>
                                             </div>
                                         </div>
@@ -442,26 +442,26 @@
                         <div class="row">
                             {{ Form::open(array('action' => 'ContactController@getMiniContactForm','id'=>'mini-contact')) }}
                             <div class="col-xs-6 text-left">
-                                {{ Form::label('contact_name', @trans('layout.contact_form_name'), array('class'=>'contact-form-label control-label')) }}
+                                {{ Form::label('contact_name', trans('layout.contact_form_name'), array('class'=>'contact-form-label control-label')) }}
                                 <div class="form-group">
-                                    {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.name_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
+                                    {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>trans('layout.name_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
                                     <small><small><span class="help-block with-errors"></span></small></small>
                                 </div>
-                                {{ Form::label('contact_email', @trans('layout.contact_form_email'), array('class'=>'contact-form-label control-label')) }}
+                                {{ Form::label('contact_email', trans('layout.contact_form_email'), array('class'=>'contact-form-label control-label')) }}
                                 <div class="form-group">
-                                    {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.mail_placeholder'),'required','data-error'=>'Introduce una dirección de correo.')) }}
+                                    {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>trans('layout.mail_placeholder'),'required','data-error'=>'Introduce una dirección de correo.')) }}
                                     <small><small><span class="help-block with-errors"></span></small></small>
                                 </div>
-                                {{ Form::label('contact_subject', @trans('layout.contact_form_subject'), array('class'=>'contact-form-label control-label')) }}
+                                {{ Form::label('contact_subject', trans('layout.contact_form_subject'), array('class'=>'contact-form-label control-label')) }}
                                 <div class="form-group">
-                                    {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>@trans('layout.subject_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
+                                    {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>trans('layout.subject_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
                                     <small><small><span class="help-block with-errors"></span></small></small>
                                 </div>
                             </div>
                             <div class="col-xs-6 text-left">
-                                {{ Form::label('contact_message', @trans('layout.contact_form_message'), array('class'=>'contact-form-label control-label')) }}
+                                {{ Form::label('contact_message', trans('layout.contact_form_message'), array('class'=>'contact-form-label control-label')) }}
                                 <div class="form-group">
-                                    {{ Form::textarea('contact_message', '', array('rows' => 5, 'class'=>'form-control input-sm','placeholder'=>@trans('layout.message_placeholder'),'required','maxlength'=>'1000','data-error'=>'Rellena este campo.')) }}
+                                    {{ Form::textarea('contact_message', '', array('rows' => 5, 'class'=>'form-control input-sm','placeholder'=>trans('layout.message_placeholder'),'required','maxlength'=>'1000','data-error'=>'Rellena este campo.')) }}
                                     <small><small><span class="help-block with-errors"></span></small></small>
                                 </div>
                                 <div class="form-group">

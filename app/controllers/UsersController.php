@@ -37,7 +37,7 @@ class UsersController extends Controller
                 ->with('show_register_modal', true);
         }
 
-        //possible to geocode address validation
+        //is it possible to geocode address?
         $geocode = Geocoding::geocode($input['address']);
         if(!$geocode) {
             return Redirect::to('/')
@@ -46,7 +46,7 @@ class UsersController extends Controller
                 ->with('show_register_modal', true);
         }
 
-        //basic validation done >>> try to register user
+        //geocoding done, try to register the user
         $repo = App::make('UserRepository');
         $user = $repo->signup($input, $geocode);
 
@@ -66,13 +66,13 @@ class UsersController extends Controller
                     function ($message) use ($user) {
                         $message
                             ->to($user->email, $user->username)
-                            ->subject(@trans('messages.email.account_confirmation.subject'));
+                            ->subject(trans('messages.email.account_confirmation.subject'));
                     }
                 );
             }
 
             return Redirect::to('/')
-                ->with('log-notice', @trans('messages.user_just_registered'))
+                ->with('log-notice', trans('messages.user_just_registered'))
                 ->with('show_login_modal',true);
         } else {
             $error = $user->errors()->all(':message');
@@ -109,11 +109,11 @@ class UsersController extends Controller
             return Redirect::intended('/userpanel/dashboard');
         } else {
             if ($repo->isThrottled($input)) {
-                $err_msg = @trans('messages.alerts.too_many_attempts');
+                $err_msg = trans('messages.alerts.too_many_attempts');
             } elseif ($repo->existsButNotConfirmed($input)) {
-                $err_msg = @trans('messages.alerts.not_confirmed');
+                $err_msg = trans('messages.alerts.not_confirmed');
             } else {
-                $err_msg = @trans('messages.alerts.wrong_credentials');
+                $err_msg = trans('messages.alerts.wrong_credentials');
             }
 
             //return Redirect::action('UsersController@login')
@@ -130,13 +130,13 @@ class UsersController extends Controller
     public function confirm($code)
     {
         if (Confide::confirm($code)) {
-            $notice_msg = @trans('messages.positive_confirmation');
+            $notice_msg = trans('messages.positive_confirmation');
             //return Redirect::action('UsersController@login')
             return Redirect::to('/')
                 ->with('log-notice', $notice_msg)
                 ->with('show_login_modal',true);
         } else {
-            $error_msg = @trans('messages.wrong_confirmation');
+            $error_msg = trans('messages.wrong_confirmation');
             //return Redirect::action('UsersController@login')
             return Redirect::to('/')
                 ->with('log-error', $error_msg)
@@ -157,13 +157,13 @@ class UsersController extends Controller
     public function doForgotPassword()
     {
         if (Confide::forgotPassword(Input::get('email'))) {
-            $notice_msg = @trans('messages.alerts.password_forgot');
+            $notice_msg = trans('messages.alerts.password_forgot');
             //return Redirect::action('UsersController@login')
             return Redirect::to('/')
                 ->with('log-notice', $notice_msg)
                 ->with('show_login_modal',true);
         } else {
-            $error_msg = @trans('messages.alerts.wrong_password_forgot');
+            $error_msg = trans('messages.alerts.wrong_password_forgot');
 //            return Redirect::action('UsersController@doForgotPassword')
             return Redirect::back()
                 ->withInput()
@@ -196,13 +196,13 @@ class UsersController extends Controller
 
         // By passing an array with the token, password and confirmation
         if ($repo->resetPassword($input)) {
-            $notice_msg = @trans('messages.alerts.password_reset');
+            $notice_msg = trans('messages.alerts.password_reset');
             //return Redirect::action('UsersController@login')
             return Redirect::to('/')
                 ->with('log-notice', $notice_msg)
                 ->with('show_login_modal',true);
         } else {
-            $error_msg = @trans('messages.alerts.wrong_password_reset');
+            $error_msg = trans('messages.alerts.wrong_password_reset');
             return Redirect::action('UsersController@resetPassword', array('token'=>$input['token']))
                 ->withInput()
                 ->with('log-error', $error_msg)
