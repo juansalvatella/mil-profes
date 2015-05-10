@@ -13,7 +13,7 @@ return array(
     'lesson_of' => 'Curso',
 
     'of_subject_escolar' => 'de nivel escolar',
-    'of_subject_cfp' => 'de CFP',
+    'of_subject_cfp' => 'de formación profesional',
     'of_subject_universitario' => 'de nivel universitario',
     'of_subject_artes' => 'de arte',
     'of_subject_musica' => 'de música',

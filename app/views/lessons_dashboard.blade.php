@@ -40,7 +40,7 @@
                     <td>
                         <a href="{{ url('admin/edit/lesson',array($lesson->id)) }}" class="btn btn-default"><i class="fa fa-edit"></i><span class="hidden-xs"> @lang('buttons.edit_course')</span></a>
                         &nbsp;
-                        <a href="{{ url('admin/delete/lesson',array($lesson->id)) }}" class="btn btn-danger"><i class="fa fa-trash-o"></i></i><span class="hidden-xs">  @lang('buttons.delete_course')</span></a>
+                        <a href="{{ url('admin/delete/lesson',array($lesson->id)) }}" class="btn btn-danger"><i class="fa fa-trash-o"></i><span class="hidden-xs">  @lang('buttons.delete_course')</span></a>
                     </td>
                 </tr>
             @endforeach

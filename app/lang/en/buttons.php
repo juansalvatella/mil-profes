@@ -24,6 +24,8 @@ return array(
     'edit_course' => 'Editar curso',
     'delete_course' => 'Eliminar curso',
     'back_to_schools' => 'Volver a academias',
+    'edit_lesson' => 'Editar clase',
+    'delete_lesson' => 'Eliminar clase',
 
 
 );

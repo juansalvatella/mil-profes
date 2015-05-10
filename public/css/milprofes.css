@@ -6,6 +6,7 @@
     .profile-subtitle { font-size: 14px; }
     .min-width-150 { }
     .min-width-300 { }
+    .min-width-115-300 { min-width: 115px; }
 }
 @media(min-width:500px){
     #welcome-responsive, #find-responsive {  font-size: 24px;  }
@@ -14,6 +15,7 @@
     .profile-subtitle { font-size: 16px; }
     .min-width-150 { min-width: 150px; }
     .min-width-300 { min-width: 290px; }
+    .min-width-115-300 { min-width: 115px; }
 }
 @media(min-width:992px){
     #welcome-responsive, #find-responsive {  font-size: 26px;  }
@@ -22,6 +24,7 @@
     .profile-subtitle { font-size: 16px; }
     .min-width-150 { min-width: 150px; }
     .min-width-300 { min-width: 290px; }
+    .min-width-115-300 { min-width: 290px; }
 }
 @media(min-width:1200px){
     #welcome-responsive {  font-size: 40px;  }
@@ -31,6 +34,7 @@
     .profile-subtitle { font-size: 20px; }
     .min-width-150 { min-width: 150px; }
     .min-width-300 { min-width: 290px; }
+    .min-width-115-300 { min-width: 290px; }
 }
 
 html, body {

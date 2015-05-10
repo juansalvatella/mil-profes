@@ -18,7 +18,7 @@ return array(
     'keywords_placeholder_salud' => 'yoga, coaching, meditación, pilates...',
     'keywords_placeholder_all' => 'baile, informática, diseño industrial, música oriental...',
     'subject_escolar' => 'Escolar',
-	'subject_cfp' => 'CFP',
+	'subject_cfp' => 'Formación profesional',
 	'subject_universitario' => 'Universitario',
 	'subject_artes' => 'Artes',
 	'subject_musica' => 'Música',

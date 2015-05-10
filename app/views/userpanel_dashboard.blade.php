@@ -17,6 +17,7 @@
 
                 </div>
                 <div class="pull-right">
+                    <a href="{{ url('profe/'.$user->slug) }}" class="btn btn-default"><i class="fa fa-link"></i> Ver mi perfil</a>
                     @if($user->hasRole("admin"))
                         <a href="{{ url('admin/school/reviews') }}" class="btn btn-primary btn-xs">Valoración academias</a>
                         <a href="{{ url('admin/teacher/reviews') }}" class="btn btn-primary btn-xs">Valoración profes.</a>
@@ -32,7 +33,7 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-tabs-profile magic-align-2 container" role="tablist">
         <li role="presentation" class="active"><a href="#teacher_tab" aria-controls="teacher_tab" role="tab" data-toggle="tab">Mis clases</a></li>
-        <li role="presentation"><a href="#profile_tab" aria-controls="profile_tab" role="tab" data-toggle="tab">Mi Perfil</a></li>
+        <li role="presentation"><a href="#profile_tab" aria-controls="profile_tab" role="tab" data-toggle="tab">Mis datos</a></li>
     </ul>
 
     <div class="tab-content container user-box top-padding-50 bottom-padding-50" role="tabpanel">

@@ -146,7 +146,9 @@
                 </script>
 
                 <div class="col-xs-12 top-buffer-10">
-                    <input type="submit" value="Guardar cambios" class="btn btn-primary pull-right"/>
+                    <button type="submit" class="btn btn-primary pull-right">
+                        <i class="fa fa-save"></i> Guardar cambios
+                    </button>
                 </div>
             </form>
         </div>
@@ -160,24 +162,25 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th class="min-width-150">Clase</th>
-                        <th class="hidden-xs">Precio<br>(€/hora)</th>
                         <th class="hidden-xs">Categoría</th>
-                        <th class="hidden-xs hidden-sm">Descripción</th>
-                        <th class="min-width-300">Acciones</th>
+                        <th class="min-width-150">Título</th>
+                        <th class="hidden-xs">Descripción</th>
+                        <th class="hidden-xs">Precio<br>(€/hora)</th>
+                        <th class="min-width-115-300">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($lessons as $lesson)
                         <tr>
+                            <td class="hidden-xs"><img width="42" title="Categoría {{ $subjects[$lesson->id]->name }}" alt="Categoría {{ $subjects[$lesson->id]->name }}" src="{{ asset('img/'.$subjects[$lesson->id]->name.'.png') }}"/></td>
                             <td>{{{ $lesson->title }}}</td>
-                            <td class="hidden-xs">{{{ $lesson->price }}}</td>
-                            <td class="hidden-xs">{{{ $subjects[$lesson->id]->name }}}</td>
-                            <td class="hidden-xs hidden-sm">{{{ $lesson->description }}}</td>
+                            <td class="hidden-xs">{{{ $lesson->description }}}</td>
+                            {{-- + 0 removes zeros to the right of the decimal separator --}}
+                            <td class="hidden-xs">{{{ str_replace('.', ',', $lesson->price + 0) }}}</td>
                             <td>
-                                <a href="{{ url('teacher/edit/lesson',array($lesson->id)) }}" class="btn btn-default bottom-buffer-5">Modificar detalles</a>
+                                <a href="{{ url('teacher/edit/lesson',array($lesson->id)) }}" class="btn btn-default bottom-buffer-5"><i class="fa fa-edit"></i><span class="hidden-xs hidden-sm"> @lang('buttons.edit_lesson')</span></a>
                                 &nbsp;
-                                <a href="{{ url('teacher/delete/lesson',array($lesson->id)) }}" class="btn btn-danger bottom-buffer-5">Eliminar clase</a>
+                                <a href="{{ url('teacher/delete/lesson',array($lesson->id)) }}" class="btn btn-danger bottom-buffer-5"><i class="fa fa-trash-o"></i><span class="hidden-xs hidden-sm">  @lang('buttons.delete_lesson')</span></a>
                             </td>
                         </tr>
                     @endforeach
@@ -190,7 +193,9 @@
             @else
                 <div class="pull-left">Aún no tienes clases publicadas.</div>
             @endif
-                <a href="{{ url('teacher/create/lesson') }}" class="btn btn-primary pull-right top-buffer-10">Nueva clase</a>
+                <a href="{{ url('teacher/create/lesson') }}" class="btn btn-primary pull-right top-buffer-10">
+                    <i class="fa fa-plus"></i> Nueva clase
+                </a>
             </div>
         </div>
     </div>

@@ -45,7 +45,7 @@
                         <div class="col-sm-10">
                             <select class="form-control" id="subject" name="subject">
                                 <option value="escolar" selected="selected">Escolar</option>
-                                <option value="cfp">CFP</option>
+                                <option value="cfp">Formación profesional</option>
                                 <option value="universitario">Universitario</option>
                                 <option value="artes">Artes</option>
                                 <option value="musica">Música</option>

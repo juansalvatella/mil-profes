@@ -46,7 +46,7 @@ return array(
     'per_course' => 'por curso',
 
     'of_subject_escolar' => 'DE NIVEL ESCOLAR',
-    'of_subject_cfp' => 'DE CFP',
+    'of_subject_cfp' => 'DE FORMACIÓN PROFESIONAL',
     'of_subject_universitario' => 'DE NIVEL UNIVERSITARIO',
     'of_subject_artes' => 'DE ARTE',
     'of_subject_musica' => 'DE MÚSICA',

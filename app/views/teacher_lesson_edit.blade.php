@@ -47,7 +47,7 @@
                         <div class="col-sm-10">
                             <select class="form-control" id="subject" name="subject">
                                 <option value="escolar" @if($subject->name=='escolar') selected="selected" @endif>Escolar</option>
-                                <option value="cfp" @if($subject->name=='cfp') selected="selected" @endif>CFP</option>
+                                <option value="cfp" @if($subject->name=='cfp') selected="selected" @endif>Formación profesional</option>
                                 <option value="universitario" @if($subject->name=='universitario') selected="selected" @endif>Universitario</option>
                                 <option value="artes" @if($subject->name=='artes') selected="selected" @endif>Artes</option>
                                 <option value="música" @if($subject->name=='música') selected="selected" @endif>Música</option>
