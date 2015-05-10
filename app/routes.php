@@ -431,12 +431,16 @@ Route::get('admin/teacher/reviews', function() {
 });
 
 Route::get('admin/school/reviews', function() {
-    $reviews = SchoolLessonRating::paginate(15);
+    $reviews = DB::table('school_lesson_ratings')
+        ->leftJoin('school_lessons','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
+        ->leftJoin('schools','school_lessons.school_id','=','schools.id')
+        ->whereNull('schools.deleted_at')
+        ->paginate(10);
+
     foreach($reviews as $review)
     {
         $lesson_reviewed = SchoolLesson::find($review->school_lesson_id);
         $reviewed_school = $lesson_reviewed->school;
-
         $review->lesson_reviewed = $lesson_reviewed->title;
         $review->reviewed = $reviewed_school->name;
         $review->slug = $reviewed_school->slug;

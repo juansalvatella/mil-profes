@@ -57,7 +57,7 @@
             </table>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="float-left">{{ count($reviews) }} @lang('adminpanel.reviews.in_total')</div>
+                    Mostrando {{ $reviews->getFrom() }}-{{ $reviews->getTo() }} de un total de {{ $reviews->getTotal() }} valoraciones.
                 </div>
             </div>
         @endif
