@@ -12,7 +12,7 @@ return array(
         Asamblea de Catalunya número 4, 3º, 1ª y con C.I.F. número B66481243.
         <br/>
         Para cualquier consulta o propuesta, contáctenos en el e-mail en​ <a target="_blank" href="mailto:info@milprofes.com">info@milprofes.com</a>
-        o en el teléfono 902 00 88 04​.
+        o en el teléfono 666 12 62 03.
         <br/>
         Esta página Web se rige por la normativa exclusivamente aplicable en España,
         quedando sometida a ella, tanto nacionales como extranjeros que utilicen esta Web.
