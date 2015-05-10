@@ -332,9 +332,12 @@ class UsersController extends Controller
         {
             $input = Input::all();
             $rules = array(
-//                'avatar'        => 'image|max:200',
                 'name'          => 'required|alpha_spaces|max:50',
                 'lastname'      => 'alpha_spaces|max:100',
+                'gender'        => 'in:male,female,other',
+                'day'           => 'integer|between:1,31',
+                'month'         => 'integer|between:1,12',
+                'year'          => 'integer|between:1800,9999',
                 'address'       => 'required|string|max:200',
                 'email'         => 'required|email',
                 'phone'         => 'string|min:5|max:20',
@@ -347,52 +350,92 @@ class UsersController extends Controller
                     ->with('failure','No ha sido posible actualizar tus datos. Asegúrate de haber rellenado los campos correctamente.');
             }
 
-//            if(Input::hasFile('avatar')) {
-//                $file = Input::file('avatar');
-//                $file_extension = Input::file('avatar')->getClientOriginalExtension();
-//                $filename = Str::random(30) . '.' . $file_extension;
-//                $path = public_path() . '/img/avatars/';
-//                $file->move($path, $filename);
-//                $user->avatar = $filename;
-//            }
-            if(Input::get('name') != $user->name)
+            if($input['name'] != $user->name)
+                $user->name = $input['name'];
+
+            if($input['lastname'] != $user->lastname)
+                $user->lastname = $input['lastname'];
+
+            if($input['gender'] != $user->gender)
+                $user->gender = $input['gender'];
+
+            $month = ($input['month']<10) ? '0'.$input['month'] : $input['month'];
+            $day = ($input['day']<10) ? '0'.$input['day'] : $input['day'];
+            $birthdate = $input['year'].'-'.$month.'-'.$day;
+            if($birthdate != $user->date_of_birth)
+                $user->date_of_birth = $birthdate;
+
+            if($input['address'] != $user->address)
             {
-                $user->name = Input::get('name');
-            }
-            if(Input::get('lastname') != $user->lastname)
-            {
-                $user->lastname = Input::get('lastname');
-            }
-            if(Input::get('address') != $user->address)
-            {
-                $user->address = Input::get('address');
+                $user->address = $input['address'];
                 $geocoding = Geocoding::geocode($user->address);
-                if(!$geocoding)
-                {
+                if(!$geocoding) {
                     return Redirect::route('userpanel')
                         ->withInput()
                         ->with('failure','No fue posible actualizar tus datos. La dirección proporcioada no parece ser válida.');
                 }
-                $user->lat = $geocoding[0]; //latitud
-                $user->lon = $geocoding[1]; //longitud
+                $user->lat = $geocoding[0]; //guargar latitud
+                $user->lon = $geocoding[1]; //guardar longitud
             }
-            if(Input::get('email') != $user->email)
-            {
-                $user->email = Input::get('email');
-            }
-            if(Input::get('phone') != $user->phone)
-            {
-                $user->phone = Input::get('phone');
-            }
-            if(Input::get('description') != $user->description)
-            {
-                $user->description = Input::get('description');
-            }
+
+            if($input['email'] != $user->email)
+                $user->email = $input['email'];
+
+            if($input['phone'] != $user->phone)
+                $user->phone = $input['phone'];
+
+            if($input['description'] != $user->description)
+                $user->description = $input['description'];
+
             if($user->save()) {
                 return Redirect::route('userpanel')->with('success', 'Tus datos se han actualizado con éxito');
             } else {
                 return Redirect::route('userpanel')->withInput()->with('failure', 'Error al actualizar tus datos');
             }
+        } else {
+            return Redirect::route('/')
+                ->with('log-notice', 'Tu sesión ha caducado y no fue posible actualizar tus datos. Por favor, vuelve a acceder e inténtalo de nuevo.')
+                ->with('show_login_modal',true);
+        }
+    }
+
+    public function updateSocial()
+    {
+        if($user = Confide::user()) {
+            $input = Input::all();
+            $rules = array(
+                'facebook' => 'url',
+                'twitter' => 'url',
+                'googleplus' => 'url',
+                'instagram' => 'url',
+                'linkedin' => 'url',
+                'web' => 'url',
+            );
+            $validator = Validator::make($input, $rules);
+            if ($validator->fails()) {
+                return Redirect::route('userpanel')
+                    ->withInput()
+                    ->with('failure', 'No ha sido posible actualizar los enlaces a redes sociales. Asegúrate de haber introducido direcciones web válidas.');
+            }
+
+            if ($input['facebook'] != $user->link_facebook)
+                $user->link_facebook = $input['facebook'];
+            if ($input['twitter'] != $user->link_twitter)
+                $user->link_twitter = $input['twitter'];
+            if ($input['googleplus'] != $user->link_googleplus)
+                $user->link_googleplus = $input['googleplus'];
+            if ($input['instagram'] != $user->link_instagram)
+                $user->link_instagram = $input['instagram'];
+            if ($input['linkedin'] != $user->link_linkedin)
+                $user->link_linkedin = $input['linkedin'];
+            if ($input['web'] != $user->link_web)
+                $user->link_web = $input['web'];
+
+            if($user->save())
+                return Redirect::route('userpanel')->with('success', 'Tus enlaces a redes sociales se han actualizado con éxito.');
+            else
+                return Redirect::route('userpanel')->withInput()->with('failure', 'Error al actualizar tus datos');
+
         } else {
             return Redirect::route('/')
                 ->with('log-notice', 'Tu sesión ha caducado y no fue posible actualizar tus datos. Por favor, vuelve a acceder e inténtalo de nuevo.')

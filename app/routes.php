@@ -331,6 +331,8 @@ Route::get('userpanel/dashboard', array('as' => 'userpanel', function()
 
 Route::post('userpanel/dashboard/update/info', 'UsersController@updateUser');
 
+Route::post('userpanel/dashboard/update/social', 'UsersController@updateSocial');
+
 Route::post('userpanel/dashboard/update/avatar', 'UsersController@updateAvatar');
 
 Route::post('userpanel/dashboard/update/passwd', 'UsersController@updateUserPasswd');
@@ -416,7 +418,7 @@ Route::post('admin/updateSchoolStatus', function()
 });
 
 Route::get('admin/teacher/reviews', function() {
-    $reviews = Rating::paginate(15);
+    $reviews = Rating::paginate(10);
     foreach($reviews as $review) {
         $lesson_reviewed = TeacherLesson::find($review->teacher_lesson_id);
         $reviewed_user = $lesson_reviewed->teacher->user;

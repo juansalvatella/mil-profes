@@ -74,25 +74,13 @@
 
 
 
-                <form class="form-horizontal" action="{{ action('UsersController@updateUser') }}" method="post" enctype="multipart/form-data" role="form" id="user-data">
+                <form class="form-horizontal" action="{{ action('UsersController@updateUser') }}" method="post" role="form" id="user-data">
 
                     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
 
                     <div class="col-xs-12 bottom-buffer-35">
                         <span class="school-rating-span">Mis datos personales</span>
                     </div>
-
-                    {{--<div class="col-xs-12 form-group">--}}
-                        {{--<div class="col-xs-12 col-sm-2 control-label">--}}
-                            {{--<label class="" for="avatar">Mi imagen de perfil</label>--}}
-                        {{--</div>--}}
-                        {{--<div class="col-xs-12 col-offset-sm-2 col-sm-10">--}}
-                            {{--<span class="btn btn-default btn-file btn-file-user1">--}}
-                            {{--Nueva imagen<input type="file" name="avatar" id="avatar"/>--}}
-                            {{--</span>--}}
-                            {{--<div class="help-block with-errors"><small>Puedes utilizar imágenes del tipo JPG, PNG o GIF</small></div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
 
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-12 col-sm-2 control-label">
@@ -111,6 +99,71 @@
                         <div class="col-xs-12 col-offset-sm-2 col-sm-10">
                             <input class="form-control col-xs-10" placeholder="Tus apellidos" type="text" name="lastname" id="lastname" value="{{{ $user->lastname }}}" maxlength="100">
                             <small><div class="help-block with-errors"></div></small>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 col-sm-2 control-label">
+                            <label for="gender">Sexo</label>
+                        </div>
+                        <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="" @if(!$user->gender || ($user->gender!='male' && $user->gender!='female' && $user->gender!='other')) selected="selected" @endif >&nbsp;</option>
+                                <option value="male" @if($user->gender=='male') selected @endif >Hombre</option>
+                                <option value="female" @if($user->gender=='female') selected @endif >Mujer</option>
+                                <option value="other" @if($user->gender=='other') selected @endif >Otro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 col-sm-2 control-label">
+                            <label for="date_of_birth">Fecha de nacimiento</label>
+                        </div>
+                        <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <label for="day"><small>Día</small></label>
+                                    <select autocomplete="off" class="form-control" id="day" name="day">
+                                        <?php
+                                            $defaultDay = ($user->date_of_birth) ? date("d",strtotime($user->date_of_birth)) : 1;
+                                        ?>
+                                        @for($i=1;$i<32;++$i)
+                                            <option @if($i==$defaultDay) selected="selected" @endif value="{{$i}}">{{$i}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <label for="month"><small>Mes</small></label>
+                                    <?php
+                                        $defaultMonth = ($user->date_of_birth) ? date("m",strtotime($user->date_of_birth)) : 1;
+                                    ?>
+                                    <select autocomplete="off" class="form-control" id="month" name="month">
+                                        <option value="1" @if($defaultMonth==1) selected="selected" @endif >Enero</option>
+                                        <option value="2" @if($defaultMonth==2) selected="selected" @endif >Febrero</option>
+                                        <option value="3" @if($defaultMonth==3) selected="selected" @endif >Marzo</option>
+                                        <option value="4" @if($defaultMonth==4) selected="selected" @endif >Abril</option>
+                                        <option value="5" @if($defaultMonth==5) selected="selected" @endif >Mayo</option>
+                                        <option value="6" @if($defaultMonth==6) selected="selected" @endif >Junio</option>
+                                        <option value="7" @if($defaultMonth==7) selected="selected" @endif >Julio</option>
+                                        <option value="8" @if($defaultMonth==8) selected="selected" @endif >Agosto</option>
+                                        <option value="9" @if($defaultMonth==9) selected="selected" @endif >Septiembre</option>
+                                        <option value="10" @if($defaultMonth==10) selected="selected" @endif >Octubre</option>
+                                        <option value="11" @if($defaultMonth==11) selected="selected" @endif >Noviembre</option>
+                                        <option value="12" @if($defaultMonth==12) selected="selected" @endif >Diciembre</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-4">
+                                    <label for="year"><small>A&ntilde;o</small></label>
+                                    {{--Form SELECT year of birth--}}
+                                    <?php
+                                        $currentYear = date("Y");
+                                        $aCenturyAgo = date("Y", strtotime($currentYear)-(60*60*24*365.242*110));
+                                        $defaultYear = ($user->date_of_birth) ? date("Y", strtotime($user->date_of_birth)) : $currentYear;
+                                    ?>
+                                    {{ Form::selectYear('year', $currentYear, $aCenturyAgo, $defaultYear,['autocomplete'=>'off','class'=>'form-control']) }}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -139,7 +192,7 @@
                             <label class="" for="phone">Teléfono</label>
                         </div>
                         <div class="col-xs-12 col-offset-sm-2 col-sm-10">
-                            <input class="form-control" placeholder="Tu teléfono de contacto" type="text" name="phone" id="phone" value="{{{ $user->phone }}}" pattern="^([0-9]){5,}$" maxlength="20">
+                            <input class="form-control" placeholder="Tu teléfono de contacto" type="text" name="phone" id="phone" value="{{{ $user->phone }}}" pattern="^([0-9]){5,}$" maxlength="20" data-error="Introduce sólo números, sin espacios.">
                             <small><div class="help-block with-errors">Sólo números, sin espacios</div></small>
                         </div>
                     </div>
@@ -151,14 +204,29 @@
                         <div class="col-xs-12 col-offset-sm-2 col-sm-10">
                             <textarea rows="3" placeholder="Descríbete..." class="form-control" name="description" id="description"  maxlength="450">{{ $user->description }}</textarea>
                             <small><div class="help-block with-errors"></div></small>
+                            <div id="chars_feedback"></div>
                         </div>
                     </div>
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            var text_max = 450;
+                            var tbox = $('#description');
+                            var text_length = tbox.val().length;
+                            var text_remaining = text_max - text_length;
+                            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+                            tbox.keyup(function() {
+                                var text_length = $('#description').val().length;
+                                var text_remaining = text_max - text_length;
+                                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+                            });
+                        });
+                    </script>
 
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-10">
                                 <div class="col-xs-12">
-                                    <span class="hidden-sm hidden-md hidden-lg left-buffer-15"></span><input type="submit" value="Actualizar datos" class="btn btn-primary"/>
+                                    <span class="hidden-sm hidden-md hidden-lg left-buffer-15"></span><button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar cambios</button>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +234,84 @@
 
                 </form>
 
-                <form class="form-horizontal" action="{{ action('UsersController@updateUserPasswd') }}" method="post" enctype="multipart/form-data" role="form" id="user-passwd">
+                <br/>
+                <form class="form-horizontal" action="{{ action('UsersController@updateSocial') }}" method="post" role="form" id="user-social">
+
+                    <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+
+                    <div class="col-xs-12 bottom-buffer-35">
+                        <span class="school-rating-span">Web y redes sociales</span>
+                    </div>
+
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 col-sm-2 control-label">
+                            <label for="facebook">Facebook</label>
+                        </div>
+                        <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                            <input class="form-control col-xs-10" placeholder="Tu página de Facebook" type="url" name="facebook" id="facebook" value="{{{ $user->link_facebook }}}" data-error="Introduce una dirección web válida. Ejemplo: http://facebook.com/milprofes">
+                            <div class="help-block with-errors"><small>Introduce la dirección web de tu perfil de Facebook. Ejemplo: http://facebook.com/milprofes</small></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 col-sm-2 control-label">
+                            <label for="twitter">Twitter</label>
+                        </div>
+                        <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                            <input class="form-control col-xs-10" placeholder="Tu página de Twitter" type="url" name="twitter" id="twitter" value="{{{ $user->link_twitter }}}" data-error="Introduce una dirección web válida. Ejemplo: http://twitter.com/milprofes">
+                            <div class="help-block with-errors"><small>Introduce la dirección web de tu perfil de Twitter. Ejemplo: http://twitter.com/milprofes</small></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 col-sm-2 control-label">
+                            <label for="googleplus">Google+</label>
+                        </div>
+                        <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                            <input class="form-control col-xs-10" placeholder="Tu página de Google+" type="url" name="googleplus" id="googleplus" value="{{{ $user->link_googleplus }}}" data-error="Introduce una dirección web válida. Ejemplo: http://plus.google.com/+MilProfes">
+                            <div class="help-block with-errors"><small>Introduce la dirección web de tu perfil de Google+. Ejemplo: http://plus.google.com/+MilProfes/</small></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 col-sm-2 control-label">
+                            <label for="instagram">Instagram</label>
+                        </div>
+                        <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                            <input class="form-control col-xs-10" placeholder="Tu página de Instagram" type="url" name="instagram" id="instagram" value="{{{ $user->link_instagram }}}" data-error="Introduce una dirección web válida. Ejemplo: http://instagram.com/milprofes">
+                            <small><div class="help-block with-errors">Introduce la dirección web de tu perfil de Instragram. Ejemplo: http://instagram.com/milprofes</div></small>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 col-sm-2 control-label">
+                            <label for="linkedin">LinkedIn</label>
+                        </div>
+                        <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                            <input class="form-control col-xs-10" placeholder="Tu página de LinkedIn" type="url" name="linkedin" id="linkedin" value="{{{ $user->link_linkedin }}}" data-error="Introduce una dirección web válida. Ejemplo: http://es.linkedin.com/in/milprofes">
+                            <small><div class="help-block with-errors">Introduce la dirección web de tu perfil de LinkedIn. Ejemplo: http://es.linkedin.com/in/milprofes</div></small>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 col-sm-2 control-label">
+                            <label for="web">Mi página web</label>
+                        </div>
+                        <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                            <input class="form-control col-xs-10" placeholder="Tu página web personal" type="url" name="web" id="web" value="{{{ $user->link_web }}}" data-error="Introduce una dirección web válida. Ejemplo: http://www.milprofes.com">
+                            <small><div class="help-block with-errors">Introduce la dirección web de tu página web personal. Ejemplo: http://www.milprofes.com</div></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-10">
+                                <div class="col-xs-12">
+                                    <span class="hidden-sm hidden-md hidden-lg left-buffer-15"></span><button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar cambios</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+                <form class="form-horizontal" action="{{ action('UsersController@updateUserPasswd') }}" method="post" role="form" id="user-passwd">
 
                     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
 
@@ -219,6 +364,7 @@
                 <script type="text/javascript">
                     $(document).ready(function(){
                         $("#user-data").validator();
+                        $("#user-social").validator();
                         $("#user-passwd").validator();
                     });
                 </script>
