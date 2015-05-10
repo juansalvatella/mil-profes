@@ -22,4 +22,8 @@ return array(
 
     'new-logo' => 'Nuevo logotipo',
     'new-pics' => 'Nuevas imágenes',
+
+    'crawled' => 'Revisar',
+    'active' => 'Activa',
+
 );

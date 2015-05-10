@@ -298,6 +298,8 @@ a, a:link, a:hover, a:active, a:visited {
 .login-modal {
     background-color: #f7f7f7;
     border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 .btn-login-send {
     min-width: 94px;
@@ -1339,4 +1341,15 @@ body.loading .modal-loading { /*modal element will be visible */
 img[class^='logo-prev'], img[class*=' logo-prev'],
 img[class^='pic-prev'], img[class*=' pic-prev'] {
     margin-bottom:5px !important;
+}
+a[class*=status-] {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+}
+a[class*=status-active] {
+    border-left: 3px solid lightgreen;
+}
+a[class*=status-crawled] {
+    border-left: 3px solid red;
 }

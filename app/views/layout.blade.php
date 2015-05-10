@@ -81,6 +81,8 @@
 @if(Request::is('userpanel/dashboard'))
     {{ HTML::style('css/jquery.Jcrop.min.css') }}
     {{ HTML::script('js/jquery.Jcrop.min.js') }}
+@elseif(Request::is('admin/schools')))
+    {{ HTML::script('js/schools-dashboard.js') }}
 @endif
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

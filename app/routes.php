@@ -393,14 +393,26 @@ Route::post('teacher/availability/save', 'TeachersController@saveAvailability');
 //====================
 Route::get('admin/schools', function()
 {
-    $schools = School::orderBy('name')->get();
-    $lessons = array();
+    //Raw database query needs soft deleted schools to be filtered (where null)
+    $schools = DB::table('schools')->whereNull('deleted_at')->orderBy('id')->paginate(10);
     foreach($schools as $school)
-    {
-        $lessons[$school->id] = SchoolLesson::where('school_id',$school->id)->get();
-    }
+        $school->nlessons = count(SchoolLesson::where('school_id',$school->id)->get());
 
-    return View::make('schools_dashboard', compact('schools','lessons'));
+    return View::make('schools_dashboard', compact('schools'));
+});
+Route::post('admin/updateSchoolStatus', function()
+{
+    $input = Input::all();
+    $school = School::findOrFail($input['schoolId']);
+    if($input['activeStatus']=='true')
+        $school->status = 'Active';
+    else
+        $school->status = 'Crawled';
+
+    if($school->save())
+        return Response::json('School (id:'.$input['schoolId'].') status updated to '.$school->status, 200);
+
+    return Response::json('Error!', 400);
 });
 
 Route::get('admin/teacher/reviews', function() {

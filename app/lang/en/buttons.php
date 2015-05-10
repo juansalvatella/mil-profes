@@ -19,6 +19,7 @@ return array(
     'save_changes' => 'Guardar cambios',
 
     //Milprofes. buttons
+    'new_school' => 'Añadir academia',
     'new_lesson' => 'Nueva clase',
     'new_course' => 'Nuevo curso',
     'edit_course' => 'Editar curso',

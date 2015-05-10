@@ -54,7 +54,7 @@ class Milprofes
     public static function getLastSchools($this_many)
     {
         $n = (int) $this_many;
-        $schools = School::all();
+        $schools = School::where('status','<>','Crawled')->get();
         $last_schools = $schools->sortByDesc(function($school) {
             return $school->created_at;
         })->take($n);
@@ -65,7 +65,7 @@ class Milprofes
     public static function getPopularSchools($this_many)
     {
         $n = (int) $this_many;
-        $schools = School::all();
+        $schools = School::where('status','<>','Crawled')->get();
         foreach($schools as $s)
         {
             $total_visualizations = 0;
