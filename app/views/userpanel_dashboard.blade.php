@@ -17,7 +17,7 @@
 
                 </div>
                 <div class="pull-right">
-                    <a href="{{ url('profe/'.$user->slug) }}" class="btn btn-default"><i class="fa fa-link"></i> Ver mi perfil</a>
+                    <a href="{{ url('profe/'.$user->slug) }}" class="btn btn-default"><i class="fa fa-user-plus"></i> Ver mi perfil</a>
                     @if($user->hasRole("admin"))
                         <a href="{{ url('admin/school/reviews') }}" class="btn btn-primary btn-xs">Valoración academias</a>
                         <a href="{{ url('admin/teacher/reviews') }}" class="btn btn-primary btn-xs">Valoración profes.</a>
@@ -202,7 +202,7 @@
                             <label class="" for="description">Mi descripción</label>
                         </div>
                         <div class="col-xs-12 col-offset-sm-2 col-sm-10">
-                            <textarea rows="3" placeholder="Descríbete..." class="form-control" name="description" id="description"  maxlength="450">{{ $user->description }}</textarea>
+                            <textarea rows="3" placeholder="Descríbete..." class="form-control" name="description" id="description" maxlength="450">{{ $user->description }}</textarea>
                             <small><div class="help-block with-errors"></div></small>
                             <div id="chars_feedback"></div>
                         </div>

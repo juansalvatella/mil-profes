@@ -14,11 +14,11 @@ class CreateTableSchoolsProfilesPics extends Migration {
 	{
         Schema::create('schools_profile_pics', function(Blueprint $table)
         {
-            $table->increments('id');
-            $table->integer('school_id')->unsigned();
-            $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('pic');
-            $table->timestamps();
+//            $table->increments('id');
+//            $table->integer('school_id')->unsigned();
+//            $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade')->onUpdate('cascade');
+//            $table->string('pic');
+//            $table->timestamps();
         });
 	}
 

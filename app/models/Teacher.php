@@ -47,4 +47,14 @@ class Teacher extends Eloquent
         }
     }
 
+    public function getNumberOfReviews()
+    {
+        $lessons = $this->lessons;
+        $n = 0;
+        foreach($lessons as $l)
+            $n += count($l->ratings()->get());
+
+        return (int) $n;
+    }
+
 }

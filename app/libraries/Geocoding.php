@@ -19,15 +19,46 @@ class Geocoding {
             $lati = $resp['results'][0]['geometry']['location']['lat'];
             $loni = $resp['results'][0]['geometry']['location']['lng'];
             $formatted_address = $resp['results'][0]['formatted_address'];
-            // verify if data is complete
-            if($lati && $loni && $formatted_address){
+            //get separated address elements
+            $location = array();
+            foreach ($resp['results'][0]['address_components'] as $component) {
+                switch ($component['types']) {
+                    case in_array('street_number', $component['types']):
+                        $location['street_number'] = $component['long_name'];
+                        break;
+                    case in_array('route', $component['types']):
+                        $location['street'] = $component['long_name'];
+                        break;
+                    case in_array('sublocality', $component['types']):
+                        $location['sublocality'] = $component['long_name'];
+                        break;
+                    case in_array('locality', $component['types']):
+                        $location['locality'] = $component['long_name'];
+                        break;
+                    case in_array('administrative_area_level_2', $component['types']):
+                        $location['admin_2'] = $component['long_name'];
+                        break;
+                    case in_array('administrative_area_level_1', $component['types']):
+                        $location['admin_1'] = $component['long_name'];
+                        break;
+                    case in_array('postal_code', $component['types']):
+                        $location['postal_code'] = $component['long_name'];
+                        break;
+                    case in_array('country', $component['types']):
+                        $location['country'] = $component['long_name'];
+                        break;
+                }
+            }
+            // verify that needed data has been gathered
+            if($lati && $loni && $formatted_address && $location){
                 // put the data in the array
                 $data_arr = array();
                 array_push(
                     $data_arr,
                     $lati,
                     $loni,
-                    $formatted_address
+                    $formatted_address,
+                    $location
                 );
                 return $data_arr;
             }else{
@@ -66,7 +97,8 @@ class Geocoding {
         {
             if ($location->lat >= $min_lat && $location->lat <= $max_lat && $location->lon >= $min_lon && $location->lon <= $max_lon)
                 return true;
-        }); //Primer filtro
+            return false;
+        });
 
         if (!$filtered_collection->isEmpty())
         {
@@ -78,7 +110,8 @@ class Geocoding {
                     $location->dist_to_user = (int) $dist_to_user;
                     return true;
                 }
-            }); //Segundo filtro
+                return false;
+            });
         }
 
         return $filtered_collection;

@@ -29,7 +29,76 @@ Route::get('/', ['as' => 'home', function()
 Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug) {
     $user = User::findBySlug($user_slug);
     $teacher = $user->teacher()->first();
-    //if passing by ID: $user = $teacher->user()->get(array('username','avatar','email','phone','description'));
+
+    //Check if the visitor is the teacher himself
+    if(Auth::check()) {
+        $current_user = Confide::user();
+        if($user->id == $current_user->id)
+            $teacher->itsme = true;
+    }
+
+    //Incrementar número de visitas en uno (por visitante y sesión)
+    if (!Session::has('profile_visited_'.$user_slug)) {
+        $teacher->profile_visits = $teacher->profile_visits + 1;
+        $teacher->save(); //increments profile visits counter, notice that this changes the updated_at column in teachers table
+        Session::put('profile_visited_' . $user_slug, true);
+        Session::save();
+    }
+
+    //Calcular antiguedad en milprofes (en array con keys years, months, etc.)
+    $datetime1 = new DateTime();
+    $datetime2 = new DateTime($teacher->created_at);
+    $interval = $datetime1->diff($datetime2);
+    $elapsed = $interval->format('%y-%m-%d-%h-%i-%S');
+    $elapsedKeys = ['years','months','days','hours','minutes','seconds'];
+    $teacher->antiguedad = array_combine($elapsedKeys, explode("-", $elapsed));
+
+    //Calcular popularidad
+    $qArray = DB::select(DB::raw("
+        SELECT tranking.rank FROM (
+          SELECT
+            t4.teacher_id,
+            t4.user_id,
+            SUM(t4.count)            AS 'total',
+            @curRank := @curRank + 1 AS rank
+          FROM (
+                 SELECT
+                   t1.teacher_lesson_id,
+                   t2.teacher_id,
+                   t3.user_id,
+                   count(*) AS 'count'
+                 FROM teacher_lessons_phone_visualizations AS t1
+                   LEFT JOIN teacher_lessons AS t2
+                     ON t2.id = t1.teacher_lesson_id
+                   LEFT JOIN teachers AS t3
+                     ON t3.id = t2.teacher_id
+                 GROUP BY t1.teacher_lesson_id
+               ) AS t4, (SELECT @curRank := 0) r
+          GROUP BY t4.teacher_id
+        ) AS tranking
+        WHERE tranking.user_id = ?;
+    "),array($user->id));
+    if(!empty($qArray))
+        $teacher->rank = (int) $qArray[0]->rank;
+
+    //Fecha de última actualización es el mínimo entre las fechas de última modificación de clases y fecha de última actualización de perfil
+    $dates = array();
+    $lessons = $teacher->lessons()->get();
+    foreach($lessons as $l)
+        $dates[] = $l->updated_at;
+    $dates[] = $teacher->updated_at;
+    $last_one = new DateTime(min($dates));
+    if(!empty($dates))
+        $teacher->last_update = $last_one->format('d/m/Y h:i');
+
+    //Calcular edad
+    if ($user->date_of_birth) {
+        $birthDate = $user->date_of_birth;
+        $birthDate = explode("-", $birthDate);
+        $teacher->age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md") ? ((date("Y") - $birthDate[0]) - 1) : (date("Y") - $birthDate[0]));
+    }
+
+    //Otros datos (importados de table user)
     $teacher->slug = $user_slug;
     $teacher->username = $user->username;
     $teacher->displayName = ucwords($user->name).' '.substr(ucwords($user->lastname),0,1).'.';
@@ -37,11 +106,61 @@ Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug)
     $teacher->email = $user->email;
     $teacher->phone = $user->phone;
     $teacher->description = $user->description;
-    $lessons = $teacher->lessons()->get();
+    $teacher->town = $user->town;
+    $teacher->gender = $user->gender;
+
+    $teacher->link_f = $user->link_facebook;
+    $teacher->link_t = $user->link_twitter;
+    $teacher->link_l = $user->link_linkedin;
+    $teacher->link_g = $user->link_googleplus;
+    $teacher->link_i = $user->link_instagram;
+    $teacher->link_w = $user->link_web;
+
     $teacher->availability = $teacher->availabilities()->get();
 
-    return View::make('teacher_details', compact('teacher','lessons'));
+    $geocoding = Geocoding::geocode($user->address);
+    if($geocoding) {
+        if(isset($geocoding[3]['admin_1']))
+            $teacher->region = $geocoding[3]['admin_1'];
+        if(isset($geocoding[3]['postal_code']))
+            $teacher->postalcode = $geocoding[3]['postal_code'];
+    }
+
+    return View::make('new_teacher_details', compact('teacher','lessons'));
 }]);
+
+Route::post('review/was/helpful/{review_id}', function($review_id){
+    if(!Auth::check())
+        return Response::json(['error'=>'Reviewer is not authenticated.'],200);
+    if (!Session::has('r_helpful_'.$review_id)) {
+        Session::put('r_helpful_'.$review_id, true);
+        Session::save();
+        $review = Rating::findOrFail($review_id);
+        $review->yes_helpful = $review->yes_helpful + 1;
+        $review->total_helpful = $review->total_helpful + 1;
+        if($review->save())
+            return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+    } else {
+        return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+    }
+    return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+});
+
+Route::post('review/not/helpful/{review_id}', function($review_id){
+    if(!Auth::check())
+        return Response::json(['error'=>'Reviewer is not authenticated.'],200);
+    if (!Session::has('r_helpful_'.$review_id)) {
+        Session::put('r_helpful_'.$review_id, true);
+        Session::save();
+        $review = Rating::findOrFail($review_id);
+        $review->total_helpful = $review->total_helpful + 1;
+        if($review->save())
+            return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+    } else {
+        return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+    }
+    return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+});
 
 Route::get('academia/{school_slug}', ['as'=>'profiles-school', function($school_slug) {
     $school = School::findBySlug($school_slug);
@@ -153,7 +272,7 @@ Route::post('request/info/teacher/{lesson_id}', function($lesson_id) {
 });
 
 Route::post('request/info/teacher/all/{teacher_id}', function($teacher_id) {
-    if (!Session::has('t_visualized_all_'.$teacher_id)) //if this Tlf visualization hasn't been recorded before (during the session)
+    if (true || !Session::has('t_visualized_all_'.$teacher_id)) //if this Tlf visualization hasn't been recorded before (during the session)
     {
         Session::put('t_visualized_all_'.$teacher_id, true); //record the visualization in the session array
         Session::save();
@@ -162,9 +281,11 @@ Route::post('request/info/teacher/all/{teacher_id}', function($teacher_id) {
             $observer = Confide::user();
             $visualization->user_id = $observer->id;
         }
-        //we choose the first lesson of this teacher as the receipt of the visualization (but it could have been any)
-        $teacher = Teacher::where('id','=',$teacher_id)->first();
+        //we choose the first lesson of this teacher as the receipt of the visualization (temporary fix)
+        $teacher = Teacher::where('id',$teacher_id)->first();
         $first_lesson = $teacher->lessons()->first();
+        if(!$first_lesson)
+            return  'No lessons found';
         $lesson_id = $first_lesson->id;
         $visualization->teacher_lesson_id = $lesson_id;
 
@@ -192,6 +313,8 @@ Route::post('request/info/school/{lesson_id}', function($lesson_id) {
 
 //Handle reviews
 Route::post('/reviews/handleReview','ReviewsController@handleNewReview');
+
+Route::post('/review/lesson','ReviewsController@handleLessonReview');
 
 Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolLessonNewReview');
 
@@ -551,3 +674,15 @@ Route::post('load-school-profile-pics','AdminController@loadProfilePics');
 
 //Sitemaps related routes
 Route::get('render-sitemaps','SitemapsController@milprofes');
+
+Route::any('sitemaps/{xmlfile?}', function($xmlfile) {
+    return 'caught ' . $xmlfile;
+})->where('xmlfile', '.+');
+
+//Route::when('sitemaps/*', 'sitemaps', array('get'));
+//Route::filter('sitemaps', function($response) {
+////    $response->header('X-Robots-Tag', 'noindex');
+////    return Response::json(array('error' => 'Your access token is not valid'), 400);
+//    return Response::make('Authentication required', 401);
+////    return $response;
+//});

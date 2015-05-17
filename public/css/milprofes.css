@@ -7,6 +7,12 @@
     .min-width-150 { }
     .min-width-300 { }
     .min-width-115-300 { min-width: 115px; }
+    .my-lessons-cntr { padding: 15px 0 0 0; }
+    .share-container { width: 50%; }
+    .share-me { top: 15px; right: 428px; }
+    .tprofile-avatar { top: 172px; left: 25px; }
+    .tprofile-name { top: 226px; left: 200px; }
+    .tprofile-stars { top:0; left: 200px; }
 }
 @media(min-width:500px){
     #welcome-responsive, #find-responsive {  font-size: 24px;  }
@@ -16,6 +22,12 @@
     .min-width-150 { min-width: 150px; }
     .min-width-300 { min-width: 290px; }
     .min-width-115-300 { min-width: 115px; }
+    .my-lessons-cntr { padding: 15px 0 0 0; }
+    .share-container { width: 50%; }
+    .share-me { top: 15px; right: 428px; }
+    .tprofile-avatar { top: 172px; left: 25px; }
+    .tprofile-name { top: 226px; left: 200px; }
+    .tprofile-stars { top:0; left: 200px; }
 }
 @media(min-width:992px){
     #welcome-responsive, #find-responsive {  font-size: 26px;  }
@@ -24,7 +36,13 @@
     .profile-subtitle { font-size: 16px; }
     .min-width-150 { min-width: 150px; }
     .min-width-300 { min-width: 290px; }
-    .min-width-115-300 { min-width: 290px; }
+    .min-width-115-300 { min-width: 215px; }
+    .my-lessons-cntr { padding: 0 0 0 15px; }
+    .share-container { width: 50%; }
+    .share-me { top: 15px; right: 428px; }
+    .tprofile-avatar { top: 172px; left: 25px; }
+    .tprofile-name { top: 226px; left: 200px; }
+    .tprofile-stars { top:0; left: 200px; }
 }
 @media(min-width:1200px){
     #welcome-responsive {  font-size: 40px;  }
@@ -34,7 +52,14 @@
     .profile-subtitle { font-size: 20px; }
     .min-width-150 { min-width: 150px; }
     .min-width-300 { min-width: 290px; }
-    .min-width-115-300 { min-width: 290px; }
+    .min-width-115-300 { min-width: 215px; }
+    .my-lessons-cntr { padding: 0 0 0 15px; }
+    .contact-info-cntr { top: 40px; right: 40px;}
+    .share-container { width: 420px; top:4px; right:4px; }
+    .share-me { top: 15px; right: 428px; }
+    .tprofile-avatar { top: 172px; left: 25px; }
+    .tprofile-name { top: 226px; left: 200px; }
+    .tprofile-stars { top:0; left: 200px; }
 }
 
 html, body {
@@ -837,7 +862,17 @@ body.loading .modal-loading { /*modal element will be visible */
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
+.my-info-availability div div.panel-body {
+    padding: 10px 0px 5px 5px;
+}
+.no-reviews {
+    display: inline-block;
+    margin-top: 5px;
+}
 .pick {
+    color: #FFF;
+    border: 0px none;
+    border-radius: 2px;
     font-family: raleway-semibold, sans-serif;
     padding-top: 0;
     padding-bottom: 0;
@@ -860,6 +895,13 @@ body.loading .modal-loading { /*modal element will be visible */
     text-align: center;
     min-width: 82px;
     height: 17px;
+}
+.pick-lg, .pick-day-lg, .pick-time-lg {
+    height: 22px !important;
+    line-height: 22px !important;
+}
+.pick-lg {
+    margin-bottom: 5px;
 }
 .price {
     margin-top: 10px;
@@ -973,6 +1015,244 @@ body.loading .modal-loading { /*modal element will be visible */
 /*END WHO*/
 
 /* PROFILES */
+.btn-yes, .btn-no {
+    display: inline-block;
+    width: 38px;
+}
+.transparent {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+}
+.hdr-img {
+    height: 300px;
+    position: relative;
+}
+.hdr-share {
+    position: relative;
+    height: 50px;
+    background-color: #EEE;
+}
+.share-container {
+    padding-top: 3px;
+    display: inline-block;
+    position: absolute;
+    /*width and positioning in media queries*/
+}
+.side-cntr {
+
+}
+.main-cntr {
+
+}
+.comment-helpfulness {
+    color: #4c4c4c;
+}
+.comment-text {
+    margin: 5px 0 5px 0;
+    font-size: 14px;
+}
+.comment-isithelpful {
+    font-size: 12px;
+}
+.activity-cntr {
+    padding: 0;
+}
+.my-info-cntr {
+    padding: 0;
+}
+.my-info-availability {
+    padding: 0;
+}
+.my-lessons-cntr {
+    /*padding in media queries*/
+}
+.my-lessons {
+    background-color: #000000;
+}
+#panel-body-lessons {
+    padding: 15px 30px;
+}
+.panel-info, .panel-lessons, .panel-activity {
+    background-color: #EEE;
+    border: 0;
+}
+.panel-info {
+
+}
+.panel-activity .panel-body div,
+.panel-info .panel-body div {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.panel-activity .panel-body div i,
+.panel-info .panel-body div i {
+    margin-right: 5px;
+}
+.panel-info .panel-body div .fa-map-marker {
+    margin-right: 10px;
+}
+.panel-lessons {
+    min-height: 600px;
+}
+.tprofile-description {
+    line-height: 25px;
+    text-align: justify;
+    padding: 10px 20px 10px 10px;
+    /*font-style: italic;*/
+}
+.tprofile-description::first-letter,
+.tprofile-description:first-letter {
+    font-size: 200%;
+    color: #000;
+}
+.tprofile-avatar {
+    z-index:1000;
+    position:absolute;
+    /*positioning in media queries*/
+}
+.tprofile-name {
+    font-family: raleway-regular, sans-serif;
+    font-size: 24px;
+    height: 160px;
+    position: absolute;
+    color: #FFF;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+    /*positioning in media queries*/
+}
+.tprofile-stars {
+    position:absolute;
+    height:50px;
+    /*positioning in media queries*/
+}
+#teacher-stars {
+    display:inline-block;
+    position:relative;
+    top: 13px;
+}
+#teacher-n-reviews {
+    display: inline-block;
+    position: relative;
+    top: 18px;
+    left: 6px;
+    font-size: 23px;
+    line-height: 0;
+    color: #5D5D5D;
+}
+.panel-heading a:after {
+    font-family: 'Glyphicons Halflings';
+    content:"\e114";
+    float: right;
+    color: grey;
+    margin-left: 25px;
+}
+.panel-heading a.collapsed:after {
+    content:"\e080";
+}
+.contact-info-cntr {
+    position: absolute;
+    background-color: #EEE !important;
+    /*positioning in media queries*/
+}
+.contact-info-body {
+    /*padding: 15px;*/
+    background-color: #EEE;
+    position:relative;
+}
+.contact-info-content div {
+    margin-bottom:5px;
+}
+.contact-info-hdr {}
+#contact-me {
+    display: block;
+    padding: 12px;
+    margin: 0;
+}
+.contact-info-title {
+    /*border-bottom: 1px solid #737575;*/
+    background-color: #EEE;
+    padding:0;
+}
+.contact-info-title a,
+.contact-info-title a:focus,
+.contact-info-title a:hover {
+    color: #000;
+    text-decoration: none;
+}
+.contact-info-content {
+    font-size:20px;
+}
+.contact-info-content i {
+    margin-right: 5px;
+}
+.contact-info-ftr {}
+.contact-info-social {
+    width: 100%;
+    min-width: 275px;
+    text-align: center;
+    font-size:41px;
+}
+.fa-facebook-square.disabled,
+.fa-twitter-square.disabled,
+.fa-linkedin-square.disabled,
+.fa-google-plus-square.disabled,
+.fa-instagram.disabled,
+.fa-square-o.disabled,
+.fa-globe.disabled {
+    color: #8e8e8e;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0.5)";
+    filter: alpha(opacity=0.5);
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+}
+.share-me {
+    position:absolute;
+    font-size:15px;
+    /*positioning in media queries*/
+}
+.fa-facebook-square {
+    color: #2d3a8b;
+}
+.fa-twitter-square {
+    color: #5ea9dd;
+}
+.fa-linkedin-square {
+    color: #0097bd;
+}
+.fa-google-plus-square {
+    color: #d44132;
+}
+.fa-instagram {
+    color: #675144;
+}
+.fa-square-o, .fa-globe {
+    color: #3271cb;
+}
+.contact-info-social a i:hover,
+.contact-info-social a span:hover i {
+    color: #E79500;
+    text-decoration: none;
+}
+.inline-block {
+    display: inline-block;
+}
+.fa-stack {
+    font-size: 23px;
+    margin-top: -3px;
+    margin-left: -5px;
+}
+.fa.fa-globe.fa-stack-1x {
+    font-size: 33px;
+    margin-top: -2px;
+}
+.tlf-number {
+    line-height: 25px;
+    font-size:1.5em;
+}
+
 .carousel {
     height: 300px;
 }
@@ -1139,10 +1419,32 @@ body.loading .modal-loading { /*modal element will be visible */
     max-width:50%;
     max-height:50%;
 }
+.subject-icon-lg img {
+    max-width:80%;
+    max-height:80%;
+}
 .t-lesson-subject {
     color: #000;
     font-weight: 700;
-    font-size: 1.1em;
+}
+.t-lesson-title-reviews {
+    display: inline-block;
+    margin-bottom:0;
+    font-family: raleway-semibold, sans-serif;
+}
+.single-star {
+    display: inline-block;
+    margin-top: -3px;
+}
+.description-reviews-separator {
+    border: 0;
+    margin: 10px 0 10px 0;
+    height: 1px;
+    background: #333;
+    background-image: -webkit-linear-gradient(left, #ccc, #FFA911, #ccc);
+    background-image: -moz-linear-gradient(left, #ccc, #FFA911, #ccc);
+    background-image: -ms-linear-gradient(left, #ccc, #FFA911, #ccc);
+    background-image: -o-linear-gradient(left, #ccc, #FFA911, #ccc);
 }
 .hr-teacher-profile {
     border:0;
@@ -1192,11 +1494,17 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .panel-milprofes {
     border-color: #A4A5A5;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 .panel-milprofes > .panel-heading {
     color: #000;
     background-color: #FFC307;
     border-color: #A4A5A5;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 .unform {
     padding:0 !important;
@@ -1329,6 +1637,10 @@ body.loading .modal-loading { /*modal element will be visible */
     position: absolute;
     right: 18px;
     top: -16px;
+    font-size: 12px;
+    color: #949494;
+}
+#rchars_feedback {
     font-size: 12px;
     color: #949494;
 }

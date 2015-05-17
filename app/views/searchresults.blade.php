@@ -413,42 +413,43 @@
                             <span id="lesson-stars-{{$result->id}}"></span>
                             <script type="text/javascript">
                                 $('#lesson-stars-{{$result->id}}').raty({
-                                    @if(!(Auth::check()))
-                                        readOnly: true,
-                                    @endif
+                                    {{--@if(!(Auth::check()))--}}
+                                        {{--readOnly: true,--}}
+                                    {{--@endif--}}
+                                    readOnly: true,
                                     half: true,
                                     score: {{ $result->lesson_avg_rating }}
                                 });
                             </script>
-                            @if(Auth::check())
-                                <script type="text/javascript">
-                                    $(document).on("click", "#lesson-stars-{{$result->id}}", function(e) {
-                                        e.preventDefault();
-                                        e.stopImmediatePropagation();
-                                        //registrar valoración en base de datos
-                                        var lesson_id = {{ $result->id }};
-                                        var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');
-                                        var aPostForm = $('form#aPostForm');
-                                        @if($prof_o_acad=='profesor')
-                                            $.post('/reviews/handleReview', {
-                                                _token: aPostForm.find('input[name=_token]').val(),
-                                                review_lesson_id: lesson_id,
-                                                review_rating: review_rating
-                                            }, function (data) {
-                                                $('#lesson-stars-{{$result->id}}').raty({readOnly:true,half:true,score:review_rating});
-                                            });
-                                        @else
-                                            $.post('/reviews/handleSchoolLessonReview', {
-                                                _token: aPostForm.find('input[name=_token]').val(),
-                                                review_lesson_id: lesson_id,
-                                                review_rating: review_rating
-                                            }, function (data) {
-                                                $('#lesson-stars-{{$result->id}}').raty({readOnly:true,half:true,score:review_rating});
-                                            });
-                                        @endif
-                                    });
-                                </script>
-                            @endif
+                            {{--@if(Auth::check())--}}
+                                {{--<script type="text/javascript">--}}
+                                    {{--$(document).on("click", "#lesson-stars-{{$result->id}}", function(e) {--}}
+                                        {{--e.preventDefault();--}}
+                                        {{--e.stopImmediatePropagation();--}}
+                                        {{--//registrar valoración en base de datos--}}
+                                        {{--var lesson_id = {{ $result->id }};--}}
+                                        {{--var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');--}}
+                                        {{--var aPostForm = $('form#aPostForm');--}}
+                                        {{--@if($prof_o_acad=='profesor')--}}
+                                            {{--$.post('/reviews/handleReview', {--}}
+                                                {{--_token: aPostForm.find('input[name=_token]').val(),--}}
+                                                {{--review_lesson_id: lesson_id,--}}
+                                                {{--review_rating: review_rating--}}
+                                            {{--}, function (data) {--}}
+                                                {{--$('#lesson-stars-{{$result->id}}').raty({readOnly:true,half:true,score:review_rating});--}}
+                                            {{--});--}}
+                                        {{--@else--}}
+                                            {{--$.post('/reviews/handleSchoolLessonReview', {--}}
+                                                {{--_token: aPostForm.find('input[name=_token]').val(),--}}
+                                                {{--review_lesson_id: lesson_id,--}}
+                                                {{--review_rating: review_rating--}}
+                                            {{--}, function (data) {--}}
+                                                {{--$('#lesson-stars-{{$result->id}}').raty({readOnly:true,half:true,score:review_rating});--}}
+                                            {{--});--}}
+                                        {{--@endif--}}
+                                    {{--});--}}
+                                {{--</script>--}}
+                            {{--@endif--}}
                         </div>
                         <div class="row text-center">
                             @if($result->price=='0')

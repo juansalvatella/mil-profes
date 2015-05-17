@@ -24,28 +24,37 @@ class Milprofes
     public static function getPopularTeachers($this_many)
     {
         $n = (int) $this_many;
-        $teachers = Teacher::all();
-        foreach($teachers as $t)
-        {
-            $total_visualizations = 0;
-            $teacher_lessons = $t->lessons()->get();
-            foreach($teacher_lessons as $l)
-            {
-                $lesson_visualizations = count($l->visualizations()->get());
-                $total_visualizations += $lesson_visualizations;
-            }
-            $t->total_visualizations = $total_visualizations;
-        }
-        $popular_teachers = $teachers->sortByDesc(function($teacher) {
-            return $teacher->total_visualizations;
-        })->take($n);
+        $popular_teachers = DB::select(DB::raw("
+          SELECT
+            t4.teacher_id            AS 'teacher_id',
+            t4.user_id               AS 'user_id',
+            SUM(t4.count)            AS 'total',
+            @curRank := @curRank + 1 AS 'rank'
+          FROM (
+                 SELECT
+                   t1.teacher_lesson_id,
+                   t2.teacher_id,
+                   t3.user_id,
+                   count(*) AS 'count'
+                 FROM teacher_lessons_phone_visualizations AS t1
+                   LEFT JOIN teacher_lessons AS t2
+                     ON t2.id = t1.teacher_lesson_id
+                   LEFT JOIN teachers AS t3
+                     ON t3.id = t2.teacher_id
+                 GROUP BY t1.teacher_lesson_id
+               ) AS t4, (SELECT @curRank := 0) r
+          GROUP BY t4.teacher_id
+          ORDER BY rank
+          LIMIT ?;
+        "),array($this_many));
 
-        foreach($popular_teachers as $lt)
+        foreach($popular_teachers as $pt)
         {
-            $lt->username = $lt->user->username;
-            $lt->displayName = ucwords($lt->user->name).' '.substr(ucwords($lt->user->lastname),0,1).'.';
-            $lt->avatar = $lt->user->avatar;
-            $lt->slug = $lt->user->slug;
+            $user = User::where('id',$pt->user_id)->first();
+            $pt->username = $user->username;
+            $pt->displayName = ucwords($user->name).' '.substr(ucwords($user->lastname),0,1).'.';
+            $pt->avatar = $user->avatar;
+            $pt->slug = $user->slug;
         }
 
         return $popular_teachers;
@@ -54,10 +63,11 @@ class Milprofes
     public static function getLastSchools($this_many)
     {
         $n = (int) $this_many;
-        $schools = School::where('status','<>','Crawled')->get();
-        $last_schools = $schools->sortByDesc(function($school) {
-            return $school->created_at;
-        })->take($n);
+        $last_schools = School::whereNull('status')
+            ->orWhere('status','<>','Crawled')
+            ->orderBy('created_at','DESC')
+            ->take($n)
+            ->get();
 
         return $last_schools;
     }
@@ -65,7 +75,10 @@ class Milprofes
     public static function getPopularSchools($this_many)
     {
         $n = (int) $this_many;
-        $schools = School::where('status','<>','Crawled')->get();
+        $schools = School::whereNull('status')
+            ->orWhere('status','<>','Crawled')
+            ->get();
+
         foreach($schools as $s)
         {
             $total_visualizations = 0;

@@ -14,11 +14,11 @@ class AddTitleColumnToLessons extends Migration {
 	{
         Schema::table('school_lessons', function(Blueprint $table)
         {
-            $table->string('title')->nullable();
+//            $table->string('title')->nullable();
         });
         Schema::table('teacher_lessons', function(Blueprint $table)
         {
-            $table->string('title')->nullable();
+//            $table->string('title')->nullable();
         });
 	}
 

@@ -176,11 +176,11 @@
                             <td>{{{ $lesson->title }}}</td>
                             <td class="hidden-xs">{{{ $lesson->description }}}</td>
                             {{-- + 0 removes zeros to the right of the decimal separator --}}
-                            <td class="hidden-xs">{{{ str_replace('.', ',', $lesson->price + 0) }}}</td>
+                            <td class="hidden-xs">@if($lesson->price!=0.0) {{{ str_replace('.', ',', $lesson->price + 0) }}} @else Sin precio @endif</td>
                             <td>
-                                <a href="{{ url('teacher/edit/lesson',array($lesson->id)) }}" class="btn btn-default bottom-buffer-5"><i class="fa fa-edit"></i><span class="hidden-xs hidden-sm"> @lang('buttons.edit_lesson')</span></a>
+                                <a href="{{ url('teacher/edit/lesson',array($lesson->id)) }}" class="btn btn-default bottom-buffer-5"><i class="fa fa-edit"></i><span class="hidden-xs hidden-sm"> @lang('buttons.edit')</span></a>
                                 &nbsp;
-                                <a href="{{ url('teacher/delete/lesson',array($lesson->id)) }}" class="btn btn-danger bottom-buffer-5"><i class="fa fa-trash-o"></i><span class="hidden-xs hidden-sm">  @lang('buttons.delete_lesson')</span></a>
+                                <a href="{{ url('teacher/delete/lesson',array($lesson->id)) }}" class="btn btn-danger bottom-buffer-5"><i class="fa fa-trash-o"></i><span class="hidden-xs hidden-sm">  @lang('buttons.delete')</span></a>
                             </td>
                         </tr>
                     @endforeach

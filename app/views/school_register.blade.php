@@ -13,8 +13,11 @@
         @if(Session::has('failure'))
             <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
         @endif
+        @if(Session::has('warning'))
+            <div class="alert alert-warning" role="alert">{{ Session::get('warning') }}</div>
+        @endif
         @if(Session::has('error'))
-            <div class="alert alert-warning" role="alert">{{ Session::get('error') }}</div>
+            <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
         @endif
 
     <form class="form-horizontal" action="{{ action('AdminController@createSchool') }}" method="post" enctype="multipart/form-data" role="form">
@@ -171,6 +174,16 @@
             <label class="col-sm-2 control-label" for="description">Descripción</label>
             <div class="col-sm-10">
                 <textarea rows="3" class="form-control" name="description" id="description"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="origin">Origen</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="origin" name="origin">
+                    <option selected="selected" value="admin">Administradores</option>
+                    <option value="agent">Comercial</option>
+                    <option value="crawled">Crawled</option>
+                </select>
             </div>
         </div>
         <div class="form-group">

@@ -1,6 +1,7 @@
 <?php
     $last_teachers = Milprofes::getLastTeachers(12);
     $last_schools = Milprofes::getLastSchools(12);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,23 +16,23 @@
     <meta name="robots" content="noindex,nofollow"/>
 @endif
 @if(Request::is('/'))
-    <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes. "/>
+    <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de milPROFES. "/>
     <title>Profesores particulares y academias</title>
 @elseif(Request::is('milprofes'))
-    <meta name="Description" content="Milprofes está formado por un grupo de jóvenes unidos por la pasión y ambición por crear."/>
+    <meta name="Description" content="milPROFES. está formado por un grupo de jóvenes unidos por la pasión y ambición por crear."/>
     <title>MilProfes</title>
 @elseif(Request::is('preguntas-frecuentes'))
-    <meta name="Description" content="Encuentra respuesta a todas las preguntas que tengas del funcionamiento de la página web de Milprofes en el apartado de preguntas frecuentes. "/>
-    <title>Respuestas a las preguntas frecuentes de Milprofes</title>
+    <meta name="Description" content="Encuentra respuesta a todas las preguntas que tengas del funcionamiento de la página web de milPROFES. en el apartado de preguntas frecuentes. "/>
+    <title>Respuestas a las preguntas frecuentes de milPROFES.</title>
 @elseif(Request::is('contacta'))
-    <meta name="Description" content="Contacta con el equipo de Milprofes a través de nuestro formulario. Estaremos encantados de responderte."/>
-    <title>Contacta con el equipo de Milprofes</title>
+    <meta name="Description" content="Contacta con el equipo de milPROFES. a través de nuestro formulario. Estaremos encantados de responderte."/>
+    <title>Contacta con el equipo de milPROFES.</title>
 @elseif(Request::is('profe/*') && isset($teacher->description) && isset($teacher->username))
     <meta name="Description" content="{{{ $teacher->description }}}"/>
-    <title>{{{ $teacher->username }}} | Milprofes</title>
+    <title>{{{ $teacher->displayName }}} | milPROFES.</title>
 @elseif(Request::is('academia/*') && isset($school->description) && isset($school->name))
     <meta name="Description" content="{{{ $school->description }}}"/>
-    <title>{{{ $school->name }}} | Milprofes</title>
+    <title>{{{ $school->name }}} | milPROFES.</title>
 @elseif(Request::is('resultados') && isset($subject) && isset($user_address))
     @if($subject == 'all')
         <?php $subject2 = 'todo'; ?>
@@ -47,7 +48,7 @@
     <title>Clases particulares de {{{ $subject2 }}} cerca de {{{ $user_address }}}</title>
 @elseif(Request::is('userpanel/*') || Request::is('teacher/*'))
     <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes. "/>
-    <title>Mi Panel de Control | Milprofes</title>
+    <title>Mi Panel de Control | milPROFES.</title>
 @else
     <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes. "/>
     <title>Profesores particulares y academias</title>
@@ -81,8 +82,35 @@
 @if(Request::is('userpanel/dashboard'))
     {{ HTML::style('css/jquery.Jcrop.min.css') }}
     {{ HTML::script('js/jquery.Jcrop.min.js') }}
-@elseif(Request::is('admin/schools')))
+@elseif(Request::is('admin/schools'))
     {{ HTML::script('js/schools-dashboard.js') }}
+@elseif(Request::is('profe/*'))
+
+    <!-- gen meta -->
+    <meta name="gen-image" content="{{ asset('img/avatars/'.$teacher->avatar) }}" />
+    <meta name="gen-title" content="Profe. {{{ $teacher->displayName }}}" />
+    <meta name="gen-url" content="{{ Request::url() }}" />
+    <meta name="gen-description" content="Visita mi perfil de profe. en milPROFES.com ¿Qué vas a aprender hoy?" />
+
+    <!-- fb meta -->
+    <meta property="og:site_name" content="milPROFES." />
+    <meta property="og:title" content="Profe. {{{ $teacher->displayName }}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ Request::url() }}" />
+    <meta property="og:image" content="{{ asset('img/avatars/'.$teacher->avatar) }}" />
+    <meta property="og:description" content="Visita mi perfil de profe. en milPROFES. ¿Qué quieres aprender hoy?" />
+
+    <!-- twitter meta -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@milprofes" />
+    <meta name="twitter:title" content="Profe. {{{ $teacher->displayName }}}" />
+    <meta name="twitter:description" content="Visita mi perfil de profe. en @milprofes: {{ Request::url() }}" />
+    <meta name="twitter:image" content="{{ asset('img/avatars/'.$teacher->avatar) }}" />
+
+    {{ HTML::style('css/rrssb.css') }}
+    {{ HTML::style('css/toastr.min.css') }}
+    {{ HTML::script('js/toastr.min.js') }}
+    {{ HTML::script('js/teachers.js') }}
 @endif
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -159,8 +187,8 @@
                     <li class="text-center"><a class="right-separator" href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
                     <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
                 @else
-                    <li><a data-target="#modal-login" data-toggle="modal" class="right-separator" href="#" title="@lang('layout.login')">@lang('layout.login')</a></li>
-                    <li><a id="register-link" data-target="#modal-register" data-toggle="modal"  href="#" title="@lang('layout.register')">@lang('layout.register')</a></li>
+                    <li><a data-target="#modal-login" data-toggle="modal" class="right-separator" href="javascript:" title="@lang('layout.login')">@lang('layout.login')</a></li>
+                    <li><a id="register-link" data-target="#modal-register" data-toggle="modal"  href="javascript:" title="@lang('layout.register')">@lang('layout.register')</a></li>
                 @endif
                 </ul>
             </div><!--/.nav-collapse -->
@@ -194,7 +222,7 @@
                                     @if (Session::get('log-notice'))
                                         <div class="alert">{{{ Session::get('log-notice') }}}</div>
                                     @endif
-
+                                        <div id="dynalert" class="alert alert-warning"></div>
 
                                     <div class="form-group">
                                         <label for="email">@lang('layout.login-username')</label>
@@ -213,14 +241,14 @@
                                     </div>
                                     <div class="checkbox">
                                         <label for="remember">
-                                            <input tabindex="4" type="checkbox" name="remember" id="remember" value="1"><small>@lang('layout.login-remind-me')</small>
+                                            <input tabindex="3" type="checkbox" name="remember" id="remember" value="1"><small>@lang('layout.login-remind-me')</small>
                                         </label>
                                     </div>
 
                                     <div class="row text-center top-buffer-15">
                                         <div class="form-group">
-                                            <button tabindex="3" type="submit" class="btn btn-login-send">@lang('layout.login-send')</button>
-                                            <button type="button" class="btn btn-login-send" data-dismiss="modal">@lang('layout.login-cancel')</button>
+                                            <button tabindex="4" type="submit" class="btn btn-login-send">@lang('layout.login-send')</button>
+                                            <button tabindex="5" type="button" class="btn btn-login-send" data-dismiss="modal">@lang('layout.login-cancel')</button>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -427,7 +455,7 @@
                         </div>
                         <div id="recent-teachers" class="row">
                         @foreach($last_teachers as $teacher)
-                                <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}" /></a></div></div>
+                                <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $teacher->displayName }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}" /></a></div></div>
                         @endforeach
                         </div>
 
@@ -549,6 +577,10 @@
     {{--<script src="http://js.maxmind.com/js/country.js" type="text/javascript"></script>--}}
     {{--<script src="http://js.maxmind.com/js/geoip.js" type="text/javascript" ></script>--}}
     {{ HTML::script('js/analytics.js') }}
+
+    @if(Request::is('profe/*'))
+        {{ HTML::script('js/rrssb.js') }}
+    @endif
 
 </body>
 </html>

@@ -24,12 +24,14 @@ class AdminController extends BaseController
         $school->phone = Input::get('phone');
         $school->phone2 = Input::get('phone2');
         $school->description = Input::get('description');
+        $school->status = 'Active'; //manually created schools are active by default (no need to review)
+        $school->origin = Input::get('origin');
+
         $geocoding = Geocoding::geocode($school->address);
         if(!$geocoding){
-//            return Redirect::to('admin/schools')
             return Redirect::back()
                 ->withInput()
-                ->with('failure', 'No se pudo crear la acadamia. Fallo al guardar la dirección.');
+                ->with('failure', 'No se pudo crear la acadamia. Error al tratar de guardar la dirección.');
         }
         $school->lat = $geocoding[0]; //latitud
         $school->lon = $geocoding[1]; //longitud
@@ -53,8 +55,8 @@ class AdminController extends BaseController
                     $img = $upload->getClientOriginalName();
                     if ($validator->fails()) {
                         return Redirect::to('admin/schools')
-                            ->with('success', 'Academia creada con éxito.')
-                            ->with('error', 'Error al subir la imagen de perfil: ' . $img);
+                            ->with('warning', 'La academia fue creada pero se dieron errores en el proceso.')
+                            ->with('error', 'Error al tratar de subir la imagen de perfil: ' . $img);
                     } else {
                         $file_extension = $upload->getClientOriginalExtension();
                         $filename = Str::random(30) . '.' . $file_extension;
@@ -65,7 +67,7 @@ class AdminController extends BaseController
                         $pic->school()->associate($school);
                         if(!$pic->save()){
                             return Redirect::to('admin/schools')
-                                ->with('success', 'Academia creada con éxito.')
+                                ->with('warning', 'La academia fue creada pero se dieron errores en el proceso.')
                                 ->with('error', 'Error al subir la imagen de perfil: ' . $img);
                         }
                     }
@@ -74,7 +76,7 @@ class AdminController extends BaseController
             return Redirect::to('admin/schools')->with('success', 'Academia creada con éxito');
         }
         else
-            return Redirect::to('admin/schools')->with('failure', 'Error! No se pudo crear la academia');
+            return Redirect::to('admin/schools')->with('error', 'Error al tratar de guardar la academia en base de datos');
     }
 
     public function deleteUser() {

@@ -376,6 +376,7 @@ class UsersController extends Controller
                 }
                 $user->lat = $geocoding[0]; //guargar latitud
                 $user->lon = $geocoding[1]; //guardar longitud
+                $user->town = $geocoding[3]['locality'];
             }
 
             if($input['email'] != $user->email)

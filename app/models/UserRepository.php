@@ -29,6 +29,7 @@ class UserRepository
         $user->address = array_get($input, 'address');
         $user->lat = $geocoded_user_address[0]; //latitud
         $user->lon = $geocoded_user_address[1]; //longitud
+        $user->town = $geocoded_user_address[3]['locality']; //municipio
 
         //Default values
         $user->avatar = 'default_avatar.png';

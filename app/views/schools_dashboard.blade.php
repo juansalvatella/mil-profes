@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 
-    {{--token needed for post ajax requests--}}
+    {{--token needed for ajax POST requests--}}
     <input id="token" type="hidden" name="_token" value="{{{ Session::getToken() }}}"/>
 
     <div class="page-header">
@@ -22,11 +22,14 @@
     @if(Session::has('success'))
         <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
     @endif
+    @if(Session::has('warning'))
+        <div class="alert alert-warning" role="alert">{{ Session::get('warning') }}</div>
+    @endif
     @if(Session::has('failure'))
-        <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
+        <div class="alert alert-danger" role="alert">{{ Session::get('failure') }}</div>
     @endif
     @if(Session::has('error'))
-        <div class="alert alert-warning" role="alert">{{ Session::get('error') }}</div>
+        <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
     @endif
 
     <div class="panel panel-default">

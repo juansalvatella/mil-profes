@@ -14,11 +14,11 @@ class AddSluggableColumns extends Migration {
 	{
 		Schema::table('schools', function(Blueprint $table)
 		{
-			$table->string('slug')->nullable();
+//			$table->string('slug')->nullable();
 		});
         Schema::table('users', function(Blueprint $table)
         {
-            $table->string('slug')->nullable();
+//            $table->string('slug')->nullable();
         });
 	}
 
