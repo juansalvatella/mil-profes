@@ -56,25 +56,27 @@ Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug)
     //Calcular popularidad
     $qArray = DB::select(DB::raw("
         SELECT tranking.rank FROM (
-          SELECT
-            t4.teacher_id,
-            t4.user_id,
-            SUM(t4.count)            AS 'total',
-            @curRank := @curRank + 1 AS rank
-          FROM (
-                 SELECT
-                   t1.teacher_lesson_id,
-                   t2.teacher_id,
-                   t3.user_id,
-                   count(*) AS 'count'
-                 FROM teacher_lessons_phone_visualizations AS t1
-                   LEFT JOIN teacher_lessons AS t2
-                     ON t2.id = t1.teacher_lesson_id
-                   LEFT JOIN teachers AS t3
-                     ON t3.id = t2.teacher_id
-                 GROUP BY t1.teacher_lesson_id
-               ) AS t4, (SELECT @curRank := 0) r
-          GROUP BY t4.teacher_id
+          SELECT t5.teacher_id, t5.user_id, t5.total, @curRank := @curRank + 1 AS 'rank'
+            FROM (SELECT
+                    t4.teacher_id            AS 'teacher_id',
+                    t4.user_id               AS 'user_id',
+                    SUM(t4.count)            AS 'total'
+                  FROM (SELECT
+                           t1.teacher_lesson_id,
+                           t2.teacher_id,
+                           t3.user_id,
+                           count(*) AS 'count'
+                         FROM teacher_lessons_phone_visualizations AS t1
+                           LEFT JOIN teacher_lessons AS t2
+                             ON t2.id = t1.teacher_lesson_id
+                           LEFT JOIN teachers AS t3
+                             ON t3.id = t2.teacher_id
+                         GROUP BY t1.teacher_lesson_id
+                   ) AS t4
+                  GROUP BY t4.teacher_id
+                  ORDER BY total DESC
+            ) AS t5, (SELECT @curRank := 0) r
+            ORDER BY rank
         ) AS tranking
         WHERE tranking.user_id = ?;
     "),array($user->id));
