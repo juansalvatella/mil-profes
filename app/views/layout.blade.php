@@ -98,13 +98,13 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:image" content="{{ asset('img/avatars/'.$teacher->avatar) }}" />
-    <meta property="og:description" content="Visita mi perfil de profe. en milPROFES. ¿Qué quieres aprender hoy?" />
+    <meta property="og:description" content="Visita mi perfil de profe. en milPROFES.com ¿Qué vas a aprender hoy?" />
 
     <!-- twitter meta -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@milprofes" />
     <meta name="twitter:title" content="Profe. {{{ $teacher->displayName }}}" />
-    <meta name="twitter:description" content="Visita mi perfil de profe. en @milprofes: {{ Request::url() }}" />
+    <meta name="twitter:description" content="Visita mi perfil de profe. en @milprofes ¿Qué vas a aprender hoy?: {{ Request::url() }}" />
     <meta name="twitter:image" content="{{ asset('img/avatars/'.$teacher->avatar) }}" />
 
     {{ HTML::style('css/rrssb.css') }}
@@ -222,7 +222,7 @@
                                     @if (Session::get('log-notice'))
                                         <div class="alert">{{{ Session::get('log-notice') }}}</div>
                                     @endif
-                                        <div id="dynalert" class="alert alert-warning"></div>
+                                        <div id="dynalert" class="alert alert-warning hidden"></div>
 
                                     <div class="form-group">
                                         <label for="email">@lang('layout.login-username')</label>

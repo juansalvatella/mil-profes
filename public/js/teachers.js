@@ -8,7 +8,7 @@ $(document).ready(function() {
         $('#modal-all-reviews-lesson-'+lessonId).modal('show');
     });
 
-    $('.contact-info-title').css({width:$('#collapse').width()+5});
+    $('.contact-info-title').css({width:$('#collapse').width()+30});
 
     $('#teacher-stars').raty({
         readOnly: true,
@@ -267,6 +267,7 @@ $(document).ready(function() {
     $('.trigger-login').click(function(e) {
         e.preventDefault();
         var dynAlert = $('#dynalert');
+        $('#dynalert').removeClass('hidden');
         dynAlert.show();
         dynAlert.append('' +
             'Accede a milProfes. para realizar valoraciones. ' +

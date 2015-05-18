@@ -30,19 +30,19 @@ Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug)
     $user = User::findBySlug($user_slug);
     $teacher = $user->teacher()->first();
 
-    //Check if the visitor is the teacher himself
-    if(Auth::check()) {
-        $current_user = Confide::user();
-        if($user->id == $current_user->id)
-            $teacher->itsme = true;
-    }
-
     //Incrementar número de visitas en uno (por visitante y sesión)
     if (!Session::has('profile_visited_'.$user_slug)) {
         $teacher->profile_visits = $teacher->profile_visits + 1;
         $teacher->save(); //increments profile visits counter, notice that this changes the updated_at column in teachers table
         Session::put('profile_visited_' . $user_slug, true);
         Session::save();
+    }
+
+    //Check if the visitor is the teacher himself
+    if(Auth::check()) {
+        $current_user = Confide::user();
+        if($user->id == $current_user->id)
+            $teacher->itsme = true;
     }
 
     //Calcular antiguedad en milprofes (en array con keys years, months, etc.)
@@ -272,7 +272,7 @@ Route::post('request/info/teacher/{lesson_id}', function($lesson_id) {
 });
 
 Route::post('request/info/teacher/all/{teacher_id}', function($teacher_id) {
-    if (true || !Session::has('t_visualized_all_'.$teacher_id)) //if this Tlf visualization hasn't been recorded before (during the session)
+    if (!Session::has('t_visualized_all_'.$teacher_id)) //if this Tlf visualization hasn't been recorded before (during the session)
     {
         Session::put('t_visualized_all_'.$teacher_id, true); //record the visualization in the session array
         Session::save();

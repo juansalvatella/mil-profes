@@ -35,7 +35,9 @@
                 <div id="collapse" class="panel-collapse collapse">
                     <div class="panel-body contact-info-body">
                         <div class="contact-info-content">
+                            @if($teacher->phone)
                             <div><i class="fa fa-phone"></i> <span class="tlf-number">{{{ substr($teacher->phone,0,3).' '.substr($teacher->phone,3,2).' '.substr($teacher->phone,5,2).' '.substr($teacher->phone,7,strlen($teacher->phone)-7) }}}</span></div>
+                            @endif
                             <div><i class="fa fa-envelope-o"></i> {{{ $teacher->email }}}</div>
                         </div>
                         <div class="contact-info-social">
@@ -339,7 +341,7 @@
                                                                 </div>
                                                             @endforeach
                                                         @else
-                                                            <span class="no-reviews">¿Has estudiado con {{ $teacher->displayName  }}? ¡Sé el primero o la primera en <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}">valorar</a> esta clase!</span>
+                                                            <span class="no-reviews">¿Has estudiado con {{ $teacher->displayName }}? ¡Sé el primero o la primera en <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}">valorar</a> esta clase!</span>
                                                         @endif
                                                     </div>
 
