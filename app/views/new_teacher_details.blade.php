@@ -26,67 +26,6 @@
                 <small>@lang('teacher-profile.teacher')</small>
             </div>
 
-            <div class="panel panel-default contact-info-cntr">
-                <div class="panel-heading contact-info-title">
-                    <a id="contact-me" data-toggle="collapse" data-target="#collapse" class="collapsed" href="javascript:">
-                        @lang('teacher-profile.info-title')
-                    </a>
-                </div>
-                <div id="collapse" class="panel-collapse collapse">
-                    <div class="panel-body contact-info-body">
-                        <div class="contact-info-content">
-                            @if($teacher->phone)
-                            <div><i class="fa fa-phone"></i> <span class="tlf-number">{{{ substr($teacher->phone,0,3).' '.substr($teacher->phone,3,2).' '.substr($teacher->phone,5,2).' '.substr($teacher->phone,7,strlen($teacher->phone)-7) }}}</span></div>
-                            @endif
-                            <div><i class="fa fa-envelope-o"></i> {{{ $teacher->email }}}</div>
-                        </div>
-                        <div class="contact-info-social">
-                            @if($teacher->link_f)
-                                <a href="{{ $teacher->link_f }}" target="_blank"><i class="fa fa-facebook-square"></i></a>
-                            @else
-                                <i class="fa fa-facebook-square disabled"></i>
-                            @endif
-                            @if($teacher->link_t)
-                                <a href="{{ $teacher->link_t }}" target="_blank"><i class="fa fa-twitter-square"></i></a>
-                            @else
-                                <i class="fa fa-twitter-square disabled"></i>
-                            @endif
-                            @if($teacher->link_g)
-                                <a href="{{ $teacher->link_g }}" target="_blank"><i class="fa fa-google-plus-square"></i></a>
-                            @else
-                                <i class="fa fa-google-plus-square disabled"></i>
-                            @endif
-                            @if($teacher->link_i)
-                                <a href="{{ $teacher->link_i }}" target="_blank"><i class="fa fa-instagram"></i></a>
-                            @else
-                                <i class="fa fa-instagram disabled"></i>
-                            @endif
-                            @if($teacher->link_l)
-                                <a href="{{ $teacher->link_l }}" target="_blank"><i class="fa fa-linkedin-square"></i></a>
-                            @else
-                                <i class="fa fa-linkedin-square disabled"></i>
-                            @endif
-                            @if($teacher->link_w)
-                            <a href="{{ $teacher->link_w }}" target="_blank">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-square-o fa-stack-2x"></i>
-                                    <i class="fa fa-globe fa-stack-1x"></i>
-                                </span>
-                            </a>
-                            @else
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-square-o fa-stack-2x disabled"></i>
-                                <i class="fa fa-globe fa-stack-1x disabled"></i>
-                            </span>
-                            @endif
-                        </div>
-                        {{--<div id="blurry">--}}
-                            {{--<a id="remove-blur" href="javascript:;" class="btn btn-lg btn-milprofes">¡Contactar!</a>--}}
-                        {{--</div>--}}
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
     <div class="row">
@@ -102,9 +41,9 @@
             </div>
 
             @if($teacher->itsme)
-                <span class="share-me">@lang('teacher-profile.share-myself') <i class="fa fa-chevron-right"></i></span>
+                <span class="hidden-xs hidden-sm hidden-md share-me">@lang('teacher-profile.share-myself') <i class="fa fa-chevron-right"></i></span>
             @else
-                <span class="share-me">@lang('teacher-profile.share-me') <i class="fa fa-chevron-right"></i></span>
+                <span class="hidden-xs hidden-sm hidden-md share-me">@lang('teacher-profile.share-me') <i class="fa fa-chevron-right"></i></span>
             @endif
             <div class="share-container">
                 <ul class="rrssb-buttons clearfix">
@@ -115,7 +54,7 @@
                                   <path d="M26.4 0H2.6C1.714 0 0 1.715 0 2.6v23.8c0 .884 1.715 2.6 2.6 2.6h12.393V17.988h-3.996v-3.98h3.997v-3.062c0-3.746 2.835-5.97 6.177-5.97 1.6 0 2.444.173 2.845.226v3.792H21.18c-1.817 0-2.156.9-2.156 2.168v2.847h5.045l-.66 3.978h-4.386V29H26.4c.884 0 2.6-1.716 2.6-2.6V2.6c0-.885-1.716-2.6-2.6-2.6z" class="cls-2" fill-rule="evenodd"></path>
                               </svg>
                             </span>
-                            <span class="rrssb-text">@lang('teacher-profile.in-f')</span>
+                            <span class="rrssb-text"><span class="hidden-lg">@lang('buttons.share')</span><span class="hidden-xs hidden-sm hidden-md">@lang('teacher-profile.in-f')</span></span>
                         </a>
                     </li>
                     <li class="rrssb-twitter">
@@ -128,7 +67,7 @@
                                   <path d="M24.253 8.756C24.69 17.08 18.297 24.182 9.97 24.62c-3.122.162-6.22-.646-8.86-2.32 2.702.18 5.375-.648 7.507-2.32-2.072-.248-3.818-1.662-4.49-3.64.802.13 1.62.077 2.4-.154-2.482-.466-4.312-2.586-4.412-5.11.688.276 1.426.408 2.168.387-2.135-1.65-2.73-4.62-1.394-6.965C5.574 7.816 9.54 9.84 13.802 10.07c-.842-2.738.694-5.64 3.434-6.48 2.018-.624 4.212.043 5.546 1.682 1.186-.213 2.318-.662 3.33-1.317-.386 1.256-1.248 2.312-2.4 2.942 1.048-.106 2.07-.394 3.02-.85-.458 1.182-1.343 2.15-2.48 2.71z"></path>
                               </svg>
                             </span>
-                            <span class="rrssb-text">@lang('teacher-profile.in-t')</span>
+                            <span class="rrssb-text"><span class="hidden-lg">@lang('buttons.share')</span><span class="hidden-xs hidden-sm hidden-md">@lang('teacher-profile.in-t')</span></span>
                         </a>
                     </li>
                     <li class="rrssb-googleplus">
@@ -141,7 +80,7 @@
                                   <path d="M14.703 15.854l-1.22-.948c-.37-.308-.88-.715-.88-1.46 0-.747.51-1.222.95-1.662 1.42-1.12 2.84-2.31 2.84-4.817 0-2.58-1.62-3.937-2.4-4.58h2.098l2.203-1.384h-6.67c-1.83 0-4.467.433-6.398 2.027C3.768 4.287 3.06 6.018 3.06 7.576c0 2.634 2.02 5.328 5.603 5.328.34 0 .71-.033 1.083-.068-.167.408-.336.748-.336 1.324 0 1.04.55 1.685 1.01 2.297-1.523.104-4.37.273-6.466 1.562-1.998 1.187-2.605 2.915-2.605 4.136 0 2.512 2.357 4.84 7.288 4.84 5.822 0 8.904-3.223 8.904-6.41.008-2.327-1.36-3.49-2.83-4.73h-.01zM10.27 11.95c-2.913 0-4.232-3.764-4.232-6.036 0-.884.168-1.797.744-2.51.543-.68 1.49-1.12 2.372-1.12 2.807 0 4.256 3.797 4.256 6.24 0 .613-.067 1.695-.845 2.48-.537.55-1.438.947-2.295.95v-.003zm.032 13.66c-3.62 0-5.957-1.733-5.957-4.143 0-2.408 2.165-3.223 2.91-3.492 1.422-.48 3.25-.545 3.556-.545.34 0 .52 0 .767.034 2.574 1.838 3.706 2.757 3.706 4.48-.002 2.072-1.736 3.664-4.982 3.648l.002.017zM23.254 11.89V8.52H21.57v3.37H18.2v1.714h3.367v3.4h1.684v-3.4h3.4V11.89"></path>
                               </svg>
                             </span>
-                            <span class="rrssb-text">@lang('teacher-profile.in-g')</span>
+                            <span class="rrssb-text"><span class="hidden-lg">@lang('buttons.share')</span><span class="hidden-xs hidden-sm hidden-md">@lang('teacher-profile.in-g')</span></span>
                         </a>
                     </li>
                 </ul>
@@ -155,6 +94,67 @@
                 <div class="col-md-4 side-cntr">
                     <div class="row">
                         <div class="col-md-12 activity-cntr">
+
+                            <div class="panel panel-milprofes panel-contact-info">
+                                <div class="panel-heading contact-info-title">
+                                    <a id="contact-me" data-toggle="collapse" data-target="#collapse" class="collapsed" href="javascript:">
+                                        @lang('teacher-profile.info-title')
+                                    </a>
+                                </div>
+                                <div id="collapse" class="panel-collapse collapse">
+                                    <div class="panel-body contact-info-body">
+                                        <div class="contact-info-content">
+                                            @if($teacher->phone)
+                                                <div><i class="fa fa-phone"></i> <span class="tlf-number">{{{ substr($teacher->phone,0,3).' '.substr($teacher->phone,3,2).' '.substr($teacher->phone,5,2).' '.substr($teacher->phone,7,strlen($teacher->phone)-7) }}}</span></div>
+                                            @endif
+                                            <div><i class="fa fa-envelope-o"></i> {{{ $teacher->email }}}</div>
+                                        </div>
+                                        <div class="contact-info-social">
+                                            @if($teacher->link_f)
+                                                <a href="{{ $teacher->link_f }}" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                                            @else
+                                                <i class="fa fa-facebook-square disabled"></i>
+                                            @endif
+                                            @if($teacher->link_t)
+                                                <a href="{{ $teacher->link_t }}" target="_blank"><i class="fa fa-twitter-square"></i></a>
+                                            @else
+                                                <i class="fa fa-twitter-square disabled"></i>
+                                            @endif
+                                            @if($teacher->link_g)
+                                                <a href="{{ $teacher->link_g }}" target="_blank"><i class="fa fa-google-plus-square"></i></a>
+                                            @else
+                                                <i class="fa fa-google-plus-square disabled"></i>
+                                            @endif
+                                            @if($teacher->link_i)
+                                                <a href="{{ $teacher->link_i }}" target="_blank"><i class="fa fa-instagram"></i></a>
+                                            @else
+                                                <i class="fa fa-instagram disabled"></i>
+                                            @endif
+                                            @if($teacher->link_l)
+                                                <a href="{{ $teacher->link_l }}" target="_blank"><i class="fa fa-linkedin-square"></i></a>
+                                            @else
+                                                <i class="fa fa-linkedin-square disabled"></i>
+                                            @endif
+                                            @if($teacher->link_w)
+                                                <a href="{{ $teacher->link_w }}" target="_blank">
+                                                    <span class="fa-stack fa-lg">
+                                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                                        <i class="fa fa-globe fa-stack-1x"></i>
+                                                    </span>
+                                                </a>
+                                            @else
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-square-o fa-stack-2x disabled"></i>
+                                                <i class="fa fa-globe fa-stack-1x disabled"></i>
+                                            </span>
+                                            @endif
+                                        </div>
+                                        {{--<div id="blurry">--}}
+                                        {{--<a id="remove-blur" href="javascript:;" class="btn btn-lg btn-milprofes">¡Contactar!</a>--}}
+                                        {{--</div>--}}
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="panel panel-milprofes panel-activity">
                                 <div class="panel-heading">@lang('teacher-profile.title_activity')</div>
@@ -267,7 +267,7 @@
                                                     {{--<input type="hidden" id="lessonId" value="{{ $l->id }}">--}}
                                                     {{--<input type="hidden" id="averageRating" value="{{ $l->getLessonAvgRating() }}">--}}
 
-                                                    <div class="col-xs-2">
+                                                    <div class="col-xs-12 col-sm-2">
                                                         <div class="row text-center subject-icon-lg">
                                                             <?php
                                                                 $category_name = $l->subject()->pluck('name');
@@ -281,7 +281,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xs-10">
+                                                    <div class="col-xs-12 col-sm-10">
 
                                                         <div class="t-lesson-subject">
                                                             @if($l->title == '')

@@ -11,6 +11,10 @@ return [
 
 	'login' => 'Entrar',
     'register' => 'Registrarse',
+    'register_xs' => 'Regístrate',
+    'register_sm' => 'Regístrate',
+    'register_md' => 'Registra tus clases GRATIS',
+
 
     //Footer
     'contact_logo' => '<span class="mil-word-2">mil</span> <span class="profes-word-2">PROFES.</span>',

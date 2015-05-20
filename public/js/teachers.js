@@ -8,8 +8,6 @@ $(document).ready(function() {
         $('#modal-all-reviews-lesson-'+lessonId).modal('show');
     });
 
-    $('.contact-info-title').css({width:$('#collapse').width()+30});
-
     $('#teacher-stars').raty({
         readOnly: true,
         half: true,

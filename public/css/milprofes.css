@@ -8,11 +8,18 @@
     .min-width-300 { }
     .min-width-115-300 { min-width: 115px; }
     .my-lessons-cntr { padding: 15px 0 0 0; }
-    .share-container { width: 50%; }
+    /*.contact-info-cntr { top: 10px; left:10px;}*/
+    .share-container { display:none; visibility: hidden; width: 210px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
-    .tprofile-avatar { top: 172px; left: 25px; }
-    .tprofile-name { top: 226px; left: 200px; }
-    .tprofile-stars { top:0; left: 200px; }
+    .tprofile-avatar { top: 42px; left:0; right:0; margin: auto; }
+    .tprofile-name { top: 206px; left:0; right:0; margin:auto; text-align: center; }
+    .tprofile-stars { top:0; left: 14px; }
+    .navbar-brand { font-size: 2.5em; }
+    #navbar { padding: auto; }
+    .navbar-header { padding: auto; }
+    .contact-info-content {  font-size:16px;  }
+    /*.contact-info-social { margin-left: -10px; }*/
+    /*.navbar-container { width:750px; }*/
 }
 @media(min-width:500px){
     #welcome-responsive, #find-responsive {  font-size: 24px;  }
@@ -23,11 +30,17 @@
     .min-width-300 { min-width: 290px; }
     .min-width-115-300 { min-width: 115px; }
     .my-lessons-cntr { padding: 15px 0 0 0; }
-    .share-container { width: 50%; }
+    /*.contact-info-cntr { top: 40px; right: 40px;}*/
+    .share-container { width: 210px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
-    .tprofile-avatar { top: 172px; left: 25px; }
+    .tprofile-avatar { top: 132px; left: 25px; }
     .tprofile-name { top: 226px; left: 200px; }
-    .tprofile-stars { top:0; left: 200px; }
+    .tprofile-stars { top:0; left: 4px; }
+    .navbar-brand { font-size: 2.5em; }
+    #navbar { padding: 0 5px 0 0; }
+    .navbar-header { padding: 0 0 0 5px; }
+    .contact-info-content {  font-size:16px;  }
+    /*.navbar-container { width:100%; }*/
 }
 @media(min-width:992px){
     #welcome-responsive, #find-responsive {  font-size: 26px;  }
@@ -38,11 +51,17 @@
     .min-width-300 { min-width: 290px; }
     .min-width-115-300 { min-width: 215px; }
     .my-lessons-cntr { padding: 0 0 0 15px; }
-    .share-container { width: 50%; }
+    /*.contact-info-cntr { top: 40px; right: 40px;}*/
+    .share-container { width: 440px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 172px; left: 25px; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
+    .navbar-brand { font-size: 2.7em; }
+    #navbar { padding: auto; }
+    .navbar-header { padding: auto; }
+    .contact-info-content {  font-size:16px;  }
+    /*.navbar-container { width:100%; }*/
 }
 @media(min-width:1200px){
     #welcome-responsive {  font-size: 40px;  }
@@ -60,6 +79,11 @@
     .tprofile-avatar { top: 172px; left: 25px; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
+    .navbar-brand { font-size: 2.7em; }
+    #navbar { padding: auto; }
+    .navbar-header { padding: auto; }
+    .contact-info-content {  font-size:16px;  }
+    /*.navbar-container { width:750px; }*/
 }
 
 html, body {
@@ -249,6 +273,8 @@ a, a:link, a:hover, a:active, a:visited {
 .navbar-inverse .navbar-toggle {
     background-color: #333;
 }
+.navbar-toggle { margin-right: 0; }
+
 .navbar-inverse {
     padding-top: 15px;
     padding-bottom: 2px;
@@ -257,8 +283,7 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .navbar-brand {
     color: #494949 !important;
-    padding: 7px 15px 7px 15px; !important;
-    font-size: 2.7em;
+    padding: 7px 15px 0 0; !important;
     font-family: raleway-light, sans-serif;
 }
 .profes-word {
@@ -1075,9 +1100,12 @@ body.loading .modal-loading { /*modal element will be visible */
 #panel-body-lessons {
     padding: 15px 30px;
 }
-.panel-info, .panel-lessons, .panel-activity {
+.panel-info, .panel-lessons, .panel-activity, .panel-contact-info {
     background-color: #EEE;
     border: 0;
+}
+.panel-milprofes .panel-heading a::after {
+    color: #000 !important;
 }
 .panel-info {
 
@@ -1181,16 +1209,13 @@ body.loading .modal-loading { /*modal element will be visible */
     color: #000;
     text-decoration: none;
 }
-.contact-info-content {
-    font-size:20px;
-}
 .contact-info-content i {
     margin-right: 5px;
 }
 .contact-info-ftr {}
 .contact-info-social {
     width: 100%;
-    min-width: 275px;
+    min-width: 271px;
     text-align: center;
     font-size:41px;
 }
@@ -1664,4 +1689,16 @@ a[class*=status-active] {
 }
 a[class*=status-crawled] {
     border-left: 3px solid red;
+}
+
+#register-link {
+    padding: 9px 15px;
+    background-color: #0480be;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    color: #FFF !important;
+    font-family: raleway-semibold,sans-serif;
+    font-size: 16px !important;
+    margin-top: 0;
 }

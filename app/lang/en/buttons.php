@@ -20,6 +20,7 @@ return array(
     'save_changes'  => 'Guardar cambios',
     'yes'           => 'Sí',
     'no'            => 'No',
+    'share'         => 'Compartir',
 
     //Milprofes. buttons
     'new_school'        => 'Añadir academia',

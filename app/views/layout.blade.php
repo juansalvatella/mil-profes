@@ -166,32 +166,42 @@
     </div>
 
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed navbar-collapsed-btn" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ route('home') }}">@lang('layout.logo')</a>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed navbar-collapsed-btn" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{{ route('home') }}">@lang('layout.logo')</a>
+                    </div>
+                    <div id="navbar" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav text-center">
+                            <li><a href="{{ url('milprofes') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
+                            <li><a href="{{ url('preguntas-frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
+                            <li><a href="{{ url('contacta') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right text-center">
+                        @if(Auth::check())
+                            <li class="text-center"><a class="right-separator" href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
+                            <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
+                        @else
+                            <li><a data-target="#modal-login" data-toggle="modal" href="javascript:" title="@lang('layout.login')">@lang('layout.login')</a></li>
+                            <li>
+                                <a id="register-link" data-target="#modal-register" data-toggle="modal"  href="javascript:" title="@lang('layout.register')">
+                                    <span class="hidden-sm hidden-md"><i class="fa fa-pencil"></i> @lang('layout.register_md')</span>
+                                    <span class="hidden-xs hidden-sm hidden-lg"><i class="fa fa-pencil"></i> @lang('layout.register_sm')</span>
+                                    <span class="hidden-xs hidden-md hidden-lg">@lang('layout.register_xs')</span>
+                                </a>
+                            </li>
+                        @endif
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
             </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav text-center">
-                    <li><a class="left-separator right-separator" href="{{ url('milprofes') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
-                    <li><a class="right-separator" href="{{ url('preguntas-frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
-                    <li><a class="right-separator" href="{{ url('contacta') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right text-center">
-                @if(Auth::check())
-                    <li class="text-center"><a class="right-separator" href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
-                    <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
-                @else
-                    <li><a data-target="#modal-login" data-toggle="modal" class="right-separator" href="javascript:" title="@lang('layout.login')">@lang('layout.login')</a></li>
-                    <li><a id="register-link" data-target="#modal-register" data-toggle="modal"  href="javascript:" title="@lang('layout.register')">@lang('layout.register')</a></li>
-                @endif
-                </ul>
-            </div><!--/.nav-collapse -->
         </div>
     </nav>
 
