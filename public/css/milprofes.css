@@ -9,11 +9,12 @@
     .min-width-115-300 { min-width: 115px; }
     .my-lessons-cntr { padding: 15px 0 0 0; }
     /*.contact-info-cntr { top: 10px; left:10px;}*/
-    .share-container { display:none; visibility: hidden; width: 210px; top:4px; right:4px; }
+    .hdr-share { height: 100px; }
+    .share-container { width: 100%; bottom:12px; left: 0; padding: 0 15px 0 15px; text-align: center; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 42px; left:0; right:0; margin: auto; }
     .tprofile-name { top: 206px; left:0; right:0; margin:auto; text-align: center; }
-    .tprofile-stars { top:0; left: 14px; }
+    .tprofile-stars { top:0; left:0; width:100%; text-align:center; }
     .navbar-brand { font-size: 2.5em; }
     #navbar { padding: auto; }
     .navbar-header { padding: auto; }
@@ -31,6 +32,7 @@
     .min-width-115-300 { min-width: 115px; }
     .my-lessons-cntr { padding: 15px 0 0 0; }
     /*.contact-info-cntr { top: 40px; right: 40px;}*/
+    .hdr-share { height: 50px; }
     .share-container { width: 210px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 132px; left: 25px; }
@@ -52,6 +54,7 @@
     .min-width-115-300 { min-width: 215px; }
     .my-lessons-cntr { padding: 0 0 0 15px; }
     /*.contact-info-cntr { top: 40px; right: 40px;}*/
+    .hdr-share { height: 50px; }
     .share-container { width: 440px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 172px; left: 25px; }
@@ -75,6 +78,7 @@
     .my-lessons-cntr { padding: 0 0 0 15px; }
     .contact-info-cntr { top: 40px; right: 40px;}
     .share-container { width: 440px; top:4px; right:4px; }
+    .hdr-share { height: 50px; }
     .share-me { top: 15px; right: 448px; }
     .tprofile-avatar { top: 172px; left: 25px; }
     .tprofile-name { top: 226px; left: 200px; }
@@ -1057,7 +1061,6 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .hdr-share {
     position: relative;
-    height: 50px;
     background-color: #EEE;
 }
 .share-container {
