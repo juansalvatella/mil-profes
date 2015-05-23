@@ -160,6 +160,13 @@ a, a:link, a:hover, a:active, a:visited {
      text-decoration: none;
 }
 
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.top-buffer-3 { margin-top:3px; }
 .top-buffer-4 { margin-top:4px; }
 .top-buffer-5 { margin-top:5px; }
 .top-buffer-10 { margin-top:10px; }
@@ -169,6 +176,8 @@ a, a:link, a:hover, a:active, a:visited {
 .top-buffer-30 { margin-top:30px; }
 .top-buffer-35 { margin-top:35px; }
 .top-buffer-45 { margin-top:45px; }
+
+.right-buffer-5 { margin-right:5px; }
 
 .bottom-buffer-5 { margin-bottom:5px; }
 .bottom-buffer-10 { margin-bottom:10px; }
@@ -191,6 +200,8 @@ a, a:link, a:hover, a:active, a:visited {
 .bottom-padding-100 { padding-bottom: 100px; }
 .bottom-padding-150 { padding-bottom: 150px; }
 .bottom-padding-200 { padding-bottom: 200px; }
+
+.padding-0 { padding:0; }
 
 .col-centered {
     display:inline-block;
@@ -895,8 +906,9 @@ body.loading .modal-loading { /*modal element will be visible */
     padding: 10px 0px 5px 5px;
 }
 .no-reviews {
-    display: inline-block;
-    margin-top: 5px;
+    display: block;
+    font-size: 13px;
+    margin-top: -5px;
 }
 .pick {
     color: #FFF;
@@ -942,6 +954,30 @@ body.loading .modal-loading { /*modal element will be visible */
     font-family: raleway-semibold, sans-serif;
     font-size: 22px;
 }
+.no-price-provided {
+    padding-top: 20px;
+    font-family: raleway-semibold, sans-serif;
+    font-size: 15px;
+}
+.price-container-tp {
+    overflow: hidden;
+    padding:0;
+}
+.price-tp {
+    font-size: 34px;
+    margin-top: 10px;
+    font-family: raleway-bold, sans-serif;
+}
+.per-unit-tp {
+    font-size:18px;
+    margin-top: -3px;
+    font-family: raleway-semibold, sans-serif;
+}
+.no-price-provided-tp {
+    font-size: 15px;
+    padding-top: 27px;
+    font-family: raleway-semibold, sans-serif;
+}
 .results-separator {
     border:0;
     width:77%;
@@ -954,11 +990,6 @@ body.loading .modal-loading { /*modal element will be visible */
 .show-more-link a, .show-more-link a:hover, .show-more-link a:active {
     color:#000;
     font-family: raleway-semibold, sans-serif;
-}
-.no-price-provided {
-    padding-top: 20px;
-    font-family: raleway-semibold, sans-serif;
-    font-size: 15px;
 }
 /************** END SEARCH ****************/
 
@@ -1079,9 +1110,26 @@ body.loading .modal-loading { /*modal element will be visible */
     color: #4c4c4c;
 }
 .comment-text {
-    margin: 5px 0 5px 0;
-    font-size: 14px;
+    margin: 5px 5px 5px 0;
+    font-size: 13px;
+    text-align: justify;
 }
+.position-relative {
+    position: relative;
+}
+.comment-left {
+    overflow: hidden;
+    padding:0;
+    position:absolute;
+    width: 80px;
+}
+.comment-right {
+    margin-left: 80px;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}
+
 .comment-isithelpful {
     font-size: 12px;
 }
@@ -1172,6 +1220,9 @@ body.loading .modal-loading { /*modal element will be visible */
     line-height: 0;
     color: #5D5D5D;
 }
+.reviewer-name {
+    font-family: raleway-semibold, sans-serif;
+}
 .panel-heading a:after {
     font-family: 'Glyphicons Halflings';
     content:"\e114";
@@ -1191,6 +1242,7 @@ body.loading .modal-loading { /*modal element will be visible */
     /*padding: 15px;*/
     background-color: #EEE;
     position:relative;
+    border-top: 1px solid #A4A5A5;
 }
 .contact-info-content div {
     margin-bottom:5px;
@@ -1205,6 +1257,7 @@ body.loading .modal-loading { /*modal element will be visible */
     /*border-bottom: 1px solid #737575;*/
     background-color: #EEE;
     padding:0;
+    border:0;
 }
 .contact-info-title a,
 .contact-info-title a:focus,
@@ -1443,6 +1496,9 @@ body.loading .modal-loading { /*modal element will be visible */
     padding-bottom: 5px;
     border-bottom: 1px solid rgb(255, 169, 17);
 }
+.subject-icon-lg {
+    padding:0;
+}
 .subject-icon img {
     max-width:50%;
     max-height:50%;
@@ -1456,9 +1512,20 @@ body.loading .modal-loading { /*modal element will be visible */
     font-weight: 700;
 }
 .t-lesson-title-reviews {
+    margin-left:-3px;
     display: inline-block;
     margin-bottom:0;
     font-family: raleway-semibold, sans-serif;
+    color: #414141;
+}
+.side-sticky {
+    margin:0;
+    padding:0;
+}
+#sticky-start {
+    height:0;
+    padding:0;
+    margin:0;
 }
 .single-star {
     display: inline-block;
@@ -1466,7 +1533,8 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .description-reviews-separator {
     border: 0;
-    margin: 10px 0 10px 0;
+    margin-top: 0px;
+    margin-bottom: 30px;
     height: 1px;
     background: #333;
     background-image: -webkit-linear-gradient(left, #ccc, #FFA911, #ccc);

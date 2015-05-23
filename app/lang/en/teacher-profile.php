@@ -7,6 +7,7 @@ return array(
     'subtitle' => 'Perfil de profe.',
     'rating' => 'Valoración',
 
+    'price_unit' => '€/hora',
     'per unit' => 'por hora',
 
     'about_me' => 'Sobre mí',
@@ -57,7 +58,7 @@ return array(
     'share-me' => '¡Comparte mi perfil!',
     'share-myself' => '¡Date a conocer!',
 
-    'reviews' => 'valoración|valoraciones',
+    'reviews' => 'Valoración|Valoraciones',
 
 
 );

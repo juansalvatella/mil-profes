@@ -10,15 +10,23 @@
 
 <div class="container-fluid background-gblack">
     <div class="row">
-        <div class="col-md-offset-1 col-md-10 hdr-img" style="
+        <div class="col-md-offset-1 col-md-10 hdr-img" itemscope itemtype="http://schema.org/LocalBusiness" id="profe" itemref="address" style="
         @if(false)
                 background: url('{{asset('img/teacher-bims/default.jpg')}}') no-repeat center center;
         @else
                 background: url('{{asset('img/teacher-bims/default.jpg')}}') no-repeat center top;
         @endif
                 background-size: cover;">
-
-            <img height="160" width="160" class="tprofile-avatar thumbnail" src="{{ asset('img/avatars/'.$teacher->avatar) }}" alt="{{ $teacher->displayName }}">
+            <meta itemprop="name" content="{{ $teacher->displayName }}">
+            {{--<meta itemprop="jobTitle" content="Profe.">--}}
+            <meta itemprop="telephone" content="{{{ $teacher->phone }}}">
+            <meta itemprop="email" content="{{{ $teacher->email }}}">
+            <img itemprop="image" height="160" width="160" class="tprofile-avatar thumbnail" src="{{ asset('img/avatars/'.$teacher->avatar) }}" alt="{{ $teacher->displayName }}">
+            <div class="tprofile-stars" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                <meta itemprop="reviewCount" content="{{ $teacher->getNumberOfReviews() }}">
+                <meta itemprop="ratingValue" content="{{ $teacher->getTeacherAvgRating() }}">
+                <meta itemprop="bestRating" content="5">
+            </div>
 
             <div class="tprofile-name">
                 <b>{{ $teacher->displayName }}</b>
@@ -30,16 +38,9 @@
     </div>
     <div class="row">
         <div class="col-md-offset-1 col-md-10 hdr-share text-right">
-
-            <div itemscope itemtype="http://schema.org/LocalBusiness" itemref="address">
-                <meta itemprop="name" content="{{ $teacher->displayName }}">
-                <div class="tprofile-stars" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-                    <meta itemprop="ratingValue" content="{{ $teacher->getTeacherAvgRating() }}">
-                    <meta itemprop="bestRating" content="5">
-                    <div id="teacher-stars"></div><span id="teacher-n-reviews" title="@choice('teacher-profile.reviews',2)">(<span itemprop="reviewCount">{{ $teacher->getNumberOfReviews() }}</span>)</span>
-                </div>
+            <div class="tprofile-stars">
+                <div id="teacher-stars"></div><span id="teacher-n-reviews" title="@choice('teacher-profile.reviews',2)">({{ $teacher->getNumberOfReviews() }})</span>
             </div>
-
             @if($teacher->itsme)
                 <span class="hidden-xs hidden-sm hidden-md share-me">@lang('teacher-profile.share-myself') <i class="fa fa-chevron-right"></i></span>
             @else
@@ -105,9 +106,9 @@
                                     <div class="panel-body contact-info-body">
                                         <div class="contact-info-content">
                                             @if($teacher->phone)
-                                                <div><i class="fa fa-phone"></i> <span class="tlf-number">{{{ substr($teacher->phone,0,3).' '.substr($teacher->phone,3,2).' '.substr($teacher->phone,5,2).' '.substr($teacher->phone,7,strlen($teacher->phone)-7) }}}</span></div>
+                                                <div><i class="fa fa-phone"></i> <span class="tlf-number" itemprop="telephone">{{{ substr($teacher->phone,0,3).' '.substr($teacher->phone,3,2).' '.substr($teacher->phone,5,2).' '.substr($teacher->phone,7,strlen($teacher->phone)-7) }}}</span></div>
                                             @endif
-                                            <div><i class="fa fa-envelope-o"></i> {{{ $teacher->email }}}</div>
+                                            <div><i class="fa fa-envelope-o"></i> <a href="mailto:{{{ $teacher->email }}}">{{{ $teacher->email }}}</a></div>
                                         </div>
                                         <div class="contact-info-social">
                                             @if($teacher->link_f)
@@ -149,9 +150,6 @@
                                             </span>
                                             @endif
                                         </div>
-                                        {{--<div id="blurry">--}}
-                                        {{--<a id="remove-blur" href="javascript:;" class="btn btn-lg btn-milprofes">¡Contactar!</a>--}}
-                                        {{--</div>--}}
                                     </div>
                                 </div>
                             </div>
@@ -262,7 +260,7 @@
                                             <span>Aún no tengo clases publicadas.</span>
                                         @else
                                             @foreach($lessons as $l)
-                                                <div class="row bottom-buffer-35">
+                                                <div class="row bottom-buffer-45">
                                                     {{--<input type="hidden" id="authCheck" value="{{ Auth::check() }}">--}}
                                                     {{--<input type="hidden" id="lessonId" value="{{ $l->id }}">--}}
                                                     {{--<input type="hidden" id="averageRating" value="{{ $l->getLessonAvgRating() }}">--}}
@@ -277,12 +275,11 @@
                                                             <br/>
                                                             <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}"><span class="stars-container top-buffer-5 bottom-buffer-5" data-score="{{ $l->getLessonAvgRating() }}"></span></a>
                                                             <br/>
-                                                            <span id="lesson-n-reviews"><small>({{ $n_reviews }} @choice('teacher-profile.reviews',$n_reviews))</small></span>
+                                                            <span id="lesson-n-reviews"><small><i class="fa fa-user" title="@choice('teacher-profile.reviews',$n_reviews)"></i> {{ $n_reviews }}</small></span>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xs-12 col-sm-10">
-
+                                                    <div class="col-xs-12 col-sm-8">
                                                         <div class="t-lesson-subject">
                                                             @if($l->title == '')
                                                                 <h4><b>@lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$category_name)</b></h4>
@@ -294,58 +291,93 @@
                                                         <div class="t-lesson-description result-description text-justify">
                                                             {{{ $l->description }}}
                                                         </div>
+                                                    </div>
 
-                                                        <hr class="description-reviews-separator"/>
+                                                    <div class="col-xs-12 col-sm-2 price-container-tp">
+                                                        @if($l->price==0.0)
+                                                            <div class="no-price-provided-tp text-center">Contáctame<br>para saber<br>el precio</div>
+                                                        @else
+                                                            <div class="price-tp text-center">
+                                                                {{-- + 0 removes zeros to the right of the decimal separator --}}
+                                                                {{{ str_replace('.', ',', $l->price + 0) }}}
+                                                            </div>
+                                                            <div class="text-center per-unit-tp">@lang('teacher-profile.price_unit')</div>
+                                                        @endif
+                                                    </div>
 
+                                                    <div class="col-xs-12 top-buffer-15">
                                                         <div class="t-lesson-comments-title">
-                                                            <h5 class="t-lesson-title-reviews">@lang('teacher-profile.title_reviews')</h5> @if($n_reviews > 2)<small><a href="javascript:" class="trigger-all-reviews" data-lessonId="{{ $l->id }}">(ver todas)</a></small>@endif
+                                                            <h5 class="t-lesson-title-reviews">@lang('teacher-profile.title_reviews')</h5> @if($n_reviews > 2)<a href="javascript:" class="trigger-all-reviews" data-lessonId="{{ $l->id }}">(ver todas)</a>@endif
                                                         </div>
 
+                                                        <div class="row top-buffer-10">
                                                         <?php
                                                             $featured_reviews = $l->getFeaturedReviews(2);
+                                                            $n_fr = count($featured_reviews);
                                                         ?>
-                                                        @if(count($featured_reviews) > 0)
+                                                        @if($n_fr)
                                                             @foreach($featured_reviews as $f)
                                                                 <?php
                                                                     //Get reviewer display name
                                                                     $student = Student::where('id',$f->student_id)->first();
                                                                     $reviewer = $student->user()->first();
                                                                     $reviewer->displayName = ucwords($reviewer->name).' '.substr(ucwords($reviewer->lastname),0,1).'.';
-                                                                    if($f->value <= 1)
-                                                                        $f->valueInWords = 'Pobre';
-                                                                    elseif($f->value <= 2)
-                                                                        $f->valueInWords = 'Regular';
-                                                                    elseif($f->value <= 3)
-                                                                        $f->valueInWords = 'Buena';
-                                                                    elseif($f->value <= 4)
-                                                                        $f->valueInWords = 'Muy buena';
-                                                                    elseif($f->value <= 5)
-                                                                        $f->valueInWords = 'Excelente';
                                                                 ?>
-                                                                <div class="row top-buffer-10">
-                                                                    <div class="col-xs-12" itemprop="review" itemscope itemtype="http://schema.org/Review">
-                                                                        <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/LocalBusiness">
-                                                                            <meta itemprop="name" content="{{ $teacher->displayName }}">
+                                                                @if($n_fr < 2)
+                                                                <div class="col-xs-12 col-sm-12" itemprop="review" itemscope itemtype="http://schema.org/Review">
+                                                                @else
+                                                                <div class="col-xs-12 col-sm-6" itemprop="review" itemscope itemtype="http://schema.org/Review">
+                                                                    <meta itemprop="datePublished" content="{{ $f->created_at->format('Y-m-d') }}">
+                                                                @endif
+                                                                    <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/LocalBusiness">
+                                                                        <meta itemprop="name" content="{{ $teacher->displayName }}">
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        @if($n_fr < 2)
+                                                                        <div class="col-xs-12 col-sm-2 padding-0">
+                                                                        @else
+                                                                        <div class="col-xs-12 col-sm-3 padding-0">
+                                                                        @endif
+                                                                            <div class="text-center top-buffer-3"><img class="img-circle" width="46" height="46" src="{{ asset('img/avatars/'.$reviewer->avatar) }}"/></div>
+                                                                            <div class="text-center top-buffer-10 ellipsis reviewer-name" itemprop="author">{{ $reviewer->displayName }}</div>
+                                                                            <div class="text-center"><small>{{ $f->yes_helpful }} <i class="fa fa-thumbs-o-up"></i> de {{ $f->total_helpful }}</small></div>
                                                                         </div>
-                                                                        <div class="comment-helpfulness"><small>{{ $f->yes_helpful }} de {{ $f->total_helpful }} encontraron útil esta valoración</small></div>
-                                                                        <div class="comment-rating">
-                                                                            <div class="inline-block" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
-                                                                            <meta itemprop="worstRating" content="0">
-                                                                            <img class="single-star" height="15" width="16" src="{{ asset('img/star-on-small.png') }}" /> <b><meta itemprop="ratingValue" content="{{ $f->value }}"><span itemprop="name">{{ $f->valueInWords }}</span></b><meta itemprop="bestRating" content="5">.</div> Por <b><span itemprop="author">{{ $reviewer->displayName }}</span></b> el <meta itemprop="datePublished" content="{{ $f->created_at->format('Y-m-d') }}">{{ $f->created_at->format('d/m/Y') }}
-                                                                        </div>
-                                                                        <div class="comment-text"><span itemprop="description">{{{ $f->comment }}}</span></div>
-                                                                        <div class="comment-isithelpful">
-                                                                            ¿Te ha resultado útil esta valoración? <a href="javascript:" data-reviewId="{{ $f->id }}" class="btn btn-xs btn-link btn-yes @if(Auth::check()) itwashelpful @else trigger-login @endif"><i class="fa fa-thumbs-up"></i> @lang('buttons.yes')</a> <a href="javascript:" data-reviewId="{{ $f->id }}" class="btn btn-xs btn-link btn-no @if(Auth::check()) nothelpful @else trigger-login @endif"><i class="fa fa-thumbs-down"></i> @lang('buttons.no')</a>
+                                                                        @if($n_fr < 2)
+                                                                        <div class="col-xs-12 col-sm-10 padding-0">
+                                                                        @else
+                                                                        <div class="col-xs-12 col-sm-9 padding-0">
+                                                                        @endif
+                                                                            <div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                                                                                <meta itemprop="worstRating" content="0">
+                                                                                <meta itemprop="ratingValue" content="{{ $f->value }}">
+                                                                                <meta itemprop="bestRating" content="5">
+                                                                                <div class="ratings-stars" data-score="{{ $f->value }}"><div class="inline-block float-right right-buffer-5">{{ $f->created_at->format('d/m/Y') }}</div></div>
+                                                                                {{--<div class="comment-helpfulness"><small>{{ $f->yes_helpful }} de {{ $f->total_helpful }} encontraron útil esta valoración</small></div>--}}
+                                                                                <div class="comment-text"><span itemprop="description">{{{ $f->comment }}}</span></div>
+                                                                                <div class="comment-isithelpful">
+                                                                                    ¿Te ha resultado útil esta valoración?<br/>
+                                                                                    <a href="javascript:" data-reviewId="{{ $f->id }}" class="btn btn-xs btn-link btn-yes @if(Auth::check()) itwashelpful @else trigger-login @endif ">
+                                                                                        <i class="fa fa-thumbs-up"></i> @lang('buttons.yes')
+                                                                                    </a>
+                                                                                    <a href="javascript:" data-reviewId="{{ $f->id }}" class="btn btn-xs btn-link btn-no @if(Auth::check()) nothelpful @else trigger-login @endif ">
+                                                                                        <i class="fa fa-thumbs-down"></i> @lang('buttons.no')
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             @endforeach
                                                         @else
-                                                            <span class="no-reviews">¿Has estudiado con {{ $teacher->displayName }}? ¡Sé el primero o la primera en <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}">valorar</a> esta clase!</span>
+                                                            <div class="col-xs-12">
+                                                                <span class="no-reviews">¿Has estudiado con {{ $teacher->displayName2 }}? ¡Sé el primero o la primera en <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}">valorar</a> esta clase!</span>
+                                                            </div>
                                                         @endif
+                                                        </div>
                                                     </div>
-
                                                 </div>
+
+                                                <hr align="center" width="100%" class="description-reviews-separator"/>
 
                                                 <?php $all_reviews = $l->ratings()->orderBy('created_at','DESC')->get(); ?>
                                                 @if(count($all_reviews) > 2)
@@ -360,30 +392,38 @@
                                                                         $student = Student::where('id',$a->student_id)->first();
                                                                         $reviewer = $student->user()->first();
                                                                         $reviewer->displayName = ucwords($reviewer->name).' '.substr(ucwords($reviewer->lastname),0,1).'.';
-                                                                        if($a->value <= 1)
-                                                                            $a->valueInWords = 'Pobre';
-                                                                        elseif($a->value <= 2)
-                                                                            $a->valueInWords = 'Regular';
-                                                                        elseif($a->value <= 3)
-                                                                            $a->valueInWords = 'Buena';
-                                                                        elseif($a->value <= 4)
-                                                                            $a->valueInWords = 'Muy buena';
-                                                                        elseif($a->value <= 5)
-                                                                            $a->valueInWords = 'Excelente';
                                                                     ?>
-                                                                    <div itemprop="review" itemscope itemtype="http://schema.org/Review">
-                                                                        <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/LocalBusiness">
-                                                                            <meta itemprop="name" content="{{ $teacher->displayName }}">
-                                                                        </div>
-                                                                        <div class="comment-helpfulness"><small>{{ $a->yes_helpful }} de {{ $a->total_helpful }} encontraron útil esta valoración</small></div>
-                                                                        <div class="comment-rating">
-                                                                            <div class="inline-block" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
-                                                                            <meta itemprop="worstRating" content="0">
-                                                                            <img class="single-star" height="15" width="16" src="{{ asset('img/star-on-small.png') }}" /> <b><meta itemprop="ratingValue" content="{{ $a->value }}"><span itemprop="name">{{ $a->valueInWords }}</span></b><meta itemprop="bestRating" content="5">.</div> Por <b><span itemprop="author">{{ $reviewer->displayName }}</span></b> el <meta itemprop="datePublished" content="{{ $a->created_at->format('Y-m-d') }}">{{ $a->created_at->format('d/m/Y') }}
-                                                                        </div>
-                                                                        <div class="comment-text"><span itemprop="description">{{{ $a->comment }}}</span></div>
-                                                                        <div class="comment-isithelpful bottom-buffer-15">
-                                                                            ¿Te ha resultado útil esta valoración? <a href="javascript:" data-reviewId="{{ $a->id }}" class="btn btn-xs btn-link btn-yes @if(Auth::check()) itwashelpful @else trigger-login @endif"><i class="fa fa-thumbs-up"></i> @lang('buttons.yes')</a> <a href="javascript:" data-reviewId="{{ $a->id }}" class="btn btn-xs btn-link btn-no @if(Auth::check()) nothelpful @else trigger-login @endif"><i class="fa fa-thumbs-down"></i> @lang('buttons.no')</a>
+                                                                    <div class="row bottom-buffer-15">
+                                                                        <div class="col-xs-12" itemprop="review" itemscope itemtype="http://schema.org/Review">
+                                                                            <meta itemprop="datePublished" content="{{ $f->created_at->format('Y-m-d') }}">
+                                                                            <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/LocalBusiness">
+                                                                                <meta itemprop="name" content="{{ $teacher->displayName }}">
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-2 padding-0">
+                                                                                <div class="text-center top-buffer-3"><img class="img-circle" width="46" height="46" src="{{ asset('img/avatars/'.$reviewer->avatar) }}"/></div>
+                                                                                <div class="text-center top-buffer-10 ellipsis reviewer-name" itemprop="author">{{ $reviewer->displayName }}</div>
+                                                                                <div class="text-center"><small>{{ $f->yes_helpful }} <i class="fa fa-thumbs-o-up"></i> de {{ $f->total_helpful }}</small></div>
+                                                                            </div>
+                                                                            <div class="col-xs-12 col-sm-10 padding-0">
+                                                                                <div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                                                                                    <meta itemprop="worstRating" content="0">
+                                                                                    <meta itemprop="ratingValue" content="{{ $f->value }}">
+                                                                                    <meta itemprop="bestRating" content="5">
+                                                                                    <div class="ratings-stars" data-score="{{ $f->value }}"><div class="inline-block float-right">{{ $f->created_at->format('d/m/Y') }}</div></div>
+                                                                                    {{--<div class="comment-helpfulness"><small>{{ $f->yes_helpful }} de {{ $f->total_helpful }} encontraron útil esta valoración</small></div>--}}
+                                                                                    <div class="comment-text"><span itemprop="description">{{{ $f->comment }}}</span></div>
+                                                                                    <div class="comment-isithelpful">
+                                                                                        ¿Te ha resultado útil esta valoración?<br/>
+                                                                                        <a href="javascript:" data-reviewId="{{ $f->id }}" class="btn btn-xs btn-link btn-yes @if(Auth::check()) itwashelpful @else trigger-login @endif ">
+                                                                                            <i class="fa fa-thumbs-up"></i> @lang('buttons.yes')
+                                                                                        </a>
+                                                                                        <a href="javascript:" data-reviewId="{{ $f->id }}" class="btn btn-xs btn-link btn-no @if(Auth::check()) nothelpful @else trigger-login @endif ">
+                                                                                            <i class="fa fa-thumbs-down"></i> @lang('buttons.no')
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
                                                                         </div>
                                                                     </div>
                                                                 @endforeach

@@ -14,6 +14,26 @@ $(document).ready(function() {
         score: $('#teacher-rating').val()
     });
 
+    $('.stars-container').raty({
+        readOnly: true,
+        half: true,
+        size: 15,
+        starHalf: '../img/star-half-small.png',
+        starOff : '../img/star-off-small.png',
+        starOn  : '../img/star-on-small.png',
+        score: function(){return $(this).attr('data-score');}
+    });
+
+    $('.ratings-stars').raty({
+        readOnly: true,
+        half: true,
+        size: 15,
+        starHalf: '../img/star-half-small.png',
+        starOff : '../img/star-off-small.png',
+        starOn  : '../img/star-on-small.png',
+        score: function(){return $(this).attr('data-score');}
+    });
+
     $('#review-stars').raty({
         readOnly: false,
         half: true,
@@ -272,16 +292,6 @@ $(document).ready(function() {
             '¿Aún no tienes cuenta? <a href="javascript:" class="trigger-register">¡Regístrate gratis!</a>' +
         '');
         $('#modal-login').modal('show');
-    });
-
-    $('.stars-container').raty({
-        readOnly: true,
-        half: true,
-        size: 15,
-        starHalf: '../img/star-half-small.png',
-        starOff : '../img/star-off-small.png',
-        starOn  : '../img/star-on-small.png',
-        score: function(){return $(this).attr('data-score');}
     });
 
 });

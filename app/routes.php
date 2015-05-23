@@ -100,16 +100,19 @@ Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug)
         $teacher->age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md") ? ((date("Y") - $birthDate[0]) - 1) : (date("Y") - $birthDate[0]));
     }
 
-    //Otros datos (importados de table user)
+    //Otros datos (importados de user table)
     $teacher->slug = $user_slug;
     $teacher->username = $user->username;
     $teacher->displayName = ucwords($user->name).' '.substr(ucwords($user->lastname),0,1).'.';
+    $teacher->displayName2 = ucwords($user->name);
     $teacher->avatar = $user->avatar;
     $teacher->email = $user->email;
     $teacher->phone = $user->phone;
     $teacher->description = $user->description;
     $teacher->town = $user->town;
     $teacher->gender = $user->gender;
+    $teacher->region = $user->region;
+    $teacher->postalcode = $user->postalcode;
 
     $teacher->link_f = $user->link_facebook;
     $teacher->link_t = $user->link_twitter;
@@ -119,14 +122,6 @@ Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug)
     $teacher->link_w = $user->link_web;
 
     $teacher->availability = $teacher->availabilities()->get();
-
-    $geocoding = Geocoding::geocode($user->address);
-    if($geocoding) {
-        if(isset($geocoding[3]['admin_1']))
-            $teacher->region = $geocoding[3]['admin_1'];
-        if(isset($geocoding[3]['postal_code']))
-            $teacher->postalcode = $geocoding[3]['postal_code'];
-    }
 
     return View::make('new_teacher_details', compact('teacher','lessons'));
 }]);

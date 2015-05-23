@@ -186,7 +186,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right text-center">
                         @if(Auth::check())
-                            <li class="text-center"><a class="right-separator" href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
+                            <li class="text-center"><a href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
                             <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
                         @else
                             <li><a data-target="#modal-login" data-toggle="modal" href="javascript:" title="@lang('layout.login')">@lang('layout.login')</a></li>

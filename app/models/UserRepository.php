@@ -30,6 +30,8 @@ class UserRepository
         $user->lat = $geocoded_user_address[0]; //latitud
         $user->lon = $geocoded_user_address[1]; //longitud
         $user->town = $geocoded_user_address[3]['locality']; //municipio
+        $user->region = $geocoded_user_address[3]['admin_2']; //guardar provincia/región
+        $user->postalcode = $geocoded_user_address[3]['postal_code']; //guardar código postal
 
         //Default values
         $user->avatar = 'default_avatar.png';
