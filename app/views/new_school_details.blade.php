@@ -1,37 +1,35 @@
 @extends('layout')
 @section('content')
 
-{{--Rich snippet--}}
-
-{{-- This vars are needed for teacher.js --}}
+{{-- This vars are needed for school.js --}}
 <input type="hidden" id="_token" value="{{ Session::getToken() }}">
-<input type="hidden" id="teacherId" value="{{ $teacher->id }}">
-<input type="hidden" id="teacher-rating" value="{{ $teacher->avgRating }}" />
+<input type="hidden" id="teacherId" value="{{ $school->id }}">
+<input type="hidden" id="teacher-rating" value="{{ $school->avgRating }}" />
 
 <div class="container-fluid background-gblack">
     <div class="row">
         <div class="col-md-offset-1 col-md-10 hdr-img" itemscope itemtype="http://schema.org/LocalBusiness" id="profe" itemref="address" style="
         @if(false)
-                background: url('{{asset('img/teacher-bims/default.jpg')}}') no-repeat center center;
+                background: url('{{asset('img/school-bims/default.jpg')}}') no-repeat center center;
         @else
-                background: url('{{asset('img/teacher-bims/default.jpg')}}') no-repeat center top;
+                background: url('{{asset('img/school-bims/default.jpg')}}') no-repeat center top;
         @endif
                 background-size: cover;">
-            <meta itemprop="name" content="{{ $teacher->displayName }}">
+            <meta itemprop="name" content="{{ $school->name }}">
             {{--<meta itemprop="jobTitle" content="Profe.">--}}
-            <meta itemprop="telephone" content="{{{ $teacher->phone }}}">
-            <meta itemprop="email" content="{{{ $teacher->email }}}">
-            <img itemprop="image" height="160" width="160" class="tprofile-avatar thumbnail" src="{{ asset('img/avatars/'.$teacher->avatar) }}" alt="{{ $teacher->displayName }}">
+            <meta itemprop="telephone" content="{{{ $school->phone }}}">
+            <meta itemprop="email" content="{{{ $school->email }}}">
+            <img itemprop="image" width="160" class="sprofile-logo thumbnail" src="{{ asset('img/logos/'.$school->logo) }}" alt="{{ $school->name }}">
             <div class="tprofile-stars" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-                <meta itemprop="reviewCount" content="{{ $teacher->nReviews }}">
-                <meta itemprop="ratingValue" content="{{ $teacher->avgRating }}">
+                <meta itemprop="reviewCount" content="{{ $school->nReviews }}">
+                <meta itemprop="ratingValue" content="{{ $school->avgRating }}">
                 <meta itemprop="bestRating" content="5">
             </div>
 
             <div class="tprofile-name">
-                <b>{{ $teacher->displayName }}</b>
+                <b>{{ $school->name }}</b>
                 <br/>
-                <small>@lang('teacher-profile.teacher')</small>
+                <small>@lang('school-profile.school')</small>
             </div>
 
         </div>
@@ -39,13 +37,11 @@
     <div class="row">
         <div class="col-md-offset-1 col-md-10 hdr-share text-right">
             <div class="tprofile-stars">
-                <div id="teacher-stars"></div><span id="teacher-n-reviews" title="@choice('teacher-profile.reviews',2)">({{ $teacher->nReviews }})</span>
+                <div id="teacher-stars"></div><span id="teacher-n-reviews" title="@choice('teacher-profile.reviews',2)">({{ $school->nReviews }})</span>
             </div>
-            @if($teacher->itsme)
-                <span class="hidden-xs hidden-sm hidden-md share-me">@lang('teacher-profile.share-myself') <i class="fa fa-chevron-right"></i></span>
-            @else
-                <span class="hidden-xs hidden-sm hidden-md share-me">@lang('teacher-profile.share-me') <i class="fa fa-chevron-right"></i></span>
-            @endif
+
+            <span class="hidden-xs hidden-sm hidden-md share-me">@lang('school-profile.share-me') <i class="fa fa-chevron-right"></i></span>
+
             <div class="share-container">
                 <ul class="rrssb-buttons clearfix">
                     <li class="rrssb-facebook">
@@ -60,7 +56,7 @@
                     </li>
                     <li class="rrssb-twitter">
                         <?php
-                            $twitter_status = urlencode('Visita mi perfil de profe. en @milprofes ¿Qué vas a aprender hoy?: '.Request::url());
+                            $twitter_status = urlencode('Infórmate de nuestra oferta de cursos en @milprofes ¿Qué vas a aprender hoy?: '.Request::url());
                         ?>
                         <a href="http://twitter.com/home?status={{$twitter_status}}" class="popup">
                             <span class="rrssb-icon">
@@ -73,7 +69,7 @@
                     </li>
                     <li class="rrssb-googleplus">
                         <?php
-                            $googleplus_status = urlencode('Visita mi perfil de profe. en milPROFES. ¿Qué vas a aprender hoy?: '.Request::url());
+                            $googleplus_status = urlencode('Infórmate de nuestra oferta de cursos en milPROFES. ¿Qué vas a aprender hoy?: '.Request::url());
                         ?>
                         <a href="https://plus.google.com/share?url={{$googleplus_status}}" class="popup">
                             <span class="rrssb-icon">
@@ -105,39 +101,39 @@
                                 <div id="collapse" class="panel-collapse collapse">
                                     <div class="panel-body contact-info-body">
                                         <div class="contact-info-content">
-                                            @if($teacher->phone)
-                                                <div><i class="fa fa-phone"></i> <span class="tlf-number" itemprop="telephone">{{{ substr($teacher->phone,0,3).' '.substr($teacher->phone,3,2).' '.substr($teacher->phone,5,2).' '.substr($teacher->phone,7,strlen($teacher->phone)-7) }}}</span></div>
+                                            @if($school->phone)
+                                                <div><i class="fa fa-phone"></i> <span class="tlf-number" itemprop="telephone">{{{ substr($school->phone,0,3).' '.substr($school->phone,3,2).' '.substr($school->phone,5,2).' '.substr($school->phone,7,strlen($school->phone)-7) }}}</span></div>
                                             @endif
-                                            <div><i class="fa fa-envelope-o"></i> <a href="mailto:{{{ $teacher->email }}}">{{{ $teacher->email }}}</a></div>
+                                            <div><i class="fa fa-envelope-o"></i> <a href="mailto:{{{ $school->email }}}">{{{ $school->email }}}</a></div>
                                         </div>
                                         <div class="contact-info-social">
-                                            @if($teacher->link_f)
-                                                <a href="{{ $teacher->link_f }}" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                                            @if($school->link_facebook)
+                                                <a href="{{ $school->link_facebook }}" target="_blank"><i class="fa fa-facebook-square"></i></a>
                                             @else
                                                 <i class="fa fa-facebook-square disabled"></i>
                                             @endif
-                                            @if($teacher->link_t)
-                                                <a href="{{ $teacher->link_t }}" target="_blank"><i class="fa fa-twitter-square"></i></a>
+                                            @if($school->link_twitter)
+                                                <a href="{{ $school->link_twitter }}" target="_blank"><i class="fa fa-twitter-square"></i></a>
                                             @else
                                                 <i class="fa fa-twitter-square disabled"></i>
                                             @endif
-                                            @if($teacher->link_g)
-                                                <a href="{{ $teacher->link_g }}" target="_blank"><i class="fa fa-google-plus-square"></i></a>
+                                            @if($school->link_googleplus)
+                                                <a href="{{ $school->link_googleplus }}" target="_blank"><i class="fa fa-google-plus-square"></i></a>
                                             @else
                                                 <i class="fa fa-google-plus-square disabled"></i>
                                             @endif
-                                            @if($teacher->link_i)
-                                                <a href="{{ $teacher->link_i }}" target="_blank"><i class="fa fa-instagram"></i></a>
+                                            @if($school->link_instagram)
+                                                <a href="{{ $school->link_instagram }}" target="_blank"><i class="fa fa-instagram"></i></a>
                                             @else
                                                 <i class="fa fa-instagram disabled"></i>
                                             @endif
-                                            @if($teacher->link_l)
-                                                <a href="{{ $teacher->link_l }}" target="_blank"><i class="fa fa-linkedin-square"></i></a>
+                                            @if($school->link_linkedin)
+                                                <a href="{{ $school->link_linkedin }}" target="_blank"><i class="fa fa-linkedin-square"></i></a>
                                             @else
                                                 <i class="fa fa-linkedin-square disabled"></i>
                                             @endif
-                                            @if($teacher->link_w)
-                                                <a href="{{ $teacher->link_w }}" target="_blank">
+                                            @if($school->link_web)
+                                                <a href="{{ $school->link_web }}" target="_blank">
                                                     <span class="fa-stack fa-lg">
                                                         <i class="fa fa-square-o fa-stack-2x"></i>
                                                         <i class="fa fa-globe fa-stack-1x"></i>
@@ -154,93 +150,143 @@
                                 </div>
                             </div>
 
-                            <div class="panel panel-milprofes panel-activity">
-                                <div class="panel-heading">@lang('teacher-profile.title_activity')</div>
-                                <div class="panel-body">
-                                    <div><i class="fa fa-eye"></i> {{ $teacher->profile_visits }} @lang('teacher-profile.views')</div>
-                                    @if($teacher->rank)
-                                    <div><i class="fa fa-arrow-up"></i> @lang('teacher-profile.popularity') #{{ $teacher->rank }}</div>
-                                    @endif
-                                    <div>
-                                        <i class="fa fa-calendar"></i> @lang('teacher-profile.antiguedad')
-                                        @if($teacher->antiguedad['years'] == '0' && $teacher->antiguedad['months'] == '0')
-                                        <span>{{ $teacher->antiguedad['days'] }} @choice('teacher-profile.days',$teacher->antiguedad['days'])</span>
-                                        @elseif($teacher->antiguedad['years'] == '0')
-                                        <span>{{ $teacher->antiguedad['months'] }} @choice('teacher-profile.months',$teacher->antiguedad['months']) @lang('teacher-profile.and')</span>
-                                        <span>{{ $teacher->antiguedad['days'] }} @choice('teacher-profile.days',$teacher->antiguedad['days'])</span>
-                                        @else
-                                        <span>{{ $teacher->antiguedad['years'] }} @choice('teacher-profile.years',$teacher->antiguedad['years']),</span>
-                                        <span>{{ $teacher->antiguedad['months'] }} @choice('teacher-profile.months',$teacher->antiguedad['months']) @lang('teacher-profile.and')</span>
-                                        <span>{{ $teacher->antiguedad['days'] }} @choice('teacher-profile.days',$teacher->antiguedad['days'])</span>
-                                        @endif
-                                    </div>
-                                @if($teacher->last_update)
-                                    <div>
-                                        <i class="fa fa-refresh"></i> @lang('teacher-profile.last_update')
-                                        <br/><i class="fa fa-clock-o transparent"></i> {{ $teacher->last_update }}
-                                    </div>
-                                @endif
-                                </div>
-                            </div>
-
                         </div>
 
-                        @if(!$teacher->availability->isEmpty() && $teacher->availability->first()->day != '')
-                        <div class="col-md-12 my-info-availability">
-
+                        @if($school->description!='')
+                        <div class="col-md-12 my-info-cntr">
                             <div class="panel panel-milprofes panel-info">
-                                <div class="panel-heading">@lang('teacher-profile.title_availability')</div>
+                                <div class="panel-heading">@lang('school-profile.description')</div>
                                 <div class="panel-body">
-                                @foreach($teacher->availability as $pick)
-                                    @if($pick->day != '')
-                                        <small><span class="pick pick-lg"><span class="pick-day pick-day-lg">&nbsp;{{ $pick->day }}&nbsp;</span> <span class="pick-time pick-time-lg">&nbsp;{{ substr($pick->start,0,-3) }} - {{ substr($pick->end,0,-3) }}&nbsp;&nbsp;</span></span></small>
-                                    @endif
-                                @endforeach
+                                    <p class="tprofile-description">{{{ $school->description }}}</p>
                                 </div>
                             </div>
-
                         </div>
                         @endif
 
+                        {{--Video--}}
+                        @if($school->video)
+                        <div class="col-md-12 video-cntr">
+                            <div class="panel panel-milprofes panel-video">
+                                <div class="panel-heading">
+                                    @lang('school-profile.our_school_video')
+                                </div>
+                                <div class="panel-body video-container">
+                                    <input type="hidden" id="videoId" value="{{$school->video}}">
+                                    <div id="player"></div>
+                                    <script>
+                                        var tag = document.createElement('script');
+                                        tag.src = "https://www.youtube.com/iframe_api";
+                                        var firstScriptTag = document.getElementsByTagName('script')[0];
+                                        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                                        var player;
+                                        function onYouTubeIframeAPIReady() {
+                                            player = new YT.Player('player', {
+                                                height: '300',
+                                                width: '100%',
+                                                videoId: $('#videoId').val(),
+                                                events: {
+                                                    'onReady': onPlayerReady,
+                                                    'onStateChange': onPlayerStateChange
+                                                }
+                                            });
+                                        }
+                                        function onPlayerReady(event) {
+                                            event.target.mute();
+                                            event.target.playVideo();
+                                        }
+                                        var done = false;
+                                        function onPlayerStateChange(event) {
+                                            //if (event.data == YT.PlayerState.PLAYING && !done) {
+                                                //setTimeout(stopVideo, 6000);
+                                                //done = true;
+                                            //}
+                                        }
+                                        function stopVideo() {
+                                            player.stopVideo();
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        {{--END Video--}}
 
-                        @if($teacher->gender || $teacher->age || $teacher->town || $teacher->description!='')
-                        <div class="col-md-12 my-info-cntr">
-
-                            <div class="panel panel-milprofes panel-info">
-                                <div class="panel-heading">@lang('teacher-profile.title_info')</div>
+                        {{--Image slider--}}
+                        @if(!$slpics->isEmpty())
+                        <div class="col-md-12 slpics-cntr">
+                            <div class="panel panel-milprofes panel-slider">
+                                <div class="panel-heading">
+                                    @lang('school-profile.our_school_imgs')
+                                </div>
                                 <div class="panel-body">
-                                    @if($teacher->gender)
-                                    <div>
-                                        @if($teacher->gender == 'male')
-                                            <i class="fa fa-mars"></i> @lang('teacher-profile.gender-male')
-                                        @elseif($teacher->gender == 'female')
-                                            <i class="fa fa-venus"></i> @lang('teacher-profile.gender-female')
-                                        @elseif($teacher->gender == 'other')
-                                            <i class="fa fa-mars-stroke-h"></i> @lang('teacher-profile.gender-other')
-                                        @endif
+                                    <div id="milprofes-carousel" class="carousel slide" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            <li data-target="#milprofes-carousel" data-slide-to="0" class="active"></li>
+                                            <?php $n = $slpics->count(); ?>
+                                            @for($i=1;$i<$n;++$i)
+                                                <li data-target="#milprofes-carousel" data-slide-to="{{ $i }}"></li>
+                                            @endfor
+                                        </ol>
+                                        <div class="carousel-inner">
+                                            <?php $i=0; ?>
+                                            @foreach($slpics as $pic)
+                                                <div class="item @if($i==0) active @endif">
+                                                    <div class="carousel-table" style="background: url({{ asset('img/pics/'.$pic->pic) }}) center center no-repeat;background-size: cover;">&nbsp;</div>
+                                                </div>
+                                                <?php ++$i; //slide counter ?>
+                                            @endforeach
+                                        </div>
+                                        <!-- Controls -->
+                                        <a class="left carousel-control" href="#milprofes-carousel" role="button" data-slide="prev">
+                                            <span class="glyphicon glyphicon-chevron-left"></span>
+                                        </a>
+                                        <a class="right carousel-control" href="#milprofes-carousel" role="button" data-slide="next">
+                                            <span class="glyphicon glyphicon-chevron-right"></span>
+                                        </a>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        {{--END image slider--}}
+
+                        {{--If auth -> directions, else -> simple gmap--}}
+                        <div class="col-md-12 map-cntr">
+                            <div class="panel panel-milprofes panel-map">
+                                <div class="panel-heading">
+                                    @if(Auth::check())
+                                        @lang('school-profile.directions')
+                                    @else
+                                        @lang('school-profile.where')
                                     @endif
-                                    @if($teacher->age)
-                                    <div>
-                                        <i class="fa fa-birthday-cake"></i> {{ $teacher->age }} @choice('teacher-profile.years',$teacher->age)
-                                    </div>
-                                    @endif
-                                    @if($teacher->town)
-                                    <div id="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                        <meta itemprop="addressRegion" content="{{ $teacher->region }}">
-                                        <meta itemprop="postalCode" content="{{ $teacher->postalcode }}">
-                                        <i class="fa fa-map-marker"></i> @lang('teacher-profile.town') <span itemprop="addressLocality">{{ $teacher->town }}</span>
-                                    </div>
-                                    @endif
-                                    @if($teacher->description != '')
-                                    <div>
-                                        <i class="fa fa-user-plus"></i> Mi descripción:
-                                    </div>
-                                    <p class="tprofile-description">{{{ $teacher->description }}}</p>
+                                </div>
+                                <div class="panel-body map-container">
+                                    @if(Auth::check())
+                                        {{ $gmap['js'] }}
+                                        {{ $gmap['html'] }}
+                                    @else
+                                        {{ $gmap['js'] }}
+                                        {{ $gmap['html'] }}
                                     @endif
                                 </div>
                             </div>
+                        </div>
 
+
+                        @if(Auth::check())
+                        <div class="col-md-12 directions-cntr">
+                            <div class="panel panel-milprofes panel-directions">
+                                <div class="panel-heading directions-title">
+                                    <a id="show-directions" data-toggle="collapse" data-target="#directions" class="collapsed" href="javascript:">
+                                        <i class="map-icon-walking"></i> @lang('school-profile.show_directions')
+                                    </a>
+                                </div>
+                                <div id="directions" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div id="directionsDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         @endif
 
@@ -261,6 +307,9 @@
                                         @else
                                             @foreach($lessons as $l)
                                                 <div class="row bottom-buffer-45">
+                                                    {{--<input type="hidden" id="authCheck" value="{{ Auth::check() }}">--}}
+                                                    {{--<input type="hidden" id="lessonId" value="{{ $l->id }}">--}}
+                                                    {{--<input type="hidden" id="averageRating" value="{{ $l->getLessonAvgRating() }}">--}}
 
                                                     <div class="col-xs-12 col-sm-2">
                                                         <div class="row text-center subject-icon-lg">
@@ -298,7 +347,7 @@
                                                                 {{-- + 0 removes zeros to the right of the decimal separator --}}
                                                                 {{{ str_replace('.', ',', $l->price + 0) }}}
                                                             </div>
-                                                            <div class="text-center per-unit-tp">@lang('teacher-profile.price_unit')</div>
+                                                            <div class="text-center per-unit-tp">@lang('school-profile.price_unit')</div>
                                                         @endif
                                                     </div>
 
@@ -327,7 +376,7 @@
                                                                 {{--@endif--}}
                                                                     <meta itemprop="datePublished" content="{{ $f->created_at->format('Y-m-d') }}">
                                                                     <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/LocalBusiness">
-                                                                        <meta itemprop="name" content="{{ $teacher->displayName }}">
+                                                                        <meta itemprop="name" content="{{ $school->displayName }}">
                                                                     </div>
                                                                     <div class="row">
                                                                         {{--@if($n_fr < 2)--}}
@@ -377,7 +426,7 @@
                                                             @endforeach
                                                         @else
                                                             <div class="col-xs-12">
-                                                                <span class="no-reviews">¿Has estudiado con {{ $teacher->displayName2 }}? ¡Sé el primero o la primera en <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}">valorar</a> esta clase!</span>
+                                                                <span class="no-reviews">¿Has estudiado con {{ $school->displayName2 }}? ¡Sé el primero o la primera en <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}">valorar</a> esta clase!</span>
                                                             </div>
                                                         @endif
                                                         </div>
@@ -404,12 +453,11 @@
                                                                         <div class="col-xs-12" itemprop="review" itemscope itemtype="http://schema.org/Review">
                                                                             <meta itemprop="datePublished" content="{{ $a->created_at->format('Y-m-d') }}">
                                                                             <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/LocalBusiness">
-                                                                                <meta itemprop="name" content="{{ $teacher->displayName }}">
+                                                                                <meta itemprop="name" content="{{ $school->displayName }}">
                                                                             </div>
                                                                             <div class="col-xs-12 col-sm-2 padding-0">
                                                                                 <div class="text-center top-buffer-3"><img class="img-circle" width="46" height="46" src="{{ asset('img/avatars/'.$reviewer->avatar) }}"/></div>
                                                                                 <div class="text-center top-buffer-10 ellipsis reviewer-name" itemprop="author">{{ $reviewer->displayName }}</div>
-                                                                                <div class="text-center"><small>{{ $a->yes_helpful }} <i class="fa fa-thumbs-o-up"></i> de {{ $a->total_helpful }}</small></div>
                                                                                 <?php
                                                                                     $ayes = $a->yes_helpful;
                                                                                     $noes = $a->total_helpful - $a->yes_helpful;
@@ -428,6 +476,7 @@
                                                                                     <meta itemprop="ratingValue" content="{{ $a->value }}">
                                                                                     <meta itemprop="bestRating" content="5">
                                                                                     <div class="ratings-stars" data-score="{{ $a->value }}"><div class="inline-block float-right">{{ $a->created_at->format('d/m/Y') }}</div></div>
+                                                                                    {{--<div class="comment-helpfulness"><small>{{ $a->yes_helpful }} de {{ $a->total_helpful }} encontraron útil esta valoración</small></div>--}}
                                                                                     <div class="comment-text"><span itemprop="description">{{{ $a->comment }}}</span></div>
                                                                                     <div class="comment-isithelpful">
                                                                                         ¿Te ha resultado útil esta valoración?<br/>

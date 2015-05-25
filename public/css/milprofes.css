@@ -13,7 +13,8 @@
     .share-container { width: 100%; bottom:12px; left: 0; padding: 0 15px 0 15px; text-align: center; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 42px; left:0; right:0; margin: auto; }
-    .tprofile-name { top: 206px; left:0; right:0; margin:auto; text-align: center; }
+    .sprofile-logo { bottom: 120px; left:0; right:0; margin: auto; }
+    .tprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
     .tprofile-stars { top:0; left:0; width:100%; text-align:center; }
     .navbar-brand { font-size: 2.5em; }
     #navbar { padding: auto; }
@@ -36,6 +37,7 @@
     .share-container { width: 210px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 132px; left: 25px; }
+    .sprofile-logo { bottom: -10px; left: 25px; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 4px; }
     .navbar-brand { font-size: 2.5em; }
@@ -58,6 +60,7 @@
     .share-container { width: 440px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 172px; left: 25px; }
+    .sprofile-logo { bottom: -50px; left: 25px; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
     .navbar-brand { font-size: 2.7em; }
@@ -81,6 +84,7 @@
     .hdr-share { height: 50px; }
     .share-me { top: 15px; right: 448px; }
     .tprofile-avatar { top: 172px; left: 25px; }
+    .sprofile-logo { bottom: -50px; left: 25px; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
     .navbar-brand { font-size: 2.7em; }
@@ -1133,13 +1137,8 @@ body.loading .modal-loading { /*modal element will be visible */
 .comment-isithelpful {
     font-size: 12px;
 }
-.activity-cntr {
-    padding: 0;
-}
-.my-info-cntr {
-    padding: 0;
-}
-.my-info-availability {
+.my-info-cntr, .my-info-availability, .activity-cntr,
+.slpics-cntr, .video-cntr, .map-cntr, .directions-cntr  {
     padding: 0;
 }
 .my-lessons-cntr {
@@ -1151,15 +1150,59 @@ body.loading .modal-loading { /*modal element will be visible */
 #panel-body-lessons {
     padding: 15px 30px;
 }
-.panel-info, .panel-lessons, .panel-activity, .panel-contact-info {
+.panel-info, .panel-lessons, .panel-activity,
+.panel-contact-info, .panel-slider, .panel-video,
+.panel-map, .panel-directions {
     background-color: #EEE;
     border: 0;
 }
+.panel-directions .panel-heading {
+    padding: 0;
+}
+.map-cntr .panel {
+    margin-bottom: 0 !important;
+}
+.panel-slider .panel-body,
+.panel-video .panel-body,
+.panel-map .panel-body,
+.panel-directions .panel-body {
+    padding: 0;
+}
+.panel-slider .panel-heading,
+.panel-video .panel-heading,
+.panel-map .panel-heading,
+.panel-directions .panel-heading {
+    border: 0;
+}
+#directionsDiv {
+    /*margin: 10px 0;*/
+    width: 100%;
+}
+.adp-warnbox {
+    /*height: 0;*/
+    /*display: none;*/
+    font-size: 85%;
+    padding-top: 0 !important;
+}
+.adp { /* google map directions div */
+    padding: 5px;
+    background-color: #FFF;
+}
+.adp-legal {
+    font-size: 85%;
+}
+.map-container {
+    border: 1px solid #A4A5A5;
+}
+.panel-directions .panel-body {
+    border: 1px solid #A4A5A5;
+}
+.video-container {
+    height: 302px;
+    border: 1px solid #A4A5A5;
+}
 .panel-milprofes .panel-heading a::after {
     color: #000 !important;
-}
-.panel-info {
-
 }
 .panel-activity .panel-body div,
 .panel-info .panel-body div {
@@ -1188,6 +1231,11 @@ body.loading .modal-loading { /*modal element will be visible */
     color: #000;
 }
 .tprofile-avatar {
+    z-index:1000;
+    position:absolute;
+    /*positioning in media queries*/
+}
+.sprofile-logo {
     z-index:1000;
     position:absolute;
     /*positioning in media queries*/
@@ -1252,6 +1300,18 @@ body.loading .modal-loading { /*modal element will be visible */
     display: block;
     padding: 12px;
     margin: 0;
+}
+#show-directions {
+    display: block;
+    padding: 10px;
+    margin: 0;
+    text-decoration: none;
+}
+.directions-title a,
+.directions-title a:focus,
+.directions-title a:hover {
+    color: #000;
+    text-decoration: none;
 }
 .contact-info-title {
     /*border-bottom: 1px solid #737575;*/
@@ -1339,27 +1399,27 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .carousel-inner {
     height: 300px;
-    border: 1px solid #737575;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    border: 1px solid #A4A5A5;
+    /*-webkit-border-radius: 5px;*/
+    /*-moz-border-radius: 5px;*/
+    /*border-radius: 5px;*/
     overflow: hidden;
 }
 .carousel-indicators li {
     border: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(255, 169, 17,0.5);
 }
 .carousel-indicators .active {
     border: 0;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgb(255, 169, 17);
 }
 .carousel-indicators {
-    bottom: -36px;
+    bottom: 0;
 }
 .carousel-control:hover {
     color: #737575 !important;
     text-decoration: none;
-    outline: 0px none;
+    outline: 0 none;
     opacity: 0.9 !important;
 }
 .carousel-control:focus {

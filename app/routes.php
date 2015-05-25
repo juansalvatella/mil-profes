@@ -103,7 +103,10 @@ Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug)
     //Otros datos (importados de user table)
     $teacher->slug = $user_slug;
     $teacher->username = $user->username;
-    $teacher->displayName = ucwords($user->name).' '.substr(ucwords($user->lastname),0,1).'.';
+    if($user->lastname)
+        $teacher->displayName = ucwords($user->name).' '.substr(ucwords($user->lastname),0,1).'.';
+    else
+        $teacher->displayName = ucwords($user->name);
     $teacher->displayName2 = ucwords($user->name);
     $teacher->avatar = $user->avatar;
     $teacher->email = $user->email;
@@ -122,6 +125,8 @@ Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug)
     $teacher->link_w = $user->link_web;
 
     $teacher->availability = $teacher->availabilities()->get();
+    $teacher->nReviews = $teacher->getNumberOfReviews();
+    $teacher->avgRating = $teacher->getTeacherAvgRating();
 
     return View::make('new_teacher_details', compact('teacher','lessons'));
 }]);
@@ -166,43 +171,106 @@ Route::get('academia/{school_slug}', ['as'=>'profiles-school', function($school_
         $l->availability = $l->availabilities()->get();
     }
 
-    //pagination by slices (first page)
-    $lessons_per_slice = 2;
-    $total_results = $lessons->count();
-    $max_slices = ceil($total_results/$lessons_per_slice);
-    $slices_showing = 0;
-    $sl_offset = $slices_showing*$lessons_per_slice;
-    $sl_length = $lessons_per_slice;
-    $lessons = $lessons->slice($sl_offset,$sl_length);
-    ++$slices_showing;
-    $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
-    $slpics = $school->pics()->get(array('pic'));
+    $slpics = $school->pics()->get(array('pic')); //get collection with filenames only
+    $school->video = $school->video()->first()->pluck('video'); //get collection with the filenames only
 
-    return View::make('school_details', compact('school','slpics','lessons','display_show_more','slices_showing','total_results'));
+    $school->nReviews = $school->getNumberOfReviews();
+    $school->avgRating = $school->getSchoolAvgRating();
+
+    if(Auth::check()) { //initialize google map WITH directions
+        $user = Confide::user();
+
+        //first map -> walking directions
+        $config = array();
+        $config['center'] = $school->lat.','.$school->lon;
+        $config['zoom'] = '14';
+        $config['disableMapTypeControl'] = true;
+        $config['disableStreetViewControl'] = false;
+        $config['disableDoubleClickZoom'] = false;
+        $config['disableNavigationControl'] = false;
+        $config['disableScaleControl'] = false;
+        $config['map_height'] = '300px';
+        $config['scrollwheel'] = false;
+        $config['zoomControlStyle'] = 'SMALL';
+        $config['zoomControlPosition'] = 'TOP_RIGHT';
+        $config['center'] = '37.4419, -122.1419';
+        $config['zoom'] = 'auto';
+        //directions
+        $config['directions'] = TRUE;
+        $config['directionsStart'] = $user->lat.','.$user->lon;
+        $config['directionsEnd'] = $school->lat.','.$school->lon;
+        $config['directionsMode'] = 'WALKING';
+        $config['directionsDivID'] = 'directionsDiv';
+        Gmaps::initialize($config);
+
+        $marker = array();
+        $marker['position'] = $school->lat.','.$school->lon;
+        //$marker['icon'] = asset('img/marcador-mapa.png');
+        Gmaps::add_marker($marker); //add student marker (center)
+        $gmap =  Gmaps::create_map();
+    }
+    else { //simple map showing localization of the school
+        $config = array();
+        $config['center'] = $school->lat.','.$school->lon;
+        $config['zoom'] = '14';
+        $config['disableMapTypeControl'] = true;
+        $config['disableStreetViewControl'] = false;
+        $config['disableDoubleClickZoom'] = false;
+        $config['disableNavigationControl'] = false;
+        $config['disableScaleControl'] = false;
+        $config['map_height'] = '300px';
+        $config['scrollwheel'] = false;
+        $config['zoomControlStyle'] = 'SMALL';
+        $config['zoomControlPosition'] = 'TOP_RIGHT';
+        Gmaps::initialize($config);
+
+        $marker = array();
+        $marker['position'] = $school->lat.','.$school->lon;
+        //$marker['icon'] = asset('img/marcador-mapa.png');
+        Gmaps::add_marker($marker); //add student marker (center)
+
+        $gmap =  Gmaps::create_map();
+    }
+//*** pagination by slices (first page)
+//    $lessons_per_slice = 2;
+//    $total_results = $lessons->count();
+//    $max_slices = ceil($total_results/$lessons_per_slice);
+//    $slices_showing = 0;
+//    $sl_offset = $slices_showing*$lessons_per_slice;
+//    $sl_length = $lessons_per_slice;
+//    $lessons = $lessons->slice($sl_offset,$sl_length);
+//    ++$slices_showing;
+//    $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
+
+    return View::make('new_school_details', compact('school','slpics','gmap','lessons'));
 }]);
 
-Route::post('academia/{school_slug}', function($school_slug) {
-    $school = School::findBySlug($school_slug);
-    $lessons = $school->lessons()->get();
-    foreach($lessons as $l) {
-        $l->availability = $l->availabilities()->get();
-    }
-
-    //pagination by slices
-    $input = Input::all();
-    $lessons_per_slice = 2;
-    $total_results = $lessons->count();
-    $max_slices = ceil($total_results/$lessons_per_slice);
-    $slices_showing = Input::has('slices_showing') ? $input['slices_showing'] : 0;
-    $sl_offset = $slices_showing*$lessons_per_slice;
-    $sl_length = $lessons_per_slice;
-    $lessons = $lessons->slice($sl_offset,$sl_length);
-    ++$slices_showing;
-    $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
-    $slpics = $school->pics()->get();
-
-    return View::make('school_details', compact('school','slpics','lessons','display_show_more','slices_showing','total_results'));
-});
+//Route::post('academia/{school_slug}', function($school_slug) {
+//    $school = School::findBySlug($school_slug);
+//    $lessons = $school->lessons()->get();
+//    foreach($lessons as $l) {
+//        $l->availability = $l->availabilities()->get();
+//    }
+//
+//    $slpics = $school->pics()->get();
+//    $school->nReviews = $school->getNumberOfReviews();
+//    $school->avgRating = $school->getSchoolAvgRating();
+//
+////*** pagination by slices ***
+////    $input = Input::all();
+////    $lessons_per_slice = 2;
+////    $total_results = $lessons->count();
+////    $max_slices = ceil($total_results/$lessons_per_slice);
+////    $slices_showing = Input::has('slices_showing') ? $input['slices_showing'] : 0;
+////    $sl_offset = $slices_showing*$lessons_per_slice;
+////    $sl_length = $lessons_per_slice;
+////    $lessons = $lessons->slice($sl_offset,$sl_length);
+////    ++$slices_showing;
+////    $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
+////    return View::make('school_details', compact('school','slpics','lessons','display_show_more','slices_showing','total_results'));
+//
+//    return View::make('school_details', compact('school','slpics','lessons'));
+//});
 
 //Search
 Route::get('resultados',['as'=>'results','uses'=>'SearchController@search']);

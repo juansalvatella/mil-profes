@@ -109,8 +109,33 @@
 
     {{ HTML::style('css/rrssb.css') }}
     {{ HTML::style('css/toastr.min.css') }}
-    {{ HTML::script('js/toastr.min.js') }}
-    {{ HTML::script('js/teachers.js') }}
+
+@elseif(Request::is('academia/*'))
+
+            <!-- gen meta -->
+            <meta name="gen-image" content="{{ asset('img/logos/'.$school->logo) }}" />
+            <meta name="gen-title" content="Academia {{{ $school->name }}}" />
+            <meta name="gen-url" content="{{ Request::url() }}" />
+            <meta name="gen-description" content="Infórmate de nuestra oferta de cursos en milPROFES.com ¿Qué vas a aprender hoy?" />
+
+            <!-- fb meta -->
+            <meta property="og:site_name" content="milPROFES." />
+            <meta property="og:title" content="Profe. {{{ $school->name }}}" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="{{ Request::url() }}" />
+            <meta property="og:image" content="{{ asset('img/logos/'.$school->logo) }}" />
+            <meta property="og:description" content="Infórmate de nuestra oferta de cursos en milPROFES.com ¿Qué vas a aprender hoy?" />
+
+            <!-- twitter meta -->
+            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:site" content="@milprofes" />
+            <meta name="twitter:title" content="Profe. {{{ $school->name }}}" />
+            <meta name="twitter:description" content="Infórmate de nuestra oferta de cursos en @milprofes ¿Qué vas a aprender hoy?: {{ Request::url() }}" />
+            <meta name="twitter:image" content="{{ asset('img/logos/'.$school->logo) }}" />
+
+            {{ HTML::style('css/rrssb.css') }}
+            {{ HTML::style('css/toastr.min.css') }}
+
 @endif
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -590,6 +615,12 @@
 
     @if(Request::is('profe/*'))
         {{ HTML::script('js/rrssb.js') }}
+        {{ HTML::script('js/toastr.min.js') }}
+        {{ HTML::script('js/teachers.js') }}
+    @elseif(Request::is('academia/*'))
+        {{ HTML::script('js/rrssb.js') }}
+        {{ HTML::script('js/toastr.min.js') }}
+        {{ HTML::script('js/school.js') }}
     @endif
 
 </body>

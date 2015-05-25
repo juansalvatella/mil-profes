@@ -35,6 +35,10 @@ class AdminController extends BaseController
         }
         $school->lat = $geocoding[0]; //latitud
         $school->lon = $geocoding[1]; //longitud
+        $school->town = $geocoding[3]['locality']; //guardar municipio
+        $school->region = $geocoding[3]['admin_2']; //guardar provincia
+        if(isset($geocoding[3]['postal_code']))
+            $school->postalcode = $geocoding[3]['postal_code']; //guardar código postal
 
         if($school->save()) {
             if (Input::hasFile('pics')) {
@@ -131,6 +135,10 @@ class AdminController extends BaseController
             }
             $school->lat = $geocoding[0]; //latitud
             $school->lon = $geocoding[1]; //longitud
+            $school->town = $geocoding[3]['locality']; //guardar municipio
+            $school->region = $geocoding[3]['admin_2']; //guardar provincia
+            if(isset($geocoding[3]['postal_code']))
+                $school->postalcode = $geocoding[3]['postal_code']; //guardar código postal
         }
         if (Input::hasFile('pics')) {
             //TODO: implementar selector de modos (reemplazar o añadir)

@@ -115,19 +115,21 @@ class UsersController extends Controller
         $repo = App::make('UserRepository');
         $input = Input::all();
 
-        if ($repo->login($input)) {
-            return Redirect::intended('/userpanel/dashboard');
-        } else {
-            if ($repo->isThrottled($input)) {
+        if ($repo->login($input)) { //if login successful
+            if(Request::is('/'))
+                return Redirect::intended('/userpanel/dashboard');
+            else
+                return Redirect::back();
+        } else { //login unsuccesful -> catch errors
+            if ($repo->isThrottled($input))
                 $err_msg = trans('messages.alerts.too_many_attempts');
-            } elseif ($repo->existsButNotConfirmed($input)) {
+            elseif ($repo->existsButNotConfirmed($input))
                 $err_msg = trans('messages.alerts.not_confirmed');
-            } else {
+            else
                 $err_msg = trans('messages.alerts.wrong_credentials');
-            }
 
             //return Redirect::action('UsersController@login')
-            return Redirect::to('/')
+            return Redirect::to('/') //redirect to home and show login modal with errors
                 ->withInput(Input::except('password'))
                 ->with('log-error', $err_msg)
                 ->with('show_login_modal',true);
@@ -226,7 +228,10 @@ class UsersController extends Controller
     {
         Confide::logout();
 
-        return Redirect::to('/');
+        if(Request::is('userpanel/*') || Request::is('admin/*'))
+            return Redirect::to('/');
+        else
+            return Redirect::back();
     }
 
     public function updateUserPasswd()
@@ -378,7 +383,8 @@ class UsersController extends Controller
                 $user->lon = $geocoding[1]; //guardar longitud
                 $user->town = $geocoding[3]['locality']; //guardar municipio
                 $user->region = $geocoding[3]['admin_2']; //guardar provincia
-                $user->postalcode = $geocoding[3]['postal_code']; //guardar código postal
+                if(isset($geocoding[3]['postal_code']))
+                    $user->postalcode = $geocoding[3]['postal_code']; //guardar código postal
             }
 
             if($input['email'] != $user->email)

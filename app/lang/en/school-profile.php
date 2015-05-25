@@ -3,12 +3,22 @@
 return array(
 
     'subtitle' => 'Perfil de academia',
+    'school' => 'Perfil de academia',
+    'description' => 'Nuestra descripción',
+    'share-me' => '¡Danos a conocer!',
+    'directions' => 'Cómo llegar',
+    'show_directions' => 'Ver indicaciones',
+    'where' => 'Dónde estamos',
+
     'rating' => 'Valoración',
 
+    'price_unit' => '€/curso',
     'unit_per_course' => '€/curso',
     'per_unit' => 'por curso',
 
     'our_school' => 'Nuestra academia',
+    'our_school_imgs' => 'Instalaciones',
+    'our_school_video' => 'Videopresentación',
     'lessons' => 'Cursos que ofrecemos',
     'lesson_of' => 'Curso',
 
