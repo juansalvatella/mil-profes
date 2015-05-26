@@ -120,7 +120,7 @@
 
             <!-- fb meta -->
             <meta property="og:site_name" content="milPROFES." />
-            <meta property="og:title" content="Profe. {{{ $school->name }}}" />
+            <meta property="og:title" content="{{{ $school->name }}}" />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="{{ Request::url() }}" />
             <meta property="og:image" content="{{ asset('img/logos/'.$school->logo) }}" />
@@ -129,7 +129,7 @@
             <!-- twitter meta -->
             <meta name="twitter:card" content="summary" />
             <meta name="twitter:site" content="@milprofes" />
-            <meta name="twitter:title" content="Profe. {{{ $school->name }}}" />
+            <meta name="twitter:title" content="{{{ $school->name }}}" />
             <meta name="twitter:description" content="Infórmate de nuestra oferta de cursos en @milprofes ¿Qué vas a aprender hoy?: {{ Request::url() }}" />
             <meta name="twitter:image" content="{{ asset('img/logos/'.$school->logo) }}" />
 

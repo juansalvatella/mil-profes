@@ -352,7 +352,7 @@
 
                                                     <div class="col-xs-12 col-sm-2 price-container-tp">
                                                         @if($l->price==0.0)
-                                                            <div class="no-price-provided-tp text-center">Contáctame<br>para saber<br>el precio</div>
+                                                            <div class="no-price-provided-tp text-center">Contáctanos<br>para saber<br>el precio</div>
                                                         @else
                                                             <div class="price-tp text-center">
                                                                 {{-- + 0 removes zeros to the right of the decimal separator --}}
@@ -437,7 +437,7 @@
                                                             @endforeach
                                                         @else
                                                             <div class="col-xs-12">
-                                                                <span class="no-reviews">¿Has estudiado con {{ $school->displayName2 }}? ¡Sé el primero o la primera en <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}">valorar</a> esta clase!</span>
+                                                                <span class="no-reviews">¿Has estudiado en {{ $school->name }}? ¡Sé el primero o la primera en <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}">valorar</a> esta clase!</span>
                                                             </div>
                                                         @endif
                                                         </div>
