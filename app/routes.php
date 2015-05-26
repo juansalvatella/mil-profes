@@ -164,6 +164,39 @@ Route::post('review/not/helpful/{review_id}', function($review_id){
     return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
 });
 
+Route::post('review/school/was/helpful/{review_id}', function($review_id){
+    if(!Auth::check())
+        return Response::json(['error'=>'Reviewer is not authenticated.'],200);
+    if (!Session::has('s_helpful_'.$review_id)) {
+        Session::put('s_helpful_'.$review_id, true);
+        Session::save();
+        $review = SchoolLessonRating::findOrFail($review_id);
+        $review->yes_helpful = $review->yes_helpful + 1;
+        $review->total_helpful = $review->total_helpful + 1;
+        if($review->save())
+            return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+    } else {
+        return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+    }
+    return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+});
+
+Route::post('review/school/not/helpful/{review_id}', function($review_id){
+    if(!Auth::check())
+        return Response::json(['error'=>'Reviewer is not authenticated.'],200);
+    if (!Session::has('s_helpful_'.$review_id)) {
+        Session::put('s_helpful_'.$review_id, true);
+        Session::save();
+        $review = SchoolLessonRating::findOrFail($review_id);
+        $review->total_helpful = $review->total_helpful + 1;
+        if($review->save())
+            return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+    } else {
+        return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+    }
+    return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+});
+
 Route::get('academia/{school_slug}', ['as'=>'profiles-school', function($school_slug) {
     $school = School::findBySlug($school_slug);
     $lessons = $school->lessons()->get();
@@ -172,7 +205,8 @@ Route::get('academia/{school_slug}', ['as'=>'profiles-school', function($school_
     }
 
     $slpics = $school->pics()->get(array('pic')); //get collection with filenames only
-    $school->video = $school->video()->first()->pluck('video'); //get collection with the filenames only
+    if($vid = $school->video()->first())
+        $school->video = $vid->pluck('video'); //get collection with the filenames only
 
     $school->nReviews = $school->getNumberOfReviews();
     $school->avgRating = $school->getSchoolAvgRating();
@@ -376,12 +410,37 @@ Route::post('request/info/school/{lesson_id}', function($lesson_id) {
     return 'Already saved in DB';
 });
 
-//Handle reviews
+Route::post('request/info/school/all/{school_id}', function($school_id) {
+    if (!Session::has('s_visualized_all_'.$school_id)) //if this Tlf visualization hasn't been recorded before (during the session)
+    {
+        Session::put('s_visualized_all_'.$school_id, true); //record the visualization in the session array
+        Session::save();
+        $visualization = new SchoolPhoneVisualization(); //register the visualization in database
+        if (Auth::check()) { //if user is authenticated relate the user id with the visualization
+            $observer = Confide::user();
+            $visualization->user_id = $observer->id;
+        }
+        //we choose the first lesson of this school as the receipt of the visualization (temporary fix)
+        $school = School::where('id',$school_id)->first();
+        $first_lesson = $school->lessons()->first();
+        if(!$first_lesson)
+            return  'No lessons found';
+        $lesson_id = $first_lesson->id;
+        $visualization->school_lesson_id = $lesson_id;
+
+        return (string) $visualization->save();
+    }
+    return 'Already saved in DB';
+});
+
+//Handle reviews (old)
 Route::post('/reviews/handleReview','ReviewsController@handleNewReview');
-
-Route::post('/review/lesson','ReviewsController@handleLessonReview');
-
 Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolLessonNewReview');
+
+//new
+Route::post('/review/lesson','ReviewsController@handleLessonReview');
+Route::post('/review/school/lesson','ReviewsController@handleSchoolLessonReview');
+
 
 //Populate and view tables. Database test tools. FOR TEST PURPOSES ONLY!!!
 //Route::get('populate', 'PopulateController@populate');

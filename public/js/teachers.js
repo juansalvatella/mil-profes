@@ -121,20 +121,22 @@ $(document).ready(function() {
                     "hideMethod": "fadeOut"
                 });
             }
-            //reset form values
-            form.find('input[name=lessonId]').val('-1');
-            form.find('input[name=score]').val('3');
-            form.find('textarea[name=comment]').val('');
-            $('#rchars_feedback').html('(255 caracteres disponibles)');
-            $('#review-stars').raty({
-                readOnly: false,
-                half: true,
-                size: 23,
-                starHalf: '../img/star-half.png',
-                starOff : '../img/star-off.png',
-                starOn  : '../img/star-on.png',
-                score: function(){return $(this).attr('data-score');}
-            });
+        });
+    });
+
+    $('#modal-review').on('hidden.bs.modal', function () {
+        formReview.find('input[name=lessonId]').val('-1');
+        formReview.find('input[name=score]').val('3');
+        formReview.find('textarea[name=comment]').val('');
+        $('#rchars_feedback').html('(255 caracteres disponibles)');
+        $('#review-stars').raty({
+            readOnly: false,
+            half: true,
+            size: 23,
+            starHalf: '../img/star-half.png',
+            starOff : '../img/star-off.png',
+            starOn  : '../img/star-on.png',
+            score: function(){return $(this).attr('data-score');}
         });
     });
 

@@ -11,7 +11,7 @@ $(document).ready(function() {
     $('#teacher-stars').raty({
         readOnly: true,
         half: true,
-        score: $('#teacher-rating').val()
+        score: $('#school-rating').val()
     });
 
     $('.stars-container').raty({
@@ -66,7 +66,7 @@ $(document).ready(function() {
         var lessonId = form.find('input[name=lessonId]').val();
         var score = form.find('input[name=score]').val();
         var comment = form.find('textarea[name=comment]').val();
-        $.post('/review/lesson', {
+        $.post('/review/school/lesson', {
             dataType: 'json',
             _token: token,
             lessonId: lessonId,
@@ -121,22 +121,25 @@ $(document).ready(function() {
                     "hideMethod": "fadeOut"
                 });
             }
-            //reset form values
-            form.find('input[name=lessonId]').val('-1');
-            form.find('input[name=score]').val('3');
-            form.find('textarea[name=comment]').val('');
-            $('#rchars_feedback').html('(255 caracteres disponibles)');
-            $('#review-stars').raty({
-                readOnly: false,
-                half: true,
-                size: 23,
-                starHalf: '../img/star-half.png',
-                starOff : '../img/star-off.png',
-                starOn  : '../img/star-on.png',
-                score: function(){return $(this).attr('data-score');}
-            });
         });
     });
+
+    $('#modal-review').on('hidden.bs.modal', function () {
+        formReview.find('input[name=lessonId]').val('-1');
+        formReview.find('input[name=score]').val('3');
+        formReview.find('textarea[name=comment]').val('');
+        $('#rchars_feedback').html('(255 caracteres disponibles)');
+        $('#review-stars').raty({
+            readOnly: false,
+            half: true,
+            size: 23,
+            starHalf: '../img/star-half.png',
+            starOff : '../img/star-off.png',
+            starOn  : '../img/star-on.png',
+            score: function(){return $(this).attr('data-score');}
+        });
+    });
+
 
     $('.trigger-review').click(function(e){
         e.preventDefault();
@@ -147,9 +150,9 @@ $(document).ready(function() {
 
     $("#contact-me").one("click", function(e) {
         e.preventDefault();
-        var teacherId =  $('#teacherId').val();
+        var schoolId =  $('#schoolId').val();
         var token = $('#_token').val();
-        $.post('/request/info/teacher/all/'+teacherId, {
+        $.post('/request/info/school/all/'+schoolId, {
             dataType: 'json',
             _token: token
         }, function(data){
@@ -161,7 +164,7 @@ $(document).ready(function() {
         e.preventDefault();
         var reviewId = $(this).attr('data-reviewId');
         var token = $('#_token').val();
-        $.post('/review/was/helpful/'+reviewId, {
+        $.post('/review/school/was/helpful/'+reviewId, {
             dataType: 'json',
             _token: token
         }, function(data){
@@ -218,7 +221,7 @@ $(document).ready(function() {
         e.preventDefault();
         var reviewId = $(this).attr('data-reviewId');
         var token = $('#_token').val();
-        $.post('/review/not/helpful/'+reviewId, {
+        $.post('/review/school/not/helpful/'+reviewId, {
             dataType: 'json',
             _token: token
         }, function(data){

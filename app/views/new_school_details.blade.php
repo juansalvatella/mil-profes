@@ -3,8 +3,8 @@
 
 {{-- This vars are needed for school.js --}}
 <input type="hidden" id="_token" value="{{ Session::getToken() }}">
-<input type="hidden" id="teacherId" value="{{ $school->id }}">
-<input type="hidden" id="teacher-rating" value="{{ $school->avgRating }}" />
+<input type="hidden" id="schoolId" value="{{ $school->id }}">
+<input type="hidden" id="school-rating" value="{{ $school->avgRating }}" />
 
 <div class="container-fluid background-gblack">
     <div class="row">
@@ -12,21 +12,24 @@
         @if(false)
                 background: url('{{asset('img/school-bims/default.jpg')}}') no-repeat center center;
         @else
-                background: url('{{asset('img/school-bims/default.jpg')}}') no-repeat center top;
+                background: url('{{asset('img/school-bims/default.jpg')}}') no-repeat center center;
         @endif
                 background-size: cover;">
             <meta itemprop="name" content="{{ $school->name }}">
             {{--<meta itemprop="jobTitle" content="Profe.">--}}
             <meta itemprop="telephone" content="{{{ $school->phone }}}">
             <meta itemprop="email" content="{{{ $school->email }}}">
-            <img itemprop="image" width="160" class="sprofile-logo thumbnail" src="{{ asset('img/logos/'.$school->logo) }}" alt="{{ $school->name }}">
-            <div class="tprofile-stars" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+
+            <?php list($imgWidth, $imgHeight) = getimagesize(asset('img/logos/'.$school->logo)); ?>
+            <img itemprop="image" width="{{ $imgWidth }}" height="{{ $imgHeight }}" class="sprofile-logo thumbnail" src="{{ asset('img/logos/'.$school->logo) }}" alt="{{ $school->name }}">
+
+            <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                 <meta itemprop="reviewCount" content="{{ $school->nReviews }}">
                 <meta itemprop="ratingValue" content="{{ $school->avgRating }}">
                 <meta itemprop="bestRating" content="5">
             </div>
 
-            <div class="tprofile-name">
+            <div class="sprofile-name">
                 <b>{{ $school->name }}</b>
                 <br/>
                 <small>@lang('school-profile.school')</small>
@@ -34,9 +37,10 @@
 
         </div>
     </div>
-    <div class="row">
+    <div class="row overflow-hidden">
         <div class="col-md-offset-1 col-md-10 hdr-share text-right">
-            <div class="tprofile-stars">
+
+            <div class="sprofile-stars">
                 <div id="teacher-stars"></div><span id="teacher-n-reviews" title="@choice('teacher-profile.reviews',2)">({{ $school->nReviews }})</span>
             </div>
 
@@ -104,7 +108,9 @@
                                             @if($school->phone)
                                                 <div><i class="fa fa-phone"></i> <span class="tlf-number" itemprop="telephone">{{{ substr($school->phone,0,3).' '.substr($school->phone,3,2).' '.substr($school->phone,5,2).' '.substr($school->phone,7,strlen($school->phone)-7) }}}</span></div>
                                             @endif
-                                            <div><i class="fa fa-envelope-o"></i> <a href="mailto:{{{ $school->email }}}">{{{ $school->email }}}</a></div>
+                                            @if($school->email)
+                                                <div><i class="fa fa-envelope-o"></i> <a href="mailto:{{{ $school->email }}}">{{{ $school->email }}}</a></div>
+                                            @endif
                                         </div>
                                         <div class="contact-info-social">
                                             @if($school->link_facebook)
@@ -230,8 +236,8 @@
                                         <div class="carousel-inner">
                                             <?php $i=0; ?>
                                             @foreach($slpics as $pic)
-                                                <div class="item @if($i==0) active @endif">
-                                                    <div class="carousel-table" style="background: url({{ asset('img/pics/'.$pic->pic) }}) center center no-repeat;background-size: cover;">&nbsp;</div>
+                                                <div class="item @if($i==0) active @endif ">
+                                                    <div class="carousel-table" style="background: url({{ asset('img/pics/'.$pic->pic) }}) center center no-repeat; background-size: cover;">&nbsp;</div>
                                                 </div>
                                                 <?php ++$i; //slide counter ?>
                                             @endforeach
@@ -303,13 +309,10 @@
                                     <div id="panel-body-lessons" class="panel-body">
 
                                         @if ($lessons->isEmpty())
-                                            <span>Aún no tengo clases publicadas.</span>
+                                            <span>Estamos publicando nuestras clases. Vuelve a visitar nuestro perfil en unos minutos.</span>
                                         @else
                                             @foreach($lessons as $l)
                                                 <div class="row bottom-buffer-45">
-                                                    {{--<input type="hidden" id="authCheck" value="{{ Auth::check() }}">--}}
-                                                    {{--<input type="hidden" id="lessonId" value="{{ $l->id }}">--}}
-                                                    {{--<input type="hidden" id="averageRating" value="{{ $l->getLessonAvgRating() }}">--}}
 
                                                     <div class="col-xs-12 col-sm-2">
                                                         <div class="row text-center subject-icon-lg">
@@ -336,6 +339,14 @@
 
                                                         <div class="t-lesson-description result-description text-justify">
                                                             {{{ $l->description }}}
+                                                        </div>
+
+                                                        <div class="lesson-availability unpadded">
+                                                            @foreach($l->availability as $pick)
+                                                                @if($pick->day != '')
+                                                                    <small><span class="pick"><span class="pick-day">&nbsp;{{ $pick->day }}&nbsp;</span> <span class="pick-time">&nbsp;{{ substr($pick->start,0,-3) }} - {{ substr($pick->end,0,-3) }}&nbsp;&nbsp;</span></span></small>
+                                                                @endif
+                                                            @endforeach
                                                         </div>
                                                     </div>
 

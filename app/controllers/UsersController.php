@@ -116,7 +116,7 @@ class UsersController extends Controller
         $input = Input::all();
 
         if ($repo->login($input)) { //if login successful
-            if(Request::is('/'))
+            if(URL::previous() == Request::root() || URL::previous() == Request::root().'/')
                 return Redirect::intended('/userpanel/dashboard');
             else
                 return Redirect::back();

@@ -16,6 +16,8 @@
     .sprofile-logo { bottom: 120px; left:0; right:0; margin: auto; }
     .tprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
     .tprofile-stars { top:0; left:0; width:100%; text-align:center; }
+    .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
+    .sprofile-stars { top:0; left:0; width:100%; text-align:center; }
     .navbar-brand { font-size: 2.5em; }
     #navbar { padding: auto; }
     .navbar-header { padding: auto; }
@@ -37,9 +39,11 @@
     .share-container { width: 210px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 132px; left: 25px; }
-    .sprofile-logo { bottom: -10px; left: 25px; }
+    .sprofile-logo { bottom: 120px; left:0; right:0; margin: auto; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 4px; }
+    .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
+    .sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:10px; }
     .navbar-brand { font-size: 2.5em; }
     #navbar { padding: 0 5px 0 0; }
     .navbar-header { padding: 0 0 0 5px; }
@@ -60,9 +64,11 @@
     .share-container { width: 440px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 172px; left: 25px; }
-    .sprofile-logo { bottom: -50px; left: 25px; }
+    .sprofile-logo { bottom: 120px; left:0; right:0; margin: auto; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
+    .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
+    .sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:15px; }
     .navbar-brand { font-size: 2.7em; }
     #navbar { padding: auto; }
     .navbar-header { padding: auto; }
@@ -84,9 +90,11 @@
     .hdr-share { height: 50px; }
     .share-me { top: 15px; right: 448px; }
     .tprofile-avatar { top: 172px; left: 25px; }
-    .sprofile-logo { bottom: -50px; left: 25px; }
+    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
+    .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
+    .sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:15px; }
     .navbar-brand { font-size: 2.7em; }
     #navbar { padding: auto; }
     .navbar-header { padding: auto; }
@@ -170,6 +178,9 @@ a, a:link, a:hover, a:active, a:visited {
     white-space: nowrap;
     overflow: hidden;
 }
+
+.overflow-hidden {  overflow: hidden;  }
+
 .top-buffer-3 { margin-top:3px; }
 .top-buffer-4 { margin-top:4px; }
 .top-buffer-5 { margin-top:5px; }
@@ -1238,9 +1249,14 @@ body.loading .modal-loading { /*modal element will be visible */
 .sprofile-logo {
     z-index:1000;
     position:absolute;
+    max-width: 280px;
+    max-height: 160px;
+    /*min-height: 100px;*/
+    height: auto;
+    width: auto;
     /*positioning in media queries*/
 }
-.tprofile-name {
+.tprofile-name, .sprofile-name {
     font-family: raleway-regular, sans-serif;
     font-size: 24px;
     height: 160px;
@@ -1249,7 +1265,7 @@ body.loading .modal-loading { /*modal element will be visible */
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
     /*positioning in media queries*/
 }
-.tprofile-stars {
+.tprofile-stars, .sprofile-stars {
     position:absolute;
     height:50px;
     /*positioning in media queries*/
