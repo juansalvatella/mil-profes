@@ -1,9 +1,13 @@
 <?php
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class Teacher extends Eloquent
 {
-    protected $fillable = [];
+    use SoftDeletingTrait;
 
+    protected $fillable = [];
+    protected $dates = ['deleted_at'];
     protected $table = 'teachers';
 
     public function user()

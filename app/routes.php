@@ -642,12 +642,19 @@ Route::post('teacher/availability/save', 'TeachersController@saveAvailability');
 //====================
 Route::get('admin/schools', function()
 {
-    //Raw database query needs soft deleted schools to be filtered (where null)
+    //Raw database query needs soft deleted schools to be filtered (notice the where null)
     $schools = DB::table('schools')->whereNull('deleted_at')->orderBy('id')->paginate(10);
     foreach($schools as $school)
         $school->nlessons = count(SchoolLesson::where('school_id',$school->id)->get());
 
     return View::make('schools_dashboard', compact('schools'));
+});
+Route::get('admin/teachers', function()
+{
+    //Raw database query needs soft deleted schools to be filtered (notice the where null)
+    $users = DB::table('users')->whereNull('deleted_at')->orderBy('id')->paginate(10);
+
+    return View::make('teachers_dashboard', compact('users'));
 });
 Route::post('admin/updateSchoolStatus', function()
 {
@@ -725,7 +732,16 @@ Route::get('admin/delete/school/{school_id}',function($school_id)
     return View::make('school_confirm_delete',compact('school'));
 });
 
+Route::get('admin/delete/teacher/{user_id}',function($user_id)
+{
+    $user = User::findOrFail($user_id);
+
+    return View::make('teacher_confirm_delete',compact('user'));
+});
+
 Route::post('admin/delete/school/{school_id}','AdminController@deleteSchool');
+
+Route::post('admin/delete/teacher/{user_id}','AdminController@deleteUser');
 
 Route::get('admin/lessons/{school_id}', array('as' => 'lessons', function($school_id)
 {

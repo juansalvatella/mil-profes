@@ -4,14 +4,13 @@ use Illuminate\Support\Collection;
 
 class Milprofes
 {
-
     public static function getLastTeachers($this_many)
     {
         $n = (int) $this_many;
-        $teachers = Teacher::all();
-        $last_teachers = $teachers->sortByDesc(function($teacher) {
-            return $teacher->created_at;
-        })->take($n);
+        $last_teachers = Teacher::orderBy('created_at','DESC')->take($n)->get();
+//        $last_teachers = $teachers->sortByDesc(function($teacher) {
+//            return $teacher->created_at;
+//        })->take($n);
         foreach($last_teachers as $lt)
         {
             $lt->username = $lt->user->username;
@@ -146,6 +145,7 @@ class Milprofes
         {
             if ($lesson->price >= $min_price && $lesson->price <= $max_price)
                 return true;
+            return false;
         }); //Primer filtro
 
         return $filtered_collection;

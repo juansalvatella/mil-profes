@@ -4,28 +4,24 @@ class AdminController extends BaseController
 {
     public function createSchool()
     {
+        $input = Input::all();
         $school = new School();
-        if(Input::hasFile('logo'))
-        {
-            $file = Input::file('logo');
-            $file_extension = Input::file('logo')->getClientOriginalExtension();
-            $filename = Str::random(30).'.'.$file_extension;
-            $path = public_path().'/img/logos/';
-            $file->move($path, $filename);
-            $school->logo = $filename;
-        } else {
-            $school->logo = 'default_logo.png';
-        }
 
-        $school->name = Input::get('name');
-        $school->address = Input::get('address');
-        $school->cif = Input::get('cif');
-        $school->email = Input::get('email');
-        $school->phone = Input::get('phone');
-        $school->phone2 = Input::get('phone2');
-        $school->description = Input::get('description');
-        $school->status = 'Active'; //manually created schools are active by default (no need to review)
-        $school->origin = Input::get('origin');
+        $school->name = $input['name'];
+        $school->address = $input['address'];
+        $school->cif = $input['cif'];
+        $school->email = $input['email'];
+        $school->phone = $input['phone'];
+        $school->phone2 = $input['phone2'];
+        $school->description = $input['description'];
+        $school->status = 'Active'; //manually created schools are active by default because there is no need to review their data
+        $school->origin = $input['origin'];
+        $school->link_web = $input['web'];
+        $school->link_facebook = $input['facebook'];
+        $school->link_twitter = $input['twitter'];
+        $school->link_linkedin = $input['linkedin'];
+        $school->link_googleplus = $input['googleplus'];
+        $school->link_instagram = $input['instagram'];
 
         $geocoding = Geocoding::geocode($school->address);
         if(!$geocoding){
@@ -40,7 +36,27 @@ class AdminController extends BaseController
         if(isset($geocoding[3]['postal_code']))
             $school->postalcode = $geocoding[3]['postal_code']; //guardar código postal
 
+        if(Input::hasFile('logo'))
+        {
+            $file = Input::file('logo');
+            $file_extension = Input::file('logo')->getClientOriginalExtension();
+            $filename = Str::random(30).'.'.$file_extension;
+            $path = public_path().'/img/logos/';
+            $file->move($path, $filename);
+            $school->logo = $filename;
+        } else {
+            $school->logo = 'default_logo.png';
+        }
+
         if($school->save()) {
+
+            //associate video
+            $video = new Video();
+            $video->video = $input['video'];
+            $video->school()->associate($school);
+            $video->save();
+
+            //associate pics
             if (Input::hasFile('pics')) {
                 $all_uploads = Input::file('pics');
                 if (!is_array($all_uploads)) {
@@ -86,12 +102,14 @@ class AdminController extends BaseController
     public function deleteUser() {
         $user_id = Input::get('id');
         $user = User::findOrFail($user_id);
+        $teacher = $user->teacher()->first();
+        $teacher->delete();
         $user->delete();
 
-        if($user->trashed())
-            return Redirect::to('admin/schools')->with('success', 'Usuario eliminado con éxito');
+        if($user->trashed() && $teacher->trashed())
+            return Redirect::to('admin/teachers')->with('success', 'Usuario eliminado con éxito');
         else
-            return Redirect::to('admin/schools')->with('failure', '¡Error! El usuario no pudo ser eliminado.');
+            return Redirect::to('admin/teachers')->with('failure', '¡Error! El usuario no pudo ser eliminado correctamente.');
     }
 
     public function deleteSchool()
@@ -108,27 +126,31 @@ class AdminController extends BaseController
 
     public function saveSchool()
     {
-        $school = School::findOrFail(Input::get('id'));
-        if(Input::hasFile('logo')) {
-            $file = Input::file('logo');
-            $file_extension = Input::file('logo')->getClientOriginalExtension();
-            $filename = Str::random(20) . '.' . $file_extension;
-            $path = public_path() . '/img/logos/';
-            $file->move($path, $filename);
-            $school->logo = $filename;
-        }
-        $school->name = Input::get('name');
-        $school->cif = Input::get('cif');
-        $school->email = Input::get('email');
-        $school->phone = Input::get('phone');
-        $school->phone2 = Input::get('phone2');
-        $school->description = Input::get('description');
-        if(Input::get('address') != $school->address)
-        {
-            $school->address = Input::get('address');
+        $input = Input::all();
+        $school = School::findOrFail($input['id']);
+
+        $school->name = $input['name'];
+        $school->cif = $input['cif'];
+        $school->email = $input['email'];
+        $school->phone = $input['phone'];
+        $school->phone2 = $input['phone2'];
+        $school->description = $input['description'];
+        $school->link_web = $input['web'];
+        $school->link_facebook = $input['facebook'];
+        $school->link_twitter = $input['twitter'];
+        $school->link_linkedin = $input['linkedin'];
+        $school->link_googleplus = $input['googleplus'];
+        $school->link_instagram = $input['instagram'];
+
+        $video = $school->video->first();
+        $video->video = $input['video'];
+        if(!$video->save())
+            return Redirect::back()->withInput()->with('failure', 'Fallo al guardar el código del vídeo asociado a la academia.');
+
+        if(Input::get('address') != $school->address) {
+            $school->address = $input['address'];
             $geocoding = Geocoding::geocode($school->address);
-            if(!$geocoding){
-//                return Redirect::to('admin/schools')
+            if(!$geocoding) {
                 return Redirect::back()
                     ->withInput()
                     ->with('failure', 'No se pudo modificar los datos de la acadamia. Fallo al guardar la dirección.');
@@ -140,6 +162,16 @@ class AdminController extends BaseController
             if(isset($geocoding[3]['postal_code']))
                 $school->postalcode = $geocoding[3]['postal_code']; //guardar código postal
         }
+
+        if(Input::hasFile('logo')) {
+            $file = Input::file('logo');
+            $file_extension = Input::file('logo')->getClientOriginalExtension();
+            $filename = Str::random(20) . '.' . $file_extension;
+            $path = public_path() . '/img/logos/';
+            $file->move($path, $filename);
+            $school->logo = $filename;
+        }
+
         if (Input::hasFile('pics')) {
             //TODO: implementar selector de modos (reemplazar o añadir)
             $school->pics()->delete(); //TODO: sólo aplicar en modo reemplazar

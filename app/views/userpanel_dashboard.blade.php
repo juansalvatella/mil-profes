@@ -18,12 +18,15 @@
                 </div>
                 <div class="pull-right">
                     <a href="{{ url('profe/'.$user->slug) }}" class="btn btn-default"><i class="fa fa-user-plus"></i> Ver mi perfil</a>
-                    @if($user->hasRole("admin"))
-                        <a href="{{ url('admin/school/reviews') }}" class="btn btn-primary btn-xs">Valoración academias</a>
-                        <a href="{{ url('admin/teacher/reviews') }}" class="btn btn-primary btn-xs">Valoración profes.</a>
-                        <a href="{{ url('admin/schools') }}" class="btn btn-warning btn-xs">Administrar academias</a>
-                    @endif
                 </div>
+                @if($user->hasRole("admin"))
+                    <div class="pull-right" style="width:150px;text-align:center;">
+                        <a href="{{ url('admin/school/reviews') }}" class="btn btn-primary btn-xs inline-block">Valoración academias</a>
+                        <a href="{{ url('admin/teacher/reviews') }}" class="btn btn-primary btn-xs inline-block top-buffer-4">Valoración profes.</a>
+                        <a href="{{ url('admin/schools') }}" class="btn btn-warning btn-xs inline-block top-buffer-4">Administrar academias</a>
+                        <a href="{{ url('admin/teachers') }}" class="btn btn-warning btn-xs inline-block top-buffer-4">Administrar profesores</a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

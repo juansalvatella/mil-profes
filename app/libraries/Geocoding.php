@@ -93,8 +93,7 @@ class Geocoding {
         $max_lon = rad2deg($lonr+$delta_lon);
 
 
-        $filtered_collection = $locations_collection->filter(function($location) use ($min_lat,$max_lat,$min_lon,$max_lon)
-        {
+        $filtered_collection = $locations_collection->filter(function($location) use ($min_lat,$max_lat,$min_lon,$max_lon) {
             if ($location->lat >= $min_lat && $location->lat <= $max_lat && $location->lon >= $min_lon && $location->lon <= $max_lon)
                 return true;
             return false;

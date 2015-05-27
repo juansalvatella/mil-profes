@@ -21,13 +21,6 @@
         <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
         <input type="hidden" name="id" value="{{ $school->id }}">
 
-        {{--<div class="form-group">--}}
-            {{--<div class="col-sm-2 control-label">--}}
-                {{--<img src="{{ asset('img/logos/'.$school->logo) }}" class="img-thumbnail" style="min-height: 50px;height: 50px;">--}}
-            {{--</div>--}}
-            {{--<div class="col-sm-10">&nbsp;</div>--}}
-        {{--</div>--}}
-
         <div class="form-group">
             <label class="col-sm-2 control-label" for="logo">Logotipo</label>
             <div class="col-sm-10">
@@ -138,7 +131,12 @@
 
             });
         </script>
-
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="video">Youtube video code</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="video" id="video" value="{{ $school->video()->first()->pluck('video'); }}"/>
+            </div>
+        </div>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="name">Nombre</label>
             <div class="col-sm-10">
@@ -179,6 +177,54 @@
             <label class="col-sm-2 control-label" for="description">Descripción</label>
             <div class="col-sm-10">
                 <textarea rows="3" class="form-control" name="description" id="description">{{ $school->description }}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <label for="facebook">Facebook</label>
+            </div>
+            <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                <input class="form-control col-xs-10" placeholder="" type="url" name="facebook" id="facebook" value="{{ $school->link_facebook }}" data-error="Introduce una dirección web válida. Ejemplo: http://facebook.com/milprofes">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <label for="twitter">Twitter</label>
+            </div>
+            <div class="col-xs-12 col-offset-sm-2 col-sm-10">
+                <input class="form-control col-xs-10" placeholder="" type="url" name="twitter" id="twitter" value="{{ $school->link_twitter }}" data-error="Introduce una dirección web válida. Ejemplo: http://twitter.com/milprofes">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <label for="googleplus">Google+</label>
+            </div>
+            <div class="col-offset-sm-2 col-sm-10">
+                <input class="form-control col-xs-10" placeholder="" type="url" name="googleplus" id="googleplus" value="{{ $school->link_googleplus }}" data-error="Introduce una dirección web válida. Ejemplo: http://plus.google.com/+MilProfes">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <label for="instagram">Instagram</label>
+            </div>
+            <div class="col-offset-sm-2 col-sm-10">
+                <input class="form-control col-xs-10" placeholder="" type="url" name="instagram" id="instagram" value="{{ $school->link_instagram }}" data-error="Introduce una dirección web válida. Ejemplo: http://instagram.com/milprofes">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <label for="linkedin">LinkedIn</label>
+            </div>
+            <div class="col-offset-sm-2 col-sm-10">
+                <input class="form-control col-xs-10" placeholder="" type="url" name="linkedin" id="linkedin" value="{{ $school->link_linkedin }}" data-error="Introduce una dirección web válida. Ejemplo: http://es.linkedin.com/in/milprofes">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <label for="web">Página web</label>
+            </div>
+            <div class="col-offset-sm-2 col-sm-10">
+                <input class="form-control col-xs-10" placeholder="" type="url" name="web" id="web" value="{{ $school->link_web }}" data-error="Introduce una dirección web válida. Ejemplo: http://www.milprofes.com">
             </div>
         </div>
         <div class="form-group">

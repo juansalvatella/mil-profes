@@ -5,6 +5,7 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Confide\ConfideUserInterface;
 use Zizaco\Entrust\HasRole;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class User extends Eloquent implements ConfideUserInterface, SluggableInterface {
 
@@ -14,14 +15,14 @@ class User extends Eloquent implements ConfideUserInterface, SluggableInterface 
         'build_from' => 'username',
         'save_to'    => 'slug',
     );
+    protected $dates = ['deleted_at'];
+    protected $fillable = [];
+
 // if slug build_from = fullname instead of username, then uncomment this method
 //    public function getFullnameAttribute()
 //    {
 //        return $this->name.' '.$this->lastname;
 //    }
-    protected $dates = ['deleted_at'];
-
-	protected $fillable = [];
 
 	public function student()
 	{
