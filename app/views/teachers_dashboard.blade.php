@@ -79,7 +79,7 @@
     </table>
     <div class="panel panel-default">
         <div class="panel-body">
-            Mostrando {{ $users->getFrom() }}-{{ $users->getTo() }} de un total de {{ $users->getTotal() }} academias.
+            Mostrando {{ $users->getFrom() }}-{{ $users->getTo() }} de un total de {{ $users->getTotal() }} profes.
         </div>
     </div>
     {{ $users->links() }}
