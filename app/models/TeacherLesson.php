@@ -48,7 +48,7 @@ class TeacherLesson extends Eloquent
     public function getFeaturedReviews($this_many) {
         $n = (int) $this_many;
         $featured = $this->ratings()
-            ->where('total_helpful','>','0')
+//            ->where('total_helpful','>','0')
             ->orderByRaw('`yes_helpful`/IF(`total_helpful`=0,1,`total_helpful`) DESC')
             ->take($n)
             ->get();

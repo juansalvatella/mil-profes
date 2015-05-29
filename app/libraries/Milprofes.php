@@ -39,6 +39,7 @@ class Milprofes
                              ON t2.id = t1.teacher_lesson_id
                            LEFT JOIN teachers AS t3
                              ON t3.id = t2.teacher_id
+                         WHERE t3.deleted_at IS NULL
                          GROUP BY t1.teacher_lesson_id
                    ) AS t4
                   GROUP BY t4.teacher_id
