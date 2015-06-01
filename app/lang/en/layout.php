@@ -19,7 +19,7 @@ return [
     //Footer
     'contact_logo' => '<span class="mil-word-2">mil</span> <span class="profes-word-2">PROFES.</span>',
     'phone_title' => 'Teléfono: ',
-    'phone' => '666 12 62 03',
+    'phone' => '696 08 91 84',
     'email_title' => 'E-Mail: ',
     'email' => 'info@milprofes.com',
     'address_title' => '',
