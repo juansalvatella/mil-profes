@@ -54,4 +54,13 @@ return array(
     'of_subject_deportes' => 'DE DEPORTES',
     'of_subject_salud' => 'DE SALUD Y BIENESTAR',
 
+    'subject_escolar' => 'NIVEL ESCOLAR',
+    'subject_cfp' => 'FORMACIÓN PROFESIONAL',
+    'subject_universitario' => 'NIVEL UNIVERSITARIO',
+    'subject_artes' => 'ARTE',
+    'subject_musica' => 'MÚSICA',
+    'subject_idiomas' => 'IDIOMAS',
+    'subject_deportes' => 'DEPORTES',
+    'subject_salud' => 'SALUD Y BIENESTAR',
+
 );

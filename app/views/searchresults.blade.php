@@ -326,10 +326,18 @@
         <div class="panel panel-default mp-shadow">
             <div class="panel-body search-total">
                 <div class="row"><div class="col-xs-12">
-                @if($total_results==0)
-                    <span><strong>No se encontraron resultados</strong></span>
+                @if($prof_o_acad=='profesor')
+                    @if($total_results==0)
+                        <span><strong>No se encontraron profes.</strong></span>
+                    @else
+                        <span><strong>{{ $total_results }} @choice('profe.|profes.',$total_results) cerca de ti</strong></span>
+                    @endif
                 @else
-                    <span><strong>{{ $total_results }} @choice('search.results',$total_results) cerca de ti</strong></span>
+                    @if($total_results==0)
+                        <span><strong>No se encontraron academias.</strong></span>
+                    @else
+                        <span><strong>{{ $total_results }} @choice('academia|academias',$total_results) cerca de ti</strong></span>
+                    @endif
                 @endif
                 </div></div>
             </div>
@@ -350,38 +358,38 @@
                                 <a href="{{ url('academia/'.$result->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->name }}" src="{{ asset('img/logos/'.$result->logo) }}"/></a>
                             @endif
                         </div>
-                        <div class="row text-center profile-link">
+                        <div class="text-center profile-link-name">
                             @if($prof_o_acad=='profesor')
-                                <a href="{{ url('profe/'.$result->slug) }}">VER PERFIL</a>
+                                <a href="{{ url('profe/'.$result->slug) }}">{{{ $result->displayName }}}</a>
                             @else
-                                <a href="{{ url('academia/'.$result->slug) }}">VER PERFIL</a>
+                                <a href="{{ url('academia/'.$result->slug) }}">{{{ $result->name }}}</a>
                             @endif
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-6">
-                        <div class="row result-name">
+                        <div class="row lesson-name">
+                        @if($result->title == '')
                             @if($prof_o_acad=='profesor')
-                                <span>{{{ $result->displayName }}}</span>
+                                @lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject)
                             @else
-                                <span>{{{ $result->name }}}</span>
+                                @lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject)
                             @endif
+                        @else
+                            {{{ $result->title }}}
+                        @endif
                         </div>
                         <div class="row result-subject">
                             @if($prof_o_acad=='profesor')
-                                <span class="span-subject-teacher">&nbsp;PROFE. @lang('search.of_subject_'.$result->subject)&nbsp;</span>
+                                <span class="span-subject-teacher">&nbsp;@lang('search.subject_'.$result->subject)&nbsp;</span>
                             @else
-                                <span class="span-subject-school">&nbsp;ACADEMIA @lang('search.of_subject_'.$result->subject)&nbsp;</span>
+                                <span class="span-subject-school">&nbsp;@lang('search.subject_'.$result->subject)&nbsp;</span>
                             @endif
                         </div>
                         <div class="row result-distance">
                             Dentro de {{ $result->dist_to_user }} Km <img alt="marcador" src="{{ asset('../img/marcador-distancia.png') }}"/>
                         </div>
                         <div class="row result-description-title top-srs-separator">
-                            @if($result->title == '')
-                                DESCRIPCIÓN DE LA CLASE
-                            @else
-                                {{{ $result->title }}}
-                            @endif
+                            DESCRIPCIÓN
                         </div>
                         <div class="row result-description bottom-srs-separator">
                             <small>{{{ $result->description }}}</small>
@@ -400,6 +408,15 @@
                                 @endif
                             @endforeach
                         </div>
+                        @if($result->aggregated > 1)
+                        <div class="row result-aggregated">
+                            @if($prof_o_acad=='profesor')
+                                <a class="btn btn-default btn-sm" href="{{ url('profe/'.$result->slug) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('clase|clases',$result->aggregated-1) más de {{ $result->displayName }} que @choice('podría|podrían',$result->aggregated-1) interesarte.</a>
+                            @else
+                                <a class="btn btn-default btn-sm" href="{{ url('academia/'.$result->slug) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('curso|cursos',$result->aggregated-1) más de {{ $result->name }} que @choice('podría|podrían',$result->aggregated-1) interesarte.</a>
+                            @endif
+                        </div>
+                        @endif
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
 

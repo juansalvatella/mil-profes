@@ -859,19 +859,29 @@ body.loading .modal-loading { /*modal element will be visible */
     margin:auto;
     vertical-align: middle;
 }
+.profile-link-name {
+    padding-top: 10px;
+}
+.profile-link-name a, .profile-link-name a:active, .profile-link-name a:hover {
+    color: #000;
+    text-decoration: none;
+    font-family: raleway-regular,sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+}
 .profile-link {
-    padding-top: 8px;
+    padding-top: 10px;
 }
 .profile-link a, .profile-link a:active, .profile-link a:hover {
-    color: #000000;
+    color: #000;
     text-decoration: none;
     border-bottom: 1px solid rgb(255, 169, 17);
-    font-family: raleway-semibold, sans-serif;
-    font-size: 0.9em;
+    font-family: raleway-semibold,sans-serif;
+    font-size: 0.8em;
 }
-.result-name {
+.lesson-name {
     font-weight: 700;
-    font-size: 1.2em;
+    font-size: 20px;
 }
 .result-subject span {
     color: #ffffff;
@@ -890,9 +900,18 @@ body.loading .modal-loading { /*modal element will be visible */
 }
 .result-distance {
     font-weight: 700;
-    font-size: 1.2em;
+    font-size: 17px;
     padding-top: 8px;
     padding-bottom: 12px;
+}
+.result-aggregated {
+    /*padding: 5px;*/
+    /*border: 1px solid #B0B0B0;*/
+    /*font-weight: 400;*/
+    /*color: #A2A2A2;*/
+    margin-top: 12px;
+    /*background-color: #FFF;*/
+    /*font-size: 13px;*/
 }
 .top-srs-separator {
     border-top: 1px solid rgb(255, 169, 17);
