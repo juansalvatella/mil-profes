@@ -271,7 +271,7 @@ class SearchController extends BaseController
                             LEFT JOIN school_lesson_ratings ON school_lesson_ratings.school_lesson_id = school_lessons.id
                           WHERE school_lessons.subject_id = ?
                           AND schools.deleted_at IS NULL
-                          AND schools.status <> 'Crawled'
+                          AND (schools.status <> 'Crawled' OR schools.status IS NULL)
                           AND MATCH(school_lessons.description,school_lessons.title) AGAINST(? IN BOOLEAN MODE)
                           GROUP BY school_lessons.id
                         ) AS t1
@@ -312,7 +312,7 @@ class SearchController extends BaseController
                             LEFT JOIN school_lesson_ratings ON school_lesson_ratings.school_lesson_id = school_lessons.id
                           WHERE school_lessons.subject_id = ?
                           AND schools.deleted_at IS NULL
-                          AND schools.status <> 'Crawled'
+                          AND (schools.status <> 'Crawled' OR schools.status IS NULL)
                           GROUP BY school_lessons.id
                         ) AS t1
                         GROUP BY t1.school_id
@@ -357,7 +357,7 @@ class SearchController extends BaseController
                             LEFT JOIN schools_average_ratings ON schools_average_ratings.school_id = schools.id
                             LEFT JOIN school_lesson_ratings ON school_lesson_ratings.school_lesson_id = school_lessons.id
                           WHERE schools.deleted_at IS NULL
-                          AND schools.status <> 'Crawled'
+                          AND (schools.status <> 'Crawled' OR schools.status IS NULL)
                           AND MATCH(school_lessons.description,school_lessons.title) AGAINST(? IN BOOLEAN MODE)
                           GROUP BY school_lessons.id
                         ) AS t1
@@ -394,7 +394,7 @@ class SearchController extends BaseController
                             LEFT JOIN schools_average_ratings ON schools_average_ratings.school_id = schools.id
                             LEFT JOIN school_lesson_ratings ON school_lesson_ratings.school_lesson_id = school_lessons.id
                           WHERE schools.deleted_at IS NULL
-                          AND schools.status <> 'Crawled'
+                          AND (schools.status <> 'Crawled' OR schools.status IS NULL)
                           GROUP BY school_lessons.id
                         ) AS t1
                         GROUP BY t1.school_id
