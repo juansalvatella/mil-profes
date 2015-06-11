@@ -352,6 +352,46 @@ Route::post('contactanos','ContactController@getContactForm');
 
 Route::post('/','ContactController@getMiniContactForm');
 
+Route::post('request/info/teacher', function() {
+    $input = Input::all();
+    if(Input::has('lessonId')) {
+        if (true || !Session::has('t_'.$input['teacherId'].'_visualized_'.$input['lessonId'])) //if this Tlf visualization hasn't been recorded before (during the session)
+        {
+            Session::put('t_'.$input['teacherId'].'_visualized_'.$input['lessonId'], true); //record the visualization in the session array
+            Session::save();
+
+            $visualization = new TeacherPhoneVisualization(); //register the visualization in database
+            if (Auth::check()) { //if user is authenticated relate the user id with the visualization
+                $observer = Confide::user();
+                $visualization->user_id = $observer->id;
+            }
+            $visualization->teacher_lesson_id = $input['lessonId'];
+            $visualization->teacher_id = $input['teacherId'];
+            $save = $visualization->save();
+
+            return Response::json(['saved' => ''.$save], '200');
+        }
+    } else {
+        if (true || !Session::has('t_'.$input['teacherId'].'_visualized_null')) //if this Tlf visualization hasn't been recorded before (during the session)
+        {
+            Session::put('t_'.$input['teacherId'].'_visualized_null', true); //record the visualization in the session array
+            Session::save();
+
+            $visualization = new TeacherPhoneVisualization(); //register the visualization in database
+            if (Auth::check()) { //if user is authenticated relate the user id with the visualization
+                $observer = Confide::user();
+                $visualization->user_id = $observer->id;
+            }
+            $visualization->teacher_id = $input['teacherId'];
+            $save = $visualization->save();
+
+            return Response::json(['saved' => ''.$save], '200');
+        }
+    }
+
+    return Response::json(['warning' => 'Already saved in DB'], '200');
+});
+
 //Register contact info requests
 Route::post('request/info/teacher/{lesson_id}', function($lesson_id) {
     if (!Session::has('t_visualized_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
@@ -391,6 +431,46 @@ Route::post('request/info/teacher/all/{teacher_id}', function($teacher_id) {
         return (string) $visualization->save();
     }
     return 'Already saved in DB';
+});
+
+Route::post('request/info/school', function() {
+    $input = Input::all();
+    if(Input::has('courseId')) {
+        if (!Session::has('s_'.$input['schoolId'].'_visualized_'.$input['courseId'])) //if this Tlf visualization hasn't been recorded before (during the session)
+        {
+            Session::put('s_'.$input['schoolId'].'_visualized_'.$input['courseId'], true); //record the visualization in the session array
+            Session::save();
+
+            $visualization = new SchoolPhoneVisualization(); //register the visualization in database
+            if (Auth::check()) { //if user is authenticated relate the user id with the visualization
+                $observer = Confide::user();
+                $visualization->user_id = $observer->id;
+            }
+            $visualization->school_lesson_id = $input['courseId'];
+            $visualization->school_id = $input['schoolId'];
+            $save = $visualization->save();
+
+            return Response::json(['saved' => ''.$save], '200');
+        }
+    } else {
+        if (!Session::has('s_'.$input['schoolId'].'_visualized_null')) //if this Tlf visualization hasn't been recorded before (during the session)
+        {
+            Session::put('s_'.$input['schoolId'].'_visualized_null', true); //record the visualization in the session array
+            Session::save();
+
+            $visualization = new SchoolPhoneVisualization(); //register the visualization in database
+            if (Auth::check()) { //if user is authenticated relate the user id with the visualization
+                $observer = Confide::user();
+                $visualization->user_id = $observer->id;
+            }
+            $visualization->school_id = $input['schoolId'];
+            $save = $visualization->save();
+
+            return Response::json(['saved' => ''.$save], '200');
+        }
+    }
+
+    return Response::json(['warning' => 'Already saved in DB'], '200');
 });
 
 Route::post('request/info/school/{lesson_id}', function($lesson_id) {

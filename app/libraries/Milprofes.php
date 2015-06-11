@@ -42,6 +42,7 @@ class Milprofes
                          WHERE t3.deleted_at IS NULL
                          GROUP BY t1.teacher_lesson_id
                    ) AS t4
+                  WHERE t4.user_id IS NOT NULL
                   GROUP BY t4.teacher_id
                   ORDER BY total DESC
             ) AS t5, (SELECT @curRank := 0) r
@@ -49,6 +50,7 @@ class Milprofes
             LIMIT ?;
         "),array($n));
 
+//        dd($popular_teachers);
         foreach($popular_teachers as $pt)
         {
             $user = User::where('id',$pt->user_id)->first();

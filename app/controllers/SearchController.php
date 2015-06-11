@@ -522,7 +522,7 @@ class SearchController extends BaseController
         //no more filters, results sorted >>>> pagination of results
         $total_results = $results->count();
         $max_slices = ceil($total_results/$results_per_slice);
-        $slices_showing = Input::has('slices_showing') ? $input['slices_showing'] : 0;
+        $slices_showing = Input::has('slices_showing') ? (int) $input['slices_showing'] : 0;
         $sl_offset = $slices_showing*6;
         $sl_length = $results_per_slice;
         $results = $results->slice($sl_offset,$sl_length);

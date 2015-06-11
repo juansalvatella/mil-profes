@@ -430,43 +430,11 @@
                             <span id="lesson-stars-{{$result->id}}"></span>
                             <script type="text/javascript">
                                 $('#lesson-stars-{{$result->id}}').raty({
-                                    {{--@if(!(Auth::check()))--}}
-                                        {{--readOnly: true,--}}
-                                    {{--@endif--}}
                                     readOnly: true,
                                     half: true,
                                     score: {{ $result->lesson_avg_rating }}
                                 });
                             </script>
-                            {{--@if(Auth::check())--}}
-                                {{--<script type="text/javascript">--}}
-                                    {{--$(document).on("click", "#lesson-stars-{{$result->id}}", function(e) {--}}
-                                        {{--e.preventDefault();--}}
-                                        {{--e.stopImmediatePropagation();--}}
-                                        {{--//registrar valoración en base de datos--}}
-                                        {{--var lesson_id = {{ $result->id }};--}}
-                                        {{--var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');--}}
-                                        {{--var aPostForm = $('form#aPostForm');--}}
-                                        {{--@if($prof_o_acad=='profesor')--}}
-                                            {{--$.post('/reviews/handleReview', {--}}
-                                                {{--_token: aPostForm.find('input[name=_token]').val(),--}}
-                                                {{--review_lesson_id: lesson_id,--}}
-                                                {{--review_rating: review_rating--}}
-                                            {{--}, function (data) {--}}
-                                                {{--$('#lesson-stars-{{$result->id}}').raty({readOnly:true,half:true,score:review_rating});--}}
-                                            {{--});--}}
-                                        {{--@else--}}
-                                            {{--$.post('/reviews/handleSchoolLessonReview', {--}}
-                                                {{--_token: aPostForm.find('input[name=_token]').val(),--}}
-                                                {{--review_lesson_id: lesson_id,--}}
-                                                {{--review_rating: review_rating--}}
-                                            {{--}, function (data) {--}}
-                                                {{--$('#lesson-stars-{{$result->id}}').raty({readOnly:true,half:true,score:review_rating});--}}
-                                            {{--});--}}
-                                        {{--@endif--}}
-                                    {{--});--}}
-                                {{--</script>--}}
-                            {{--@endif--}}
                         </div>
                         <div class="row text-center">
                             @if($result->price=='0')
@@ -488,40 +456,11 @@
                             @endif
                         </div>
                         <div class="row text-center top-buffer-15">
-                                @if($prof_o_acad=='profesor')
-                                    <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="top" title="Contacto">Contáctame</a>
-                                @else
-                                    <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="top" title="Contacto">Contáctanos</a>
-                                @endif
-                                <script type="text/javascript">
-                                    $(document).ready(function(){
-                                        $("#contact-me-{{ $result->id }}").popover({
-                                            html: true,
-                                            content:    ''+
-    @if($result->phone == '' && $result->email == '')  'Nuestra información de contacto aún no está disponible.'+ @endif
-                            @if($result->phone != '')  '<div class="text-center contact-info-title1">Teléfono</div>'+
-                                                        '<div class="text-center contact-info-tel">{{ $result->phone }}</div>'+ @endif
-    @if($result->phone != '' && $result->email != '')   '<hr class="contact-info-hr">'+  @endif
-                            @if($result->email != '')   '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
-                                                        '<div class="text-center contact-info-mail">{{ $result->email  }}</div>'+ @endif
-                                                        ''
-                                        });
-                                    });
-                                    $(document).on("click", "#contact-me-{{ $result->id }}", function(e) {
-                                        e.preventDefault();
-                                        e.stopImmediatePropagation();
-                                        var aPostForm = $('form#aPostForm');
-                                        @if($prof_o_acad=='profesor')
-                                            $.post('/request/info/teacher/{{$result->id}}',{
-                                                _token: aPostForm.find('input[name=_token]').val()
-                                            },function(data){});
-                                        @else
-                                            $.post('/request/info/school/{{$result->id}}',{
-                                                _token: aPostForm.find('input[name=_token]').val()
-                                            },function(data){});
-                                        @endif
-                                    });
-                                </script>
+                            @if($prof_o_acad=='profesor')
+                                <a id="contact-me-{{ $result->id }}" href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}" class="btn btn-milprofes">Contáctame</a>
+                            @else
+                                <a id="contact-me-{{ $result->id }}" href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}" class="btn btn-milprofes">Contáctanos</a>
+                            @endif
                         </div>
                     </div>
                 </div>
