@@ -377,7 +377,7 @@
                                                                 <?php
                                                                     //Get reviewer display name
                                                                     $student = Student::where('id',$f->student_id)->first();
-                                                                    $reviewer = $student->user()->first();
+                                                                    $reviewer = $student->user()->withTrashed()->first();
                                                                     $reviewer->displayName = ucwords($reviewer->name).' '.substr(ucwords($reviewer->lastname),0,1).'.';
                                                                 ?>
                                                                 {{--@if($n_fr < 2)--}}
@@ -457,7 +457,7 @@
                                                                     <?php
                                                                         //Get reviewer display name
                                                                         $student = Student::where('id',$a->student_id)->first();
-                                                                        $reviewer = $student->user()->first();
+                                                                        $reviewer = $student->user()->withTrashed()->first();
                                                                         $reviewer->displayName = ucwords($reviewer->name).' '.substr(ucwords($reviewer->lastname),0,1).'.';
                                                                     ?>
                                                                     <div class="row bottom-buffer-15">

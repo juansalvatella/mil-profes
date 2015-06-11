@@ -17,10 +17,10 @@
 @endif
 @if(Request::is('/'))
     <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de milPROFES. "/>
-    <title>Profesores particulares y academias</title>
+    <title>milPROFES. | Profesores particulares y academias</title>
 @elseif(Request::is('milprofes'))
     <meta name="Description" content="milPROFES. está formado por un grupo de jóvenes unidos por la pasión y ambición por crear."/>
-    <title>MilProfes</title>
+    <title>milPROFES.</title>
 @elseif(Request::is('preguntas-frecuentes'))
     <meta name="Description" content="Encuentra respuesta a todas las preguntas que tengas del funcionamiento de la página web de milPROFES. en el apartado de preguntas frecuentes. "/>
     <title>Respuestas a las preguntas frecuentes de milPROFES.</title>
@@ -51,7 +51,7 @@
     <title>Mi Panel de Control | milPROFES.</title>
 @else
     <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes. "/>
-    <title>Profesores particulares y academias</title>
+    <title>milPROFES. | Profesores particulares y academias</title>
 @endif
 
     <!-- Favicon -->
@@ -184,14 +184,24 @@
         </button>
         Este sitio web utiliza cookies propias y de terceros para mejorar nuestros servicios y mostrarle publicidad relacionada con sus preferencias mediante el análisis de sus hábitos de navegación.
         Si está de acuerdo pulse <a href="#">Acepto</a> o siga navegando. Puede cambiar la configuración u obtener más información haciendo click en <a class="noconsent" href="{{ url('cookies') }}">más información</a>.
-        {{--Ejemplos de enlaces relacionados con aceptación de cookies--}}
-        {{--<a href="#">Acepto</a>--}}
-        {{--<a class="noconsent" href="{{ url('politica-de-privacidad') }}">Política de Privacidad</a>--}}
-        {{--<a class="denyConsent noconsent" href="#">No autorizo el uso de cookies</a>--}}
     </div>
-
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="container-fluid">
+            <div class="navbar-brand-container hidden-xs hidden-sm">
+                <a href="{{ route('home') }}">
+                    <img src="{{ asset('img/milprofes-logo.png') }}" width="130" height="130" alt="milPROFES."/>
+                </a>
+            </div>
+            <div class="navbar-brand-container hidden-xs hidden-md hidden-lg">
+                <a href="{{ route('home') }}">
+                    <img src="{{ asset('img/milprofes-logo.png') }}" width="100" height="100" alt="milPROFES."/>
+                </a>
+            </div>
+            <div class="navbar-brand-container-mini hidden-sm hidden-md hidden-lg">
+                <a href="{{ route('home') }}">
+                    <img src="{{ asset('img/milprofes-logo.png') }}" width="100" height="100" alt="milPROFES."/>
+                </a>
+            </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
                     <div class="navbar-header">
@@ -201,10 +211,10 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="{{ route('home') }}">@lang('layout.logo')</a>
                     </div>
                     <div id="navbar" class="collapse navbar-collapse">
                         <ul class="nav navbar-nav text-center">
+                            <li class="hidden-md hidden-lg"><span class="distance-correction" style="display:inline-block;height:32px;"></span></li>
                             <li><a href="{{ url('milprofes') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
                             <li><a href="{{ url('preguntas-frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
                             <li><a href="{{ url('contacta') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>

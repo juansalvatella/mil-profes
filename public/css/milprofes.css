@@ -1,5 +1,6 @@
 @media(max-width:500px){
-    #welcome-responsive { font-size: 14px; }
+    .nav li a {  font-size: 14px !important;  }
+    #welcome-responsive { font-size: 14px; margin-top: 20px; }
     #find-responsive { font-size: 24px; }
     .central-text { font-size: 13px; }
     .profile-maintitle { font-size: 16px; }
@@ -13,20 +14,22 @@
     .share-container { width: 100%; bottom:12px; left: 0; padding: 0 15px 0 15px; text-align: center; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 42px; left:0; right:0; margin: auto; }
-    .sprofile-logo { bottom: 120px; left:0; right:0; margin: auto; }
+    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 130px !important; }
     .tprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
     .tprofile-stars { top:0; left:0; width:100%; text-align:center; }
     .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
     .sprofile-stars { top:0; left:0; width:100%; text-align:center; }
     .navbar-brand { font-size: 2.5em; }
-    #navbar { padding: auto; }
+    #navbar { padding: auto; overflow-x: hidden; }
     .navbar-header { padding: auto; }
     .contact-info-content {  font-size:16px;  }
     /*.contact-info-social { margin-left: -10px; }*/
     /*.navbar-container { width:750px; }*/
+    #sub-header-menu { padding: 25px 0 15px; }
 }
 @media(min-width:500px){
-    #welcome-responsive, #find-responsive {  font-size: 24px;  }
+    .nav li a {  font-size: 14px !important;  }
+    #welcome-responsive, #find-responsive {  font-size: 24px; margin-top: 20px;  }
     .central-text { font-size: 20px; }
     .profile-maintitle { font-size: 20px; }
     .profile-subtitle { font-size: 16px; }
@@ -39,19 +42,21 @@
     .share-container { width: 210px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 132px; left: 25px; }
-    .sprofile-logo { bottom: 120px; left:0; right:0; margin: auto; }
+    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 130px !important; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 4px; }
     .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
     .sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:10px; }
     .navbar-brand { font-size: 2.5em; }
-    #navbar { padding: 0 5px 0 0; }
+    #navbar { padding: 0 5px 0 0; overflow-x: hidden; }
     .navbar-header { padding: 0 0 0 5px; }
     .contact-info-content {  font-size:16px;  }
     /*.navbar-container { width:100%; }*/
+    #sub-header-menu { padding: 25px 0 15px; }
 }
 @media(min-width:992px){
-    #welcome-responsive, #find-responsive {  font-size: 26px;  }
+    .nav li a {  font-size: 14px !important;  }
+    #welcome-responsive, #find-responsive {  font-size: 26px; margin-top: 38px; }
     .central-text { font-size: 20px; }
     .profile-maintitle { font-size: 20px; }
     .profile-subtitle { font-size: 16px; }
@@ -64,7 +69,7 @@
     .share-container { width: 440px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 172px; left: 25px; }
-    .sprofile-logo { bottom: 120px; left:0; right:0; margin: auto; }
+    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 120px !important; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
     .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
@@ -74,9 +79,11 @@
     .navbar-header { padding: auto; }
     .contact-info-content {  font-size:16px;  }
     /*.navbar-container { width:100%; }*/
+    #sub-header-menu { padding: 59px 0 15px; }
 }
 @media(min-width:1200px){
-    #welcome-responsive {  font-size: 40px;  }
+    .nav li a {  font-size: 16px !important;  }
+    #welcome-responsive {  font-size: 40px; margin-top: 38px; }
     #find-responsive {  font-size: 36px;  }
     .central-text { font-size: 25px; }
     .profile-maintitle { font-size: 24px; }
@@ -90,7 +97,7 @@
     .hdr-share { height: 50px; }
     .share-me { top: 15px; right: 448px; }
     .tprofile-avatar { top: 172px; left: 25px; }
-    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; }
+    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 120px !important; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
     .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
@@ -100,6 +107,7 @@
     .navbar-header { padding: auto; }
     .contact-info-content {  font-size:16px;  }
     /*.navbar-container { width:750px; }*/
+    #sub-header-menu { padding: 59px 0 15px; }
 }
 
 html, body {
@@ -284,6 +292,9 @@ a, a:link, a:hover, a:active, a:visited {
 /*======================================================*/
 
 /******************** Layout - header *******************/
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #FFC307;
+}
 .mp-bgcolor {
 	background-color: #656565;
 }
@@ -306,10 +317,12 @@ a, a:link, a:hover, a:active, a:visited {
 .navbar-toggle { margin-right: 0; }
 
 .navbar-inverse {
-    padding-top: 15px;
-    padding-bottom: 2px;
-	background-color: #FFC307;
-    border-bottom: 1px solid #F7E7B3;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /*padding-top: 20px;*/
+    /*padding-bottom: 20px;*/
+    background-color: #FFC307;
+    border-bottom: 1px solid #FFC307;
 }
 .navbar-brand {
     color: #494949 !important;
@@ -339,7 +352,6 @@ a, a:link, a:hover, a:active, a:visited {
     padding: 7px 15px 7px 15px; !important;
     color:#000000 !important;
     font-family: raleway-semibold, sans-serif;
-    font-size: 16px !important;
     margin-top: 3px;
 }
 .nav li a:hover {
@@ -597,14 +609,46 @@ a, a:link, a:hover, a:active, a:visited {
 .navbar-collapsed-btn {
     margin-top: 3px;
 }
+.navbar-brand-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    margin: 0;
+}
+.navbar-brand-container img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1001;
+}
+. navbar-brand-container-mini {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    margin: 0;
+}
+.navbar-brand-container-mini img {
+    position: absolute;
+    left: 15px;
+    top: 0;
+    z-index: 1001;
+}
 /************************ END LAYOUT ************************/
 
 
 /*====================================================*/
 /************************ HOME ************************/
 /*====================================================*/
+.schools-info {
+    background: #287af9;
+    color: #FFF;
+}
 .home-splash {
-    background:url(../img/home1.png) top left repeat;
+    background: url(../img/home1.png) top left repeat;
 	/*background-size: cover;*/
 	max-width: 100%;
 	padding: 35px 0 45px 0;
@@ -615,9 +659,10 @@ a, a:link, a:hover, a:active, a:visited {
     position: relative;
 }
 #welcome-responsive {
-    margin-top: 10px;
+    line-height: 175%;
+    /*margin-top: 10px;*/
     font-family: raleway-semibold, sans-serif;
-    line-height: 200%;
+    /*line-height: 200%;*/
 	color: #E79500;
     text-align: center;
 }
@@ -677,7 +722,7 @@ a, a:link, a:hover, a:active, a:visited {
 #home-featured {
     background-color: #f4f4f4;
     max-width: 100%;
-    padding: 0 0 40px 0;
+    padding: 0 0 65px 0;
     height: auto;
     width: 100%;
     top: 0;
@@ -702,6 +747,25 @@ a, a:link, a:hover, a:active, a:visited {
     margin-top: auto;
     margin-bottom: auto;
     vertical-align: middle;
+}
+.best-image-container2 {
+    margin-left: auto;
+    margin-right: auto;
+    overflow:hidden;
+    height:7em;
+    line-height: 6.9em;
+    width: 100%;
+}
+.best-image-container2 img {
+    max-width:100%;
+    max-height:100%;
+    margin-top: auto;
+    margin-bottom: auto;
+    vertical-align: middle;
+}
+.best-img {
+    /*max-width: 110px;*/
+    /*max-height: 110px;*/
 }
 .best-name-container a, .best-name-container a:active, .best-name-container a:hover {
     color: #000;
@@ -747,7 +811,7 @@ body.loading .modal-loading { /*modal element will be visible */
     display: block;
 }
 #sub-header-menu {
-    padding: 15px 0 15px 0;
+    /*padding: 15px 0 15px 0;*/
     background-color: #287AF9;
     color: #ffffff;
     margin-bottom: 25px;
@@ -1269,7 +1333,7 @@ body.loading .modal-loading { /*modal element will be visible */
     z-index:1000;
     position:absolute;
     max-width: 280px;
-    max-height: 160px;
+    /*max-height: 160px;*/
     /*min-height: 100px;*/
     height: auto;
     width: auto;

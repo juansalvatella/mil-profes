@@ -237,8 +237,8 @@
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
                 @foreach($popular_teachers as $teacher)
                     <div class="col-xs-6 col-sm-3 names-responsive">
-                        <div class="row best-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }} "/></a></div>
-                        <div class="row best-name-container top-buffer-5"><a href="{{ url('profe/'.$teacher->slug) }}">{{{ $teacher->displayName }}}</a></div>
+                        <div class="row best-image-container2"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-responsive img-thumbnail best-img lazy" alt="{{ $teacher->username }}" src="{{ asset('img/avatars/'.$teacher->avatar) }} "/></a></div>
+                        <div class="best-name-container top-buffer-5"><a href="{{ url('profe/'.$teacher->slug) }}">{{{ $teacher->displayName }}}</a></div>
                     </div>
                 @endforeach
             </div>

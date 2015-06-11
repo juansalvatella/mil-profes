@@ -12,9 +12,9 @@
     <div class="row">
         <div class="col-md-offset-1 col-md-10 hdr-img" itemscope itemtype="http://schema.org/LocalBusiness" id="profe" itemref="address" style="
         @if(false)
-                background: url('{{asset('img/teacher-bims/default.jpg')}}') no-repeat center center;
+                background: url('{{asset('img/school-bims/default.jpg')}}') no-repeat center center;
         @else
-                background: url('{{asset('img/teacher-bims/default.jpg')}}') no-repeat center top;
+                background: url('{{asset('img/school-bims/default.jpg')}}') no-repeat center center;
         @endif
                 background-size: cover;">
             <meta itemprop="name" content="{{ $teacher->displayName }}">
@@ -317,7 +317,7 @@
                                                                 <?php
                                                                     //Get reviewer display name
                                                                     $student = Student::where('id',$f->student_id)->first();
-                                                                    $reviewer = $student->user()->first();
+                                                                    $reviewer = $student->user()->withTrashed()->first();
                                                                     $reviewer->displayName = ucwords($reviewer->name).' '.substr(ucwords($reviewer->lastname),0,1).'.';
                                                                 ?>
                                                                 {{--@if($n_fr < 2)--}}
@@ -397,7 +397,7 @@
                                                                     <?php
                                                                         //Get reviewer display name
                                                                         $student = Student::where('id',$a->student_id)->first();
-                                                                        $reviewer = $student->user()->first();
+                                                                        $reviewer = $student->user()->withTrashed()->first();
                                                                         $reviewer->displayName = ucwords($reviewer->name).' '.substr(ucwords($reviewer->lastname),0,1).'.';
                                                                     ?>
                                                                     <div class="row bottom-buffer-15">
