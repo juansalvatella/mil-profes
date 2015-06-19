@@ -2,6 +2,7 @@
 
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class School extends Eloquent implements SluggableInterface
 {

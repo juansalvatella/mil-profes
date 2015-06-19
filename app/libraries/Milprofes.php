@@ -1,16 +1,11 @@
 <?php
 
-use Illuminate\Support\Collection;
-
 class Milprofes
 {
     public static function getLastTeachers($this_many)
     {
         $n = (int) $this_many;
         $last_teachers = Teacher::orderBy('created_at','DESC')->take($n)->get();
-//        $last_teachers = $teachers->sortByDesc(function($teacher) {
-//            return $teacher->created_at;
-//        })->take($n);
         foreach($last_teachers as $lt)
         {
             $lt->username = $lt->user->username;
@@ -50,7 +45,6 @@ class Milprofes
             LIMIT ?;
         "),array($n));
 
-//        dd($popular_teachers);
         foreach($popular_teachers as $pt)
         {
             $user = User::where('id',$pt->user_id)->first();
@@ -66,9 +60,11 @@ class Milprofes
     public static function getLastSchools($this_many)
     {
         $n = (int) $this_many;
-        $last_schools = School::whereNull('status')
-            ->orWhere('status','<>','Crawled')
-            ->orderBy('created_at','DESC')
+        $last_schools = School::whereNull('deleted_at')
+            ->where(function ($query) {
+                $query->whereNull('status')
+                    ->orWhere('status','<>','Crawled');
+            })->orderBy('created_at','DESC')
             ->take($n)
             ->get();
 
@@ -78,9 +74,11 @@ class Milprofes
     public static function getPopularSchools($this_many)
     {
         $n = (int) $this_many;
-        $schools = School::whereNull('status')
-            ->orWhere('status','<>','Crawled')
-            ->get();
+        $schools = School::whereNull('deleted_at')
+            ->where(function ($query) {
+                $query->whereNull('status')
+                    ->orWhere('status', '<>', 'Crawled');
+            })->get();
 
         foreach($schools as $s)
         {
@@ -88,8 +86,7 @@ class Milprofes
             $school_lessons = $s->lessons;
             foreach($school_lessons as $l)
             {
-                $lesson_visualizations = count($l->visualizations()->get());
-                $total_visualizations += $lesson_visualizations;
+                $total_visualizations += $l->visualizations()->count();
             }
             $s->total_visualizations = $total_visualizations;
         }
@@ -149,7 +146,7 @@ class Milprofes
             if ($lesson->price >= $min_price && $lesson->price <= $max_price)
                 return true;
             return false;
-        }); //Primer filtro
+        });
 
         return $filtered_collection;
     }
