@@ -19,7 +19,11 @@ class Milprofes
     {
         $n = (int) $this_many;
         $popular_teachers = DB::select(DB::raw("
-            SELECT t5.teacher_id, t5.user_id, t5.total, @curRank := @curRank + 1 AS 'rank'
+            SELECT
+               t5.teacher_id,
+               t5.user_id,
+               t5.total,
+               @curRank := @curRank + 1 AS 'rank'
             FROM (SELECT
                     t4.teacher_id            AS 'teacher_id',
                     t4.user_id               AS 'user_id',
@@ -34,7 +38,10 @@ class Milprofes
                              ON t2.id = t1.teacher_lesson_id
                            LEFT JOIN teachers AS t3
                              ON t3.id = t2.teacher_id
+                           LEFT JOIN users AS t6
+                             ON t3.user_id = t6.id
                          WHERE t3.deleted_at IS NULL
+                         AND t6.avatar <> 'default_avatar.png'
                          GROUP BY t1.teacher_lesson_id
                    ) AS t4
                   WHERE t4.user_id IS NOT NULL
@@ -49,9 +56,10 @@ class Milprofes
         {
             $user = User::where('id',$pt->user_id)->first();
             $pt->username = $user->username;
-            $pt->displayName = ucwords($user->name).' '.substr(ucwords($user->lastname),0,1).'.';
+            $pt->displayName = (!isset($user->lastname) || trim($user->lastname)==='') ?  ucwords($user->name) : ucwords($user->name).' '.substr(ucwords($user->lastname),0,1).'.';
             $pt->avatar = $user->avatar;
             $pt->slug = $user->slug;
+            $pt->town = $user->town;
         }
 
         return $popular_teachers;

@@ -19,8 +19,19 @@ Route::when('*', 'csrf', array('post', 'put', 'delete'));
 //Home
 Route::get('/', ['as' => 'home', function()
 {
-    $popular_teachers = Milprofes::getPopularTeachers(4);
-    $popular_schools = Milprofes::getPopularSchools(4);
+    $popular_teachers = Milprofes::getPopularTeachers(15);
+    $popular_schools = Milprofes::getPopularSchools(15);
+
+    foreach($popular_teachers as $teacher)
+    {
+        $teacher->avgRating = Teacher::find($teacher->teacher_id)->getTeacherAvgRating();
+    }
+
+    foreach($popular_schools as $school)
+    {
+        $school->avgRating = $school->getSchoolAvgRating();
+        $school->category = $school->lessons()->first()->subject()->pluck('name');
+    }
 
     return View::make('home', compact('popular_schools','popular_teachers'));
 }]);
@@ -316,6 +327,11 @@ Route::post('resultados','SearchController@search');
 //Faqs
 Route::get('preguntas-frecuentes',['as'=>'faqs', function(){
     return View::make('faqs');
+}]);
+
+//Services
+Route::get('servicios',['as'=>'services', function(){
+    return View::make('servicios');
 }]);
 
 //Who

@@ -12,20 +12,24 @@
     </div>
     <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
         <div class="container generic-box top-padding-50 bottom-padding-50 magic-align">
-
-            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-12 who-padding">
-
-                <div class="col-xs-12 text-justify">@lang('who.p1')<br><br></div>
-
-                <div class="col-xs-12 text-justify">@lang('who.p2')<br><br></div>
-
-                <div class="col-xs-12 text-justify">@lang('who.p3')<br><br></div>
-
-                <div class="col-xs-12 top-buffer-35">
+            <div class="row">
+                <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 who-padding">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 text-center contact-who-logo-container">
-                            <span class="who-logo">@lang('who.logo')</span>
-                        </div>
+                        <div class="col-xs-12 top-buffer-25">@lang('who.p1')<br><br></div>
+
+                        <div class="col-xs-12">@lang('who.p2')<br><br></div>
+
+                        <div class="col-xs-12">@lang('who.p3')<br><br></div>
+
+                        {{--<div class="col-xs-12 top-buffer-35">--}}
+                            {{--<div class="row">--}}
+                                {{--<div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 text-center contact-who-logo-container">--}}
+                                    {{--<span class="who-logo">--}}
+                                        {{--<img src="{{ asset('img/milprofes-logo.png') }}" alt="milPROFES">--}}
+                                    {{--</span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
             </div>

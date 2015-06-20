@@ -1,7 +1,6 @@
 <?php
     $last_teachers = Milprofes::getLastTeachers(12);
     $last_schools = Milprofes::getLastSchools(12);
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,29 +46,28 @@
     @endif
     <title>Clases particulares de {{{ $subject2 }}} cerca de {{{ $user_address }}}</title>
 @elseif(Request::is('userpanel/*') || Request::is('teacher/*'))
-    <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes. "/>
+    <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes."/>
     <title>Mi Panel de Control | milPROFES.</title>
 @else
-    <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes. "/>
+    <meta name="Description" content="Aprende idiomas, ciencias, arte, tecnología, música, baile, cualquier materia... con los profesores particulares y academias de Milprofes."/>
     <title>milPROFES. | Profesores particulares y academias</title>
 @endif
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
 
-    <!-- CSS -->
+    <!-- Common CSS -->
     {{ HTML::style('css/bootstrap.min.css') }}
     {{ HTML::style('css/font-awesome.min.css') }}
-    {{ HTML::style('css/milprofes.css') }}
+    {{ HTML::style('css/milprofes21062015.css') }}
     {{ HTML::style('css/slider.css') }}
     {{ HTML::style('css/jquery.raty.css') }}
     {{ HTML::style('css/bootstrap-formhelpers.min.css') }}
     {{ HTML::style('css/map-icons.min.css') }}
 
-    <!-- Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-
-    <!-- JS -->
+    {{--<!-- Fonts -->--}}
+    {{--<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>--}}
+    <!-- Common JS -->
     {{ HTML::script('js/jquery.min.js') }}
     {{ HTML::script('js/jquery.raty.js') }}
     {{ HTML::script('js/jquery.fittext.js') }}
@@ -78,15 +76,16 @@
     {{ HTML::script('js/consent.js') }}
     {{ HTML::script('js/milprofes.js') }}
 
-    {{--CSS and JS for specific pages--}}
-@if(Request::is('userpanel/dashboard'))
+    {{--Meta & CSS for specific pages--}}
+@if(Request::is('/'))
+    {{ HTML::style('css/owl.carousel.css') }}
+    {{ HTML::style('css/owl.transitions.css') }}
+    {{ HTML::style('css/owl.theme.css') }}
+@elseif(Request::is('userpanel/dashboard'))
     {{ HTML::style('css/jquery.Jcrop.min.css') }}
-    {{ HTML::script('js/jquery.Jcrop.min.js') }}
-@elseif(Request::is('admin/schools'))
-    {{ HTML::script('js/schools-dashboard.js') }}
 @elseif(Request::is('profe/*'))
 
-    <!-- gen meta -->
+    <!-- general meta -->
     <meta name="gen-image" content="{{ asset('img/avatars/'.$teacher->avatar) }}" />
     <meta name="gen-title" content="Profe. {{{ $teacher->displayName }}}" />
     <meta name="gen-url" content="{{ Request::url() }}" />
@@ -112,29 +111,29 @@
 
 @elseif(Request::is('academia/*'))
 
-            <!-- gen meta -->
-            <meta name="gen-image" content="{{ asset('img/logos/'.$school->logo) }}" />
-            <meta name="gen-title" content="Academia {{{ $school->name }}}" />
-            <meta name="gen-url" content="{{ Request::url() }}" />
-            <meta name="gen-description" content="Infórmate de nuestra oferta de cursos en milPROFES.com ¿Qué vas a aprender hoy?" />
+    <!-- gen meta -->
+    <meta name="gen-image" content="{{ asset('img/logos/'.$school->logo) }}" />
+    <meta name="gen-title" content="Academia {{{ $school->name }}}" />
+    <meta name="gen-url" content="{{ Request::url() }}" />
+    <meta name="gen-description" content="Infórmate de nuestra oferta de cursos en milPROFES.com ¿Qué vas a aprender hoy?" />
 
-            <!-- fb meta -->
-            <meta property="og:site_name" content="milPROFES." />
-            <meta property="og:title" content="{{{ $school->name }}}" />
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content="{{ Request::url() }}" />
-            <meta property="og:image" content="{{ asset('img/logos/'.$school->logo) }}" />
-            <meta property="og:description" content="Infórmate de nuestra oferta de cursos en milPROFES.com ¿Qué vas a aprender hoy?" />
+    <!-- fb meta -->
+    <meta property="og:site_name" content="milPROFES." />
+    <meta property="og:title" content="{{{ $school->name }}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ Request::url() }}" />
+    <meta property="og:image" content="{{ asset('img/logos/'.$school->logo) }}" />
+    <meta property="og:description" content="Infórmate de nuestra oferta de cursos en milPROFES.com ¿Qué vas a aprender hoy?" />
 
-            <!-- twitter meta -->
-            <meta name="twitter:card" content="summary" />
-            <meta name="twitter:site" content="@milprofes" />
-            <meta name="twitter:title" content="{{{ $school->name }}}" />
-            <meta name="twitter:description" content="Infórmate de nuestra oferta de cursos en @milprofes ¿Qué vas a aprender hoy?: {{ Request::url() }}" />
-            <meta name="twitter:image" content="{{ asset('img/logos/'.$school->logo) }}" />
+    <!-- twitter meta -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@milprofes" />
+    <meta name="twitter:title" content="{{{ $school->name }}}" />
+    <meta name="twitter:description" content="Infórmate de nuestra oferta de cursos en @milprofes ¿Qué vas a aprender hoy?: {{ Request::url() }}" />
+    <meta name="twitter:image" content="{{ asset('img/logos/'.$school->logo) }}" />
 
-            {{ HTML::style('css/rrssb.css') }}
-            {{ HTML::style('css/toastr.min.css') }}
+    {{ HTML::style('css/rrssb.css') }}
+    {{ HTML::style('css/toastr.min.css') }}
 
 @endif
 
@@ -144,20 +143,20 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- JS Responsive text containers -->
-    <script>
-        $(document).ready(function($){
-            $(".names-responsive").fitText();
-            $("#recent-responsive").fitText();
-            $("#contact-responsive").fitText();
-            $("#footer-brand-responsive").fitText(0.56);
-            $(".footer-contact").fitText(1.67);
-            $("#footer-follow").fitText(1.72);
-            $(".school-rating-span").fitText(1.3);
-            $(".teacher-rating-span").fitText(1.3);
-            $(".contact-who-logo-container").fitText();
-        });
-    </script>
+    {{--<!-- JS Responsive text containers -->--}}
+    {{--<script>--}}
+        {{--$(document).ready(function($){--}}
+            {{--$(".names-responsive").fitText();--}}
+            {{--$("#recent-responsive").fitText();--}}
+            {{--$("#contact-responsive").fitText();--}}
+            {{--$("#footer-brand-responsive").fitText(0.56);--}}
+            {{--$(".footer-contact").fitText(1.67);--}}
+            {{--$("#footer-follow").fitText(1.72);--}}
+            {{--$(".school-rating-span").fitText(1.3);--}}
+            {{--$(".teacher-rating-span").fitText(1.3);--}}
+            {{--$(".contact-who-logo-container").fitText();--}}
+        {{--});--}}
+    {{--</script>--}}
 
     <!-- Google Analytics -->
     <script>
@@ -165,7 +164,6 @@
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
         ga('create', 'UA-61042823-1', 'auto');
         ga('send', 'pageview');
     </script>
@@ -189,21 +187,21 @@
         <div class="container-fluid">
             <div class="navbar-brand-container hidden-xs hidden-sm">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('img/milprofes-logo.png') }}" width="130" height="130" alt="milPROFES."/>
+                    <img src="{{ asset('img/milprofes-logo-2.png') }}" width="130" height="130" alt="milPROFES"/>
                 </a>
             </div>
             <div class="navbar-brand-container hidden-xs hidden-md hidden-lg">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('img/milprofes-logo.png') }}" width="100" height="100" alt="milPROFES."/>
+                    <img src="{{ asset('img/milprofes-logo-2.png') }}" width="100" height="100" alt="milPROFES"/>
                 </a>
             </div>
             <div class="navbar-brand-container-mini hidden-sm hidden-md hidden-lg">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('img/milprofes-logo.png') }}" width="100" height="100" alt="milPROFES."/>
+                    <img src="{{ asset('img/milprofes-logo-2.png') }}" width="100" height="100" alt="milPROFES"/>
                 </a>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+                <div class="col-xs-12">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed navbar-collapsed-btn" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                             <span class="sr-only">Toggle navigation</span>
@@ -218,6 +216,7 @@
                             <li><a href="{{ url('milprofes') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
                             <li><a href="{{ url('preguntas-frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
                             <li><a href="{{ url('contacta') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
+                            <li><a href="{{ route('services') }}" title="Servicios">Servicios</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right text-center">
                         @if(Auth::check())
@@ -227,9 +226,9 @@
                             <li><a data-target="#modal-login" data-toggle="modal" href="javascript:" title="@lang('layout.login')">@lang('layout.login')</a></li>
                             <li>
                                 <a id="register-link" data-target="#modal-register" data-toggle="modal"  href="javascript:" title="@lang('layout.register')">
-                                    <span class="hidden-sm hidden-md"><i class="fa fa-pencil"></i> @lang('layout.register_md')</span>
-                                    <span class="hidden-xs hidden-sm hidden-lg"><i class="fa fa-pencil"></i> @lang('layout.register_sm')</span>
-                                    <span class="hidden-xs hidden-md hidden-lg">@lang('layout.register_xs')</span>
+                                    <span><i class="fa fa-pencil"></i> @lang('layout.register_md')</span>
+                                    {{--<span class="hidden-xs hidden-sm hidden-lg"><i class="fa fa-pencil"></i> @lang('layout.register_sm')</span>--}}
+                                    {{--<span class="hidden-xs hidden-md hidden-lg">@lang('layout.register_xs')</span>--}}
                                 </a>
                             </li>
                         @endif
@@ -450,136 +449,86 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <div id="footer-apps">
-        <div class="container-fluid">
-            <div class="row text-center">
-
-                <div class="col-xs-12 col-sm-offset-0 col-sm-4 bottom-padding footer-section-1">
-                    <div class="col-xs-offset-1 col-xs-10">
-                        <div class="row text-left" id="footer-brand-responsive"><a id="footer-brand" href="{{ route('home') }}">@lang('layout.contact_logo')</a></div>
-                        <div class="row">
-                            <div class="col-xs-offset-1 col-xs-10 text-left">
-                                <div class="row top-buffer-15 footer-contact"><span class="glyphicon glyphicon-earphone footer-glyphicon"></span>&nbsp;&nbsp;&nbsp;&nbsp; @lang('layout.phone_title') @lang('layout.phone')</div>
-                                <div class="row top-buffer-10 footer-contact"><span class="glyphicon glyphicon-envelope footer-glyphicon"></span>&nbsp;&nbsp;&nbsp;&nbsp; @lang('layout.email_title') @lang('layout.email')</div>
-                                <div class="row top-buffer-10 footer-contact"><span class="glyphicon glyphicon-home footer-glyphicon"></span>&nbsp;&nbsp;&nbsp;&nbsp; @lang('layout.address_title') @lang('layout.address')</div>
+<!-- FOOTER -->
+    <div id="pre-footer">
+        <div class="container-fluid" style="padding-top:15px;padding-bottom:15px;">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-offset-1 col-md-5">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 text-center">
+                            <a href="{{ route('home') }}">
+                                <img src="{{ asset('img/milprofes-logo-3.png') }}" class="hidden-xs hidden-md hidden-lg top-buffer-35" width="100" height="100" alt="milPROFES"/>
+                                <img src="{{ asset('img/milprofes-logo-3.png') }}" class="hidden-sm top-buffer-10" width="130" height="130" alt="milPROFES"/>
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 top-padding-25 bottom-padding-25 text-center">
+                            <div class="text-left inline-block">
+                                <div class="footer-contact"><span class="glyphicon glyphicon-earphone footer-glyphicon"></span>&nbsp;&nbsp;&nbsp;&nbsp; @lang('layout.phone_title') @lang('layout.phone')</div>
+                                <div class="top-buffer-10 footer-contact"><span class="glyphicon glyphicon-envelope footer-glyphicon"></span>&nbsp;&nbsp;&nbsp;&nbsp; @lang('layout.email_title') @lang('layout.email')</div>
+                                <div class="top-buffer-10 footer-contact"><span class="glyphicon glyphicon-home footer-glyphicon"></span>&nbsp;&nbsp;&nbsp;&nbsp; @lang('layout.address_title') @lang('layout.address')</div>
+                                <div class="top-buffer-10 footer-contact" id="footer-faicons">
+                                    @lang('layout.follow_us')&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span>
+                                        <a target="_blank" href="{{ Config::get('constants.social-links.facebook') }}" class="fa fa-facebook-f"></a>&nbsp;&nbsp;
+                                        <a target="_blank" href="{{ Config::get('constants.social-links.twitter') }}" class="fa fa-twitter"></a>&nbsp;&nbsp;
+                                        <a target="_blank" href="{{ Config::get('constants.social-links.linkedin') }}" class="fa fa-linkedin"></a>&nbsp;&nbsp;
+                                        <a target="_blank" href="{{ Config::get('constants.social-links.googleplus') }}" class="fa fa-google-plus" rel="publisher"></a>&nbsp;&nbsp;
+                                        <a target="_blank" href="{{ Config::get('constants.social-links.youtube') }}" class="fa fa-youtube"></a>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div class="row top-buffer-25 text-left" id="footer-follow">@lang('layout.follow_us')&nbsp;&nbsp;&nbsp;&nbsp;<span id="footer-faicons"><a target="_blank" href="{{ Config::get('constants.social-links.facebook') }}" class="fa fa-facebook-f"></a>&nbsp;&nbsp;<a target="_blank" href="{{ Config::get('constants.social-links.twitter') }}" class="fa fa-twitter"></a>&nbsp;&nbsp;<a target="_blank" href="{{ Config::get('constants.social-links.linkedin') }}" class="fa fa-linkedin"></a>&nbsp;&nbsp;<a target="_blank" href="{{ Config::get('constants.social-links.googleplus') }}" rel="publisher" class="fa fa-google-plus"></a>&nbsp;&nbsp;<a target="_blank" href="{{ Config::get('constants.social-links.youtube') }}" class="fa fa-youtube"></a></span></div>
                     </div>
                 </div>
-
-                <div class="col-xs-12 col-sm-4 footer-left-separator footer-right-separator bottom-padding footer-section-2">
-                    <div id="recent-responsive" class="col-xs-offset-2 col-xs-8 text-center">
-
-                        <div class="row recent-title">@lang('layout.recent_results')</div>
-
-                        <div class="row recent-selectors">
-                            <div class="unpadded col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left"><a href="#" class="btn lasts-btn-schools">@lang('layout.schools')</a></div>
-                            <div class="unpadded col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right"><a href="#" class="btn lasts-btn-teachers">@lang('layout.teachers')</a></div>
+                <div class="col-xs-12 col-sm-6 col-md-5">
+                    <div class="row">
+                        <div class="col-xs-4 footer-sitemap">
+                            <h4>Navegar</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="{{ route('home') }}">Inicio</a></li>
+                                <li><a href="{{ route('who') }}">Quiénes somos</a></li>
+                                <li><a href="{{ route('faqs')  }}">FAQs</a></li>
+                                <li><a href="{{ route('contact') }}">Contáctanos</a></li>
+                            </ul>
                         </div>
-                        <script type="text/javascript">
-                            $(document).ready(function() {
-                                $('#recent-teachers').hide();
-                            });
-                            $(".lasts-btn-schools").click(function(e){
-                                e.preventDefault();
-                                $('#recent-teachers').hide();
-                                $('#recent-schools').fadeIn(1000);
-                            });
-                            $(".lasts-btn-teachers").click(function(e){
-                                e.preventDefault();
-                                $('#recent-schools').hide();
-                                $('#recent-teachers').fadeIn(1000);
-                            });
-                        </script>
-                        <div id="recent-schools" class="row">
-                        @foreach($last_schools as $school)
-                            <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('academia/'.$school->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $school->name }}" src="{{ asset('img/logos/'.$school->logo) }}" data-src="{{ asset('img/logos/'.$school->logo) }}" /></a></div></div>
-                        @endforeach
+                        <div class="col-xs-4 footer-sitemap">
+                            <h4>Servicios</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="{{ route('services') }}">Servicios para academias</a></li>
+                            </ul>
                         </div>
-                        <div id="recent-teachers" class="row">
-                        @foreach($last_teachers as $teacher)
-                                <div class="col-xs-3 unpadded"><div class="last-image-container"><a href="{{ url('profe/'.$teacher->slug) }}"><img class="img-thumbnail img-responsive img-recientes lazy" alt="{{ $teacher->displayName }}" src="{{ asset('img/avatars/'.$teacher->avatar) }}" data-src="{{ asset('img/avatars/'.$teacher->avatar) }}" /></a></div></div>
-                        @endforeach
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-4 bottom-padding footer-section-3">
-                    <div class="col-xs-offset-0 col-xs-12 text-center">
-                        <div class="row recent-title">
-                            <div id="contact-responsive" class="col-xs-offset-2 col-xs-8">
-                                @lang('layout.contact_form_title')
-                            </div>
-                        </div>
-                        <div class="row">
-                            {{ Form::open(array('action' => 'ContactController@getMiniContactForm','id'=>'mini-contact')) }}
-                            <div class="col-xs-6 text-left">
-                                {{ Form::label('contact_name', trans('layout.contact_form_name'), array('class'=>'contact-form-label control-label')) }}
-                                <div class="form-group">
-                                    {{ Form::text('contact_name', '', array('class'=>'form-control input-sm','placeholder'=>trans('layout.name_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
-                                    <small><small><span class="help-block with-errors"></span></small></small>
-                                </div>
-                                {{ Form::label('contact_email', trans('layout.contact_form_email'), array('class'=>'contact-form-label control-label')) }}
-                                <div class="form-group">
-                                    {{ Form::email('contact_email', '', array('class'=>'form-control input-sm','placeholder'=>trans('layout.mail_placeholder'),'required','data-error'=>'Introduce una dirección de correo.')) }}
-                                    <small><small><span class="help-block with-errors"></span></small></small>
-                                </div>
-                                {{ Form::label('contact_subject', trans('layout.contact_form_subject'), array('class'=>'contact-form-label control-label')) }}
-                                <div class="form-group">
-                                    {{ Form::text('contact_subject', '', array('class'=>'form-control input-sm','placeholder'=>trans('layout.subject_placeholder'),'required','maxlength'=>'50','data-error'=>'Rellena este campo.')) }}
-                                    <small><small><span class="help-block with-errors"></span></small></small>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 text-left">
-                                {{ Form::label('contact_message', trans('layout.contact_form_message'), array('class'=>'contact-form-label control-label')) }}
-                                <div class="form-group">
-                                    {{ Form::textarea('contact_message', '', array('rows' => 5, 'class'=>'form-control input-sm','placeholder'=>trans('layout.message_placeholder'),'required','maxlength'=>'1000','data-error'=>'Rellena este campo.')) }}
-                                    <small><small><span class="help-block with-errors"></span></small></small>
-                                </div>
-                                <div class="form-group">
-                                    {{ Form::submit('Enviar', array('class' => 'btn contact-form-submit-btn')) }}
-                                </div>
-                            </div>
-                            {{ Form::close(); }}
-                            <script type="text/javascript">
-                                $(document).ready(function(){
-                                    $("#mini-contact").validator();
-                                });
-                            </script>
+                        <div class="col-xs-4 footer-sitemap">
+                            <h4>Legal</h4>
+                            <ul class="list-unstyled">
+                                <li><a href="{{ route('terms') }}">Condiciones de uso</a></li>
+                                <li><a href="{{ route('privacy') }}">Política de privacidad</a></li>
+                                <li><a href="{{ route('cookies') }}">Política de cookies</a></li>
+                            </ul>
                         </div>
                     </div>
-                            @if (Session::get('minicontact-success'))
-                                <div class="col-xs-offset-0 col-xs-12 padded">
-                                    <div class="alert alert-success smaller-alert">{{{ Session::get('minicontact-success') }}}</div>
-                                </div>
-                            @endif
-                            @if (Session::get('minicontact-error'))
-                                <div class="col-xs-offset-0 col-xs-12 padded">
-                                    <div class="alert alert-error alert-danger smaller-alert">{{{ Session::get('minicontact-error') }}}</div>
-                                </div>
-                            @endif
-
                 </div>
-
-            </div><!-- /.row -->
-        </div><!-- /.container -->
-    </div><!-- /#footer-apps -->
+            </div>
+        </div>
+    </div>
 
     <div id="footer">
         <div class="container-fluid">
-            <div class="pull-left text-center top-buffer-5">
-                <small>@lang('layout.copyright')</small> | <div class="netw-link"><a href="http://www.network30.com/" target="_blank"><small>Network3.0</small></a></div><small> & </small><div class="enosis-link"><a href="http://e-nosis.com/" target="_blank"><small>e-nosis</small></a></div>
-            </div>
-            <div class="pull-right top-buffer-5 footer-links">
-                <a href="{{ url('condiciones') }}" title="@lang('layout.user_terms')">@lang('layout.user_terms')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('privacidad') }}" title="@lang('layout.privacy')">@lang('layout.privacy')</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('cookies') }}" title="@lang('layout.cookies')">@lang('layout.cookies')</a>{{--&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{{ url('mapa') }}" title="@lang('layout.sitemap')">@lang('layout.sitemap')</a>--}}
+            <div class="row">
+                <div class="col-xs-12 col-md-offset-1 col-md-10 text-left top-padding-15 bottom-padding-15 small">
+                    @lang('layout.copyright')
+                    <div class="netw-link">
+                        <a href="http://www.network30.com/" target="_blank">Network3.0</a>
+                    </div>
+                    &
+                    <div class="enosis-link">
+                        <a href="http://e-nosis.com/" target="_blank">e-nosis</a>
+                    </div>
+                </div>
             </div>
         </div><!-- /.container -->
     </div><!-- /#footer -->
 
-    <!-- /FOOTER -->
+<!-- /FOOTER -->
 
     <!-- Bootstrap related JS -->
     {{ HTML::script('js/bootstrap.min.js') }}
@@ -623,7 +572,54 @@
     {{--<script src="http://js.maxmind.com/js/geoip.js" type="text/javascript" ></script>--}}
     {{ HTML::script('js/analytics.js') }}
 
-    @if(Request::is('profe/*'))
+    @if(Request::is('/'))
+        {{ HTML::script('js/owl.carousel.js') }}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var carousel = $("#schools-carousel");
+                carousel.owlCarousel({
+                    items: 3,
+                    loop: true,
+                    autoWidth: false,
+                    nav: true,
+                    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
+                    dots: false,
+                    navSpeed: 500,
+                    autoplaySpeed: 500,
+                    mouseDrag: false,
+                    touchDrag: false,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true
+                });
+//                $('.stars-container2').raty({
+//                    readOnly: true,
+//                    half: true,
+//                    size: 15,
+//                    starHalf: '../img/star-half-small2.png',
+//                    starOff : '../img/star-off-small2.png',
+//                    starOn  : '../img/star-on-small2.png',
+//                    score: function(){return $(this).attr('data-score');}
+//                });
+                $('.stars-container').raty({
+                    readOnly: true,
+                    half: true,
+                    size: 15,
+                    starHalf: '../img/star-half-small.png',
+                    starOff : '../img/star-off-small.png',
+                    starOn  : '../img/star-on-small.png',
+                    score: function(){return $(this).attr('data-score');}
+                });
+//                $(".diamond").mouseenter(function() {
+//                    $(this).find('div.diamond-info').css('opacity','1');
+//                    $(this).find('a.toggleDisplay').css('display','visible');
+//                }).mouseleave(function() {
+//                    $(this).find('div.diamond-info').css('opacity','0');
+//                    $(this).find('a.toggleDisplay').css('display','none');
+//                });
+            });
+        </script>
+    @elseif(Request::is('profe/*'))
         {{ HTML::script('js/rrssb.js') }}
         {{ HTML::script('js/toastr.min.js') }}
         {{ HTML::script('js/teachers.js') }}
@@ -631,6 +627,10 @@
         {{ HTML::script('js/rrssb.js') }}
         {{ HTML::script('js/toastr.min.js') }}
         {{ HTML::script('js/school.js') }}
+    @elseif(Request::is('userpanel/dashboard'))
+        {{ HTML::script('js/jquery.Jcrop.min.js') }}
+    @elseif(Request::is('admin/schools'))
+        {{ HTML::script('js/schools-dashboard.js') }}
     @endif
 
 </body>
