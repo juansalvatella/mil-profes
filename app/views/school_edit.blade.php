@@ -134,7 +134,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="video">Youtube video code</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="video" id="video" value="{{ $school->video()->first()->pluck('video'); }}"/>
+                <input type="text" class="form-control" name="video" id="video" @if($school->video()->first()) value="{{ $school->video()->first()->pluck('video'); }}" @else value="" @endif />
             </div>
         </div>
         <div class="form-group">
