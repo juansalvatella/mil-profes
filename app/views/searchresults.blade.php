@@ -353,16 +353,16 @@
                     <div class="col-xs-12 col-sm-3 col-md-3">
                         <div class="row search-image-container">
                             @if($prof_o_acad=='profesor')
-                                <a href="{{ url('profe/'.$result->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{{ $result->displayName }}}" src="{{ asset('img/avatars/'.$result->avatar) }}"/></a>
+                                <a href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{{ $result->displayName }}}" src="{{ asset('img/avatars/'.$result->avatar) }}"/></a>
                             @else
-                                <a href="{{ url('academia/'.$result->slug) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->name }}" src="{{ asset('img/logos/'.$result->logo) }}"/></a>
+                                <a href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->name }}" src="{{ asset('img/logos/'.$result->logo) }}"/></a>
                             @endif
                         </div>
                         <div class="text-center profile-link-name">
                             @if($prof_o_acad=='profesor')
-                                <a href="{{ url('profe/'.$result->slug) }}">{{{ $result->displayName }}}</a>
+                                <a href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}">{{{ $result->displayName }}}</a>
                             @else
-                                <a href="{{ url('academia/'.$result->slug) }}">{{{ $result->name }}}</a>
+                                <a href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}">{{{ $result->name }}}</a>
                             @endif
                         </div>
                     </div>
@@ -411,9 +411,9 @@
                         @if($result->aggregated > 1)
                         <div class="row result-aggregated">
                             @if($prof_o_acad=='profesor')
-                                <a class="btn btn-default btn-sm" href="{{ url('profe/'.$result->slug) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('clase|clases',$result->aggregated-1) más de {{ $result->displayName }} que @choice('podría|podrían',$result->aggregated-1) interesarte.</a>
+                                <a class="btn btn-default btn-sm" href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('clase|clases',$result->aggregated-1) más de {{ $result->displayName }} que @choice('podría|podrían',$result->aggregated-1) interesarte.</a>
                             @else
-                                <a class="btn btn-default btn-sm" href="{{ url('academia/'.$result->slug) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('curso|cursos',$result->aggregated-1) más de {{ $result->name }} que @choice('podría|podrían',$result->aggregated-1) interesarte.</a>
+                                <a class="btn btn-default btn-sm" href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('curso|cursos',$result->aggregated-1) más de {{ $result->name }} que @choice('podría|podrían',$result->aggregated-1) interesarte.</a>
                             @endif
                         </div>
                         @endif

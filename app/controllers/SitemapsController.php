@@ -31,7 +31,8 @@ class SitemapsController extends BaseController
         $tags[] = ['loc'=>URL::route('faqs'), 'lastmod'=>$timestamp['faqs'], 'changefreq'=>self::FREQ_FAQS, 'priority'=>self::PRI_FAQS]; //FAQs tag
         $tags[] = ['loc'=>URL::route('contact'), 'lastmod'=>$timestamp['contact'], 'changefreq'=>self::FREQ_CONTACT, 'priority'=>self::PRI_CONTACT]; //Contact tag
         $sitemapView = View::make('sitemap', compact('tags'))->render(); //Render view
-        File::put(public_path().'/sitemap.xml', $sitemapView); //Save view as XML. We are done!
+//        File::put(public_path().'/sitemap.xml', $sitemapView);
+        File::put(app_path('views').'/sitemap/sitemap.php', $sitemapView); //Save view as XML. We are done!
         unset($tags);
 
         //Generate sitemaps/teacher-XXX.xml sitemaps for every 50000 rows
@@ -43,7 +44,8 @@ class SitemapsController extends BaseController
         foreach($teachers as $t){
             if ($c % 50000 == 0) {
                 $sitemapView = View::make('sitemap', compact('tags'))->render();
-                File::put(public_path().'/sitemaps/teachers-'.$i.'.xml', $sitemapView);
+//                File::put(public_path().'/sitemaps/teachers-'.$i.'.xml', $sitemapView);
+                File::put(app_path('views').'/sitemap/sitemaps/teachers-'.$i.'.php', $sitemapView);
                 unset($tags);
                 ++$i;
             } //every 50000 a new sitemap
@@ -59,7 +61,8 @@ class SitemapsController extends BaseController
 
             if($c==$n) {
                 $sitemapView = View::make('sitemap', compact('tags'))->render();
-                File::put(public_path().'/sitemaps/teachers-'.$i.'.xml', $sitemapView);
+//                File::put(public_path().'/sitemaps/teachers-'.$i.'.xml', $sitemapView);
+                File::put(app_path('views').'/sitemap/sitemaps/teachers-'.$i.'.php', $sitemapView);
                 unset($tags);
                 break;
             } //no more -> new sitemap
@@ -77,7 +80,8 @@ class SitemapsController extends BaseController
             ];
         }
         $sitemapView = View::make('sitemaps', compact('sitemaps'))->render();
-        File::put(public_path().'/sitemaps/teacher.xml', $sitemapView);
+//        File::put(public_path().'/sitemaps/teacher.xml', $sitemapView);
+        File::put(app_path('views').'/sitemap/sitemaps/teacher.php', $sitemapView);
         unset($sitemaps);
 
         //Generate sitemaps/school-XXX.xml sitemaps for every 50000 rows
@@ -89,7 +93,8 @@ class SitemapsController extends BaseController
         foreach($schools as $s){
             if($c % 50000 == 0) {
                 $sitemapView = View::make('sitemap', compact('tags'))->render();
-                File::put(public_path().'/sitemaps/schools-'.$i.'.xml', $sitemapView);
+//                File::put(public_path().'/sitemaps/schools-'.$i.'.xml', $sitemapView);
+                File::put(app_path('views').'/sitemap/sitemaps/schools-'.$i.'.php', $sitemapView);
                 unset($tags);
                 ++$i;
             } //every 50000 (c) a new file
@@ -105,7 +110,8 @@ class SitemapsController extends BaseController
 
             if($c==$n) {
                 $sitemapView = View::make('sitemap', compact('tags'))->render();
-                File::put(public_path().'/sitemaps/schools-'.$i.'.xml', $sitemapView);
+//                File::put(public_path().'/sitemaps/schools-'.$i.'.xml', $sitemapView);
+                File::put(app_path('views').'/sitemap/sitemaps/schools-'.$i.'.php', $sitemapView);
                 unset($tags);
                 break;
             } //no more -> new sitemap
@@ -121,7 +127,8 @@ class SitemapsController extends BaseController
             ];
         }
         $sitemapView = View::make('sitemaps', compact('sitemaps'))->render();
-        File::put(public_path().'/sitemaps/school.xml', $sitemapView);
+//        File::put(public_path().'/sitemaps/school.xml', $sitemapView);
+        File::put(app_path('views').'/sitemap/sitemaps/school.php', $sitemapView);
         unset($sitemaps);
 
         return 'Done!';

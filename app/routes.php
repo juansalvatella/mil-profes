@@ -910,15 +910,17 @@ Route::post('load-school-profile-pics','AdminController@loadProfilePics');
 
 //Sitemaps related routes
 Route::get('render-sitemaps','SitemapsController@milprofes');
+Route::get('sitemap.xml', function() {
+    return Response::view('sitemap.sitemap')
+        ->header('Content-Type', 'application/xml')
+        ->header('X-Robots-Tag','noindex, nofollow');
+});
+Route::get('sitemaps/{xmlfile?}.xml', function($xmlfile) {
+    return Response::view('sitemap.sitemaps.'.$xmlfile)
+        ->header('Content-Type', 'application/xml')
+        ->header('X-Robots-Tag','noindex, nofollow');
+});
 
-Route::any('sitemaps/{xmlfile?}', function($xmlfile) {
-    return 'caught ' . $xmlfile;
-})->where('xmlfile', '.+');
-
-//Route::when('sitemaps/*', 'sitemaps', array('get'));
-//Route::filter('sitemaps', function($response) {
-////    $response->header('X-Robots-Tag', 'noindex');
-////    return Response::json(array('error' => 'Your access token is not valid'), 400);
-//    return Response::make('Authentication required', 401);
-////    return $response;
-//});
+//Route::any('sitemaps/{xmlfile?}', function($xmlfile) {
+//    return 'caught ' . $xmlfile;
+//})->where('xmlfile', '.+');

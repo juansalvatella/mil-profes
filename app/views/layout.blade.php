@@ -3,7 +3,11 @@
     $last_schools = Milprofes::getLastSchools(12);
 ?>
 <!DOCTYPE html>
+@if(Request::is('profe/*') || Request::is('academia/*'))
+<html lang="es" prefix="og: http://ogp.me/ns#">
+@else
 <html lang="es">
+@endif
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="author" content="Milprofes S.L." />
