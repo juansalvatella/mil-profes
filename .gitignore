@@ -24,3 +24,8 @@ public/icons/README.md
 
 app/views/oldFooter.blade.php
 app/views/oldHome.blade.php
+
+app/views/sitemap/sitemap.php
+app/views/sitemap/sitemaps
+public/sitemaps_old
+public/sitemap.xml_old

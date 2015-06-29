@@ -94,6 +94,8 @@ Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug)
     if(!empty($qArray))
         $teacher->rank = (int) $qArray[0]->rank;
 
+    Log::info('Rank query output',$qArray);
+
     //Fecha de última actualización es el mínimo entre las fechas de última modificación de clases y fecha de última actualización de perfil
     $dates = array();
     $lessons = $teacher->lessons()->get();
@@ -920,7 +922,3 @@ Route::get('sitemaps/{xmlfile?}.xml', function($xmlfile) {
         ->header('Content-Type', 'application/xml')
         ->header('X-Robots-Tag','noindex, nofollow');
 });
-
-//Route::any('sitemaps/{xmlfile?}', function($xmlfile) {
-//    return 'caught ' . $xmlfile;
-//})->where('xmlfile', '.+');
