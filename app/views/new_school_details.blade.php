@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 
-{{-- This vars are needed for school.js --}}
+{{-- This inputs values are fetched as school.js vars --}}
 <input type="hidden" id="_token" value="{{ Session::getToken() }}">
 <input type="hidden" id="schoolId" value="{{ $school->id }}">
 <input type="hidden" id="school-rating" value="{{ $school->avgRating }}" />
@@ -19,33 +19,26 @@
             {{--<meta itemprop="jobTitle" content="Profe.">--}}
             <meta itemprop="telephone" content="{{{ $school->phone }}}">
             <meta itemprop="email" content="{{{ $school->email }}}">
-
             <?php list($imgWidth, $imgHeight) = getimagesize(asset('img/logos/'.$school->logo)); ?>
             <img itemprop="image" width="{{ $imgWidth }}" height="{{ $imgHeight }}" class="sprofile-logo thumbnail" src="{{ asset('img/logos/'.$school->logo) }}" alt="{{ $school->name }}">
-
             <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                 <meta itemprop="reviewCount" content="{{ $school->nReviews }}">
                 <meta itemprop="ratingValue" content="{{ $school->avgRating }}">
                 <meta itemprop="bestRating" content="5">
             </div>
-
             <div class="sprofile-name">
                 <b>{{ $school->name }}</b>
                 <br/>
                 <small>@lang('school-profile.school')</small>
             </div>
-
         </div>
     </div>
     <div class="row overflow-hidden">
         <div class="col-md-offset-1 col-md-10 hdr-share text-right">
-
             <div class="sprofile-stars">
                 <div id="teacher-stars"></div><span id="teacher-n-reviews" title="@choice('teacher-profile.reviews',2)">({{ $school->nReviews }})</span>
             </div>
-
             <span class="hidden-xs hidden-sm hidden-md share-me">@lang('school-profile.share-me') <i class="fa fa-chevron-right"></i></span>
-
             <div class="share-container">
                 <ul class="rrssb-buttons clearfix">
                     <li class="rrssb-facebook">
@@ -88,14 +81,12 @@
             </div>
         </div>
     </div>
-
     <div class="row top-buffer-25">
         <div class="col-md-offset-1 col-md-10">
             <div class="row">
                 <div class="col-md-4 side-cntr">
                     <div class="row">
                         <div class="col-md-12 activity-cntr">
-
                             <div class="panel panel-milprofes panel-contact-info">
                                 <div class="panel-heading contact-info-title">
                                     <a id="contact-me" data-toggle="collapse" data-target="#collapse" class="collapsed" href="javascript:">
@@ -155,10 +146,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
-                        @if($school->description!='')
+                    @if($school->description!='')
                         <div class="col-md-12 my-info-cntr">
                             <div class="panel panel-milprofes panel-info">
                                 <div class="panel-heading">@lang('school-profile.description')</div>
@@ -167,10 +156,9 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
-
+                    @endif
                         {{--Video--}}
-                        @if($school->video)
+                    @if($school->video)
                         <div class="col-md-12 video-cntr">
                             <div class="panel panel-milprofes panel-video">
                                 <div class="panel-heading">
@@ -214,11 +202,11 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
+                    @endif
                         {{--END Video--}}
 
                         {{--Image slider--}}
-                        @if(!$slpics->isEmpty())
+                    @if(!$slpics->isEmpty())
                         <div class="col-md-12 slpics-cntr">
                             <div class="panel panel-milprofes panel-slider">
                                 <div class="panel-heading">
@@ -253,9 +241,8 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
+                    @endif
                         {{--END image slider--}}
-
                         {{--If auth -> directions, else -> simple gmap--}}
                         <div class="col-md-12 map-cntr">
                             <div class="panel panel-milprofes panel-map">
@@ -277,9 +264,7 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        @if(Auth::check())
+                    @if(Auth::check())
                         <div class="col-md-12 directions-cntr">
                             <div class="panel panel-milprofes panel-directions">
                                 <div class="panel-heading directions-title">
@@ -294,53 +279,45 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
-
+                    @endif
                     </div>
                 </div>
-
                 <div class="col-md-8 main-cntr">
                     <div class="row">
                         <div class="col-md-12 my-lessons-cntr">
                             <div class="my-lessons">
-
                                 <div class="panel panel-milprofes panel-lessons">
                                     <div class="panel-heading">@lang('teacher-profile.title_lessons')</div>
                                     <div id="panel-body-lessons" class="panel-body">
-
                                         @if ($lessons->isEmpty())
                                             <span>Estamos publicando nuestras clases. Vuelve a visitar nuestro perfil en unos minutos.</span>
                                         @else
                                             @foreach($lessons as $l)
                                                 <div class="row bottom-buffer-45">
-
                                                     <div class="col-xs-12 col-sm-2">
                                                         <div class="row text-center subject-icon-lg">
-                                                            <?php
-                                                                $category_name = $l->subject()->pluck('name');
-                                                                $n_reviews = $l->getNumberOfReviews();
-                                                            ?>
-                                                            <img title="Categoría {{ $category_name }}" alt="Categoría {{ $category_name }}" src="{{ asset('img/'.$category_name.'.png') }}"/>
+                                                        <?php
+                                                            $category_name = $l->subject()->pluck('name');
+                                                            $n_reviews = $l->getNumberOfReviews();
+                                                        ?>
+                                                            <img title="@lang('subjects.'.$category_name)" alt="@lang('subjects.'.$category_name)" src="{{ asset('img/subjects/'.$l->subject()->pluck('id').'.png') }}"/>
                                                             <br/>
                                                             <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}"><span class="stars-container top-buffer-5 bottom-buffer-5" data-score="{{ $l->getLessonAvgRating() }}"></span></a>
                                                             <br/>
                                                             <span id="lesson-n-reviews"><small><i class="fa fa-user" title="@choice('teacher-profile.reviews',$n_reviews)"></i> {{ $n_reviews }}</small></span>
                                                         </div>
                                                     </div>
-
                                                     <div class="col-xs-12 col-sm-8">
                                                         <div class="t-lesson-subject">
                                                             @if($l->title == '')
-                                                                <h4><b>@lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$category_name)</b></h4>
+                                                                <h4><b>@lang('school-profile.lesson_of') @lang('subjects.'.$category_name)</b></h4>
                                                             @else
                                                                 <h4><b>{{{ $l->title }}}</b></h4>
                                                             @endif
                                                         </div>
-
                                                         <div class="t-lesson-description result-description text-justify">
                                                             {{{ $l->description }}}
                                                         </div>
-
                                                         <div class="lesson-availability unpadded">
                                                             @foreach($l->availability as $pick)
                                                                 @if($pick->day != '')
@@ -349,7 +326,6 @@
                                                             @endforeach
                                                         </div>
                                                     </div>
-
                                                     <div class="col-xs-12 col-sm-2 price-container-tp">
                                                         @if($l->price==0.0)
                                                             <div class="no-price-provided-tp text-center">Contáctanos<br>para saber<br>el precio</div>
@@ -361,7 +337,6 @@
                                                             <div class="text-center per-unit-tp">@lang('school-profile.price_unit')</div>
                                                         @endif
                                                     </div>
-
                                                     <div class="col-xs-12 top-buffer-15">
                                                         <div class="t-lesson-comments-title">
                                                             <h5 class="t-lesson-title-reviews">@lang('teacher-profile.title_reviews')</h5> @if($n_reviews > 2)<a href="javascript:" class="trigger-all-reviews" data-lessonId="{{ $l->id }}">(ver todas)</a>@endif
@@ -380,21 +355,13 @@
                                                                     $reviewer = $student->user()->withTrashed()->first();
                                                                     $reviewer->displayName = ucwords($reviewer->name).' '.substr(ucwords($reviewer->lastname),0,1).'.';
                                                                 ?>
-                                                                {{--@if($n_fr < 2)--}}
-                                                                {{--<div class="col-xs-12 col-sm-12" itemprop="review" itemscope itemtype="http://schema.org/Review">--}}
-                                                                {{--@else--}}
                                                                 <div class="col-xs-12 col-sm-6" itemprop="review" itemscope itemtype="http://schema.org/Review">
-                                                                {{--@endif--}}
                                                                     <meta itemprop="datePublished" content="{{ $f->created_at->format('Y-m-d') }}">
                                                                     <div itemprop="itemReviewed" itemscope itemtype="http://schema.org/LocalBusiness">
                                                                         <meta itemprop="name" content="{{ $school->displayName }}">
                                                                     </div>
                                                                     <div class="row">
-                                                                        {{--@if($n_fr < 2)--}}
-                                                                        {{--<div class="col-xs-12 col-sm-2 padding-0">--}}
-                                                                        {{--@else--}}
                                                                         <div class="col-xs-12 col-sm-3 padding-0">
-                                                                        {{--@endif--}}
                                                                             <div class="text-center top-buffer-3"><img class="img-circle" width="46" height="46" src="{{ asset('img/avatars/'.$reviewer->avatar) }}"/></div>
                                                                             <div class="text-center top-buffer-10 ellipsis reviewer-name" itemprop="author">{{ $reviewer->displayName }}</div>
                                                                             <?php
@@ -409,11 +376,7 @@
                                                                                 <div class="text-center text-danger"><small><i class="fa fa-minus"></i></small> {{ abs($helpSum) }}</div>
                                                                             @endif
                                                                         </div>
-                                                                        {{--@if($n_fr < 2)--}}
-                                                                        {{--<div class="col-xs-12 col-sm-10 padding-0">--}}
-                                                                        {{--@else--}}
                                                                         <div class="col-xs-12 col-sm-9 padding-0">
-                                                                        {{--@endif--}}
                                                                             <div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
                                                                                 <meta itemprop="worstRating" content="0">
                                                                                 <meta itemprop="ratingValue" content="{{ $f->value }}">
@@ -515,11 +478,8 @@
                                                 @endif
                                             @endforeach
                                         @endif
-
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

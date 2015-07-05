@@ -5,12 +5,6 @@
         <h1>@lang('course_dashboard.course_editor') <small>{{ $school->name }}</small></h1>
     </div>
 
-    @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-    @elseif(Session::has('failure'))
-        <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
-    @endif
-
     <div class="panel panel-default">
         <div class="panel-body">
             <a href="{{ url('admin/create/lesson',array($school->id)) }}" class="btn btn-primary">@lang('buttons.new_course')</a>
@@ -36,7 +30,7 @@
                     <td>{{ $lesson->title }}</td>
                     <td class="hidden-xs">{{ $lesson->price }}</td>
                     <td class="hidden-xs">{{ $lesson->description }}</td>
-                    <td class="hidden-xs">{{ $subjects[$lesson->id]->name }}</td>
+                    <td class="hidden-xs">@lang('subjects.'.$subjects[$lesson->id]->name)</td>
                     <td>
                         <a href="{{ url('admin/edit/lesson',array($lesson->id)) }}" class="btn btn-default"><i class="fa fa-edit"></i><span class="hidden-xs"> @lang('buttons.edit_course')</span></a>
                         &nbsp;
@@ -58,4 +52,5 @@
         </div>
     </div>
 </div>
-@stop
+
+@endsection

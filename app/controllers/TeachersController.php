@@ -8,7 +8,7 @@ class TeachersController extends BaseController
         $input['price'] = str_replace(',','.',$input['price']);
         $rules = array(
             'title' => 'required|string|max:50',
-            'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario|salud)$/'),
+            'subject' => 'required|string',
             'price' => 'numeric',
             'address' => 'required|string',
             'description' => 'required|string|max:200',
@@ -17,7 +17,9 @@ class TeachersController extends BaseController
         if($validator->fails()) {
             return Redirect::back()
                 ->withInput()
-                ->with('error', '¡Error! Los datos introducidos parecen no ser válidos. Asegúrate de haber rellenado los campos correctamente.');
+                ->with('error', '¡Error! Los datos introducidos pueden no ser válidos. Asegúrate de haber rellenado los campos correctamente.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'Los datos introducidos pueden no ser válidos. Asegúrate de haber rellenado los campos correctamente.');
         }
 
         $lesson = new TeacherLesson();
@@ -30,7 +32,9 @@ class TeachersController extends BaseController
         if(!$geocoding){
             return Redirect::to('teacher/create/lesson')
                 ->withInput()
-                ->with('error', '¡Error! La dirección proporcionada parece no ser válida.');
+                ->with('error', '¡Error! La dirección proporcionada parece no ser válida.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'La dirección proporcionada parece no ser válida. Comprueba si está escrita correctamente.');
         }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
@@ -44,9 +48,15 @@ class TeachersController extends BaseController
         $lesson->teacher()->associate($teacher);
 
         if($lesson->save())
-            return Redirect::route('userpanel')->with('success', 'Clase creada con éxito');
+            return Redirect::route('userpanel')
+                ->with('success', 'Clase creada con éxito')
+                ->with('Stitle', 'Éxito')
+                ->with('Smsg', 'Tu clase ha sido dada de alta y aparecerá en los resultados de las búsquedas.');
         else
-            return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo crear la clase. Ponte en contacto con nosotros si el problema persiste.');
+            return Redirect::route('userpanel')
+                ->with('error', '¡Error! No se pudo crear la clase. Ponte en contacto con el equipo de milPROFES si el problema persiste.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'Error al tratar de crear la clase. Ponte en contacto con el equipo de milPROFES si el problema persiste.');
     }
 
     public function saveLesson()
@@ -55,7 +65,7 @@ class TeachersController extends BaseController
         $input['price'] = str_replace(',','.',$input['price']);
         $rules = array(
             'title' => 'required|string|max:50',
-            'subject' => array('regex:/^(escolar|cfp|musica|idiomas|artes|deportes|universitario|salud)$/'),
+            'subject' => 'required|string',
             'price' => 'numeric',
             'address' => 'required|string',
             'description' => 'required|string|max:200',
@@ -64,7 +74,9 @@ class TeachersController extends BaseController
         if($validator->fails()) {
             return Redirect::back()
                 ->withInput()
-                ->with('error', '¡Error! No se pudo actualizar los datos de tu clase. Asegúrate de haber rellenado los campos correctamente.');
+                ->with('error', '¡Error! No se pudo actualizar los datos de tu clase. Asegúrate de haber rellenado los campos correctamente.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'No se pudo actualizar los datos de tu clase. Asegúrate de haber rellenado los campos correctamente.');
         }
 
         $lesson_id = $input['lesson_id'];
@@ -82,7 +94,9 @@ class TeachersController extends BaseController
             if (!$geocoding) {
                 return Redirect::back()
                     ->withInput()
-                    ->with('error', '¡Error! La dirección proporcionada parece no ser válida.');
+                    ->with('error', '¡Error! La dirección proporcionada parece no ser válida.')
+                    ->with('Etitle', 'Error')
+                    ->with('Emsg', 'La dirección proporcionada parece no ser válida. Asegúrate de haber escrito la dirección correctamente.');
             }
             $lesson->lat = $geocoding[0]; //latitud
             $lesson->lon = $geocoding[1]; //longitud
@@ -92,11 +106,20 @@ class TeachersController extends BaseController
             $lesson->subject()->associate($subject);
 
             if ($lesson->save())
-                return Redirect::route('userpanel')->with('success', 'Datos de la clase actualizados con éxito');
+                return Redirect::route('userpanel')
+                    ->with('success', 'Datos de la clase actualizados con éxito')
+                    ->with('Stitle', 'Éxito')
+                    ->with('Smsg', 'Se han actualizado los datos de tu clase.');
             else
-                return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar los datos de la clase');
+                return Redirect::route('userpanel')
+                    ->with('error', '¡Error! No se pudo actualizar los datos de la clase')
+                    ->with('Etitle', 'Error')
+                    ->with('Emsg', 'No se pudieron actualizar los datos de tu clase. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
         } else {
-            return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar los datos de la clase.');
+            return Redirect::route('userpanel')
+                ->with('error', '¡Error! No se pudo actualizar los datos de la clase.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'No se pudieron actualizar los datos de tu clase. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
         }
 
     }
@@ -112,11 +135,18 @@ class TeachersController extends BaseController
         {
             $lesson->delete();
             if($lesson->exists)
-                return Redirect::route('userpanel')->with('failure', '¡Error! La clase no pudo ser eliminada');
+                return Redirect::route('userpanel')
+                    ->with('error', '¡Error! La clase no pudo ser eliminada')
+                    ->with('Etitle', 'Error')
+                    ->with('Emsg', 'La clase no pudo ser eliminada. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
             else
-                return Redirect::route('userpanel')->with('success', 'Clase eliminada con éxito');
+                return Redirect::route('userpanel')->with('success', 'Clase eliminada con éxito')
+                    ->with('Stitle', 'Éxito')
+                    ->with('Smsg', 'Se ha eliminado la clase.');
         } else {
-            return Redirect::route('userpanel')->with('failure', '¡Error! La clase no pudo ser eliminada.');
+            return Redirect::route('userpanel')->with('error', '¡Error! La clase no pudo ser eliminada.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'La clase no pudo ser eliminada. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
         }
 
     }
@@ -159,7 +189,10 @@ class TeachersController extends BaseController
         );
         $validator = Validator::make($input, $rules);
         if ($validator->fails()){
-            return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar tu disponibilidad.');
+            return Redirect::route('userpanel')
+                ->with('error', '¡Error! No se pudo actualizar tu disponibilidad.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'No se pudo actualizar tu disponibilidad. Los datos introducidos no son válidos.');
         }
 
         $previous_picks = $teacher->availabilities()->get();
@@ -174,7 +207,10 @@ class TeachersController extends BaseController
                 $pick->start = $input['start'.$i];
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar tu disponibilidad.');
+                    return Redirect::route('userpanel')
+                        ->with('error', '¡Error! No se pudo actualizar tu disponibilidad.')
+                        ->with('Etitle', 'Error')
+                        ->with('Emsg', 'No se pudo actualizar tu disponibilidad. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
                 }
             }
         } else { //if there exists 9 previous saved picks (even empty ones, in DB), update them with the input
@@ -204,14 +240,18 @@ class TeachersController extends BaseController
                 $pick->start = $cleanInput['start'.$i];
                 $pick->end = $cleanInput['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('userpanel')->with('failure', '¡Error! No se pudo actualizar tu disponibilidad.');
+                    return Redirect::route('userpanel')
+                        ->with('error', '¡Error! No se pudo actualizar tu disponibilidad.')
+                        ->with('Etitle', 'Error')
+                        ->with('Emsg', 'No se pudo actualizar tu disponibilidad. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
                 }
                 ++$i;
             }
         }
 
-        return Redirect::route('userpanel')->with('success', 'Tu disponibilidad ha sido actualizada con éxito');
-
+        return Redirect::route('userpanel')
+            ->with('success', 'Tu disponibilidad ha sido actualizada con éxito')
+            ->with('Stitle', 'Éxito')
+            ->with('Smsg', 'Tu disponibilidad ha sido actualizada.');
     }
-
 }

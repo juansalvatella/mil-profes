@@ -1,3 +1,4 @@
+
 <div class="container-fluid top-padding-25 bottom-padding-25">
     <div class="panel panel-milprofes">
         <div class="panel-heading">
@@ -5,13 +6,10 @@
         </div>
         <div class="panel-body">
             <form class="form-horizontal" action="{{ action('TeachersController@saveAvailability') }}" method="post" role="form" id="availabilityForm">
-
                 <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
-
                 <div class="col-xs-12 col-sm-12 col-md-4">Día</div>
                 <div class="col-xs-12 col-sm-12 hidden-sm hidden-xs col-md-4">De</div>
                 <div class="col-xs-12 col-sm-12 hidden-xs hidden-sm col-md-4">a</div>
-
                 <div class="col-xs-12 col-sm-12 col-md-4 clear-left">
                     <div>
                         <select class="form-control" id="day1" name="day1">
@@ -172,7 +170,7 @@
                     <tbody>
                     @foreach($lessons as $lesson)
                         <tr>
-                            <td class="hidden-xs"><img width="42" title="Categoría {{ $subjects[$lesson->id]->name }}" alt="Categoría {{ $subjects[$lesson->id]->name }}" src="{{ asset('img/'.$subjects[$lesson->id]->name.'.png') }}"/></td>
+                            <td class="hidden-xs"><img width="42" title="@lang('subjects.'.$subjects[$lesson->id]->name)" alt="@lang('subjects.'.$subjects[$lesson->id]->name)" src="{{ asset('img/subjects/'.$subjects[$lesson->id]->id.'.png') }}"/></td>
                             <td>{{{ $lesson->title }}}</td>
                             <td class="hidden-xs">{{{ $lesson->description }}}</td>
                             {{-- + 0 removes zeros to the right of the decimal separator --}}
@@ -199,5 +197,4 @@
             </div>
         </div>
     </div>
-
 </div>

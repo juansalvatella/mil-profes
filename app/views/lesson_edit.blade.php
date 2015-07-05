@@ -6,19 +6,8 @@
     <div class="page-header">
         <h1>@lang('course_edit.edit_course_of') {{ $school->name }}</h1>
     </div>
-
-    @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-    @endif
-    @if(Session::has('failure'))
-        <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
-    @endif
-    @if(Session::has('error'))
-        <div class="alert alert-warning" role="alert">{{ Session::get('error') }}</div>
-    @endif
-
     <form class="form-horizontal" action="{{ action('AdminController@saveLesson') }}" method="post" role="form">
-        <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+        <input type="hidden" name="_token" value="{{ Session::getToken() }}">
         <input type="hidden" name="school_id" value="{{ $school->id }}">
         <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
         <div class="form-group">
@@ -43,14 +32,9 @@
             <label class="col-sm-2 control-label" for="subject">@lang('subjects.subject')</label>
             <div class="col-sm-10">
                 <select class="form-control" id="subject" name="subject">
-                    <option value="@lang('subjects.elementary-db')" @if($subject->name=='escolar') selected="selected" @endif>@lang('subjects.elementary')</option>
-                    <option value="@lang('subjects.vocational-db')" @if($subject->name=='cfp') selected="selected" @endif>@lang('subjects.vocational')</option>
-                    <option value="@lang('subjects.university-db')" @if($subject->name=='universitario') selected="selected" @endif>@lang('subjects.university')</option>
-                    <option value="@lang('subjects.arts-db')" @if($subject->name=='artes') selected="selected" @endif>@lang('subjects.arts')</option>
-                    <option value="@lang('subjects.music-db')" @if($subject->name=='música') selected="selected" @endif>@lang('subjects.music')</option>
-                    <option value="@lang('subjects.languages-db')" @if($subject->name=='idiomas') selected="selected" @endif>@lang('subjects.languages')</option>
-                    <option value="@lang('subjects.sports-db')" @if($subject->name=='deportes') selected="selected" @endif>@lang('subjects.sports')</option>
-                    <option value="@lang('subjects.health-db')" @if($subject->name=='salud') selected="selected" @endif>@lang('subjects.health')</option>
+                    @foreach(Subject::all() as $subj)
+                        <option value="{{ $subj->name }}" @if($subject->name == $subj->name) selected="selected" @endif>@lang('subjects.'.$subj->name)</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -206,4 +190,4 @@
 
 </div>
 
-@stop
+@endsection

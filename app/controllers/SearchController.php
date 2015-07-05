@@ -597,7 +597,7 @@ class SearchController extends BaseController
         $search = new Search();
         $search->address = $search_user_address;
         $search->subject_id = $search_subj_id;
-        $search->subject_name = $subject;
+//        $search->subject_name = $subject;
         $search->keywords = $keywords;
         $search->type = $prof_o_acad;
         $search->results = (int) $total_results;

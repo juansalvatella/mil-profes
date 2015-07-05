@@ -4,7 +4,6 @@
 <div class="home-splash">
   <div class="container-fluid">
       <div class="row">
-
           <div class="col-xs-12 col-md-6">
               <div class="row">
                   <div class="col-xs-12 col-md-offset-1 col-md-11 text-left hidden-xs hidden-sm">
@@ -15,7 +14,6 @@
                   </div>
               </div>
           </div>
-
           <div class="col-xs-12 col-md-6">
               {{ Form::open(array('action' => 'SearchController@search')) }}
               <div class="row top-buffer-15">
@@ -46,7 +44,6 @@
                           if (navigator && checknavgeo) {
                               navigator.geolocation.getCurrentPosition(geo_success, geo_error);
                           } else {
-//                      printAddress(geoip_latitude(), geoip_longitude()); //MAXMIND
                               $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
                           }
                       });
@@ -55,7 +52,6 @@
                       printAddress(position.coords.latitude, position.coords.longitude);
                   }
                   function geo_error() {
-//              printAddress(geoip_latitude(), geoip_longitude()); //MAXMIND
                       $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
                   }
                   function printAddress(latitude, longitude) {
@@ -86,71 +82,41 @@
                                   <span id="subject-name">{{ trans('home.subject_all') }}</span>
                                   <span class="caret"></span>
                               </button>
-                              <ul class="dropdown-menu">
-                                  <li><a href="#" id="action-escolar">{{ trans('home.subject_escolar') }}</a></li>
-                                  <li><a href="#" id="action-cfp">{{ trans('home.subject_cfp') }}</a></li>
-                                  <li><a href="#" id="action-universitario">{{ trans('home.subject_universitario') }}</a></li>
-                                  <li><a href="#" id="action-artes">{{ trans('home.subject_artes') }}</a></li>
-                                  <li><a href="#" id="action-musica">{{ trans('home.subject_musica') }}</a></li>
-                                  <li><a href="#" id="action-idiomas">{{ trans('home.subject_idiomas') }}</a></li>
-                                  <li><a href="#" id="action-deportes">{{ trans('home.subject_deportes') }}</a></li>
-                                  <li><a href="#" id="action-salud">{{ trans('home.subject_salud') }}</a></li>
-                                  <li><a href="#" id="action-all">{{ trans('home.subject_all') }}</a></li>
-                              </ul>
-                          </div><!-- /btn-group -->
+                              <div class="dropdown-menu multi-column">
+                                  <div class="row">
+                                      <div class="col-md-6" id="multi-column-1">
+                                          <ul class="dropdown-menu">
+                                          <?php $half = intval(ceil(Subject::all()->count() / 2)) + 3; ?>
+                                          @foreach(Subject::where('id','<=',$half)->orderBy('name')->get() as $subj)
+                                              <li><a href="#" id="action-{{ $subj->id }}">@lang('subjects.'.$subj->name)</a></li>
+                                          @endforeach
+                                          </ul>
+                                      </div>
+                                      <div class="col-md-6" id="multi-column-2">
+                                          <ul class="dropdown-menu">
+                                          @foreach(Subject::where('id','>',$half)->orderBy('name')->get() as $subj)
+                                              <li><a href="#" id="action-{{ $subj->id }}">@lang('subjects.'.$subj->name)</a></li>
+                                          @endforeach
+                                              <li><a href="#" id="action-all">@lang('subjects.all')</a></li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div><!-- /.input-group-btn -->
                           <script type="text/javascript">
-                              $("#action-escolar").click(function(e){
+                          @foreach(Subject::orderBy('name')->get() as $subj)
+                              var selector = "#action-{{ $subj->id }}";
+                              $(selector).click(function(e){
                                   e.preventDefault();
-                                  $("#subject").val("escolar");
-                                  $("#subject-name").text("{{trans('home.subject_escolar')}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_escolar')}}");
+                                  $("#subject").val("{{$subj->name}}");
+                                  $("#subject-name").text("{{trans('subjects.'.$subj->name)}}");
+                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_'.$subj->name)}}");
                               });
-                              $("#action-cfp").click(function(e){
-                                  e.preventDefault();
-                                  $("#subject").val("cfp");
-                                  $("#subject-name").text("{{trans('home.subject_cfp')}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_cfp')}}");
-                              });
-                              $("#action-universitario").click(function(e){
-                                  e.preventDefault();
-                                  $("#subject").val("universitario");
-                                  $("#subject-name").text("{{trans('home.subject_universitario')}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_universitario')}}");
-                              });
-                              $("#action-artes").click(function(e){
-                                  e.preventDefault();
-                                  $("#subject").val("artes");
-                                  $("#subject-name").text("{{trans('home.subject_artes')}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_artes')}}");
-                              });
-                              $("#action-musica").click(function(e){
-                                  e.preventDefault();
-                                  $("#subject").val("musica");
-                                  $("#subject-name").text("{{trans('home.subject_musica')}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_musica')}}");
-                              });
-                              $("#action-idiomas").click(function(e){
-                                  e.preventDefault();
-                                  $("#subject").val("idiomas");
-                                  $("#subject-name").text("{{trans('home.subject_idiomas')}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_idiomas')}}");
-                              });
-                              $("#action-deportes").click(function(e){
-                                  e.preventDefault();
-                                  $("#subject").val("deportes");
-                                  $("#subject-name").text("{{trans('home.subject_deportes')}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_deportes')}}");
-                              });
-                              $("#action-salud").click(function(e){
-                                  e.preventDefault();
-                                  $("#subject").val("salud");
-                                  $("#subject-name").text("{{trans('home.subject_salud')}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_salud')}}");
-                              });
+                          @endforeach
                               $("#action-all").click(function(e){
                                   e.preventDefault();
                                   $("#subject").val("all");
-                                  $("#subject-name").text("{{trans('home.subject_all')}}");
+                                  $("#subject-name").text("{{trans('subjects.all')}}");
                                   $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_all')}}");
                               });
                           </script>
@@ -270,24 +236,8 @@
                                 @endif
                             </div>
                             <div class="category top-buffer-10">
-                                <img style="display: inline;height:20px;width:20px;" height="20" width="20" alt="Categoría {{ $school->category }}" src="{{ asset('img/'.$school->category.'.png') }}"/>
-                                @if($school->category == 'escolar')
-                                    {{ trans('home.subject_escolar') }}
-                                @elseif($school->category == 'cfp')
-                                    {{ trans('home.subject_cfp') }}
-                                @elseif($school->category == 'universitario')
-                                    {{ trans('home.subject_universitario') }}
-                                @elseif($school->category == 'artes')
-                                    {{ trans('home.subject_artes') }}
-                                @elseif($school->category == 'musica')
-                                    {{ trans('home.subject_musica') }}
-                                @elseif($school->category == 'idiomas')
-                                    {{ trans('home.subject_idiomas') }}
-                                @elseif($school->category == 'deportes')
-                                    {{ trans('home.subject_deportes') }}
-                                @elseif($school->category == 'salud')
-                                    {{ trans('home.subject_salud') }}
-                                @endif
+                                <img style="display: inline;height:20px;width:20px;" height="20" width="20" alt="@lang('subjects.'.$school->category->name)" src="{{ asset('img/subjects/'.$school->category->id.'.png') }}"/>
+                                @lang('subjects.'.$school->category->name)
                             </div>
                             <div class="starts top-buffer-10">
                                 <span class="stars-container" data-score="{{ $school->avgRating }}"></span>
@@ -314,4 +264,4 @@
     </div>
 </div>
 
-@stop
+@endsection

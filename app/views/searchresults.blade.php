@@ -150,56 +150,6 @@
 
             <hr class="hr-sm-separator"/>
 
-            <div class="row text-center top-buffer-15">
-                {{ Form::label('subject', 'Categorías') }}
-            </div>
-
-            <div class="row">
-                @if($subject=='all')
-                    <div class="radio"><label>{{ Form::radio('subject', 'all', true, array('id'=>'su_1')) }} @lang('search.all') </label></div>
-                @else
-                    <div class="radio"><label>{{ Form::radio('subject', 'all', false, array('id'=>'su_1')) }} @lang('search.all') </label></div>
-                @endif
-                @if($subject=='escolar')
-                    <div class="radio"><label>{{ Form::radio('subject', 'escolar', true, array('id'=>'su_2')) }} @lang('search.escolar') </label></div>
-                @else
-                    <div class="radio"><label>{{ Form::radio('subject', 'escolar', false, array('id'=>'su_2')) }} @lang('search.escolar') </label></div>
-                @endif
-                @if($subject=='cfp')
-                    <div class="radio"><label>{{ Form::radio('subject', 'cfp', true, array('id'=>'su_3')) }} @lang('search.cfp') </label></div>
-                @else
-                    <div class="radio"><label>{{ Form::radio('subject', 'cfp', false, array('id'=>'su_3')) }} @lang('search.cfp') </label></div>
-                @endif
-                @if($subject=='universitario')
-                    <div class="radio"><label>{{ Form::radio('subject', 'universitario', true, array('id'=>'su_4')) }} @lang('search.universitario') </label></div>
-                @else
-                    <div class="radio"><label>{{ Form::radio('subject', 'universitario', false, array('id'=>'su_4')) }} @lang('search.universitario') </label></div>
-                @endif
-                @if($subject=='artes')
-                    <div class="radio"><label>{{ Form::radio('subject', 'artes', true, array('id'=>'su_5')) }} @lang('search.artes') </label></div>
-                @else
-                    <div class="radio"><label>{{ Form::radio('subject', 'artes', false, array('id'=>'su_5')) }} @lang('search.artes') </label></div>
-                @endif
-                @if($subject=='musica')
-                    <div class="radio"><label>{{ Form::radio('subject', 'musica', true, array('id'=>'su_6')) }} @lang('search.musica') </label></div>
-                @else
-                    <div class="radio"><label>{{ Form::radio('subject', 'musica', false, array('id'=>'su_6')) }} @lang('search.musica') </label></div>
-                @endif
-                @if($subject=='idiomas')
-                    <div class="radio"><label>{{ Form::radio('subject', 'idiomas', true, array('id'=>'su_7')) }} @lang('search.idiomas') </label></div>
-                @else
-                    <div class="radio"><label>{{ Form::radio('subject', 'idiomas', false, array('id'=>'su_7')) }} @lang('search.idiomas') </label></div>
-                @endif
-                @if($subject=='deportes')
-                    <div class="radio"><label>{{ Form::radio('subject', 'deportes', true, array('id'=>'su_8')) }} @lang('search.deportes') </label></div>
-                @else
-                    <div class="radio"><label>{{ Form::radio('subject', 'deportes', false, array('id'=>'su_8')) }} @lang('search.deportes') </label></div>
-                @endif
-            </div>
-
-
-            <hr class="hr-sm-separator"/>
-
             <div id="price-tags">
 
                 @if($prof_o_acad=='profesor')
@@ -290,27 +240,42 @@
                     ninput.val(0);
                     var soForm = $('form#newSearchForm');
                     $.post('/resultados',
-                        {
-                            _token: soForm.find('input[name=_token]').val(),
-                            user_lat: soForm.find('input[name=user_lat]').val(),
-                            user_lon: soForm.find('input[name=user_lon]').val(),
-                            keywords: soForm.find('input[name=keywords]').val(),
-                            user_address: soForm.find('input[name=user_address]').val(),
-                            prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
-                            search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
-                            subject: $('input[name=subject]:checked', '#newSearchForm').val(),
-                            price: $('input[name=price]:checked', '#newSearchForm').val(),
-                            slices_showing: 0
-                        },
-                        function(data) { //handle the controller response
-                            $('#price-tags').replaceWith($(data).find('#price-tags'));
-                            $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
-                            initialize_map(); //necesario tras cargar el código js del gmap de forma asíncrona
-                            $('#results-main-content').replaceWith($(data).find('#results-main-content'));
-                    });
+                            {
+                                _token: soForm.find('input[name=_token]').val(),
+                                user_lat: soForm.find('input[name=user_lat]').val(),
+                                user_lon: soForm.find('input[name=user_lon]').val(),
+                                keywords: soForm.find('input[name=keywords]').val(),
+                                user_address: soForm.find('input[name=user_address]').val(),
+                                prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
+                                search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
+                                subject: $('input[name=subject]:checked', '#newSearchForm').val(),
+                                price: $('input[name=price]:checked', '#newSearchForm').val(),
+                                slices_showing: 0
+                            },
+                            function(data) { //handle the controller response
+                                $('#price-tags').replaceWith($(data).find('#price-tags'));
+                                $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
+                                initialize_map(); //necesario tras cargar el código js del gmap de forma asíncrona
+                                $('#results-main-content').replaceWith($(data).find('#results-main-content'));
+                            });
                     ninput.val(1);
                 });
             </script>
+
+            <hr class="hr-sm-separator"/>
+
+            <div class="row text-center top-buffer-15">
+                {{ Form::label('subject', 'Categorías') }}
+            </div>
+
+            <div class="row">
+                <div class="radio"><label>{{ Form::radio('subject', 'all', ($subject=='all'), array('id'=>'su_1')) }} @lang('subjects.all') </label></div>
+                <?php $k=2; ?>
+                @foreach(Subject::orderBy('name')->get() as $subj)
+                    <div class="radio"><label>{{ Form::radio('subject', $subj->name, ($subject==$subj->name), array('id'=>'su_'.$k)) }} @lang('subjects.'.$subj->name) </label></div>
+                    <?php ++$k; ?>
+                @endforeach
+            </div>
 
         </div>
     </div>
@@ -370,9 +335,9 @@
                         <div class="row lesson-name">
                         @if($result->title == '')
                             @if($prof_o_acad=='profesor')
-                                @lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject)
+                                @lang('teacher-profile.lesson_of') @lang('subjects.'.$result->subject)
                             @else
-                                @lang('teacher-profile.lesson_of') @lang('teacher-profile.of_subject_'.$result->subject)
+                                @lang('school-profile.lesson_of') @lang('subjects.'.$result->subject)
                             @endif
                         @else
                             {{{ $result->title }}}
@@ -380,9 +345,9 @@
                         </div>
                         <div class="row result-subject">
                             @if($prof_o_acad=='profesor')
-                                <span class="span-subject-teacher">&nbsp;@lang('search.subject_'.$result->subject)&nbsp;</span>
+                                <span class="span-subject-teacher">&nbsp;@lang('subjects.'.$result->subject)&nbsp;</span>
                             @else
-                                <span class="span-subject-school">&nbsp;@lang('search.subject_'.$result->subject)&nbsp;</span>
+                                <span class="span-subject-school">&nbsp;@lang('subjects.'.$result->subject)&nbsp;</span>
                             @endif
                         </div>
                         <div class="row result-distance">
@@ -530,4 +495,5 @@
         });
     });
 </script>
-@stop
+
+@endsection

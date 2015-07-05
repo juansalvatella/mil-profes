@@ -13,22 +13,6 @@
     <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
         <div class="container generic-box top-padding-50 bottom-padding-150 magic-align">
 
-            @if (Session::get('success'))
-                <div class="row">
-                    <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
-                        <div class="alert alert-success">{{{ Session::get('success') }}}</div>
-                    </div>
-                </div>
-            @endif
-            @if (Session::get('error'))
-                <div class="row">
-                    <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
-                        <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
-                    </div>
-                </div>
-            @endif
-
-
             <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 
                 <form class="form-horizontal" action="{{ action('TeachersController@createLesson') }}" method="post" role="form" id="create-l-form">
@@ -44,14 +28,11 @@
                         <label class="col-sm-2 control-label" for="subject">Categoría (*)</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="subject" name="subject">
-                                <option value="escolar" selected="selected">Escolar</option>
-                                <option value="cfp">Formación profesional</option>
-                                <option value="universitario">Universitario</option>
-                                <option value="artes">Artes</option>
-                                <option value="musica">Música</option>
-                                <option value="idiomas">Idiomas</option>
-                                <option value="deportes">Deportes</option>
-                                <option value="salud">Salud y bienestar</option>
+                                <?php $k = 0; ?>
+                                @foreach(Subject::all() as $subj)
+                                    <option value="{{ $subj->name }}" @if($k==0) selected="selected" @endif>@lang('subjects.'.$subj->name)</option>
+                                <?php ++$k; ?>
+                                @endforeach
                             </select>
                             <input type="hidden" class="form-control">
                             <div class="help-block with-errors">¿En qué categoría clasificarías tu clase?</div>
@@ -112,4 +93,4 @@
         <hr class="hr-page-end"/>
     </div>
 
-@stop
+@endsection

@@ -13,7 +13,8 @@
 		"zizaco/entrust": "1.2.*@dev",
 		"torann/geoip": "0.1.*@dev",
 		"cviebrock/eloquent-sluggable": "2.*",
-        "watson/sitemap": "1.1.*"
+        "watson/sitemap": "1.1.*",
+		"fzaninotto/faker": "^1.5"
 	},
 	"autoload": {
 		"classmap": [

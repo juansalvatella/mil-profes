@@ -3,26 +3,15 @@
 
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
-
             <div><h1 class="generic-title">@lang('politica_privacidad.title')</h1></div>
-
             <div><h2 class="generic-subtitle">@lang('politica_privacidad.subtitle')</h2></div>
-
         </div>
     </div>
     <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
         <div class="container generic-box top-padding-50 bottom-padding-50 magic-align">
-
-            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 who-padding">
-
-                <div class="col-xs-12 text-justify">@lang('politica_privacidad.p1')</div>
-
-                <div class="col-xs-12 top-buffer-35">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 text-center contact-who-logo-container">
-                            <span class="who-logo">@lang('politica_privacidad.logo')</span>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 who-padding">
+                    <p class="full-width text-justify">@lang('politica_privacidad.p1')</p>
                 </div>
             </div>
         </div>

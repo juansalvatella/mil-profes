@@ -7,14 +7,13 @@
         <div class="container">
             <div class="row">
                 <div class="pull-left">
-
-                    <div class="profile-image"><img src="{{ asset('img/avatars/'.$user->avatar) }}" title="{{ $user->username }} logo" alt="{{ $user->username }}"></div>
-
+                    <div class="profile-image">
+                        <img class="thumbnail" height="100" width="100" src="{{ asset('img/avatars/'.$user->avatar) }}" title="{{ $user->username }} logo" alt="{{ $user->username }}">
+                    </div>
                     <div class="profile-title">
                         <div><h1 class="profile-maintitle">Mi panel de control</h1></div>
                         <div><h2 class="profile-subtitle">@if($user->hasRole('teacher'))Profe.@endif {{ $user->name }}</h2></div>
                     </div>
-
                 </div>
                 <div class="pull-right">
                     <a href="{{ url('profe/'.$user->slug) }}" class="btn btn-default"><i class="fa fa-user-plus"></i> Ver mi perfil</a>
@@ -38,20 +37,9 @@
         <li role="presentation" class="active"><a href="#teacher_tab" aria-controls="teacher_tab" role="tab" data-toggle="tab">Mis clases</a></li>
         <li role="presentation"><a href="#profile_tab" aria-controls="profile_tab" role="tab" data-toggle="tab">Mis datos</a></li>
     </ul>
-
     <div class="tab-content container user-box top-padding-50 bottom-padding-50" role="tabpanel">
         <div role="tabpanel" class="tab-pane active" id="teacher_tab">
-
-            <div class="col-xs-12">
-                @if(Session::has('success'))
-                    <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-                @elseif(Session::has('failure'))
-                    <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
-                @endif
-            </div>
-
             {{ $content_teacher }}
-
         </div>
         <div role="tabpanel" class="tab-pane" id="profile_tab">
 
@@ -74,8 +62,6 @@
                         </div>
                     </div>
                 </form>
-
-
 
                 <form class="form-horizontal" action="{{ action('UsersController@updateUser') }}" method="post" role="form" id="user-data">
 
@@ -238,6 +224,7 @@
                 </form>
 
                 <br/>
+
                 <form class="form-horizontal" action="{{ action('UsersController@updateSocial') }}" method="post" role="form" id="user-social">
 
                     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
@@ -312,7 +299,6 @@
                     </div>
 
                 </form>
-
 
                 <form class="form-horizontal" action="{{ action('UsersController@updateUserPasswd') }}" method="post" role="form" id="user-passwd">
 
@@ -506,4 +492,4 @@
     });
 </script>
 
-@stop
+@endsection

@@ -3,7 +3,7 @@
 return [
 
     //Header
-    'logo' => 'mil <span class="profes-word">PROFES.</span>',
+    'logo' => 'milPROFES.',
 
     'who' => 'Quiénes somos',
 	'faq' => 'FAQs',
@@ -17,7 +17,7 @@ return [
 
 
     //Footer
-    'contact_logo' => '<span class="mil-word-2">mil</span> <span class="profes-word-2">PROFES.</span>',
+    'contact_logo' => 'milPROFES.',
     'phone_title' => 'Teléfono: ',
     'phone' => '696 08 91 84',
     'email_title' => 'E-Mail: ',

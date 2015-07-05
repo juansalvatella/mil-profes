@@ -38,8 +38,4 @@
         <hr class="hr-page-end"/>
     </div>
 
-
-
-
-
-@stop
+@endsection

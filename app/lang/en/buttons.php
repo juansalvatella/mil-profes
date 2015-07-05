@@ -1,7 +1,8 @@
 <?php
 
 return array(
-    //Common ones
+
+    //Common buttons
     'back'          => 'Volver',
     'cancel'        => 'Cancelar',
     'buy'           => 'Comprar',

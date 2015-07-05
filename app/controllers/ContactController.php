@@ -60,13 +60,18 @@ class ContactController extends Controller {
             });
 
             return Redirect::to('contactanos')
-                ->with('success', 'Tu mensaje ha sido enviado. ¡Muchas gracias!');
+                ->with('success', 'Tu mensaje ha sido enviado. ¡Muchas gracias!')
+                ->with('Stitle','Éxito')
+                ->with('Smsg','Tu mensaje ha sido enviado. ¡Muchas gracias!.');
         }
         else
         {
             //return contact form with errors
             return Redirect::to('contactanos')
-                ->with('error', '¡Error! Faltan campos por rellenar.');
+                ->withInput()
+                ->with('error', '¡Error! Faltan campos por rellenar.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'No se pudo enviar tu mensaje. Asegúrate de que todos los campos están rellenados correctamente.');
         }
 
     }

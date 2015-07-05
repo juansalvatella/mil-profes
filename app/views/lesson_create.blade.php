@@ -7,18 +7,8 @@
         <h1>@lang('course_create.new_course_of') {{ $school->name }}</h1>
     </div>
 
-    @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-    @endif
-    @if(Session::has('failure'))
-        <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
-    @endif
-    @if(Session::has('error'))
-        <div class="alert alert-warning" role="alert">{{ Session::get('error') }}</div>
-    @endif
-
     <form class="form-horizontal" action="{{ action('AdminController@createLesson') }}" method="post" role="form">
-        <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+        <input type="hidden" name="_token" value="{{ Session::getToken() }}">
         <input type="hidden" name="school_id" value="{{ $school->id }}">
         <div class="form-group">
             <label class="col-sm-2 control-label" for="title">@lang('forms.new_course.title')</label>
@@ -42,14 +32,11 @@
             <label class="col-sm-2 control-label" for="subject">@lang('subjects.subject')</label>
             <div class="col-sm-10">
                 <select class="form-control" id="subject" name="subject">
-                    <option value="@lang('subjects.elementary-db')" selected="selected">@lang('subjects.elementary')</option>
-                    <option value="@lang('subjects.vocational-db')">@lang('subjects.vocational')</option>
-                    <option value="@lang('subjects.university-db')">@lang('subjects.university')</option>
-                    <option value="@lang('subjects.arts-db')">@lang('subjects.arts')</option>
-                    <option value="@lang('subjects.music-db')">@lang('subjects.music')</option>
-                    <option value="@lang('subjects.languages-db')">@lang('subjects.languages')</option>
-                    <option value="@lang('subjects.sports-db')">@lang('subjects.sports')</option>
-                    <option value="@lang('subjects.health-db')">@lang('subjects.health')</option>
+                    <?php $k = 0; ?>
+                    @foreach(Subject::all() as $subj)
+                        <option value="{{ $subj->name }}" @if($k==0) selected="selected" @endif>@lang('subjects.'.$subj->name)</option>
+                        <?php ++$k; ?>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -180,4 +167,4 @@
 
 </div>
 
-@stop
+@endsection

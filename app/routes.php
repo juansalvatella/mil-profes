@@ -30,7 +30,7 @@ Route::get('/', ['as' => 'home', function()
     foreach($popular_schools as $school)
     {
         $school->avgRating = $school->getSchoolAvgRating();
-        $school->category = $school->lessons()->first()->subject()->pluck('name');
+        $school->category = $school->lessons()->first()->subject()->first();
     }
 
     return View::make('home', compact('popular_schools','popular_teachers'));
@@ -710,7 +710,10 @@ Route::get('teacher/edit/lesson/{lesson_id}', function($lesson_id)
     if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de editar clases de otros usuarios
         return View::make('teacher_lesson_edit', compact('lesson','subject'));
     else
-        return Redirect::route('userpanel')->with('failure', '¡Error! Tu clase no ha sido encontrada');
+        return Redirect::route('userpanel')
+            ->with('error', '¡Error! Tu clase no ha sido encontrada')
+            ->with('Etitle', 'Error')
+            ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
 });
 
 Route::post('teacher/edit/lesson/{teacher_id}', 'TeachersController@saveLesson');
@@ -727,7 +730,10 @@ Route::get('teacher/delete/lesson/{lesson_id}', function($lesson_id)
     if($teacher->id==$lesson_teacher->id) //Comprobamos que no se está tratando de eliminar las clases de otros usuarios
         return View::make('teacher_lesson_confirm_delete', compact('user','lesson','subject'));
     else
-        return Redirect::route('userpanel')->with('failure', 'Error! Tu clase no ha sido encontrada');
+        return Redirect::route('userpanel')
+            ->with('error', 'Error! Tu clase no ha sido encontrada')
+            ->with('Etitle', 'Error')
+            ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
 });
 
 Route::post('teacher/delete/lesson/{teacher_id}', 'TeachersController@deleteLesson');

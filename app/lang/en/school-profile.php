@@ -20,7 +20,7 @@ return array(
     'our_school_imgs' => 'Instalaciones',
     'our_school_video' => 'Videopresentación',
     'lessons' => 'Cursos que ofrecemos',
-    'lesson_of' => 'Curso',
+    'lesson_of' => 'Curso de',
 
     'of_subject_escolar' => 'de nivel escolar',
     'of_subject_cfp' => 'de formación profesional',

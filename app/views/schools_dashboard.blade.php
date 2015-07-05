@@ -19,19 +19,6 @@
 
     <div class="container">
 
-    @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-    @endif
-    @if(Session::has('warning'))
-        <div class="alert alert-warning" role="alert">{{ Session::get('warning') }}</div>
-    @endif
-    @if(Session::has('failure'))
-        <div class="alert alert-danger" role="alert">{{ Session::get('failure') }}</div>
-    @endif
-    @if(Session::has('error'))
-        <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
-    @endif
-
     <div class="panel panel-default">
         <div class="panel-body">
             <a href="{{ url('/admin/create/school') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('buttons.new_school')</a>
@@ -119,4 +106,4 @@
 
     </div>
 
-@stop
+@endsection

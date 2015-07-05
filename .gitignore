@@ -22,8 +22,8 @@ public/img/avatars/
 public/media/README.md
 public/icons/README.md
 
-app/views/oldFooter.blade.php
-app/views/oldHome.blade.php
+../milprofes-deleted/views/oldFooter.blade.php
+../milprofes-deleted/views/oldHome.blade.php
 
 app/views/sitemap/sitemap.php
 app/views/sitemap/sitemaps

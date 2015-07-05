@@ -3,11 +3,8 @@
 
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
-
             <div><h1 class="generic-title">@lang('who.title')</h1></div>
-
             <div><h2 class="generic-subtitle">@lang('who.subtitle')</h2></div>
-
         </div>
     </div>
     <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
@@ -16,20 +13,8 @@
                 <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 who-padding">
                     <div class="row">
                         <div class="col-xs-12 top-buffer-25">@lang('who.p1')<br><br></div>
-
                         <div class="col-xs-12">@lang('who.p2')<br><br></div>
-
                         <div class="col-xs-12">@lang('who.p3')<br><br></div>
-
-                        {{--<div class="col-xs-12 top-buffer-35">--}}
-                            {{--<div class="row">--}}
-                                {{--<div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 text-center contact-who-logo-container">--}}
-                                    {{--<span class="who-logo">--}}
-                                        {{--<img src="{{ asset('img/milprofes-logo.png') }}" alt="milPROFES">--}}
-                                    {{--</span>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
                     </div>
                 </div>
             </div>

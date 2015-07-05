@@ -182,7 +182,6 @@
     font-style: normal;
 }
 
-
 html, body {
     height: 100%;
 }
@@ -196,9 +195,8 @@ a, a:link, a:hover, a:active, a:visited {
      text-decoration: none;
 }
 
-
 .ellipsis {  text-overflow: ellipsis;  white-space: nowrap;  overflow: hidden;  }
-
+.full-width {  width: 100%;  }
 .overflow-hidden {  overflow: hidden;  }
 
 .top-buffer-3 { margin-top:3px; }
@@ -702,6 +700,23 @@ a, a:link, a:hover, a:active, a:visited {
 /*====================================================*/
 /************************ HOME ************************/
 /*====================================================*/
+.dropdown-menu.multi-column {
+    min-width: 380px;
+}
+.dropdown-menu.multi-column .dropdown-menu {
+    display: block !important;
+    position: static !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    min-width:100px;
+}
+#multi-column-1 {
+    width: 163px;
+}
+#multi-column-2 {
+    width: 211px;
+}
 .jumbo-teachers {
     background-color: #fff;
 }
@@ -1124,6 +1139,10 @@ body.loading .modal-loading { /*modal element will be visible */
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
+.result-subject .span-subject-teacher,
+.result-subject .span-subject-school {
+    text-transform: uppercase;
+}
 .result-subject .span-subject-teacher {
     background-color: #41A4CD;
 }
@@ -1290,6 +1309,9 @@ body.loading .modal-loading { /*modal element will be visible */
     max-height: 40px;
     /*font-family: raleway-semibold, sans-serif;*/
     /*border:1px solid #9A9A9A;*/
+}
+.faicons {
+    font-size: 1.3em;
 }
 /*END CONTACT*/
 
@@ -1719,11 +1741,11 @@ body.loading .modal-loading { /*modal element will be visible */
     -webkit-box-shadow: -7px 8px 5px 0 rgba(0,0,0,0.2);
     -moz-box-shadow: -7px 8px 5px 0 rgba(0,0,0,0.2);
     box-shadow: -7px 8px 5px 0 rgba(0,0,0,0.2);
-    border: 1px solid #808080;
-    background-color: #EBEBEB;
-    height: 90px;
-    line-height: 86px;
-    width: 110px;
+    /*border: 1px solid #808080;*/
+    /*background-color: #EBEBEB;*/
+    height: 100px;
+    /*line-height: 86px;*/
+    width: 100px;
 }
 .profile-image img {
     max-width:100%;

@@ -1,5 +1,6 @@
 @extends('layout')
 @section('content')
+
 <div class="container top-buffer-15 bottom-buffer-45">
     <div class="page-header">
         <h1>@lang('course_confirm_delete.are_u_sure') {{ $school->name }}?</h1>
@@ -20,4 +21,5 @@
         </form>
     </div>
 </div>
-@stop
+
+@endsection

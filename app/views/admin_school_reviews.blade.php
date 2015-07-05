@@ -13,20 +13,11 @@
             </div>
         </div>
     </div>
-
     <div class="container">
         <div class="float-right">{{ $reviews->links() }}</div>
-
-        @if(Session::has('success'))
-            <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
-        @elseif(Session::has('failure'))
-            <div class="alert alert-warning" role="alert">{{ Session::get('failure') }}</div>
-        @endif
-
         @if ($reviews->isEmpty())
             <p>@lang('adminpanel.reviews.not_found')</p>
         @else
-
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -57,12 +48,11 @@
             </table>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    Mostrando {{ $reviews->getFrom() }}-{{ $reviews->getTo() }} de un total de {{ $reviews->getTotal() }} valoraciones.
+                    @lang('common.showing') {{ $reviews->getFrom() }}-{{ $reviews->getTo() }} @lang('common.from-total') {{ $reviews->getTotal() }} @lang('common.reviews').
                 </div>
             </div>
         @endif
-
         <div class="float-right">{{ $reviews->links() }}</div>
     </div>
 
-@stop
+@endsection

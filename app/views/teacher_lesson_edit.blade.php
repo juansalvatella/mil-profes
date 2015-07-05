@@ -14,22 +14,6 @@
     <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
         <div class="container generic-box top-padding-50 bottom-padding-150 magic-align">
 
-            @if (Session::get('success'))
-                <div class="row">
-                    <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
-                        <div class="alert alert-success">{{{ Session::get('success') }}}</div>
-                    </div>
-                </div>
-            @endif
-            @if (Session::get('error'))
-                <div class="row">
-                    <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
-                        <div class="alert alert-error alert-danger">{{{ Session::get('error') }}}</div>
-                    </div>
-                </div>
-            @endif
-
-
             <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 
                 <form class="form-horizontal" action="{{ action('TeachersController@saveLesson') }}" method="post" role="form" id="edit-l-form">
@@ -46,14 +30,9 @@
                         <label class="col-sm-2 control-label" for="subject">Categoría (*)</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="subject" name="subject">
-                                <option value="escolar" @if($subject->name=='escolar') selected="selected" @endif>Escolar</option>
-                                <option value="cfp" @if($subject->name=='cfp') selected="selected" @endif>Formación profesional</option>
-                                <option value="universitario" @if($subject->name=='universitario') selected="selected" @endif>Universitario</option>
-                                <option value="artes" @if($subject->name=='artes') selected="selected" @endif>Artes</option>
-                                <option value="música" @if($subject->name=='música') selected="selected" @endif>Música</option>
-                                <option value="idiomas" @if($subject->name=='idiomas') selected="selected" @endif>Idiomas</option>
-                                <option value="deportes" @if($subject->name=='deportes') selected="selected" @endif>Deportes</option>
-                                <option value="salud" @if($subject->name=='salud') selected="selected" @endif>Salud y bienestar</option>
+                            @foreach(Subject::all() as $subj)
+                                <option value="{{ $subj->name }}" @if($subject->name == $subj->name) selected="selected" @endif>@lang('subjects.'.$subj->name)</option>
+                            @endforeach
                             </select>
                             <input type="hidden" class="form-control">
                             <div class="help-block with-errors">¿En qué categoría clasificarías tu clase?</div>
@@ -114,6 +93,5 @@
     <div class="container-fluid background-gblack">
         <hr class="hr-page-end"/>
     </div>
-
 
 @endsection

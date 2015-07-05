@@ -27,7 +27,9 @@ class AdminController extends BaseController
         if(!$geocoding){
             return Redirect::back()
                 ->withInput()
-                ->with('failure', 'No se pudo crear la acadamia. Error al tratar de guardar la dirección.');
+                ->with('error', 'No se pudo crear la acadamia. Error al tratar de guardar la dirección.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'No se pudo crear la acadamia. Se produjo un error al tratar de guardar la dirección.');
         }
         $school->lat = $geocoding[0]; //latitud
         $school->lon = $geocoding[1]; //longitud
@@ -76,7 +78,11 @@ class AdminController extends BaseController
                     if ($validator->fails()) {
                         return Redirect::to('admin/schools')
                             ->with('warning', 'La academia fue creada pero se dieron errores en el proceso.')
-                            ->with('error', 'Error al tratar de subir la imagen de perfil: ' . $img);
+                            ->with('Wtitle', 'Aviso')
+                            ->with('Wmsg', 'La academia fue creada pero se dieron errores en el proceso.')
+                            ->with('error', 'Error al tratar de subir la imagen de perfil: ' . $img)
+                            ->with('Etitle', 'Error')
+                            ->with('Emsg', 'Error al subir la imagen de perfil: ' . $img);
                     } else {
                         $file_extension = $upload->getClientOriginalExtension();
                         $filename = Str::random(30) . '.' . $file_extension;
@@ -88,15 +94,26 @@ class AdminController extends BaseController
                         if(!$pic->save()){
                             return Redirect::to('admin/schools')
                                 ->with('warning', 'La academia fue creada pero se dieron errores en el proceso.')
-                                ->with('error', 'Error al subir la imagen de perfil: ' . $img);
+                                ->with('Wtitle', 'Aviso')
+                                ->with('Wmsg', 'La academia fue creada pero se dieron errores en el proceso.')
+                                ->with('error', 'Error al subir la imagen de perfil: ' . $img)
+                                ->with('Etitle', 'Error')
+                                ->with('Emsg', 'Error al subir la imagen de perfil: ' . $img);
                         }
                     }
                 }
             }
-            return Redirect::to('admin/schools')->with('success', 'Academia creada con éxito');
+            return Redirect::to('admin/schools')
+                ->with('success', 'Academia creada con éxito')
+                ->with('Stitle','Academia creada con éxito')
+                ->with('Smsg','Se ha añadido la nueva academia a la base de datos.');
         }
         else
-            return Redirect::to('admin/schools')->with('error', 'Error al tratar de guardar la academia en base de datos');
+            return Redirect::to('admin/schools')
+                ->withInput()
+                ->with('error', 'Error al tratar de guardar la academia en base de datos')
+                ->with('Etitle','Error')
+                ->with('Emsg','Se ha producido un error al tratar de guardar la academia en base de datos.');
     }
 
     public function deleteUser() {
@@ -107,9 +124,15 @@ class AdminController extends BaseController
         $user->delete();
 
         if($user->trashed() && $teacher->trashed())
-            return Redirect::to('admin/teachers')->with('success', 'Usuario eliminado con éxito');
+            return Redirect::to('admin/teachers')
+                ->with('success', 'Usuario eliminado con éxito')
+                ->with('Stitle','Usuario eliminado con éxito')
+                ->with('Smsg','Se ha eliminado el usuario de la base de datos.');
         else
-            return Redirect::to('admin/teachers')->with('failure', '¡Error! El usuario no pudo ser eliminado correctamente.');
+            return Redirect::to('admin/teachers')
+                ->with('error', '¡Error! El usuario no pudo ser eliminado correctamente.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'El usuario no pudo ser eliminado correctamente.');
     }
 
     public function deleteSchool()
@@ -119,9 +142,15 @@ class AdminController extends BaseController
         $school->delete();
 
         if($school->trashed())
-            return Redirect::to('admin/schools')->with('success', 'Academia eliminada con éxito');
+            return Redirect::to('admin/schools')
+                ->with('success', 'Academia eliminada con éxito')
+                ->with('Stitle', 'Éxito')
+                ->with('Smsg', 'Academia eliminada con éxito.');
         else
-            return Redirect::to('admin/schools')->with('failure', 'Error! La academia no pudo ser eliminada');
+            return Redirect::to('admin/schools')
+                ->with('error', 'Error! La academia no pudo ser eliminada')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'La academia no pudo ser eliminada.');
     }
 
     public function saveSchool()
@@ -152,7 +181,10 @@ class AdminController extends BaseController
         }
 
         if(!$video->save())
-            return Redirect::back()->withInput()->with('failure', 'Fallo al guardar el código del vídeo asociado a la academia.');
+            return Redirect::back()->withInput()
+                ->with('error', 'Fallo al guardar el código del vídeo asociado a la academia.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'Fallo al guardar el código del vídeo asociado a la academia.');
 
         if(Input::get('address') != $school->address) {
             $school->address = $input['address'];
@@ -160,7 +192,9 @@ class AdminController extends BaseController
             if(!$geocoding) {
                 return Redirect::back()
                     ->withInput()
-                    ->with('failure', 'No se pudo modificar los datos de la acadamia. Fallo al guardar la dirección.');
+                    ->with('error', 'No se pudo modificar los datos de la acadamia. Fallo al guardar la dirección.')
+                    ->with('Etitle', 'Error')
+                    ->with('Emsg', 'Se produjo un error al tratar de guardar la dirección. No se pudo modificar los datos de la acadamia.');
             }
             $school->lat = $geocoding[0]; //latitud
             $school->lon = $geocoding[1]; //longitud
@@ -199,7 +233,9 @@ class AdminController extends BaseController
                 if ($validator->fails()) {
                     return Redirect::back()
                         ->withInput()
-                        ->with('failure', 'Error al subir la imagen de perfil: ' . $img);
+                        ->with('error', 'Error al subir la imagen de perfil: ' . $img)
+                        ->with('Etitle', 'Error')
+                        ->with('Emsg', 'Error al subir la imagen de perfil: ' . $img);
                 } else {
                     $file_extension = $upload->getClientOriginalExtension();
                     $filename = Str::random(30) . '.' . $file_extension;
@@ -211,16 +247,24 @@ class AdminController extends BaseController
                     if(!$pic->save()){
                         return Redirect::back()
                             ->withInput()
-                            ->with('failure', 'Error al guardar la imagen de perfil: ' . $img);
+                            ->with('error', 'Error al guardar la imagen de perfil: ' . $img)
+                            ->with('Etitle', 'Error')
+                            ->with('Emsg', 'Error al guardar la imagen de perfil: ' . $img);
                     }
                 }
             }
         }
 
         if($school->save())
-            return Redirect::to('admin/schools')->with('success', 'Datos de academia actualizados con éxito');
+            return Redirect::to('admin/schools')
+                ->with('success', 'Datos de academia actualizados con éxito')
+                ->with('Stitle', 'Éxito')
+                ->with('Smsg', 'Datos de academia actualizados con éxito');
         else
-            return Redirect::to('admin/schools')->with('failure', '¡Error! No se pudo actualizar datos de la academia');
+            return Redirect::to('admin/schools')
+                ->with('error', '¡Error! No se pudo actualizar datos de la academia')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'No se pudo actualizar datos de la academia.');
     }
 
     public function createLesson()
@@ -237,7 +281,9 @@ class AdminController extends BaseController
 //            return Redirect::route('lessons', array('school_id' => $school_id))
             return Redirect::back()
                 ->withInput()
-                ->with('failure', 'No se pudo crear nueva clase. Error al guardar la dirección.');
+                ->with('error', 'No se pudo crear nueva clase. Error al guardar la dirección.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'No se pudo crear nueva clase. Error al guardar la dirección.');
         }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
@@ -250,7 +296,10 @@ class AdminController extends BaseController
         $lesson->school()->associate($school);
 
         if(!$lesson->save()) {
-            return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Error! No se pudo crear la clase');
+            return Redirect::route('lessons', array('school_id' => $school_id))
+                ->with('error', 'Error! No se pudo crear la clase')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'No se pudo crear la clase.');
         }
         else {
             $lesson_id = $lesson->id;
@@ -263,12 +312,18 @@ class AdminController extends BaseController
                 $pick->start = $input['start'.$i];
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Aviso: La clase se creó con errores');
+                    return Redirect::route('lessons', array('school_id' => $school_id))
+                        ->with('warning', 'Aviso: La clase se creó con errores')
+                        ->with('Wtitle', 'Aviso')
+                        ->with('Wmsg', 'El curso se creó satisfactoriamente pero con errores en las disponibilidades asociadas.');
                 }
             }
         }
 
-        return Redirect::route('lessons',array('school_id' => $school_id))->with('success', 'Clase creada con éxito');
+        return Redirect::route('lessons',array('school_id' => $school_id))
+            ->with('success', 'Clase creada con éxito')
+            ->with('Stitle', 'Éxito')
+            ->with('Smsg', 'Curso creado satisfactoriamente.');
     }
 
     public function saveLesson()
@@ -285,7 +340,9 @@ class AdminController extends BaseController
 //            return Redirect::route('lessons', array('school_id' => $school_id))
             return Redirect::back()
                 ->withInput()
-                ->with('failure', 'No se puedo actualizar datos. Error al guardar la nueva dirección.');
+                ->with('error', 'No se pudo actualizar datos. Error al guardar la nueva dirección.')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'Error al tratar de guardar la nueva dirección. No se pudieron actualizar los datos.');
         }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
@@ -295,7 +352,10 @@ class AdminController extends BaseController
         $lesson->subject()->associate($subject);
 
         if(!$lesson->save()) {
-            return Redirect::route('lessons', array('school_id' => $school_id))->with('failure', 'Error! No se pudo actualizar datos de la clase');
+            return Redirect::route('lessons', array('school_id' => $school_id))
+                ->with('error', 'Error! No se pudo actualizar datos de la clase')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'No se pudieron actualizar los datos de la clase.');
         } else { //update availabilities
             $lesson_id = $lesson->id;
             $previous_picks = $lesson->availabilities()->get();
@@ -309,14 +369,19 @@ class AdminController extends BaseController
                 $pick->start = $input['start'.$i];
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('userpanel')->with('failure', 'Aviso! Se actualizaron los datos de la clase con errores');
+                    return Redirect::route('userpanel')
+                        ->with('warning', 'Aviso! Se actualizaron los datos de la clase con errores')
+                        ->with('Wtitle', 'Aviso')
+                        ->with('Wmsg', 'Se actualizaron los datos de la clase con posibles errores en las disponibilidades.');
                 }
                 ++$i;
             }
         }
 
-        return Redirect::route('lessons',array('school_id' => $school_id))->with('success', 'Datos de la clase actualizados con éxito');
-
+        return Redirect::route('lessons',array('school_id' => $school_id))
+            ->with('success', 'Datos de la clase actualizados con éxito')
+            ->with('Stitle', 'Éxito')
+            ->with('Smsg', 'Los datos del curso se actualizaron con éxito.');
     }
 
     public function deleteLesson()
@@ -327,27 +392,45 @@ class AdminController extends BaseController
         $lesson->delete();
 
         if($lesson->exists)
-            return Redirect::route('lessons',array('school_id' => $school_id))->with('failure', 'Error! La clase no pudo ser eliminada');
+            return Redirect::route('lessons',array('school_id' => $school_id))
+                ->with('error', 'Error! La clase no pudo ser eliminada')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'La clase no pudo ser eliminada.');
         else
-            return Redirect::route('lessons',array('school_id' => $school_id))->with('success', 'Clase eliminada con éxito');
+            return Redirect::route('lessons',array('school_id' => $school_id))
+                ->with('success', 'Clase eliminada con éxito')
+                ->with('Stitle', 'Éxito')
+                ->with('Smsg', 'Clase eliminada con éxito.');
     }
 
     public function deleteSchoolReview($id) {
         $rating = SchoolLessonRating::findOrFail($id);
         $rating->delete();
         if($rating->exists)
-            return Redirect::to('admin/school/reviews')->with('failure', 'Error! La valoración no pudo ser eliminada');
+            return Redirect::to('admin/school/reviews')
+                ->with('error', 'Error! La valoración no pudo ser eliminada')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'La valoración no pudo ser eliminada.');
         else
-            return Redirect::to('admin/school/reviews')->with('success', 'Valoración eliminada con éxito');
+            return Redirect::to('admin/school/reviews')
+                ->with('success', 'Valoración eliminada con éxito')
+                ->with('Stitle', 'Éxito')
+                ->with('Smsg', 'Se eliminó la valoración.');
     }
 
     public function deleteTeacherReview($id) {
         $rating = Rating::findOrFail($id);
         $rating->delete();
         if($rating->exists)
-            return Redirect::to('admin/teacher/reviews')->with('failure', 'Error! La valoración no pudo ser eliminada');
+            return Redirect::to('admin/teacher/reviews')
+                ->with('error', 'Error! La valoración no pudo ser eliminada')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'La valoración no pudo ser eliminada.');
         else
-            return Redirect::to('admin/teacher/reviews')->with('success', 'Valoración eliminada con éxito');
+            return Redirect::to('admin/teacher/reviews')
+                ->with('success', 'Valoración eliminada con éxito')
+                ->with('Stitle', 'Éxito')
+                ->with('Smsg', 'Se eliminó la valoración.');
     }
 
 }
