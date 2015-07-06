@@ -162,6 +162,7 @@
         {{--});--}}
     {{--</script>--}}
 
+@if(!Request::is('userpanel/dashboard') && !Request::is('teacher/*') && !Request::is('admin/*'))
     <!-- Google Analytics -->
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -171,6 +172,7 @@
         ga('create', 'UA-61042823-1', 'auto');
         ga('send', 'pageview');
     </script>
+@endif
 
 </head>
 
