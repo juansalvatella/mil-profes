@@ -1854,8 +1854,9 @@ body.loading .modal-loading { /*modal element will be visible */
     margin-bottom: 5px;
 }
 .subject-icon-lg img {
-    max-width:80%;
-    max-height:80%;
+    max-width: 80px;
+    max-height: 80px;
+    margin-bottom: 5px;
 }
 .t-lesson-subject {
     color: #000;
