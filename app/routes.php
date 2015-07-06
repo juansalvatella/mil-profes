@@ -918,12 +918,12 @@ Route::post('load-school-profile-pics','AdminController@loadProfilePics');
 
 //Sitemaps related routes
 Route::get('render-sitemaps','SitemapsController@milprofes');
-Route::get('sitemap.xml', function() {
+Route::get('sitemap', function() {
     return Response::view('sitemap.sitemap')
         ->header('Content-Type', 'application/xml')
         ->header('X-Robots-Tag','noindex, nofollow');
 });
-Route::get('sitemaps/{xmlfile?}.xml', function($xmlfile) {
+Route::get('sitemaps/{xmlfile?}', function($xmlfile) {
     return Response::view('sitemap.sitemaps.'.$xmlfile)
         ->header('Content-Type', 'application/xml')
         ->header('X-Robots-Tag','noindex, nofollow');

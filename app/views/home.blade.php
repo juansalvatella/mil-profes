@@ -79,7 +79,7 @@
                           <div class="input-group-btn">
                               <button type="button" class="btn btn-default btn-lg dropdown-toggle btn-pick-subject" data-toggle="dropdown">
                                   <input name="subject" id="subject" type="hidden" value="all">
-                                  <span id="subject-name">{{ trans('home.subject_all') }}</span>
+                                  <span id="subject-name">{{ trans('subjects.all') }}</span>
                                   <span class="caret"></span>
                               </button>
                               <div class="dropdown-menu multi-column">

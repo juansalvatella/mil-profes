@@ -63,7 +63,7 @@
     <!-- Common CSS -->
     {{ HTML::style('css/bootstrap.min.css') }}
     {{ HTML::style('css/font-awesome.min.css') }}
-    {{ HTML::style('css/milprofes21062015.css') }}
+    {{ HTML::style('css/milprofes06072015.css') }}
     {{ HTML::style('css/slider.css') }}
     {{ HTML::style('css/jquery.raty.css') }}
     {{ HTML::style('css/bootstrap-formhelpers.min.css') }}
