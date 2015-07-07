@@ -104,6 +104,9 @@ $(document).ready(function() {
                     "showMethod": "fadeIn",
                     "hideMethod": "fadeOut"
                 });
+                setTimeout(function(){
+                    location.reload();
+                },1000);
             } else if (data.success == 'warning') {
                 toastr['warning'](''+data.msg, 'Aviso', {
                     "closeButton": true,
@@ -166,6 +169,17 @@ $(document).ready(function() {
         var teacherId =  $('#teacherId').val();
         var token = $('#_token').val();
         var lesson = getUrlParameter('clase');
+
+        $.get('/request/persData/teacher', {
+            dataType: 'json',
+            teacherId: teacherId
+        }, function(response){
+            $('.info-loader').hide();
+            if(response.telephone)
+                $('span.tlf-number').text(response.telephone);
+            $('a.e-mail').attr("href", response.mailto).text(response.email);
+        });
+
         $.post('/request/info/teacher', {
             dataType: 'json',
             teacherId: teacherId,
@@ -174,6 +188,18 @@ $(document).ready(function() {
         }, function(data){
             //console.log(data);
         });
+    });
+
+    var plusMinusOne = (function(obj, mode) {
+        var objVal = parseInt(obj.first().text());
+        if(objVal != 0 && objVal != 1) { //avoid changing sign conflict
+            if (mode == 'plus')
+                objVal++;
+            if (mode == 'minus')
+                objVal--;
+        }
+        obj.empty().text(objVal.toString());
+        return false;
     });
 
     $('.itwashelpful').click(function(e) {
@@ -185,6 +211,14 @@ $(document).ready(function() {
             _token: token
         }, function(data){
             if(data.success == 'success') {
+                $('.btn-yes[data-reviewId='+reviewId+']').hide();
+                $('.btn-no[data-reviewId='+reviewId+']').hide();
+                $('.reviewed-thanks[data-reviewId='+reviewId+']').removeClass('hidden');
+                var helpSum = $('.helpSum[data-reviewId='+reviewId+']');
+                if(helpSum.closest('div').find('i').hasClass('fa-plus'))
+                    plusMinusOne(helpSum,'plus');
+                if(helpSum.closest('div').find('i').hasClass('fa-minus'))
+                    plusMinusOne(helpSum,'minus');
                 toastr['success'](''+data.msg, 'Valoración enviada', {
                     "closeButton": true,
                     "debug": false,
@@ -242,6 +276,14 @@ $(document).ready(function() {
             _token: token
         }, function(data){
             if(data.success == 'success') {
+                $('.btn-yes[data-reviewId='+reviewId+']').hide();
+                $('.btn-no[data-reviewId='+reviewId+']').hide();
+                $('.reviewed-thanks[data-reviewId='+reviewId+']').removeClass('hidden');
+                var helpSum = $('.helpSum[data-reviewId='+reviewId+']');
+                if(helpSum.closest('div').find('i').hasClass('fa-plus'))
+                    plusMinusOne(helpSum,'minus');
+                if(helpSum.closest('div').find('i').hasClass('fa-minus'))
+                    plusMinusOne(helpSum,'plus');
                 toastr['success'](''+data.msg, 'Valoración enviada', {
                     "closeButton": true,
                     "debug": false,

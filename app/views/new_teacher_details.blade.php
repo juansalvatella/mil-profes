@@ -100,9 +100,15 @@
                                     <div class="panel-body contact-info-body">
                                         <div class="contact-info-content">
                                             @if($teacher->phone)
-                                                <div><i class="fa fa-phone"></i> <span class="tlf-number" itemprop="telephone">{{{ substr($teacher->phone,0,3).' '.substr($teacher->phone,3,2).' '.substr($teacher->phone,5,2).' '.substr($teacher->phone,7,strlen($teacher->phone)-7) }}}</span></div>
+                                                <div><i class="fa fa-phone"></i>
+                                                    <img class="info-loader" height="15" width="15" src="{{ asset('img/infoloader.gif') }}">
+                                                    <span class="tlf-number"></span>
+                                                </div>
                                             @endif
-                                            <div><i class="fa fa-envelope-o"></i> <a href="mailto:{{{ $teacher->email }}}">{{{ $teacher->email }}}</a></div>
+                                            <div><i class="fa fa-envelope-o"></i>
+                                                <img class="info-loader" height="15" width="15" src="{{ asset('img/infoloader.gif') }}">
+                                                <a class="e-mail" href=""></a>
+                                            </div>
                                         </div>
                                         <div class="contact-info-social">
                                             @if($teacher->link_f)
@@ -250,7 +256,7 @@
                                                             ?>
                                                             <img title="@lang('subjects.'.$category_name)" alt="@lang('subjects.'.$category_name)" src="{{ asset('img/subjects/'.$l->subject()->pluck('id').'.png') }}"/>
                                                             <br/>
-                                                            <a href="javascript:" class="@if(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}"><span class="stars-container top-buffer-5 bottom-buffer-5" data-score="{{ $l->getLessonAvgRating() }}"></span></a>
+                                                            <a href="javascript:" class="@if(Auth::check() && ) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}"><span class="stars-container top-buffer-5 bottom-buffer-5" data-score="{{ $l->getLessonAvgRating() }}"></span></a>
                                                             <br/>
                                                             <span id="lesson-n-reviews"><small><i class="fa fa-user" title="@choice('teacher-profile.reviews',$n_reviews)"></i> {{ $n_reviews }}</small></span>
                                                         </div>
@@ -311,9 +317,9 @@
                                                                                 $checkPositive = ($helpSum >= 0) ? true : false;
                                                                             ?>
                                                                             @if($checkPositive)
-                                                                                <div class="text-center text-success"><small><i class="fa fa-plus"></i></small> {{ $helpSum }}</div>
+                                                                                <div class="text-center text-success"><small><i class="fa fa-plus"></i></small> <span data-reviewId="{{ $f->id }}" class="helpSum">{{ $helpSum }}</span></div>
                                                                             @else
-                                                                                <div class="text-center text-danger"><small><i class="fa fa-minus"></i></small> {{ abs($helpSum) }}</div>
+                                                                                <div class="text-center text-danger"><small><i class="fa fa-minus"></i></small> <span data-reviewId="{{ $f->id }}" class="helpSum">{{ abs($helpSum) }}</span></div>
                                                                             @endif
                                                                         </div>
                                                                         <div class="col-xs-12 col-sm-9 padding-0">
@@ -326,6 +332,7 @@
                                                                                 <div class="comment-text"><span itemprop="description">{{{ $f->comment }}}</span></div>
                                                                                 <div class="comment-isithelpful">
                                                                                     ¿Te ha resultado útil esta valoración?<br/>
+                                                                                    <span data-reviewId="{{ $f->id }}" class="reviewed-thanks text-success hidden"><i class="fa fa-check"></i> Gracias por compartir tu opinión.</span>
                                                                                     <a href="javascript:" data-reviewId="{{ $f->id }}" class="btn btn-xs btn-link btn-yes @if(Auth::check()) itwashelpful @else trigger-login @endif ">
                                                                                         <i class="fa fa-thumbs-up"></i> @lang('buttons.yes')
                                                                                     </a>
@@ -370,7 +377,7 @@
                                                                             <div class="col-xs-12 col-sm-2 padding-0">
                                                                                 <div class="text-center top-buffer-3"><img class="img-circle" width="46" height="46" src="{{ asset('img/avatars/'.$reviewer->avatar) }}"/></div>
                                                                                 <div class="text-center top-buffer-10 ellipsis reviewer-name" itemprop="author">{{ $reviewer->displayName }}</div>
-                                                                                <div class="text-center"><small>{{ $a->yes_helpful }} <i class="fa fa-thumbs-o-up"></i> de {{ $a->total_helpful }}</small></div>
+                                                                                {{--<div class="text-center"><small>{{ $a->yes_helpful }} <i class="fa fa-thumbs-o-up"></i> de {{ $a->total_helpful }}</small></div>--}}
                                                                                 <?php
                                                                                     $ayes = $a->yes_helpful;
                                                                                     $noes = $a->total_helpful - $a->yes_helpful;
@@ -378,9 +385,9 @@
                                                                                     $checkPositive = ($helpSum >= 0) ? true : false;
                                                                                 ?>
                                                                                 @if($checkPositive)
-                                                                                    <div class="text-center text-success"><small><i class="fa fa-plus"></i></small> {{ $helpSum }}</div>
+                                                                                    <div class="text-center text-success"><small><i class="fa fa-plus"></i></small> <span data-reviewId="{{ $a->id }}" class="helpSum">{{ $helpSum }}</span></div>
                                                                                 @else
-                                                                                    <div class="text-center text-danger"><small><i class="fa fa-minus"></i></small> {{ abs($helpSum) }}</div>
+                                                                                    <div class="text-center text-danger"><small><i class="fa fa-minus"></i></small> <span data-reviewId="{{ $a->id }}" class="helpSum">{{ abs($helpSum) }}</span></div>
                                                                                 @endif
                                                                             </div>
                                                                             <div class="col-xs-12 col-sm-10 padding-0">
@@ -392,6 +399,7 @@
                                                                                     <div class="comment-text"><span itemprop="description">{{{ $a->comment }}}</span></div>
                                                                                     <div class="comment-isithelpful">
                                                                                         ¿Te ha resultado útil esta valoración?<br/>
+                                                                                        <span data-reviewId="{{ $a->id }}" class="reviewed-thanks text-success hidden"><i class="fa fa-check"></i> Gracias por compartir tu opinión.</span>
                                                                                         <a href="javascript:" data-reviewId="{{ $a->id }}" class="btn btn-xs btn-link btn-yes @if(Auth::check()) itwashelpful @else trigger-login @endif ">
                                                                                             <i class="fa fa-thumbs-up"></i> @lang('buttons.yes')
                                                                                         </a>
