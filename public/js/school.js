@@ -104,6 +104,9 @@ $(document).ready(function() {
                     "showMethod": "fadeIn",
                     "hideMethod": "fadeOut"
                 });
+                setTimeout(function(){
+                    location.reload();
+                },1000);
             } else if (data.success == 'warning') {
                 toastr['warning'](''+data.msg, 'Aviso', {
                     "closeButton": true,
@@ -177,6 +180,18 @@ $(document).ready(function() {
         });
     });
 
+    var plusMinusOne = (function(obj, mode) {
+        var objVal = parseInt(obj.first().text());
+        if(objVal != 0 && objVal != 1) { //avoid changing sign conflict
+            if (mode == 'plus')
+                objVal++;
+            if (mode == 'minus')
+                objVal--;
+        }
+        obj.empty().text(objVal.toString());
+        return false;
+    });
+
     $('.itwashelpful').click(function(e) {
         e.preventDefault();
         var reviewId = $(this).attr('data-reviewId');
@@ -186,6 +201,14 @@ $(document).ready(function() {
             _token: token
         }, function(data){
             if(data.success == 'success') {
+                $('.btn-yes[data-reviewId='+reviewId+']').hide();
+                $('.btn-no[data-reviewId='+reviewId+']').hide();
+                $('.reviewed-thanks[data-reviewId='+reviewId+']').removeClass('hidden');
+                var helpSum = $('.helpSum[data-reviewId='+reviewId+']');
+                if(helpSum.closest('div').find('i').hasClass('fa-plus'))
+                    plusMinusOne(helpSum,'plus');
+                if(helpSum.closest('div').find('i').hasClass('fa-minus'))
+                    plusMinusOne(helpSum,'minus');
                 toastr['success'](''+data.msg, 'Valoración enviada', {
                     "closeButton": true,
                     "debug": false,
@@ -243,6 +266,14 @@ $(document).ready(function() {
             _token: token
         }, function(data){
             if(data.success == 'success') {
+                $('.btn-yes[data-reviewId='+reviewId+']').hide();
+                $('.btn-no[data-reviewId='+reviewId+']').hide();
+                $('.reviewed-thanks[data-reviewId='+reviewId+']').removeClass('hidden');
+                var helpSum = $('.helpSum[data-reviewId='+reviewId+']');
+                if(helpSum.closest('div').find('i').hasClass('fa-plus'))
+                    plusMinusOne(helpSum,'minus');
+                if(helpSum.closest('div').find('i').hasClass('fa-minus'))
+                    plusMinusOne(helpSum,'plus');
                 toastr['success'](''+data.msg, 'Valoración enviada', {
                     "closeButton": true,
                     "debug": false,
@@ -305,9 +336,7 @@ $(document).ready(function() {
     $('.trigger-login').click(function(e) {
         e.preventDefault();
         var dynAlert = $('#dynalert');
-        $('#dynalert').removeClass('hidden');
-        dynAlert.show();
-        dynAlert.append('' +
+        dynAlert.removeClass('hidden').show().append('' +
             'Accede a milProfes. para realizar valoraciones. ' +
             '¿Aún no tienes cuenta? <a href="javascript:" class="trigger-register">¡Regístrate gratis!</a>' +
         '');

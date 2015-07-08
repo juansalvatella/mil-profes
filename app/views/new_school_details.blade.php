@@ -225,7 +225,7 @@
                                             <?php $i=0; ?>
                                             @foreach($slpics as $pic)
                                                 <div class="item @if($i==0) active @endif ">
-                                                    <div class="carousel-table" style="background: url({{ asset('img/pics/'.$pic->pic) }}) center center no-repeat; background-size: cover;">&nbsp;</div>
+                                                    <div class="carousel-table" style="background: url('{{ asset('img/pics/'.$pic->pic) }}') center center no-repeat; background-size: cover;">&nbsp;</div>
                                                 </div>
                                                 <?php ++$i; //slide counter ?>
                                             @endforeach
@@ -371,9 +371,9 @@
                                                                                 $checkPositive = ($helpSum >= 0) ? true : false;
                                                                             ?>
                                                                             @if($checkPositive)
-                                                                                <div class="text-center text-success"><small><i class="fa fa-plus"></i></small> {{ $helpSum }}</div>
+                                                                                <div class="text-center text-success"><small><i class="fa fa-plus"></i></small>  <span data-reviewId="{{ $f->id }}" class="helpSum">{{ $helpSum }}</span></div>
                                                                             @else
-                                                                                <div class="text-center text-danger"><small><i class="fa fa-minus"></i></small> {{ abs($helpSum) }}</div>
+                                                                                <div class="text-center text-danger"><small><i class="fa fa-minus"></i></small> <span data-reviewId="{{ $f->id }}" class="helpSum">{{ abs($helpSum) }}</span></div>
                                                                             @endif
                                                                         </div>
                                                                         <div class="col-xs-12 col-sm-9 padding-0">
@@ -386,6 +386,7 @@
                                                                                 <div class="comment-text"><span itemprop="description">{{{ $f->comment }}}</span></div>
                                                                                 <div class="comment-isithelpful">
                                                                                     ¿Te ha resultado útil esta valoración?<br/>
+                                                                                    <span data-reviewId="{{ $f->id }}" class="reviewed-thanks text-success hidden"><i class="fa fa-check"></i> Gracias por compartir tu opinión.</span>
                                                                                     <a href="javascript:" data-reviewId="{{ $f->id }}" class="btn btn-xs btn-link btn-yes @if(Auth::check()) itwashelpful @else trigger-login @endif ">
                                                                                         <i class="fa fa-thumbs-up"></i> @lang('buttons.yes')
                                                                                     </a>
@@ -439,9 +440,9 @@
                                                                                     $checkPositive = ($helpSum >= 0) ? true : false;
                                                                                 ?>
                                                                                 @if($checkPositive)
-                                                                                    <div class="text-center text-success"><small><i class="fa fa-plus"></i></small> {{ $helpSum }}</div>
+                                                                                    <div class="text-center text-success"><small><i class="fa fa-plus"></i></small> <span data-reviewId="{{ $a->id }}" class="helpSum">{{ $helpSum }}</span></div>
                                                                                 @else
-                                                                                    <div class="text-center text-danger"><small><i class="fa fa-minus"></i></small> {{ abs($helpSum) }}</div>
+                                                                                    <div class="text-center text-danger"><small><i class="fa fa-minus"></i></small> <span data-reviewId="{{ $a->id }}" class="helpSum">{{ abs($helpSum) }}</span></div>
                                                                                 @endif
                                                                             </div>
                                                                             <div class="col-xs-12 col-sm-10 padding-0">
@@ -454,6 +455,7 @@
                                                                                     <div class="comment-text"><span itemprop="description">{{{ $a->comment }}}</span></div>
                                                                                     <div class="comment-isithelpful">
                                                                                         ¿Te ha resultado útil esta valoración?<br/>
+                                                                                        <span data-reviewId="{{ $a->id }}" class="reviewed-thanks text-success hidden"><i class="fa fa-check"></i> Gracias por compartir tu opinión.</span>
                                                                                         <a href="javascript:" data-reviewId="{{ $a->id }}" class="btn btn-xs btn-link btn-yes @if(Auth::check()) itwashelpful @else trigger-login @endif ">
                                                                                             <i class="fa fa-thumbs-up"></i> @lang('buttons.yes')
                                                                                         </a>
