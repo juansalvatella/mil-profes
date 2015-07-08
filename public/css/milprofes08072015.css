@@ -14,11 +14,14 @@
     .share-container { width: 100%; bottom:12px; left: 0; padding: 0 15px 0 15px; text-align: center; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 42px; left:0; right:0; margin: auto; }
-    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 130px !important; }
     .tprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
     .tprofile-stars { top:0; left:0; width:100%; text-align:center; }
+    .sprofile-logo { top: 42px; left:0; right:0; margin: auto; max-height: 150px !important; max-width: 90% !important; }
     .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
     .sprofile-stars { top:0; left:0; width:100%; text-align:center; }
+    /*.sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 130px !important; }*/
+    /*.sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }*/
+    /*.sprofile-stars { top:0; left:0; width:100%; text-align:center; }*/
     .navbar-brand { font-size: 2.5em; }
     #navbar { padding: auto; overflow-x: hidden; }
     .navbar-header { padding: auto; }
@@ -46,11 +49,14 @@
     .share-container { width: 210px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 132px; left: 25px; }
-    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 130px !important; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 4px; }
-    .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
-    .sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:10px; }
+    .sprofile-logo { top: auto; bottom: -8px !important; left: 10px !important; width: 180px !important; height: auto; }
+    .sprofile-name { top: 226px; left: 200px; }
+    .sprofile-stars { top:0; left: 4px; }
+    /*.sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 130px !important; }*/
+    /*.sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }*/
+    /*.sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:10px; }*/
     .navbar-brand { font-size: 2.5em; }
     #navbar { padding: 0 5px 0 0; overflow-x: hidden; }
     .navbar-header { padding: 0 0 0 5px; }
@@ -77,11 +83,14 @@
     .share-container { width: 440px; top:4px; right:4px; }
     .share-me { top: 15px; right: 428px; }
     .tprofile-avatar { top: 172px; left: 25px; }
-    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 120px !important; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
-    .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
-    .sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:15px; }
+    .sprofile-logo { top: auto; bottom: -8px !important; left: 10px !important; width: 180px !important; height: auto; }
+    .sprofile-name { top: 226px !important; left: 200px !important; }
+    .sprofile-stars { top:0; left: 4px; }
+    /*.sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 120px !important; }*/
+    /*.sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }*/
+    /*.sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:15px; }*/
     .navbar-brand { font-size: 2.7em; }
     #navbar { padding: auto; }
     .navbar-header { padding: auto; }
@@ -109,11 +118,14 @@
     .hdr-share { height: 50px; }
     .share-me { top: 15px; right: 448px; }
     .tprofile-avatar { top: 172px; left: 25px; }
-    .sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 120px !important; }
     .tprofile-name { top: 226px; left: 200px; }
     .tprofile-stars { top:0; left: 200px; }
-    .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
-    .sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:15px; }
+    .sprofile-logo { top: auto; bottom: -8px !important; left: 10px !important; width: 180px !important; height: auto; }
+    .sprofile-name { top: 226px; left: 200px; }
+    .sprofile-stars { top:0; left: 14px; }
+    /*.sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 120px !important; }*/
+    /*.sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }*/
+    /*.sprofile-stars { top:0; left:0; width:100%; text-align:left; padding-left:15px; }*/
     .navbar-brand { font-size: 2.7em; }
     #navbar { padding: auto; }
     .navbar-header { padding: auto; }
