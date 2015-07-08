@@ -256,7 +256,7 @@
                                                             ?>
                                                             <img title="@lang('subjects.'.$category_name)" alt="@lang('subjects.'.$category_name)" src="{{ asset('img/subjects/'.$l->subject()->pluck('id').'.png') }}"/>
                                                             <br/>
-                                                            <a href="javascript:" class="@if(Auth::check() && ) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}"><span class="stars-container top-buffer-5 bottom-buffer-5" data-score="{{ $l->getLessonAvgRating() }}"></span></a>
+                                                            <a href="javascript:" class="@if($teacher->itsme) trigger-itsme @elseif(Auth::check()) trigger-review @else trigger-login @endif" data-lessonId="{{ $l->id }}"><span class="stars-container top-buffer-5 bottom-buffer-5" data-score="{{ $l->getLessonAvgRating() }}"></span></a>
                                                             <br/>
                                                             <span id="lesson-n-reviews"><small><i class="fa fa-user" title="@choice('teacher-profile.reviews',$n_reviews)"></i> {{ $n_reviews }}</small></span>
                                                         </div>
@@ -264,7 +264,7 @@
                                                     <div class="col-xs-12 col-sm-8">
                                                         <div class="t-lesson-subject">
                                                             @if($l->title == '')
-                                                                <h4><b>@lang('teacher-profile.lesson_of') @lang('subjects'.$category_name)</b></h4>
+                                                                <h4><b>@lang('teacher-profile.lesson_of') @lang('subjects.'.$category_name)</b></h4>
                                                             @else
                                                                 <h4><b>{{{ $l->title }}}</b></h4>
                                                             @endif
