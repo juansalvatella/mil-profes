@@ -436,9 +436,25 @@ class SearchController extends BaseController
         //            });
         //        }
 
+        $resultsBAK = $results;
+
         // Filter by distance and price
         $results = Geocoding::findWithinDistance($user_lat,$user_lon,$search_distance,$results); //filter results within distance boundaries
         $results = Milprofes::findWithinPrice($price,$prof_o_acad,$results);
+
+        //seek for results within <50 kms if first search (from home) has no results within <2 or <5 kms
+        if(isset($input['first_search']) && $resultsBAK->count() != 0) {
+            while($results->count() == 0) {
+                if($search_distance == 'rang0')
+                    $search_distance = 'rang1';
+                elseif($search_distance == 'rang1')
+                    $search_distance = 'rang2';
+                elseif($search_distance == 'rang2')
+                    break; //nothing else we can do (any results are further than 50 km)
+                $results = Geocoding::findWithinDistance($user_lat,$user_lon,$search_distance,$resultsBAK); //filter results within distance boundaries
+                $results = Milprofes::findWithinPrice($price,$prof_o_acad,$results);
+            }
+        }
 
         //Get ratings, availabilities, display name and subjects
         if($prof_o_acad=='profesor'){
@@ -520,7 +536,7 @@ class SearchController extends BaseController
         }
 
         //no more filters, results sorted >>>> pagination of results
-        $total_results = $results->count();
+        $total_results = $results->count(); //update count
         $max_slices = ceil($total_results/$results_per_slice);
         $slices_showing = Input::has('slices_showing') ? (int) $input['slices_showing'] : 0;
         $sl_offset = $slices_showing*6;

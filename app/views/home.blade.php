@@ -16,6 +16,7 @@
           </div>
           <div class="col-xs-12 col-md-6">
               {{ Form::open(array('action' => 'SearchController@search')) }}
+              <input type="hidden" name="first_search" value="true">
               <div class="row top-buffer-15">
                   <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0 text-left">
                       <div class="form-group">
