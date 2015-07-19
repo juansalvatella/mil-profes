@@ -254,13 +254,8 @@
                                     @endif
                                 </div>
                                 <div class="panel-body map-container">
-                                    @if(Auth::check())
-                                        {{ $gmap['js'] }}
-                                        {{ $gmap['html'] }}
-                                    @else
-                                        {{ $gmap['js'] }}
-                                        {{ $gmap['html'] }}
-                                    @endif
+                                    {{ $gmap['js'] }}
+                                    {{ $gmap['html'] }}
                                 </div>
                             </div>
                         </div>

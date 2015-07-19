@@ -562,6 +562,7 @@ class SearchController extends BaseController
         else //rang0
             $config['zoom'] = '12';
         $config['disableMapTypeControl'] = true;
+        $config['https'] = true;
         $config['disableStreetViewControl'] = true;
         $config['disableDoubleClickZoom'] = true;
         $config['disableNavigationControl'] = true;
