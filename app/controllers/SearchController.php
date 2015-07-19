@@ -600,7 +600,7 @@ class SearchController extends BaseController
         $MapWidth  = 300;//198;
         $MapHeight = 170;
         $EncString = Geocoding::GMapCircle($MapLat,$MapLng, $MapRadius); // Encode a circle over Earth
-        $MapAPI = 'http://maps.google.com/maps/api/staticmap?';
+        $MapAPI = 'https://maps.google.com/maps/api/staticmap?';
         $MapImgURL = $MapAPI.'center='.$MapLat.','.$MapLng.
             '&zoom='.$Zoom.
             '&size='.$MapWidth.'x'.$MapHeight.
