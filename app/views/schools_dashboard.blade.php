@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" style="margin-bottom: 100px;">
 
     <div class="panel panel-default">
         <div class="panel-body">
@@ -25,28 +25,24 @@
         </div>
     </div>
 
-    @if ($schools->isEmpty())
+    @if (!isset($schools) || $schools->isEmpty())
         <p>There are no schools... yet?</p>
     @else
-        {{ $schools->links() }}
-        <table class="table table-striped">
+        <table id="table_schools" class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Estado</th>
-                    <th class="hidden-xs">Dir</th>
-                    <th class="hidden-xs">CIF</th>
-                    <th class="hidden-xs">EMail</th>
-                    <th class="hidden-xs">Tlf</th>
-                    <th class="hidden-xs">Tlf2</th>
-                    <th class="hidden-xs">Logo</th>
-                    <th class="hidden-xs">Desc</th>
-                    <th class="hidden-xs">Geo</th>
+                    <th width="30" class="hidden-xs">Dir</th>
+                    <th width="30" class="hidden-xs">CIF</th>
+                    <th width="30" class="hidden-xs">EMail</th>
+                    <th width="30" class="hidden-xs">Tlf</th>
+                    <th width="30" class="hidden-xs">Tlf2</th>
+                    <th width="30" class="hidden-xs">Logo</th>
+                    <th width="30" class="hidden-xs">Desc</th>
+                    <th width="30" class="hidden-xs">Geo</th>
                     <th>Cursos</th>
-                    <th>Perfil</th>
-                    <th>Editar</th>
-                    <th></th>
-                    <th>Eliminar</th>
+                    <th width="200">Acciones</th>
                 </tr>
             </thead>
             <tbody id="schools">
@@ -78,30 +74,18 @@
                     <td class="text-center hidden-xs">@if($school->phone2)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->phone2 }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
                     <td class="text-center hidden-xs">@if($school->logo)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->logo }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
                     <td class="text-center hidden-xs">@if($school->description)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->description }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
-                    <td class="text-center hidden-xs">@if($school->lon)<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->lat }},{{ $school->lon }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
+                    <td class="text-center hidden-xs">@if($school->lon && $school->lon != '0.0000000')<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->lat }},{{ $school->lon }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
                     <td class="text-center">{{ $school->nlessons }}</td>
                     <td>
-                        <a href="{{ url('academia',array($school->slug)) }}" class="btn btn-sm btn-info"><i class="fa fa-link"></i>Ver<span class="hidden-xs"> perfil</span></a>
-                    </td>
-                    <td>
-                        <a href="{{ url('admin/lessons',array($school->id)) }}" class="btn btn-sm btn-default"><i class="fa fa-edit"></i> <span class="hidden-xs">Editar </span>cursos</a>
-                    </td>
-                    <td>
-                        <a href="{{ url('admin/edit/school',array($school->id)) }}" class="btn btn-sm btn-default"><i class="fa fa-edit"></i> <span class="hidden-xs">Editar </span>academia</a>
-                    </td>
-                    <td>
-                        <a href="{{ url('admin/delete/school',array($school->id)) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> <span class="hidden-xs">Eliminar</span></a>
+                        <a href="{{ url('academia',array($school->slug)) }}" class="btn btn-xs btn-info"><i class="fa fa-link"></i>Ver<span class="hidden-xs"> perfil</span></a>
+                        <a href="{{ url('admin/lessons',array($school->id)) }}" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> <span class="hidden-xs">Editar </span>cursos</a>
+                        <a href="{{ url('admin/delete/school',array($school->id)) }}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> <span class="hidden-xs">Eliminar</span></a>
+                        <a href="{{ url('admin/edit/school',array($school->id)) }}" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> <span class="hidden-xs">Editar </span>academia</a>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                Mostrando {{ $schools->getFrom() }}-{{ $schools->getTo() }} de un total de {{ $schools->getTotal() }} academias.
-            </div>
-        </div>
-        {{ $schools->links() }}
     @endif
 
     </div>

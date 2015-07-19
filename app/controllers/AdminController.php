@@ -196,10 +196,14 @@ class AdminController extends BaseController
                     ->with('Etitle', 'Error')
                     ->with('Emsg', 'Se produjo un error al tratar de guardar la dirección. No se pudo modificar los datos de la acadamia.');
             }
-            $school->lat = $geocoding[0]; //latitud
-            $school->lon = $geocoding[1]; //longitud
-            $school->town = $geocoding[3]['locality']; //guardar municipio
-            $school->region = $geocoding[3]['admin_2']; //guardar provincia
+            if(isset($geocoding[0]))
+                $school->lat = $geocoding[0]; //latitud
+            if(isset($geocoding[1]))
+                $school->lon = $geocoding[1]; //longitud
+            if(isset($geocoding[3]['locality']))
+                $school->town = $geocoding[3]['locality']; //guardar municipio
+            if(isset($geocoding[3]['admin_2']))
+                $school->region = $geocoding[3]['admin_2']; //guardar provincia
             if(isset($geocoding[3]['postal_code']))
                 $school->postalcode = $geocoding[3]['postal_code']; //guardar código postal
         }
@@ -213,7 +217,7 @@ class AdminController extends BaseController
             $school->logo = $filename;
         }
 
-        if (Input::hasFile('pics')) {
+        if(Input::hasFile('pics')) {
             //TODO: implementar selector de modos (reemplazar o añadir)
             $school->pics()->delete(); //TODO: sólo aplicar en modo reemplazar
 

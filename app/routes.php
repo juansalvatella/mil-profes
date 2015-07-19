@@ -630,7 +630,8 @@ Route::post('teacher/availability/save', 'TeachersController@saveAvailability');
 Route::get('admin/schools', function()
 {
     //Raw database query needs soft deleted schools to be filtered (notice the where null)
-    $schools = DB::table('schools')->whereNull('deleted_at')->orderBy('id')->paginate(10);
+//    $schools = DB::table('schools')->whereNull('deleted_at')->orderBy('id')->paginate(10);
+    $schools = School::whereNull('deleted_at')->get();
     foreach($schools as $school)
         $school->nlessons = count(SchoolLesson::where('school_id',$school->id)->get());
 

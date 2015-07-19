@@ -1,7 +1,3 @@
-<?php
-    $last_teachers = Milprofes::getLastTeachers(12);
-    $last_schools = Milprofes::getLastSchools(12);
-?>
 <!DOCTYPE html>
 @if(Request::is('profe/*') || Request::is('academia/*'))
 <html lang="es" prefix="og: http://ogp.me/ns#">
@@ -89,6 +85,8 @@
     {{ HTML::style('css/owl.theme.css') }}
 @elseif(Request::is('userpanel/dashboard'))
     {{ HTML::style('css/jquery.Jcrop.min.css') }}
+@elseif(Request::is('admin/schools*'))
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
 @elseif(Request::is('profe/*'))
 
     <!-- general meta -->
@@ -146,21 +144,6 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    {{--<!-- JS Responsive text containers -->--}}
-    {{--<script>--}}
-        {{--$(document).ready(function($){--}}
-            {{--$(".names-responsive").fitText();--}}
-            {{--$("#recent-responsive").fitText();--}}
-            {{--$("#contact-responsive").fitText();--}}
-            {{--$("#footer-brand-responsive").fitText(0.56);--}}
-            {{--$(".footer-contact").fitText(1.67);--}}
-            {{--$("#footer-follow").fitText(1.72);--}}
-            {{--$(".school-rating-span").fitText(1.3);--}}
-            {{--$(".teacher-rating-span").fitText(1.3);--}}
-            {{--$(".contact-who-logo-container").fitText();--}}
-        {{--});--}}
-    {{--</script>--}}
 
 @if(!Request::is('userpanel/dashboard') && !Request::is('teacher/*') && !Request::is('admin/*'))
     <!-- Google Analytics -->
@@ -445,11 +428,6 @@
 
                         </div>
                     </div>
-                    {{--<div class="row text-left">--}}
-                        {{--<div class="col-xs-12 userterms-link">--}}
-                            {{--<small><a href="{{url('condiciones')}}">@lang('layout.register_user-terms')</a></small>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
                 </div>
             </div>
         </div>
@@ -574,8 +552,6 @@
             });
         });
     </script>
-    {{--<script src="http://js.maxmind.com/js/country.js" type="text/javascript"></script>--}}
-    {{--<script src="http://js.maxmind.com/js/geoip.js" type="text/javascript" ></script>--}}
     {{ HTML::script('js/analytics.js') }}
 
     @if(Request::is('/'))
@@ -598,15 +574,6 @@
                     autoplayTimeout: 3000,
                     autoplayHoverPause: true
                 });
-//                $('.stars-container2').raty({
-//                    readOnly: true,
-//                    half: true,
-//                    size: 15,
-//                    starHalf: '../img/star-half-small2.png',
-//                    starOff : '../img/star-off-small2.png',
-//                    starOn  : '../img/star-on-small2.png',
-//                    score: function(){return $(this).attr('data-score');}
-//                });
                 $('.stars-container').raty({
                     readOnly: true,
                     half: true,
@@ -616,13 +583,6 @@
                     starOn  : '../img/star-on-small.png',
                     score: function(){return $(this).attr('data-score');}
                 });
-//                $(".diamond").mouseenter(function() {
-//                    $(this).find('div.diamond-info').css('opacity','1');
-//                    $(this).find('a.toggleDisplay').css('display','visible');
-//                }).mouseleave(function() {
-//                    $(this).find('div.diamond-info').css('opacity','0');
-//                    $(this).find('a.toggleDisplay').css('display','none');
-//                });
             });
         </script>
     @elseif(Request::is('profe/*'))
@@ -635,6 +595,54 @@
         {{ HTML::script('js/jquery.Jcrop.min.js') }}
     @elseif(Request::is('admin/schools'))
         {{ HTML::script('js/schools-dashboard.js') }}
+        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#table_schools').DataTable({
+                    "language": {
+                        "sProcessing":     "Procesando...",
+                        "sLengthMenu":     "Mostrar _MENU_ registros",
+                        "sZeroRecords":    "No se encontraron resultados",
+                        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix":    "",
+                        "sSearch":         "Buscar:",
+                        "sUrl":            "",
+                        "sInfoThousands":  ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst":    "Primero",
+                            "sLast":     "Último",
+                            "sNext":     "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    },
+                    "pagingType": "full_numbers",
+                    "order": [[ 0, 'asc' ]],
+                    "pageLength": 10,
+                    "columns": [
+                        { "orderDataType": "dom-text" },
+                        { "orderable": false, "searchable": false },
+                        { "orderable": false, "searchable": false },
+                        { "orderable": false, "searchable": false },
+                        { "orderable": false, "searchable": false },
+                        { "orderable": false, "searchable": false },
+                        { "orderable": false, "searchable": false },
+                        { "orderable": false, "searchable": false },
+                        { "orderable": false, "searchable": false },
+                        { "orderable": false, "searchable": false },
+                        { "orderDataType": "dom-text", "type": "numeric" },
+                        { "orderable": false, "searchable": false }
+                    ]
+                });
+            });
+        </script>
     @elseif(Request::is('contacta'))
         {{ HTML::script('js/contact.js') }}
     @endif
