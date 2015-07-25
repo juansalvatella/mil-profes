@@ -9,27 +9,15 @@ composer.phar
 app/storage/
 app/config/
 app/_ide_helpers.php
+_ide_helper.php
 
 vendor/
-
-public/sitemaps/
-public/sitemap.xml
 
 public/img/news/
 public/img/pics/
 public/img/logos/
 public/img/avatars/
 public/img/subjects/
-public/media/README.md
-public/icons/README.md
-
-../milprofes-deleted/views/oldFooter.blade.php
-../milprofes-deleted/views/oldHome.blade.php
 
 app/views/sitemap/sitemap.php
 app/views/sitemap/sitemaps
-public/sitemaps_old
-public/sitemap.xml_old
-public/img/milprofes-logo-old.png
-public/img/milprofes-logo-2-old.png
-public/img/milprofes-logo.png
