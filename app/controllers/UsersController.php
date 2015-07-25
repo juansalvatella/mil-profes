@@ -12,8 +12,67 @@ class UsersController extends Controller
             ->with('show_register_modal',true);
     }
 
-    //Stores new account
-    // @return  Illuminate\Http\Response
+    /**
+     * Shows the dashboard of user
+     * @return $this
+     */
+    public function dashboard()
+    {
+        $user = Confide::user();
+
+        if(Entrust::hasRole('teacher'))
+        {
+            $teacher = $user->teacher()->first();
+            $teacher_id = $teacher->id;
+            $lessons = $teacher->lessons()->get();
+            $subjects = array();
+            foreach($lessons as $lesson) {
+                $subjects[$lesson->id] = $lesson->subject()->first();
+            }
+            $picks = $teacher->availabilities()->get();
+            if($picks->count()!=9) //if teacher has never saved availability before, create 9 new picks with the input
+            {
+                for ($i = 1; $i < 10; ++$i) {
+                    $pick = new TeacherAvailability();
+                    $pick->teacher_id = $teacher_id;
+                    $pick->pick = '' . $i;
+                    $pick->day = '';
+                    $pick->start = '15:00:00';
+                    $pick->end = '21:00:00';
+                    $pick->save();
+                }
+                $picks = $teacher->availabilities()->get();
+            }
+
+            $n_picks_set = 0;
+            foreach($picks as $pick) //check how many picks are not blank
+            {
+                if($pick->day == '') {
+                    break;
+                }
+                ++$n_picks_set;
+            }
+            $picks = $picks->toArray();
+
+            return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_manage_lessons',compact('teacher','lessons','subjects','picks','n_picks_set'));
+        }
+        else
+            return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
+    }
+
+    /**
+     *
+     * @return \Illuminate\View\View
+     */
+    public function usersRegister()
+    {
+        return View::make('users_register');  //Not exists users_register in View folder !
+    }
+
+    /**
+     * Stores new account
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store()
     {
         //basic form validation
@@ -99,6 +158,14 @@ class UsersController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function UsersLogin()
+    {
+        return View::make('users_login');  //Not exists users_login in View folder !
+    }
+
     // Displays the login form
     // @return  Illuminate\Http\Response
     public function login()
@@ -111,8 +178,10 @@ class UsersController extends Controller
         }
     }
 
-    // Attempt to do login
-    // @return  Illuminate\Http\Response
+    /**
+     * Attempts to do login.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function doLogin()
     {
         $repo = App::make('UserRepository');
@@ -139,7 +208,7 @@ class UsersController extends Controller
         }
     }
 
-    // Attempt to confirm account with code
+    // Attempts to confirm account with code
     // @param  string $code
     // @return  Illuminate\Http\Response
     public function confirm($code)
@@ -159,16 +228,20 @@ class UsersController extends Controller
         }
     }
 
-    // Displays the forgot password form
-    // @return  Illuminate\Http\Response
+    /**
+     * Displays the forgot password form.
+     * @return \Illuminate\View\View
+     */
     public function forgotPassword()
     {
 //        return View::make(Config::get('confide::forgot_password_form'));
         return View::make('forgot_password');
     }
 
-    // Attempt to send change password link to the given email
-    // @return  Illuminate\Http\Response
+    /**
+     * Attempts to send change password link to the given email.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function doForgotPassword()
     {
         if (Confide::forgotPassword(Input::get('email'))) {
@@ -190,9 +263,11 @@ class UsersController extends Controller
         }
     }
 
-    // Shows the change password form with the given token
-    // @param  string $token
-    // @return  Illuminate\Http\Response
+    /**
+     * Shows the change password form with the given token.
+     * @param $token
+     * @return $this
+     */
     public function resetPassword($token)
     {
 //        return View::make(Config::get('confide::reset_password_form'))
@@ -200,8 +275,10 @@ class UsersController extends Controller
                 ->with('token', $token);
     }
 
-    // Attempt change password of the user
-    // @return  Illuminate\Http\Response
+    /**
+     * Attempts change password of the user.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function doResetPassword()
     {
         $repo = App::make('UserRepository');
@@ -227,8 +304,10 @@ class UsersController extends Controller
         }
     }
 
-    // Log the user out of the application.
-    // @return  Illuminate\Http\Response
+    /**
+     * Logs the user out of the application.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout()
     {
         Confide::logout();
@@ -239,6 +318,10 @@ class UsersController extends Controller
             return Redirect::back();
     }
 
+    /**
+     * Updates the password of user.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateUserPasswd()
     {
         if($user = Confide::user()){
@@ -288,6 +371,10 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * Updates the avatar of user.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateAvatar() {
         if($user = Confide::user())
         {
@@ -351,6 +438,10 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * Updates the user data.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateUser()
     {
         if($user = Confide::user())
@@ -438,6 +529,10 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * Updates the social media data of user.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateSocial()
     {
         if($user = Confide::user()) {
@@ -490,6 +585,10 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * Realizes the action of becoming to teacher.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function becomeATeacher()
     {
         if($user = Confide::user())
@@ -516,7 +615,5 @@ class UsersController extends Controller
                 ->with('log-notice', 'Al parece tu sesión ha caducado. Por favor, vuelve a acceder e inténtalo de nuevo.')
                 ->with('show_login_modal',true);
         }
-
     }
-
 }

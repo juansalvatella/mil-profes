@@ -5,6 +5,10 @@ use Illuminate\Support\Collection;
 class SearchController extends BaseController
 {
 
+    /**
+     * Returns the view of search action
+     * @return \Illuminate\View\View
+     */
     public function search()
     {
         $results_per_slice = 6; //TODO: put this var in constants file

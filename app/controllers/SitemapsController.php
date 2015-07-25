@@ -18,7 +18,11 @@ class SitemapsController extends BaseController
     const FREQ_CONTACT   = 'monthly';
     const FREQ_TEACHERS  = 'monthly';
     const FREQ_SCHOOLS   = 'monthly';
-    
+
+    /**
+     * Generates the sitemaps of the whole teachers and schools.
+     * @return string
+     */
     public function milprofes()
     {
         // Generate sitemap.xml - Sitemap de las páginas informativas
@@ -134,4 +138,26 @@ class SitemapsController extends BaseController
         return 'Done!!!';
     }
 
+    /**
+     * Shows sitemap.
+     * @return $this
+     */
+    public function showSitemap()
+    {
+        return Response::view('sitemap.sitemap')
+            ->header('Content-Type', 'application/xml')
+            ->header('X-Robots-Tag','noindex, nofollow');
+    }
+
+    /**
+     * Show sitemap XML.
+     * @param $xmlfile
+     * @return $this
+     */
+    public function showSitemapXML($xmlfile)
+    {
+        return Response::view('sitemap.sitemaps.'.$xmlfile)
+            ->header('Content-Type', 'application/xml')
+            ->header('X-Robots-Tag','noindex, nofollow');
+    }
 }

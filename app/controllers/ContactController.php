@@ -1,7 +1,23 @@
 <?php
 
+/**
+ * Class ContactController
+ */
 class ContactController extends Controller {
 
+    /**
+     * Show contact info.
+     * @return \Illuminate\View\View
+     */
+    public function contactPage()
+    {
+        return View::make('contact');
+    }
+
+    /**
+     * Show the mini contact form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function getMiniContactForm()
     {
 
@@ -36,7 +52,10 @@ class ContactController extends Controller {
 
     }
 
-
+    /**
+     * Show the contact form
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function getContactForm()
     {
 

@@ -2,6 +2,137 @@
 
 class AdminController extends BaseController
 {
+
+    /**
+     * Shows the dashboard of school.
+     * @return \Illuminate\View\View
+     */
+    public function schoolsDashboard()
+    {
+        //Raw database query needs soft deleted schools to be filtered (notice the where null)
+        //$schools = DB::table('schools')->whereNull('deleted_at')->orderBy('id')->paginate(10);
+        $schools = School::whereNull('deleted_at')->get();
+        foreach($schools as $school)
+            $school->nlessons = count(SchoolLesson::where('school_id',$school->id)->get());
+
+        return View::make('schools_dashboard', compact('schools'));
+    }
+
+    /**
+     * Shows the dashboard of teacher.
+     * @return \Illuminate\View\View
+     */
+    public function teachersDashboard()
+    {
+        //Raw database query needs soft deleted schools to be filtered (notice the where null)
+        $users = DB::table('users')->whereNull('deleted_at')->orderBy('id')->paginate(10);
+
+        return View::make('teachers_dashboard', compact('users'));
+    }
+
+    /**
+     * Updates the school status.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateSchoolStatus()
+    {
+        $input = Input::all();
+        $school = School::findOrFail($input['schoolId']);
+        if($input['activeStatus']=='true')
+            $school->status = 'Active';
+        else
+            $school->status = 'Crawled';
+
+        if($school->save())
+            return Response::json('School (id:'.$input['schoolId'].') status updated to '.$school->status, 200);
+
+        return Response::json('Error!', 400);
+    }
+
+    /**
+     * Shows the admin_teacher_reviews View.
+     * @return \Illuminate\View\View
+     */
+    public function teacherReviews()
+    {
+        $reviews = Rating::paginate(10);
+        foreach($reviews as $review) {
+            $lesson_reviewed = TeacherLesson::find($review->teacher_lesson_id);
+            $reviewed_user = $lesson_reviewed->teacher->user;
+
+            $review->lesson_reviewed = $lesson_reviewed->title;
+            $review->reviewed = $reviewed_user->username;
+            $review->slug = $reviewed_user->slug;
+            $review->reviewer = Student::find($review->student_id)->user->username;
+        }
+
+        return View::make('admin_teacher_reviews', compact('reviews'));
+    }
+
+    /**
+     * Shows the admin_school_reviews View.
+     * @return \Illuminate\View\View
+     */
+    public function schoolReviews()
+    {
+        $reviews = DB::table('school_lesson_ratings')
+            ->leftJoin('school_lessons','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
+            ->leftJoin('schools','school_lessons.school_id','=','schools.id')
+            ->whereNull('schools.deleted_at')
+            ->paginate(10);
+
+        foreach($reviews as $review)
+        {
+            $lesson_reviewed = SchoolLesson::find($review->school_lesson_id);
+            $reviewed_school = $lesson_reviewed->school;
+            $review->lesson_reviewed = $lesson_reviewed->title;
+            $review->reviewed = $reviewed_school->name;
+            $review->slug = $reviewed_school->slug;
+            $review->reviewer = Student::find($review->student_id)->user->username;
+        }
+
+        return View::make('admin_school_reviews', compact('reviews'));
+    }
+
+    /**
+     * Shows the school_register View.
+     * @return \Illuminate\View\View
+     */
+    public function schoolRegister()
+    {
+        return View::make('school_register');
+    }
+
+    /**
+     * Given the parameter $school_id, and returns 'school_edit' View.
+     * @param $school_id
+     * @return \Illuminate\View\View
+     */
+    public function editSchool($school_id)
+    {
+        $school = School::findOrFail($school_id);
+
+        return View::make('school_edit', compact('school'));
+    }
+
+    /**
+     * Given the parameter $school_id, and deletes the
+     * @param $school_id
+     * @return \Illuminate\View\View
+     */
+
+    public function deleteSchool($school_id)
+    {
+        $school = School::findOrFail($school_id);
+
+        return View::make('school_confirm_delete',compact('school'));
+    }
+
+    /**
+     * Creates a school
+     * @param bkg
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function createSchool()
     {
         $input = Input::all();
@@ -116,6 +247,10 @@ class AdminController extends BaseController
                 ->with('Emsg','Se ha producido un error al tratar de guardar la academia en base de datos.');
     }
 
+    /**
+     * Deletes the user from the data base.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteUser() {
         $user_id = Input::get('id');
         $user = User::findOrFail($user_id);
@@ -135,7 +270,11 @@ class AdminController extends BaseController
                 ->with('Emsg', 'El usuario no pudo ser eliminado correctamente.');
     }
 
-    public function deleteSchool()
+    /**
+     * Shows the messages after deleting the school.
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function showDeleteSchool()
     {
         $school_id = Input::get('id');
         $school = School::findOrFail($school_id);
@@ -153,6 +292,10 @@ class AdminController extends BaseController
                 ->with('Emsg', 'La academia no pudo ser eliminada.');
     }
 
+    /**
+     * Saves the school with inputs data, otherwise returns error messages.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function saveSchool()
     {
         $input = Input::all();
@@ -271,6 +414,34 @@ class AdminController extends BaseController
                 ->with('Emsg', 'No se pudo actualizar datos de la academia.');
     }
 
+    /**
+     * Given the parameter $school_id, and show the lesson_create View.
+     * @param $school_id
+     * @return \Illuminate\View\View
+     */
+    public function showCreateLesson($school_id)
+    {
+        $school = School::findOrFail($school_id);
+
+        return View::make('lesson_create', compact('school'));
+    }
+
+    /**
+     * Given the paramter $user_id, and deletes the teacher with this id.
+     * @param $user_id
+     * @return \Illuminate\View\View
+     */
+    public function deleteTeacher($user_id)
+    {
+        $user = User::findOrFail($user_id);
+
+        return View::make('teacher_confirm_delete',compact('user'));
+    }
+
+    /**
+     * Creates the lesson, otherwise shows the error messages.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function createLesson()
     {
         $input = Input::all();
@@ -330,6 +501,48 @@ class AdminController extends BaseController
             ->with('Smsg', 'Curso creado satisfactoriamente.');
     }
 
+    /**
+     * Shows the 'lesson_edit' View.
+     * @param $lesson_id
+     * @return \Illuminate\View\View
+     */
+    public function editLesson($lesson_id)
+    {
+        $lesson = SchoolLesson::findOrFail($lesson_id);
+        $school = $lesson->school()->first();
+        $subject = $lesson->subject()->first();
+        $picks = $lesson->availabilities()->get();
+        if($picks->count()!=9) //if the school lesson has never had availability before, create 9 new picks with the input
+        {
+            for ($i = 1; $i < 10; ++$i) {
+                $pick = new SchoolLessonAvailability();
+                $pick->school_lesson_id = $lesson_id;
+                $pick->pick = '' . $i;
+                $pick->day = '';
+                $pick->start = '15:00:00';
+                $pick->end = '21:00:00';
+                $pick->save();
+            }
+            $picks = $lesson->availabilities()->get();
+        }
+        $n_picks_set = 0;
+        foreach($picks as $pick) //check how many picks are not blank
+        {
+            if($pick->day == '') {
+                break;
+            }
+            ++$n_picks_set;
+        }
+        $picks = $picks->toArray();
+
+        return View::make('lesson_edit', compact('lesson','school','subject','picks','n_picks_set'));
+    }
+
+
+    /**
+     * Saves the lesson with inputs data.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function saveLesson()
     {
         $input = Input::all();
@@ -388,6 +601,24 @@ class AdminController extends BaseController
             ->with('Smsg', 'Los datos del curso se actualizaron con éxito.');
     }
 
+    /**
+     * Given the parameter $lesson_id, and show the 'lesson_confirm_delete' View.
+     * @param $lesson_id
+     * @return \Illuminate\View\View
+     */
+    public function showDeleteLesson($lesson_id)
+    {
+        $lesson = SchoolLesson::findOrFail($lesson_id);
+        $school = $lesson->school()->first();
+        $subject = $lesson->subject()->first();
+
+        return View::make('lesson_confirm_delete', compact('lesson','school','subject'));
+    }
+
+    /**
+     * Deletes the lesson
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteLesson()
     {
         $lesson_id = Input::get('lesson_id');
@@ -407,6 +638,11 @@ class AdminController extends BaseController
                 ->with('Smsg', 'Clase eliminada con éxito.');
     }
 
+    /**
+     * Deletes the evaluation of school with the parameter id.
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteSchoolReview($id) {
         $rating = SchoolLessonRating::findOrFail($id);
         $rating->delete();
@@ -422,6 +658,29 @@ class AdminController extends BaseController
                 ->with('Smsg', 'Se eliminó la valoración.');
     }
 
+    /**
+     * Shows the lessons_dashboard View.
+     * @return \Illuminate\View\View
+     */
+    public function lesssonDashboard($school_id)
+    {
+        $school = School::findOrFail($school_id);
+        $lessons = SchoolLesson::where('school_id',$school_id)->get();
+        $subjects = array();
+        foreach($lessons as $lesson)
+        {
+            $subjects[$lesson->id] = $lesson->subject()->first();
+        }
+
+        return View::make('lessons_dashboard', compact('school','lessons','subjects'));
+    }
+
+
+    /**
+     * Given the parameter $id, and deletes the teacher review of this id or returns error messages.
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteTeacherReview($id) {
         $rating = Rating::findOrFail($id);
         $rating->delete();

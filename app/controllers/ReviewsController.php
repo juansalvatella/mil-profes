@@ -2,6 +2,10 @@
 
 class ReviewsController extends BaseController
 {
+    /**
+     * Returns message that if user has sent off the assessment about lesson personal, otherwise returns error message.
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function handleLessonReview()
     {
         if(!Auth::check())
@@ -34,6 +38,10 @@ class ReviewsController extends BaseController
 
     }
 
+    /**
+     * Returns whether if the the review has been saved or not, otherwise returns error message.
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function handleNewReview()
     {
         if(Auth::check()) {
@@ -103,6 +111,10 @@ class ReviewsController extends BaseController
         }
     }
 
+    /**
+     * Returns message that if user has sent off the assessment about school lesson, otherwise returns error message.
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function handleSchoolLessonReview()
     {
         if(!Auth::check())
@@ -133,5 +145,101 @@ class ReviewsController extends BaseController
             return Response::json(['success'=>'success','msg'=>'Muchas gracias. Tu valoración ha sido correctamente enviada.'],200);
         return Response::json(['success'=>'error','msg'=>'No se pudo enviar tu valoración. Prueba de nuevo en unos minutos.'],200);
 
+    }
+
+
+    /**
+     * Given a variable 'review_id' and return object JsonResponse that means if the user has given the opinion,
+     * otherwise returns a warning or error message.
+     * @param $review_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function wasHelpful($review_id)
+    {
+        if(!Auth::check())
+            return Response::json(['error'=>'Reviewer is not authenticated.'],200);
+        if (!Session::has('r_helpful_'.$review_id)) {
+            Session::put('r_helpful_'.$review_id, true);
+            Session::save();
+            $review = Rating::findOrFail($review_id);
+            $review->yes_helpful = $review->yes_helpful + 1;
+            $review->total_helpful = $review->total_helpful + 1;
+            if($review->save())
+                return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+        } else {
+            return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+        }
+        return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+    }
+
+    /**
+     * Given a variable 'review_id' and return object JsonResponse that means if the user has given the opinion,
+     * otherwise returns a warning or error message.
+     * @param $review_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function wasNotHelpful($review_id)
+    {
+        if(!Auth::check())
+            return Response::json(['error'=>'Reviewer is not authenticated.'],200);
+        if (!Session::has('r_helpful_'.$review_id)) {
+            Session::put('r_helpful_'.$review_id, true);
+            Session::save();
+            $review = Rating::findOrFail($review_id);
+            $review->total_helpful = $review->total_helpful + 1;
+            if($review->save())
+                return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+        } else {
+            return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+        }
+        return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+    }
+
+    /**
+     * Given the variable $review_id, returns message that means if the user has given the opinion about school,
+     * otherwise returns a warning or error message.
+     * @param $review_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function wasHelpfulSchool($review_id)
+    {
+        if(!Auth::check())
+            return Response::json(['error'=>'Reviewer is not authenticated.'],200);
+        if (!Session::has('s_helpful_'.$review_id)) {
+            Session::put('s_helpful_'.$review_id, true);
+            Session::save();
+            $review = SchoolLessonRating::findOrFail($review_id);
+            $review->yes_helpful = $review->yes_helpful + 1;
+            $review->total_helpful = $review->total_helpful + 1;
+            if($review->save())
+                return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+        } else {
+            return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+        }
+        return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+    }
+
+    /**
+     * Given the variable $review_id, returns message that means if the user has given the opinion about school,
+     * otherwise returns a warning or error message.
+     * @param $review_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function wasNotHelpfulSchool($review_id)
+    {
+
+        if(!Auth::check())
+            return Response::json(['error'=>'Reviewer is not authenticated.'],200);
+        if (!Session::has('s_helpful_'.$review_id)) {
+            Session::put('s_helpful_'.$review_id, true);
+            Session::save();
+            $review = SchoolLessonRating::findOrFail($review_id);
+            $review->total_helpful = $review->total_helpful + 1;
+            if($review->save())
+                return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+        } else {
+            return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+        }
+        return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
     }
 }

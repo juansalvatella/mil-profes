@@ -24,6 +24,7 @@ class ReplaceLessonsWith2otherLessonsTables extends Migration {
 			$table->increments('id');
 			$table->decimal('price');
 			$table->string('description');
+			$table->string('title')->nullable();
 
 			//Each lesson belongs to 1 teacher and 1 subject
 			$table->integer('teacher_id')->unsigned();
@@ -39,6 +40,7 @@ class ReplaceLessonsWith2otherLessonsTables extends Migration {
 			$table->increments('id');
 			$table->decimal('price');
 			$table->string('description');
+			$table->string('title')->nullable();
 
 			//Each lesson belongs to 1 teacher and 1 subject
 			$table->integer('school_id')->unsigned();

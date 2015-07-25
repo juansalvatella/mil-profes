@@ -7,15 +7,16 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"laravelbook/ardent": "dev-master",
-		"appitventures/phpgmaps": "1.0.*@dev",
 		"way/generators": "~2.0",
 		"zizaco/confide": "~4.0@dev",
+	  	"appitventures/phpgmaps":"1.0.*@dev",
 		"zizaco/entrust": "1.2.*@dev",
 		"torann/geoip": "0.1.*@dev",
 		"cviebrock/eloquent-sluggable": "2.*",
         "watson/sitemap": "1.1.*",
 		"fzaninotto/faker": "^1.5",
-		"artdarek/oauth-4-laravel": "1.0.5"
+		"artdarek/oauth-4-laravel": "1.0.5",
+		"barryvdh/laravel-ide-helper": "v1.11.6"
 	},
 	"autoload": {
 		"classmap": [
@@ -34,6 +35,7 @@
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
+		    "php artisan ide-helper:generate",
 			"php artisan optimize"
 		],
 		"post-create-project-cmd": [

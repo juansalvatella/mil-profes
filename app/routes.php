@@ -17,492 +17,37 @@ Route::when('*', 'csrf', array('post', 'put', 'delete'));
 //============
 
 //Home
-Route::get('/', ['as' => 'home', function()
-{
-    $popular_teachers = Milprofes::getPopularTeachers(15);
-    $popular_schools = Milprofes::getPopularSchools(15);
-
-    foreach($popular_teachers as $teacher)
-    {
-        $teacher->avgRating = Teacher::find($teacher->teacher_id)->getTeacherAvgRating();
-    }
-
-    foreach($popular_schools as $school)
-    {
-        $school->avgRating = $school->getSchoolAvgRating();
-        $school->category = $school->lessons()->first()->subject()->first();
-    }
-
-    return View::make('home', compact('popular_schools','popular_teachers'));
-}]);
-Route::post('/','ContactController@getMiniContactForm');
-
-//Profiles
-Route::get('profe/{user_slug}',['as' => 'profiles-teacher', function($user_slug) {
-    $user = User::findBySlug($user_slug);
-    $teacher = $user->teacher()->first();
-
-    //Incrementar número de visitas en uno (por visitante y sesión)
-    if (!Session::has('profile_visited_'.$user_slug)) {
-        $teacher->profile_visits = $teacher->profile_visits + 1;
-        $teacher->save(); //increments profile visits counter, notice that this changes the updated_at column in teachers table
-        Session::put('profile_visited_' . $user_slug, true);
-        Session::save();
-    }
-
-    //Check if the visitor is the teacher himself
-    if(Auth::check()) {
-        $current_user = Confide::user();
-        if($user->id == $current_user->id)
-            $teacher->itsme = true;
-    }
-
-    //Calcular antiguedad en milprofes (en array con keys years, months, etc.)
-    $datetime1 = new DateTime();
-    $datetime2 = new DateTime($teacher->created_at);
-    $interval = $datetime1->diff($datetime2);
-    $elapsed = $interval->format('%y-%m-%d-%h-%i-%S');
-    $elapsedKeys = ['years','months','days','hours','minutes','seconds'];
-    $teacher->antiguedad = array_combine($elapsedKeys, explode("-", $elapsed));
-
-    //Calcular popularidad
-    $qArray = DB::select(DB::raw("
-        SELECT tranking.rank FROM (
-          SELECT t5.teacher_id, t5.user_id, t5.total, @curRank := @curRank + 1 AS 'rank'
-            FROM (SELECT
-                    t4.teacher_id            AS 'teacher_id',
-                    t4.user_id               AS 'user_id',
-                    SUM(t4.count)            AS 'total'
-                  FROM (SELECT
-                           t1.teacher_lesson_id,
-                           t2.teacher_id,
-                           t3.user_id,
-                           count(*) AS 'count'
-                         FROM teacher_lessons_phone_visualizations AS t1
-                           LEFT JOIN teacher_lessons AS t2
-                             ON t2.id = t1.teacher_lesson_id
-                           LEFT JOIN teachers AS t3
-                             ON t3.id = t2.teacher_id
-                         GROUP BY t1.teacher_lesson_id
-                   ) AS t4
-                  GROUP BY t4.teacher_id
-                  ORDER BY total DESC
-            ) AS t5, (SELECT @curRank := 0) r
-            ORDER BY rank
-        ) AS tranking
-        WHERE tranking.user_id = ?;
-    "),array($user->id));
-    if(!empty($qArray))
-        $teacher->rank = (int) $qArray[0]->rank;
-
-    Log::info('Rank query output',$qArray);
-
-    //Fecha de última actualización es el mínimo entre las fechas de última modificación de clases y fecha de última actualización de perfil
-    $dates = array();
-    $lessons = $teacher->lessons()->get();
-    foreach($lessons as $l)
-        $dates[] = $l->updated_at;
-    $dates[] = $teacher->updated_at;
-    $last_one = new DateTime(min($dates));
-    if(!empty($dates))
-        $teacher->last_update = $last_one->format('d/m/Y h:i');
-
-    //Calcular edad
-    if ($user->date_of_birth) {
-        $birthDate = $user->date_of_birth;
-        $birthDate = explode("-", $birthDate);
-        $teacher->age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md") ? ((date("Y") - $birthDate[0]) - 1) : (date("Y") - $birthDate[0]));
-    }
-
-    //Otros datos (importados de user table)
-    $teacher->slug = $user_slug;
-    $teacher->username = $user->username;
-    if($user->lastname)
-        $teacher->displayName = ucwords($user->name).' '.substr(ucwords($user->lastname),0,1).'.';
-    else
-        $teacher->displayName = ucwords($user->name);
-    $teacher->displayName2 = ucwords($user->name);
-    $teacher->avatar = $user->avatar;
-    $teacher->email = $user->email;
-    $teacher->phone = $user->phone;
-    $teacher->description = $user->description;
-    $teacher->town = $user->town;
-    $teacher->gender = $user->gender;
-    $teacher->region = $user->region;
-    $teacher->postalcode = $user->postalcode;
-
-    $teacher->link_f = $user->link_facebook;
-    $teacher->link_t = $user->link_twitter;
-    $teacher->link_l = $user->link_linkedin;
-    $teacher->link_g = $user->link_googleplus;
-    $teacher->link_i = $user->link_instagram;
-    $teacher->link_w = $user->link_web;
-
-    $teacher->availability = $teacher->availabilities()->get();
-    $teacher->nReviews = $teacher->getNumberOfReviews();
-    $teacher->avgRating = $teacher->getTeacherAvgRating();
-
-    return View::make('new_teacher_details', compact('teacher','lessons'));
-}]);
-Route::post('review/was/helpful/{review_id}', function($review_id){
-    if(!Auth::check())
-        return Response::json(['error'=>'Reviewer is not authenticated.'],200);
-    if (!Session::has('r_helpful_'.$review_id)) {
-        Session::put('r_helpful_'.$review_id, true);
-        Session::save();
-        $review = Rating::findOrFail($review_id);
-        $review->yes_helpful = $review->yes_helpful + 1;
-        $review->total_helpful = $review->total_helpful + 1;
-        if($review->save())
-            return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
-    } else {
-        return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
-    }
-    return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
-});
-Route::post('review/not/helpful/{review_id}', function($review_id){
-    if(!Auth::check())
-        return Response::json(['error'=>'Reviewer is not authenticated.'],200);
-    if (!Session::has('r_helpful_'.$review_id)) {
-        Session::put('r_helpful_'.$review_id, true);
-        Session::save();
-        $review = Rating::findOrFail($review_id);
-        $review->total_helpful = $review->total_helpful + 1;
-        if($review->save())
-            return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
-    } else {
-        return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
-    }
-    return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
-});
-Route::post('review/school/was/helpful/{review_id}', function($review_id){
-    if(!Auth::check())
-        return Response::json(['error'=>'Reviewer is not authenticated.'],200);
-    if (!Session::has('s_helpful_'.$review_id)) {
-        Session::put('s_helpful_'.$review_id, true);
-        Session::save();
-        $review = SchoolLessonRating::findOrFail($review_id);
-        $review->yes_helpful = $review->yes_helpful + 1;
-        $review->total_helpful = $review->total_helpful + 1;
-        if($review->save())
-            return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
-    } else {
-        return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
-    }
-    return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
-});
-Route::post('review/school/not/helpful/{review_id}', function($review_id){
-    if(!Auth::check())
-        return Response::json(['error'=>'Reviewer is not authenticated.'],200);
-    if (!Session::has('s_helpful_'.$review_id)) {
-        Session::put('s_helpful_'.$review_id, true);
-        Session::save();
-        $review = SchoolLessonRating::findOrFail($review_id);
-        $review->total_helpful = $review->total_helpful + 1;
-        if($review->save())
-            return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
-    } else {
-        return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
-    }
-    return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
-});
-Route::get('academia/{school_slug}', ['as'=>'profiles-school', function($school_slug) {
-    $school = School::findBySlug($school_slug);
-    $lessons = $school->lessons()->get();
-    foreach($lessons as $l) {
-        $l->availability = $l->availabilities()->get();
-    }
-
-    $slpics = $school->pics()->get(array('pic')); //get collection with filenames only
-    if($vid = $school->video()->first())
-        $school->video = $vid->pluck('video'); //get collection with the filenames only
-
-    $school->nReviews = $school->getNumberOfReviews();
-    $school->avgRating = $school->getSchoolAvgRating();
-
-    if(Auth::check()) { //initialize google map WITH directions
-        $user = Confide::user();
-
-        //first map -> walking directions
-        $config = array();
-        $config['center'] = $school->lat.','.$school->lon;
-        $config['zoom'] = '14';
-        $config['https'] = true;
-        $config['disableMapTypeControl'] = true;
-        $config['disableStreetViewControl'] = false;
-        $config['disableDoubleClickZoom'] = false;
-        $config['disableNavigationControl'] = false;
-        $config['disableScaleControl'] = false;
-        $config['map_height'] = '300px';
-        $config['scrollwheel'] = false;
-        $config['zoomControlStyle'] = 'SMALL';
-        $config['zoomControlPosition'] = 'TOP_RIGHT';
-        $config['center'] = '37.4419, -122.1419';
-        $config['zoom'] = 'auto';
-        //directions
-        $config['directions'] = TRUE;
-        $config['directionsStart'] = $user->lat.','.$user->lon;
-        $config['directionsEnd'] = $school->lat.','.$school->lon;
-        $config['directionsMode'] = 'WALKING';
-        $config['directionsDivID'] = 'directionsDiv';
-        Gmaps::initialize($config);
-
-        $marker = array();
-        $marker['position'] = $school->lat.','.$school->lon;
-        //$marker['icon'] = asset('img/marcador-mapa.png');
-        Gmaps::add_marker($marker); //add student marker (center)
-        $gmap =  Gmaps::create_map();
-    }
-    else { //simple map showing localization of the school
-        $config = array();
-        $config['center'] = $school->lat.','.$school->lon;
-        $config['zoom'] = '14';
-        $config['https'] = true;
-        $config['disableMapTypeControl'] = true;
-        $config['disableStreetViewControl'] = false;
-        $config['disableDoubleClickZoom'] = false;
-        $config['disableNavigationControl'] = false;
-        $config['disableScaleControl'] = false;
-        $config['map_height'] = '300px';
-        $config['scrollwheel'] = false;
-        $config['zoomControlStyle'] = 'SMALL';
-        $config['zoomControlPosition'] = 'TOP_RIGHT';
-        Gmaps::initialize($config);
-
-        $marker = array();
-        $marker['position'] = $school->lat.','.$school->lon;
-        //$marker['icon'] = asset('img/marcador-mapa.png');
-        Gmaps::add_marker($marker); //add student marker (center)
-
-        $gmap =  Gmaps::create_map();
-    }
-//*** pagination by slices (first page)
-//    $lessons_per_slice = 2;
-//    $total_results = $lessons->count();
-//    $max_slices = ceil($total_results/$lessons_per_slice);
-//    $slices_showing = 0;
-//    $sl_offset = $slices_showing*$lessons_per_slice;
-//    $sl_length = $lessons_per_slice;
-//    $lessons = $lessons->slice($sl_offset,$sl_length);
-//    ++$slices_showing;
-//    $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
-
-    return View::make('new_school_details', compact('school','slpics','gmap','lessons'));
-}]);
-
-//Search
-Route::get('resultados',['as'=>'results','uses'=>'SearchController@search']);
-Route::post('resultados','SearchController@search');
-//Route::post('resultados/async','SearchController@search');
-//Route::post('/search','SearchController@search');
-
-//Faqs
-Route::get('preguntas-frecuentes',['as'=>'faqs', function(){
-    return View::make('faqs');
-}]);
-
-//Services
-Route::get('servicios',['as'=>'services', function(){
-    return View::make('servicios');
-}]);
-
-//Who
-Route::get('milprofes',['as'=>'who', function() {
-    return View::make('who');
-}]);
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
 
 //Contact
-Route::get('contacta',['as'=>'contact', function() {
-    return View::make('contact');
-}]);
-Route::post('contactanos','ContactController@getContactForm');
+Route::post('contactanos',
+    ['as' => 'contactaForm', 'uses' => 'ContactController@getContactForm']);
+Route::get('contacta',
+    ['as'=>'contact', 'uses' => 'ContactController@contactPage']);
 
-//Aviso legal
-Route::get('condiciones',['as'=>'terms', function() {
-    return View::make('aviso_legal');
-}]);
+//Profiles teacher
+Route::get('profe/{user_slug}',
+    ['as' => 'profiles-teacher', 'uses' => 'ProfilesController@profilesTeacher']);
 
-//Cookies
-Route::get('cookies',['as'=>'cookies', function() {
-    return View::make('cookies');
-}]);
+//Profiles academy
+Route::get('academia/{school_slug}',
+        ['as'=>'profiles-school', 'uses' => 'ProfilesController@profilesSchool']);
 
-//Política de privacidad
-Route::get('privacidad',['as'=>'privacy', function() {
-    return View::make('politica_privacidad');
-}]);
+//Review was helpful
+Route::post('review/was/helpful/{review_id}',
+    ['as' => 'review-was-helpful', 'uses' => 'ReviewsController@wasHelpful']);
 
-//Mapa del sitio (sitemap)
-Route::get('mapa', ['as'=>'sitemap', function() {
-    return View::make('mapa');
-}]);
+//Review not helpful
+Route::post('review/was/helpful/{review_id}',
+    ['as' => 'review-not-helpful', 'uses' => 'ReviewsController@wasNotHelpful']);
 
-//Contact info requests (register requests and serve information logic)
-Route::post('request/info/teacher', function() {
-    $input = Input::all();
-    if(Input::has('lessonId')) {
-        if (true || !Session::has('t_'.$input['teacherId'].'_visualized_'.$input['lessonId'])) //if this Tlf visualization hasn't been recorded before (during the session)
-        {
-            Session::put('t_'.$input['teacherId'].'_visualized_'.$input['lessonId'], true); //record the visualization in the session array
-            Session::save();
+//Review school was helpful
+Route::post('review/school/was/helpful/{review_id}',
+    ['as' => 'review-helpful-sch', 'uses' => 'ReviewsController@wasHelpfulSchool']);
 
-            $visualization = new TeacherPhoneVisualization(); //register the visualization in database
-            if (Auth::check()) { //if user is authenticated relate the user id with the visualization
-                $observer = Confide::user();
-                $visualization->user_id = $observer->id;
-            }
-            $visualization->teacher_lesson_id = $input['lessonId'];
-            $visualization->teacher_id = $input['teacherId'];
-            $save = $visualization->save();
-
-            return Response::json(['saved' => ''.$save], '200');
-        }
-    } else {
-        if (true || !Session::has('t_'.$input['teacherId'].'_visualized_null')) //if this Tlf visualization hasn't been recorded before (during the session)
-        {
-            Session::put('t_'.$input['teacherId'].'_visualized_null', true); //record the visualization in the session array
-            Session::save();
-
-            $visualization = new TeacherPhoneVisualization(); //register the visualization in database
-            if (Auth::check()) { //if user is authenticated relate the user id with the visualization
-                $observer = Confide::user();
-                $visualization->user_id = $observer->id;
-            }
-            $visualization->teacher_id = $input['teacherId'];
-            $save = $visualization->save();
-
-            return Response::json(['saved' => ''.$save], '200');
-        }
-    }
-
-    return Response::json(['warning' => 'Already saved in DB'], '200');
-});
-Route::post('request/info/teacher/{lesson_id}', function($lesson_id) {
-    if (!Session::has('t_visualized_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
-    {
-        Session::put('t_visualized_'.$lesson_id, true); //record the visualization in the session array
-        Session::save();
-        $visualization = new TeacherPhoneVisualization(); //register the visualization in database
-        if (Auth::check()) { //if user is authenticated relate the user id with the visualization
-            $observer = Confide::user();
-            $visualization->user_id = $observer->id;
-        }
-        $visualization->teacher_lesson_id = $lesson_id;
-
-        return (string) $visualization->save();
-    }
-    return 'Already saved in DB';
-});
-Route::post('request/info/teacher/all/{teacher_id}', function($teacher_id) {
-    if (!Session::has('t_visualized_all_'.$teacher_id)) //if this Tlf visualization hasn't been recorded before (during the session)
-    {
-        Session::put('t_visualized_all_'.$teacher_id, true); //record the visualization in the session array
-        Session::save();
-        $visualization = new TeacherPhoneVisualization(); //register the visualization in database
-        if (Auth::check()) { //if user is authenticated relate the user id with the visualization
-            $observer = Confide::user();
-            $visualization->user_id = $observer->id;
-        }
-        //we choose the first lesson of this teacher as the receipt of the visualization (temporary fix)
-        $teacher = Teacher::where('id',$teacher_id)->first();
-        $first_lesson = $teacher->lessons()->first();
-        if(!$first_lesson)
-            return  'No lessons found';
-        $lesson_id = $first_lesson->id;
-        $visualization->teacher_lesson_id = $lesson_id;
-
-        return (string) $visualization->save();
-    }
-    return 'Already saved in DB';
-});
-Route::post('request/info/school', function() {
-    $input = Input::all();
-    if(Input::has('courseId')) {
-        if (!Session::has('s_'.$input['schoolId'].'_visualized_'.$input['courseId'])) //if this Tlf visualization hasn't been recorded before (during the session)
-        {
-            Session::put('s_'.$input['schoolId'].'_visualized_'.$input['courseId'], true); //record the visualization in the session array
-            Session::save();
-
-            $visualization = new SchoolPhoneVisualization(); //register the visualization in database
-            if (Auth::check()) { //if user is authenticated relate the user id with the visualization
-                $observer = Confide::user();
-                $visualization->user_id = $observer->id;
-            }
-            $visualization->school_lesson_id = $input['courseId'];
-            $visualization->school_id = $input['schoolId'];
-            $save = $visualization->save();
-
-            return Response::json(['saved' => ''.$save], '200');
-        }
-    } else {
-        if (!Session::has('s_'.$input['schoolId'].'_visualized_null')) //if this Tlf visualization hasn't been recorded before (during the session)
-        {
-            Session::put('s_'.$input['schoolId'].'_visualized_null', true); //record the visualization in the session array
-            Session::save();
-
-            $visualization = new SchoolPhoneVisualization(); //register the visualization in database
-            if (Auth::check()) { //if user is authenticated relate the user id with the visualization
-                $observer = Confide::user();
-                $visualization->user_id = $observer->id;
-            }
-            $visualization->school_id = $input['schoolId'];
-            $save = $visualization->save();
-
-            return Response::json(['saved' => ''.$save], '200');
-        }
-    }
-
-    return Response::json(['warning' => 'Already saved in DB'], '200');
-});
-Route::post('request/info/school/{lesson_id}', function($lesson_id) {
-    if (!Session::has('s_visualized_'.$lesson_id)) //if this Tlf visualization hasn't been recorded before (during the session)
-    {
-        Session::put('s_visualized_'.$lesson_id, true); //record the visualization in the session array
-        Session::save();
-        $visualization = new SchoolPhoneVisualization(); //register the visualization in database
-        if (Auth::check()) { //if user is authenticated relate the user id with the visualization
-            $observer = Confide::user();
-            $visualization->user_id = $observer->id;
-        }
-        $visualization->school_lesson_id = $lesson_id;
-
-        return (string) $visualization->save();
-    }
-    return 'Already saved in DB';
-});
-Route::post('request/info/school/all/{school_id}', function($school_id) {
-    if (!Session::has('s_visualized_all_'.$school_id)) //if this Tlf visualization hasn't been recorded before (during the session)
-    {
-        Session::put('s_visualized_all_'.$school_id, true); //record the visualization in the session array
-        Session::save();
-        $visualization = new SchoolPhoneVisualization(); //register the visualization in database
-        if (Auth::check()) { //if user is authenticated relate the user id with the visualization
-            $observer = Confide::user();
-            $visualization->user_id = $observer->id;
-        }
-        //we choose the first lesson of this school as the receipt of the visualization (temporary fix)
-        $school = School::where('id',$school_id)->first();
-        $first_lesson = $school->lessons()->first();
-        if(!$first_lesson)
-            return  'No lessons found';
-        $lesson_id = $first_lesson->id;
-        $visualization->school_lesson_id = $lesson_id;
-
-        return (string) $visualization->save();
-    }
-    return 'Already saved in DB';
-});
-Route::get('request/persData/teacher', function() {
-    $input = Input::all();
-    $user = Teacher::findOrFail($input['teacherId'])->user;
-    $response = [];
-    if($user->phone)
-        $response['telephone'] = substr($user->phone,0,3).' '.substr($user->phone,3,2).' '.substr($user->phone,5,2).' '.substr($user->phone,7,strlen($user->phone)-7);
-    $response['email'] = $user->email;
-    $response['mailto'] = 'mailto:'.$user->email;
-
-    return Response::json($response,200);
-});
+//Review/school not helpful
+Route::post('review/school/not/helpful/{review_id}',
+    ['as' => 'review-not-helpful-sch', 'uses' => 'ReviewsController@wasNotHelpfulSchool']);
 
 //Handle reviews (old)
 Route::post('/reviews/handleReview','ReviewsController@handleNewReview');
@@ -512,288 +57,141 @@ Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolL
 Route::post('/review/lesson','ReviewsController@handleLessonReview');
 Route::post('/review/school/lesson','ReviewsController@handleSchoolLessonReview');
 
-// Authentication routes
-Route::get('users/create', function(){ return View::make('users_register'); });
-Route::post('users', 'UsersController@store');
-Route::get('users/login', function(){ return View::make('users_login'); });
-Route::post('users/login', 'UsersController@doLogin');
-Route::get('users/confirm/{code}', 'UsersController@confirm');
-Route::get('users/forgot-password', 'UsersController@forgotPassword');
-Route::post('users/forgot-password', 'UsersController@doForgotPassword');
-Route::get('users/reset-password/{token}', 'UsersController@resetPassword');
-Route::post('users/reset-password', 'UsersController@doResetPassword');
-Route::get('users/logout', 'UsersController@logout');
+
+//Mejorar el url de search tanto con input NULL como user input
+//Search get
+Route::get('resultados',['as'=>'resultsGet','uses'=>'SearchController@search']);
+
+//Search post
+Route::post('resultados',['as' => 'resultsPost', 'uses' => 'SearchController@search']);
+//Route::post('resultados/async','SearchController@search');
+//Route::post('/search','SearchController@search');
+
+
+//Contact info requests (register requests and serve information logic)
+Route::post('request/info/teacher',
+    ['as' => 'request.teacher', 'uses' => 'RequestController@requestTeacher']);
+
+
+Route::post('request/info/teacher/{lesson_id}',
+    ['as' => 'request.teacher.lesson', 'uses' => 'RequestController@teacherLessonVisualization']);
+
+Route::post('request/info/teacher/all/{teacher_id}',
+    ['as' => 'request.teacher.id', 'uses' => 'RequestController@teacherVisualization']);
+
+Route::post('request/info/school',
+    ['as' => 'request.school', 'uses' => 'RequestController@requestSchool']);
+
+Route::post('request/info/school/{lesson_id}',
+    ['as' => 'request.school.lesson', 'uses' => 'RequestController@schoolLessonVisualization']);
+
+Route::post('request/info/school/all/{school_id}',
+    ['as' => 'request.school.id', 'uses' => 'RequestController@schoolVisualization']);
+
+Route::get('request/persData/teacher',
+    ['as' => 'request.teacherData', 'uses' => 'RequestController@teacherData']);
 
 //===================
 //User control Panels
 //===================
-Route::get('userpanel/dashboard', array('as' => 'userpanel', function()
-{
-    $user = Confide::user();
 
-    if(Entrust::hasRole('teacher'))
-    {
-        $teacher = $user->teacher()->first();
-        $teacher_id = $teacher->id;
-        $lessons = $teacher->lessons()->get();
-        $subjects = array();
-        foreach($lessons as $lesson) {
-            $subjects[$lesson->id] = $lesson->subject()->first();
-        }
-        $picks = $teacher->availabilities()->get();
-        if($picks->count()!=9) //if teacher has never saved availability before, create 9 new picks with the input
-        {
-            for ($i = 1; $i < 10; ++$i) {
-                $pick = new TeacherAvailability();
-                $pick->teacher_id = $teacher_id;
-                $pick->pick = '' . $i;
-                $pick->day = '';
-                $pick->start = '15:00:00';
-                $pick->end = '21:00:00';
-                $pick->save();
-            }
-            $picks = $teacher->availabilities()->get();
-        }
+// Authentication routes
+    Route::get('users/create',
+        ['as' => 'user.register', 'uses' => 'UsersController@usersRegister']);
+Route::post('users', ['as' => 'users', 'uses'=> 'UsersController@store']);
+Route::get('users/login',['as' => 'users.login', 'uses'=> 'UsersController@login']);
+Route::post('users/login', ['as' => 'users.login', 'uses'=> 'UsersController@doLogin']);
+Route::get('users/confirm/{code}', ['as' => 'users.confirm.code', 'uses' => 'UsersController@confirm']);
+Route::get('users/forgot-password', ['as' => 'users.forgot.pwd', 'uses' => 'UsersController@forgotPassword']);
+Route::post('users/forgot-password', ['as' => 'users.do.forgot.pwd', 'uses' => 'UsersController@doForgotPassword']);
+Route::get('users/reset-password/{token}', ['as' => 'users.reset.pwd', 'uses' => 'UsersController@resetPassword']);
+Route::post('users/reset-password', ['as' => 'users.do.reset.pwd', 'uses' => 'UsersController@doResetPassword']);
+Route::get('users/logout', ['as' => 'users.logout', 'uses' => 'UsersController@logout']);
 
-        $n_picks_set = 0;
-        foreach($picks as $pick) //check how many picks are not blank
-        {
-            if($pick->day == '') {
-                break;
-            }
-            ++$n_picks_set;
-        }
-        $picks = $picks->toArray();
-
-        return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_manage_lessons',compact('teacher','lessons','subjects','picks','n_picks_set'));
-    }
-    else
-        return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
-}));
-Route::post('userpanel/dashboard/update/info', 'UsersController@updateUser');
-Route::post('userpanel/dashboard/update/social', 'UsersController@updateSocial');
-Route::post('userpanel/dashboard/update/avatar', 'UsersController@updateAvatar');
-Route::post('userpanel/dashboard/update/passwd', 'UsersController@updateUserPasswd');
-Route::get('userpanel/become/teacher','UsersController@becomeATeacher');
+Route::get('userpanel/dashboard', ['as' => 'userpanel.dashboard', 'uses' => 'UsersController@dashboard']);
+Route::post('userpanel/dashboard/update/info', ['as' => 'userpanel.dashboard.update.info', 'uses' => 'UsersController@updateUser']);
+Route::post('userpanel/dashboard/update/social', ['as' => 'userpanel.dashboard.update.social', 'uses' => 'UsersController@updateSocial']);
+Route::post('userpanel/dashboard/update/avatar', ['as' => 'userpanel.dashboard.update.avatar', 'uses' => 'UsersController@updateAvatar']);
+Route::post('userpanel/dashboard/update/passwd', ['as' => 'userpanel.dashboard.update.passwd', 'uses' => 'UsersController@updateUserPasswd']);
+Route::get('userpanel/become/teacher', ['as' => 'userpanel.become.teacher', 'uses' => 'UsersController@becomeATeacher']);
 
 //======================
 //Teacher control panels
 //======================
-Route::get('teacher/create/lesson', function()
-{
-    $user = Auth::user();
-    $teacher = $user->teacher()->first();
+Route::get('teacher/create/lesson', ['as' => 'teacher.create.lesson', 'uses' => 'TeachersController@createLesson']);
+Route::post('teacher/create/lesson', ['as' => 'teacher.request.create.lesson', 'uses' => 'TeachersController@createLesson']);
+Route::get('teacher/edit/lesson/{lesson_id}', ['as' => 'teacher.edit.lesson', 'uses' => 'TeachersController@editLesson']);
 
-    return View::make('teacher_lesson_create',compact('user','teacher'));
-});
-Route::post('teacher/create/lesson', 'TeachersController@createLesson');
-Route::get('teacher/edit/lesson/{lesson_id}', function($lesson_id)
-{
-    $lesson = TeacherLesson::findOrFail($lesson_id);
-    $subject = $lesson->subject()->first();
-    $lesson_teacher = $lesson->teacher()->first();
+//La función 'saveLesson' no tiene el parametro, pero la ruta si que contiene la variable teacher_id!?
+Route::post('teacher/save/lesson/{teacher_id}', ['as' => 'teacher.save.lesson', 'uses' =>'TeachersController@saveLesson']);
 
-    $user = Auth::user();
-    $teacher = $user->teacher()->first();
+Route::get('teacher/delete/lesson/{lesson_id}', ['as' => 'teacher.delete.lesson', 'uses' => 'TeachersController@deleteLesson']);
+//Funcion deleteLesson con paramentro $teacher_id ?
+Route::post('teacher/delete/lesson/{teacher_id}', ['as' => 'teacher.delete.lesson', 'uses' => 'TeachersController@deleteLesson']);
 
-    if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de editar clases de otros usuarios
-        return View::make('teacher_lesson_edit', compact('lesson','subject'));
-    else
-        return Redirect::route('userpanel')
-            ->with('error', '¡Error! Tu clase no ha sido encontrada')
-            ->with('Etitle', 'Error')
-            ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
-});
-Route::post('teacher/edit/lesson/{teacher_id}', 'TeachersController@saveLesson');
-Route::get('teacher/delete/lesson/{lesson_id}', function($lesson_id)
-{
-    $lesson = TeacherLesson::findOrFail($lesson_id);
-    $lesson_teacher = $lesson->teacher()->first();
-    $subject = $lesson->subject()->first();
-
-    $user = Auth::user();
-    $teacher = $user->teacher()->first();
-
-    if($teacher->id==$lesson_teacher->id) //Comprobamos que no se está tratando de eliminar las clases de otros usuarios
-        return View::make('teacher_lesson_confirm_delete', compact('user','lesson','subject'));
-    else
-        return Redirect::route('userpanel')
-            ->with('error', 'Error! Tu clase no ha sido encontrada')
-            ->with('Etitle', 'Error')
-            ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
-});
-Route::post('teacher/delete/lesson/{teacher_id}', 'TeachersController@deleteLesson');
-Route::post('teacher/availability/save', 'TeachersController@saveAvailability');
+Route::post('teacher/availability/save', ['as' => 'teacher.availability.save', 'uses' => 'TeachersController@saveAvailability']);
 
 
 //====================
 //Admin control Panels
 //====================
-Route::get('admin/schools', function()
-{
-    //Raw database query needs soft deleted schools to be filtered (notice the where null)
-//    $schools = DB::table('schools')->whereNull('deleted_at')->orderBy('id')->paginate(10);
-    $schools = School::whereNull('deleted_at')->get();
-    foreach($schools as $school)
-        $school->nlessons = count(SchoolLesson::where('school_id',$school->id)->get());
+Route::get('admin/schools', ['as' => 'schools.dashboard', 'uses' => 'AdminController@schoolsDashboard']);
+//Función 'deleteSchool' no tiene el parámetro $school_id, admin/delete/school ??
+Route::get('admin/delete/school/{school_id}', ['as' => 'show.delete.school', 'uses' => 'AdminController@showDeleteSchool']);
+Route::post('admin/delete/school/{school_id}', ['as' => 'delete.school', 'uses' => 'AdminController@deleteSchool']);
+Route::get('admin/delete/school/review/{id}', ['as' => 'delete.school.review', 'uses' => 'AdminController@deleteSchoolReview']);
+Route::get('admin/create/school', ['as' => 'school.register', 'uses' => 'AdminController@schoolRegister']);
+Route::post('admin/create/school', ['as' => 'create.school', 'uses' => 'AdminController@createSchool']);
+Route::get('admin/edit/school/{school_id}', ['as' => 'edit.school', 'uses' => 'AdminController@editSchool']);
+//admin/save/school/{school_id}
+Route::post('admin/edit/school/{school_id}', ['as' => 'save.school', 'uses' => 'AdminController@saveSchool']);
+Route::get('admin/school/reviews', ['as' => 'school.reviews', 'uses' => 'AdminController@schoolReviews']);
+Route::post('admin/updateSchoolStatus', ['as' => 'update.school.status', 'uses' => 'AdminController@updateSchoolStatus']);
 
-    return View::make('schools_dashboard', compact('schools'));
-});
-Route::get('admin/teachers', function()
-{
-    //Raw database query needs soft deleted schools to be filtered (notice the where null)
-    $users = DB::table('users')->whereNull('deleted_at')->orderBy('id')->paginate(10);
 
-    return View::make('teachers_dashboard', compact('users'));
-});
-Route::post('admin/updateSchoolStatus', function()
-{
-    $input = Input::all();
-    $school = School::findOrFail($input['schoolId']);
-    if($input['activeStatus']=='true')
-        $school->status = 'Active';
-    else
-        $school->status = 'Crawled';
+Route::get('admin/teachers', ['as' => 'schools.dashboard', 'uses' => 'AdminController@teachersDashboard']);
+Route::get('admin/teacher/reviews', ['as' => 'teacher.reviews', 'uses' => 'AdminController@teacherReviews']);
+Route::get('admin/delete/teacher/review/{id}',  ['as' => 'delete.teacher.review', 'uses' => 'AdminController@deleteTeacherReview']);
+Route::get('admin/delete/teacher/{user_id}', ['as' => 'delete.teacher', 'uses' => 'AdminController@deleteTeacher']);
+Route::post('admin/delete/teacher/{user_id}', ['as' => 'delete.user.teacher', 'uses' => 'AdminController@deleteUser']);
 
-    if($school->save())
-        return Response::json('School (id:'.$input['schoolId'].') status updated to '.$school->status, 200);
+Route::get('admin/create/lesson/{school_id}', ['as' => 'show.create.lesson', 'uses' => 'AdminController@showCreateLesson']);
+Route::post('admin/create/lesson/{school_id}', ['as' => 'create.lesson', 'uses' =>'AdminController@createLesson']);
+Route::get('admin/edit/lesson/{lesson_id}', ['as' => 'edit.lesson', 'uses' =>'AdminController@editLesson']);
+Route::get('admin/lessons/{school_id}', ['as' => 'lessons', 'uses' => 'AdminController@lesssonDashboard']);
 
-    return Response::json('Error!', 400);
-});
-Route::get('admin/teacher/reviews', function() {
-    $reviews = Rating::paginate(10);
-    foreach($reviews as $review) {
-        $lesson_reviewed = TeacherLesson::find($review->teacher_lesson_id);
-        $reviewed_user = $lesson_reviewed->teacher->user;
+//admin/save/lesson/{school_id}??
+Route::post('admin/edit/lesson/{school_id}', ['as' => 'save.lessons', 'uses' => 'AdminController@saveLesson']);
+Route::get('admin/delete/lesson/{lesson_id}', ['as' => 'show.delete.lessons', 'uses' => 'AdminController@showDeleteLesson']);
+Route::post('admin/delete/lesson/{school_id}', ['as' => 'delete.lessons', 'uses' => 'AdminController@deleteLesson']);
 
-        $review->lesson_reviewed = $lesson_reviewed->title;
-        $review->reviewed = $reviewed_user->username;
-        $review->slug = $reviewed_user->slug;
-        $review->reviewer = Student::find($review->student_id)->user->username;
-    }
-
-    return View::make('admin_teacher_reviews', compact('reviews'));
-});
-Route::get('admin/school/reviews', function() {
-    $reviews = DB::table('school_lesson_ratings')
-        ->leftJoin('school_lessons','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
-        ->leftJoin('schools','school_lessons.school_id','=','schools.id')
-        ->whereNull('schools.deleted_at')
-        ->paginate(10);
-
-    foreach($reviews as $review)
-    {
-        $lesson_reviewed = SchoolLesson::find($review->school_lesson_id);
-        $reviewed_school = $lesson_reviewed->school;
-        $review->lesson_reviewed = $lesson_reviewed->title;
-        $review->reviewed = $reviewed_school->name;
-        $review->slug = $reviewed_school->slug;
-        $review->reviewer = Student::find($review->student_id)->user->username;
-    }
-
-    return View::make('admin_school_reviews', compact('reviews'));
-});
-Route::get('admin/delete/teacher/review/{id}', 'AdminController@deleteTeacherReview');
-Route::get('admin/delete/school/review/{id}', 'AdminController@deleteSchoolReview');
-Route::get('admin/create/school', function() {
-    return View::make('school_register');
-});
-Route::post('admin/create/school', 'AdminController@createSchool');
-Route::get('admin/edit/school/{school_id}', function($school_id)
-{
-    $school = School::findOrFail($school_id);
-
-    return View::make('school_edit', compact('school'));
-});
-Route::post('admin/edit/school/{school_id}','AdminController@saveSchool');
-Route::get('admin/delete/school/{school_id}',function($school_id)
-{
-    $school = School::findOrFail($school_id);
-
-    return View::make('school_confirm_delete',compact('school'));
-});
-Route::get('admin/delete/teacher/{user_id}',function($user_id)
-{
-    $user = User::findOrFail($user_id);
-
-    return View::make('teacher_confirm_delete',compact('user'));
-});
-Route::post('admin/delete/school/{school_id}','AdminController@deleteSchool');
-Route::post('admin/delete/teacher/{user_id}','AdminController@deleteUser');
-Route::get('admin/lessons/{school_id}', array('as' => 'lessons', function($school_id)
-{
-    $school = School::findOrFail($school_id);
-    $lessons = SchoolLesson::where('school_id',$school_id)->get();
-    $subjects = array();
-    foreach($lessons as $lesson)
-    {
-        $subjects[$lesson->id] = $lesson->subject()->first();
-    }
-
-    return View::make('lessons_dashboard', compact('school','lessons','subjects'));
-}));
-Route::get('admin/create/lesson/{school_id}', function($school_id)
-{
-    $school = School::findOrFail($school_id);
-
-    return View::make('lesson_create', compact('school'));
-});
-Route::post('admin/create/lesson/{school_id}', 'AdminController@createLesson');
-Route::get('admin/edit/lesson/{lesson_id}', function($lesson_id)
-{
-    $lesson = SchoolLesson::findOrFail($lesson_id);
-    $school = $lesson->school()->first();
-    $subject = $lesson->subject()->first();
-    $picks = $lesson->availabilities()->get();
-    if($picks->count()!=9) //if the school lesson has never had availability before, create 9 new picks with the input
-    {
-        for ($i = 1; $i < 10; ++$i) {
-            $pick = new SchoolLessonAvailability();
-            $pick->school_lesson_id = $lesson_id;
-            $pick->pick = '' . $i;
-            $pick->day = '';
-            $pick->start = '15:00:00';
-            $pick->end = '21:00:00';
-            $pick->save();
-        }
-        $picks = $lesson->availabilities()->get();
-    }
-    $n_picks_set = 0;
-    foreach($picks as $pick) //check how many picks are not blank
-    {
-        if($pick->day == '') {
-            break;
-        }
-        ++$n_picks_set;
-    }
-    $picks = $picks->toArray();
-
-    return View::make('lesson_edit', compact('lesson','school','subject','picks','n_picks_set'));
-});
-Route::post('admin/edit/lesson/{school_id}', 'AdminController@saveLesson');
-Route::get('admin/delete/lesson/{lesson_id}', function($lesson_id) {
-    $lesson = SchoolLesson::findOrFail($lesson_id);
-    $school = $lesson->school()->first();
-    $subject = $lesson->subject()->first();
-
-    return View::make('lesson_confirm_delete', compact('lesson','school','subject'));
-});
-Route::post('admin/delete/lesson/{school_id}', 'AdminController@deleteLesson');
-Route::post('load-school-profile-pics','AdminController@loadProfilePics');
+//Ya no existía la función loadProfilePics !
+Route::post('load-school-profile-pics', ['as' => 'load.school.profile', 'uses' => 'AdminController@loadProfilePics']);
 
 //Sitemaps related routes
-Route::get('render-sitemaps','SitemapsController@milprofes');
-Route::get('sitemap', function() {
-    return Response::view('sitemap.sitemap')
-        ->header('Content-Type', 'application/xml')
-        ->header('X-Robots-Tag','noindex, nofollow');
-});
-Route::get('sitemaps/{xmlfile?}', function($xmlfile) {
-    return Response::view('sitemap.sitemaps.'.$xmlfile)
-        ->header('Content-Type', 'application/xml')
-        ->header('X-Robots-Tag','noindex, nofollow');
-});
+Route::get('render-sitemaps', ['as' => 'render.sitemaps', 'uses' => 'SitemapsController@milprofes']);
+Route::get('sitemap', ['as' => 'show.sitemap', 'uses' => 'SitemapsController@showSitemap']);
+Route::get('sitemaps/{xmlfile?}', ['as' => 'show.sitemap.xml', 'uses' => 'SitemapsController@showSitemapXML']);
 
 //payment handlers. possible future implementation
 //Route::get('lastpayment', 'UsersController@paymentIsCurrent');
 //Route::get('ihavejustpaid', 'UsersController@updateLastPaymentDate');
+
+//Faqs
+Route::get('preguntas-frecuentes',['as'=>'faqs', 'uses' => 'StuffController@showFaqs']);
+//Services
+Route::get('servicios',['as'=>'services', 'uses' => 'StuffController@showServices']);
+//Who
+Route::get('milprofes',['as'=>'who', 'uses' => 'StuffController@showWho']);
+
+//Aviso legal
+Route::get('condiciones',['as'=>'terms', 'uses' => 'StuffController@showTerms']);
+
+//Cookies
+Route::get('cookies',['as'=>'cookies', 'uses' => 'StuffController@showCookies']);
+
+//Política de privacidad
+Route::get('privacidad',['as'=>'privacy', 'uses' => 'StuffController@showPrivacy']);
+
+//Mapa del sitio (sitemap)
+Route::get('mapa', ['as'=>'sitemap', 'uses' => 'StuffController@showSitemap']);

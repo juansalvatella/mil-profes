@@ -128,6 +128,7 @@ return array(
         'Torann\GeoIP\GeoIPServiceProvider',
         'Cviebrock\EloquentSluggable\SluggableServiceProvider',
         'Watson\Sitemap\SitemapServiceProvider',
+		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 
 	),
 

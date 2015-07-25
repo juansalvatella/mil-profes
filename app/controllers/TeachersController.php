@@ -2,6 +2,21 @@
 
 class TeachersController extends BaseController
 {
+    /**
+     * Displays the View to create lesson.
+     * @return \Illuminate\View\View
+     */
+    public function creteLessonForm()
+    {
+        $user = Auth::user();
+        $teacher = $user->teacher()->first();
+
+        return View::make('teacher_lesson_create',compact('user','teacher'));
+    }
+    /**
+     * Requests the creation of lesson or returns errors. 
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function createLesson()
     {
         $input = Input::all();
@@ -59,6 +74,10 @@ class TeachersController extends BaseController
                 ->with('Emsg', 'Error al tratar de crear la clase. Ponte en contacto con el equipo de milPROFES si el problema persiste.');
     }
 
+    /**
+     * Saves the teacher lesson or returns error message.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function saveLesson()
     {
         $input = Input::all();
@@ -121,10 +140,59 @@ class TeachersController extends BaseController
                 ->with('Etitle', 'Error')
                 ->with('Emsg', 'No se pudieron actualizar los datos de tu clase. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
         }
-
     }
 
-    public function deleteLesson()
+    /**
+     * Given the variable $lesson_id, and returns the view of teacher_lesson_edit or error message.
+     * @param $lesson_id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function editLesson($lesson_id)
+    {
+        $lesson = TeacherLesson::findOrFail($lesson_id);
+        $subject = $lesson->subject()->first();
+        $lesson_teacher = $lesson->teacher()->first();
+
+        $user = Auth::user();
+        $teacher = $user->teacher()->first();
+
+        if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de editar clases de otros usuarios
+            return View::make('teacher_lesson_edit', compact('lesson','subject'));
+        else
+            return Redirect::route('userpanel')
+                ->with('error', '¡Error! Tu clase no ha sido encontrada')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
+    }
+
+    /**
+     * Given the parameter $lesson_id, deletes the lesson of this id.
+     * @param $lesson_id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function deleteLesson($lesson_id)
+    {
+        $lesson = TeacherLesson::findOrFail($lesson_id);
+        $lesson_teacher = $lesson->teacher()->first();
+        $subject = $lesson->subject()->first();
+
+        $user = Auth::user();
+        $teacher = $user->teacher()->first();
+
+        if($teacher->id==$lesson_teacher->id) //Comprobamos que no se está tratando de eliminar las clases de otros usuarios
+            return View::make('teacher_lesson_confirm_delete', compact('user','lesson','subject'));
+        else
+            return Redirect::route('userpanel')
+                ->with('error', 'Error! Tu clase no ha sido encontrada')
+                ->with('Etitle', 'Error')
+                ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
+    }
+
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    /**public function deleteLesson()
     {
         $lesson_id = Input::get('lesson_id');
         $lesson = TeacherLesson::findOrFail($lesson_id);
@@ -149,8 +217,12 @@ class TeachersController extends BaseController
                 ->with('Emsg', 'La clase no pudo ser eliminada. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
         }
 
-    }
+    }*/
 
+    /**
+     * Saves the availability.
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function saveAvailability() {
 
         $user = Confide::user();
