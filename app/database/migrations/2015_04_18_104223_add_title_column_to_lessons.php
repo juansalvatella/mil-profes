@@ -12,14 +12,7 @@ class AddTitleColumnToLessons extends Migration {
 	 */
 	public function up()
 	{
-//        Schema::table('school_lessons', function(Blueprint $table)
-//        {
-//            $table->string('title')->nullable();
-//        });
-//        Schema::table('teacher_lessons', function(Blueprint $table)
-//        {
-//            $table->string('title')->nullable();
-//        });
+//
 	}
 
 	/**
@@ -29,14 +22,7 @@ class AddTitleColumnToLessons extends Migration {
 	 */
 	public function down()
 	{
-//        Schema::table('school_lessons', function(Blueprint $table)
-//        {
-//            $table->dropColumn('title');
-//        });
-//        Schema::table('teacher_lessons', function(Blueprint $table)
-//        {
-//            $table->dropColumn('title');
-//        });
+//
 	}
 
 }

@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'milprofes',
 			'username'  => 'milprofes',
-			'password'  => 'U3ebv9NepN7zYdKS',
+			'password'  => 'eerahgha',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

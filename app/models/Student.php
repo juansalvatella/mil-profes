@@ -3,7 +3,7 @@
 class Student extends Eloquent
 {
     protected $fillable = [];
-
+    protected $dates = ['created_at','updated_at'];
     protected $table = 'students';
 
     public function user() {

@@ -8,12 +8,25 @@ class School extends Eloquent implements SluggableInterface
 {
     use SluggableTrait, SoftDeletingTrait;
 
-    protected $sluggable = array(
-        'build_from' => 'name',
-        'save_to'    => 'slug',
-    );
-    protected $dates = ['deleted_at'];
-    protected $fillable = [];
+    protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
+    protected $dates = ['created_at','updated_at','deleted_at'];
+    protected $fillable = [
+        'name',
+        'address',
+        'cif',
+        'email',
+        'phone',
+        'phone2',
+        'link_web',
+        'link_facebook',
+        'link_twitter',
+        'link_linkedin',
+        'link_googleplus',
+        'link_instagram',
+        'video',
+        'description'
+    ];
+    protected $table = 'schools';
 
     public function lessons()
     {
@@ -23,15 +36,12 @@ class School extends Eloquent implements SluggableInterface
     //each school has many pics
     public function pics()
     {
-        return $this->hasMany('Pic');
+        return $this->hasMany('SchoolPic');
     }
 
-    //each school has one video (youtube link)
-    public function video()
-    {
-        return $this->hasOne('Video');
-    }
-
+    /**
+     * @return float
+     */
     public function getSchoolAvgRating()
     {
         $lessons = $this->lessons;
@@ -42,6 +52,7 @@ class School extends Eloquent implements SluggableInterface
         $lessons = $lessons->filter(function($lesson) { //filter lessons without rating (avg rating = -1)
             if ($lesson->average_rating != -1)
                 return true;
+            return false;
         });
         $n = $lessons->count();
         if($n)
@@ -59,6 +70,9 @@ class School extends Eloquent implements SluggableInterface
         }
     }
 
+    /**
+     * @return int
+     */
     public function getNumberOfReviews()
     {
         $lessons = $this->lessons;

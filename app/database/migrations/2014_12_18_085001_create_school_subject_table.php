@@ -12,15 +12,7 @@ class CreateSchoolSubjectTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('school_subject', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->integer('school_id')->unsigned()->index();
-			$table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
-			$table->integer('subject_id')->unsigned()->index();
-			$table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-			$table->timestamps();
-		});
+//
 	}
 
 
@@ -31,7 +23,7 @@ class CreateSchoolSubjectTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('school_subject');
+//
 	}
 
 }

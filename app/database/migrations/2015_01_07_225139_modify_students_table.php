@@ -12,23 +12,7 @@ class ModifyStudentsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('students',function($table)
-		{	//quitamos columnas innecesarias (ya incluidas en users)
-			$table->dropColumn('name');
-			$table->dropColumn('lastname');
-			$table->dropColumn('email')->unique();
-			$table->dropColumn('phone');
-			$table->dropColumn('address');
-			$table->dropColumn('avatar');
-//			$table->dropColumn('availability');
-			$table->dropColumn('description');
-			$table->dropColumn('lat');
-			$table->dropColumn('lon');
-
-			//relacionamos user con un student id
-			$table->integer('user_id')->unsigned();
-			$table->foreign('user_id')->references('id')->on('users');
-		});
+//
 	}
 
 	/**

@@ -12,7 +12,7 @@ class CreateTableSchoolLessonsAvailability extends Migration {
      */
     public function up()
     {
-        Schema::create('school_lessons_availability', function(Blueprint $table)
+        Schema::create('school_lesson_availabilities', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('school_lesson_id')->unsigned();
@@ -34,7 +34,7 @@ class CreateTableSchoolLessonsAvailability extends Migration {
      */
     public function down()
     {
-        Schema::drop('school_lessons_availability');
+        Schema::drop('school_lesson_availabilities');
     }
 
 }

@@ -11,18 +11,24 @@ class User extends Eloquent implements ConfideUserInterface, SluggableInterface 
 
 	use ConfideUser, HasRole, SluggableTrait, SoftDeletingTrait;
 
-    protected $sluggable = array(
-        'build_from' => 'username',
-        'save_to'    => 'slug',
-    );
-    protected $dates = ['deleted_at'];
-    protected $fillable = [];
-
-// if slug build_from = fullname instead of username, then uncomment this method
-//    public function getFullnameAttribute()
-//    {
-//        return $this->name.' '.$this->lastname;
-//    }
+    protected $sluggable = ['build_from' => 'username', 'save_to' => 'slug'];
+    protected $dates = ['date_of_birth','created_at','updated_at','deleted_at'];
+    protected $fillable = [
+		'username',
+		'name',
+		'lastname',
+		'email',
+		'phone',
+		'address',
+		'link_web',
+		'link_facebook',
+		'link_twitter',
+		'link_linkedin',
+		'link_googleplus',
+		'link_instagram',
+		'description'
+	];
+	protected $table = 'users';
 
 	public function student()
 	{
@@ -34,6 +40,9 @@ class User extends Eloquent implements ConfideUserInterface, SluggableInterface 
 		return $this->hasOne('Teacher');
 	}
 
+	/**
+	 * @return bool
+     */
 	public function thisUserPaymentIsCurrent()
 	{
 		$lastPaymentDate = new DateTime($this->lastpayment);
@@ -46,6 +55,10 @@ class User extends Eloquent implements ConfideUserInterface, SluggableInterface 
 		return $itIsCurrent;
 	}
 
+	/**
+	 * @param DateTime $lastpaymentdatetime
+	 * @return int
+     */
 	private function calcElapsedDaysSincePayment(DateTime $lastpaymentdatetime)
 	{
 		$datetime1 = new DateTime('now');
@@ -56,6 +69,9 @@ class User extends Eloquent implements ConfideUserInterface, SluggableInterface 
 		return $elapsedDays;
 	}
 
+	/**
+	 * @return bool
+     */
 	public function updateLastPaymentDate()
 	{
 		$today = new DateTime('now');

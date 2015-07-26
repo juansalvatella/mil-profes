@@ -12,7 +12,7 @@ class CreateTableTeachersAvailability extends Migration {
      */
     public function up()
     {
-        Schema::create('teachers_availability', function(Blueprint $table)
+        Schema::create('teacher_availabilities', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('teacher_id')->unsigned();
@@ -34,7 +34,7 @@ class CreateTableTeachersAvailability extends Migration {
      */
     public function down()
     {
-        Schema::drop('teachers_availability');
+        Schema::drop('teacher_availabilities');
     }
 
 }

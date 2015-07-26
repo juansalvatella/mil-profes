@@ -16,7 +16,7 @@ class ProfilesController extends BaseController
         $user = User::findBySlug($user_slug);
         $teacher = $user->teacher()->first();
 
-        //Incrementar n鷐ero de visitas en uno (por visitante y sesi髇)
+        //Incrementar n煤mero de visitas en uno (por visitante y sesi贸n)
         if (!Session::has('profile_visited_' . $user_slug)) {
             $teacher->profile_visits = $teacher->profile_visits + 1;
             $teacher->save(); //increments profile visits counter, notice that this changes the updated_at column in teachers table
@@ -41,37 +41,37 @@ class ProfilesController extends BaseController
 
         //Calcular popularidad
         $qArray = DB::select(DB::raw("
-        SELECT tranking.rank FROM (
-          SELECT t5.teacher_id, t5.user_id, t5.total, @curRank := @curRank + 1 AS 'rank'
-            FROM (SELECT
-                    t4.teacher_id            AS 'teacher_id',
-                    t4.user_id               AS 'user_id',
-                    SUM(t4.count)            AS 'total'
-                  FROM (SELECT
-                           t1.teacher_lesson_id,
-                           t2.teacher_id,
-                           t3.user_id,
-                           count(*) AS 'count'
-                         FROM teacher_lessons_phone_visualizations AS t1
-                           LEFT JOIN teacher_lessons AS t2
-                             ON t2.id = t1.teacher_lesson_id
-                           LEFT JOIN teachers AS t3
-                             ON t3.id = t2.teacher_id
-                         GROUP BY t1.teacher_lesson_id
-                   ) AS t4
-                  GROUP BY t4.teacher_id
-                  ORDER BY total DESC
-            ) AS t5, (SELECT @curRank := 0) r
-            ORDER BY rank
-        ) AS tranking
-        WHERE tranking.user_id = ?;
-    "), array($user->id));
+            SELECT tranking.rank FROM (
+              SELECT t5.teacher_id, t5.user_id, t5.total, @curRank := @curRank + 1 AS 'rank'
+                FROM (SELECT
+                        t4.teacher_id            AS 'teacher_id',
+                        t4.user_id               AS 'user_id',
+                        SUM(t4.count)            AS 'total'
+                      FROM (SELECT
+                               t1.teacher_lesson_id,
+                               t2.teacher_id,
+                               t3.user_id,
+                               count(*) AS 'count'
+                             FROM t_phone_visualizations AS t1
+                               LEFT JOIN teacher_lessons AS t2
+                                 ON t2.id = t1.teacher_lesson_id
+                               LEFT JOIN teachers AS t3
+                                 ON t3.id = t2.teacher_id
+                             GROUP BY t1.teacher_lesson_id
+                       ) AS t4
+                      GROUP BY t4.teacher_id
+                      ORDER BY total DESC
+                ) AS t5, (SELECT @curRank := 0) r
+                ORDER BY rank
+            ) AS tranking
+            WHERE tranking.user_id = ?;
+        "), array($user->id));
         if (!empty($qArray))
             $teacher->rank = (int)$qArray[0]->rank;
 
-        Log::info('Rank query output', $qArray);
+//        Log::info('Rank query output', $qArray);
 
-        //Fecha de 鷏tima actualizaci髇 es el m韓imo entre las fechas de 鷏tima modificaci髇 de clases y fecha de 鷏tima actualizaci髇 de perfil
+        //Fecha de 煤ltima actualizaci贸n es el m铆nimo entre las fechas de 煤ltima modificaci贸n de clases y fecha de 煤ltima actualizaci贸n de perfil
         $dates = array();
         $lessons = $teacher->lessons()->get();
         foreach ($lessons as $l)
@@ -133,8 +133,6 @@ class ProfilesController extends BaseController
         }
 
         $slpics = $school->pics()->get(array('pic')); //get collection with filenames only
-        if ($vid = $school->video()->first())
-            $school->video = $vid->pluck('video'); //get collection with the filenames only
 
         $school->nReviews = $school->getNumberOfReviews();
         $school->avgRating = $school->getSchoolAvgRating();
@@ -205,7 +203,7 @@ class ProfilesController extends BaseController
             //    ++$slices_showing;
             //    $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
 
-            return View::make('new_school_details', compact('school', 'slpics', 'gmap', 'lessons'));
         }
+        return View::make('new_school_details', compact('school', 'slpics', 'gmap', 'lessons'));
     }
 }

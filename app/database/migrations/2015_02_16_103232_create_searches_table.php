@@ -16,11 +16,11 @@ class CreateSearchesTable extends Migration {
         {
             $table->increments('id');
             $table->string('address');
+
             //relacionamos search con un subject
             $table->integer('subject_id')->unsigned()->nullable();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('set null')->onUpdate('cascade');
-            $subjects = array('escolar', 'cfp', 'musica', 'idiomas', 'all', 'artes', 'universitario', 'deportes');
-            $table->enum('subject_name', $subjects);
+
             $table->string('keywords');
             $table->string('type');
             $table->integer('results');

@@ -12,14 +12,7 @@ class SchoolsProfileVideo extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('schools_profile_video', function(Blueprint $table)
-        {
-            $table->increments('id');
-            $table->integer('school_id')->unsigned();
-            $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('video');
-            $table->timestamps();
-        });
+//
     }
 
     /**
@@ -29,7 +22,7 @@ class SchoolsProfileVideo extends Migration {
      */
     public function down()
     {
-        Schema::drop('schools_profile_video');
+//
     }
 
 }

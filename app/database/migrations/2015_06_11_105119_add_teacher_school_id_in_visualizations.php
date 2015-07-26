@@ -12,12 +12,7 @@ class AddTeacherSchoolIdInVisualizations extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('school_lessons_phone_visualizations', function(Blueprint $table) {
-            $table->integer('school_id')->unsigned()->nullable();
-        });
-        Schema::table('teacher_lessons_phone_visualizations', function(Blueprint $table) {
-            $table->integer('teacher_id')->unsigned()->nullable();
-        });
+//
 	}
 
 	/**
@@ -27,12 +22,7 @@ class AddTeacherSchoolIdInVisualizations extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('school_lessons_phone_visualizations', function(Blueprint $table) {
-            $table->dropColumn('school_id');
-        });
-        Schema::table('teacher_lessons_phone_visualizations', function(Blueprint $table) {
-            $table->dropColumn('teacher_id');
-        });
+//
 	}
 
 }

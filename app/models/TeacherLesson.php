@@ -2,8 +2,8 @@
 
 class TeacherLesson extends Eloquent
 {
-    protected $fillable = [];
-
+    protected $fillable = ['title','price','description','address'];
+    protected $dates = ['created_at','updated_at'];
     protected $table = 'teacher_lessons';
 
     //Each lesson belongs to 1 teacher and 1 subject
@@ -24,6 +24,9 @@ class TeacherLesson extends Eloquent
         return $this->hasMany('TeacherPhoneVisualization');
     }
 
+    /**
+     * @return float
+     */
     public function getLessonAvgRating()
     {
         if($this->ratings()->count())
@@ -32,19 +35,29 @@ class TeacherLesson extends Eloquent
             return (float) 3.0; //If there are no ratings for the lesson, default to 3.00
     }
 
+    /**
+     * @return float
+     */
     public function getLessonAvgRatingWithoutCorrection()
     {
         if($this->ratings()->count())
             return round($this->ratings()->avg('value'), 1);
         else
-            return -1; //If there are no ratings for the lesson, return -1
+            return -1.0; //If there are no ratings for the lesson, return -1
     }
 
+    /**
+     * @return int
+     */
     public function getNumberOfReviews()
     {
-        return $this->hasMany('Rating')->count();
+        return (int) $this->hasMany('Rating')->count();
     }
 
+    /**
+     * @param $this_many
+     * @return mixed
+     */
     public function getFeaturedReviews($this_many) {
         $n = (int) $this_many;
         $featured = $this->ratings()

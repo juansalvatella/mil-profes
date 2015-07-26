@@ -2,6 +2,10 @@
 
 class Milprofes
 {
+    /**
+     * @param $this_many
+     * @return mixed
+     */
     public static function getLastTeachers($this_many)
     {
         $n = (int) $this_many;
@@ -15,6 +19,10 @@ class Milprofes
         return $last_teachers;
     }
 
+    /**
+     * @param $this_many
+     * @return array
+     */
     public static function getPopularTeachers($this_many)
     {
         $n = (int) $this_many;
@@ -33,7 +41,7 @@ class Milprofes
                            t2.teacher_id,
                            t3.user_id,
                            count(*) AS 'count'
-                         FROM teacher_lessons_phone_visualizations AS t1
+                         FROM t_phone_visualizations AS t1
                            LEFT JOIN teacher_lessons AS t2
                              ON t2.id = t1.teacher_lesson_id
                            LEFT JOIN teachers AS t3
@@ -65,6 +73,10 @@ class Milprofes
         return $popular_teachers;
     }
 
+    /**
+     * @param $this_many
+     * @return mixed
+     */
     public static function getLastSchools($this_many)
     {
         $n = (int) $this_many;
@@ -79,6 +91,10 @@ class Milprofes
         return $last_schools;
     }
 
+    /**
+     * @param $this_many
+     * @return mixed
+     */
     public static function getPopularSchools($this_many)
     {
         $n = (int) $this_many;
@@ -104,7 +120,13 @@ class Milprofes
 
         return $popular_schools;
     }
-    
+
+    /**
+     * @param $price_range
+     * @param $prof_o_acad
+     * @param $collection
+     * @return mixed
+     */
     public static function findWithinPrice($price_range, $prof_o_acad, $collection)
     {
         if($prof_o_acad=='profesor') {

@@ -12,9 +12,7 @@ class AddOriginToSchools extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('schools', function(Blueprint $table) {
-            $table->string('origin')->nullable();
-        });
+//
 	}
 
 	/**
@@ -24,9 +22,7 @@ class AddOriginToSchools extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('schools', function(Blueprint $table) {
-            $table->dropColumn('origin');
-        });
+//
 	}
 
 }

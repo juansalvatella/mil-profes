@@ -4,6 +4,10 @@ use Illuminate\Support\Collection;
 
 class Geocoding {
 
+    /**
+     * @param $address
+     * @return array|bool
+     */
     public static function geocode($address) {
         // url encode the address
         $address = urlencode($address);
@@ -29,9 +33,6 @@ class Geocoding {
                     case in_array('route', $component['types']):
                         $location['street'] = $component['long_name'];
                         break;
-                    case in_array('sublocality', $component['types']):
-                        $location['sublocality'] = $component['long_name'];
-                        break;
                     case in_array('locality', $component['types']):
                         $location['locality'] = $component['long_name'];
                         break;
@@ -41,11 +42,11 @@ class Geocoding {
                     case in_array('administrative_area_level_1', $component['types']):
                         $location['admin_1'] = $component['long_name'];
                         break;
-                    case in_array('postal_code', $component['types']):
-                        $location['postal_code'] = $component['long_name'];
-                        break;
                     case in_array('country', $component['types']):
                         $location['country'] = $component['long_name'];
+                        break;
+                    case in_array('postal_code', $component['types']):
+                        $location['postal_code'] = $component['long_name'];
                         break;
                 }
             }
@@ -69,6 +70,13 @@ class Geocoding {
         }
     } // function to geocode address, it will return false if unable to geocode address
 
+    /**
+     * @param $lat_origin
+     * @param $lon_origin
+     * @param $distance_range
+     * @param $locations_collection
+     * @return mixed
+     */
     public static function findWithinDistance($lat_origin,$lon_origin,$distance_range,$locations_collection)
     {
         if ($distance_range=='rang2') {
@@ -116,6 +124,14 @@ class Geocoding {
         return $filtered_collection;
     } //Filtering function, check if elements inside a collection of locations are within a given distance
 
+    /**
+     * @param $lat
+     * @param $lon
+     * @param $distance
+     * @param $limit
+     * @param $prof_o_acad
+     * @return mixed
+     */
     public static function dbFindWithin($lat, $lon, $distance, $limit, $prof_o_acad)
     {
         $R = 6371.01; //radio de la tierra promedio (en km)
@@ -160,6 +176,13 @@ class Geocoding {
         return $results;
     }
 
+    /**
+     * @param $Lat
+     * @param $Lng
+     * @param $Rad
+     * @param int $Detail
+     * @return mixed
+     */
     public static function GMapCircle($Lat,$Lng,$Rad,$Detail=8){
         $R    = 6371;
         $pi   = pi();

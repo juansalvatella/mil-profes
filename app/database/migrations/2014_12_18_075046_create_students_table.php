@@ -12,19 +12,14 @@ class CreateStudentsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('students', function($table)
+		Schema::create('students', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('name');
-			$table->string('lastname');
-			$table->string('email')->unique();
-			$table->string('phone');
-			$table->string('address');
-			$table->string('avatar');
-//			$table->string('availability');
-			$table->string('description');
-			$table->decimal('lat',9,7);
-			$table->decimal('lon',9,7);
+
+			//relacionamos user con un student id
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users');
+
 			$table->timestamps();
 		});
 	}

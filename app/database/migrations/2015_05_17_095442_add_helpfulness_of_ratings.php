@@ -12,14 +12,7 @@ class AddHelpfulnessOfRatings extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('ratings', function(Blueprint $table) {
-            $table->integer('yes_helpful')->default(0);
-            $table->integer('total_helpful')->default(0);
-        });
-        Schema::table('school_lesson_ratings', function(Blueprint $table) {
-            $table->integer('yes_helpful')->default(0);
-            $table->integer('total_helpful')->default(0);
-        });
+//
 	}
 
 	/**
@@ -29,14 +22,7 @@ class AddHelpfulnessOfRatings extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('ratings', function(Blueprint $table) {
-            $table->dropColumn('yes_helpful');
-            $table->dropColumn('total_helpful');
-        });
-        Schema::table('school_lesson_ratings', function(Blueprint $table) {
-            $table->dropColumn('yes_helpful');
-            $table->dropColumn('total_helpful');
-        });
+//
 	}
 
 }

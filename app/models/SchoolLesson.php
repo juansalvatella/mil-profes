@@ -2,19 +2,22 @@
 
 class SchoolLesson extends Eloquent
 {
-    protected $fillable = [];
-
+    protected $fillable = ['title','price','description','address'];
+    protected $dates = ['created_at','updated_at'];
     protected $table = 'school_lessons';
 
-    public function school() {
-        return $this->belongsTo('School');
+    public function school()
+    {
+        return $this->belongsTo('School','school_id');
     }
 
-    public function subject() {
-        return $this->belongsTo('Subject');
+    public function subject()
+    {
+        return $this->belongsTo('Subject','subject_id');
     }
 
-    public function visualizations() {
+    public function visualizations()
+    {
         return $this->hasMany('SchoolPhoneVisualization');
     }
 
@@ -28,6 +31,17 @@ class SchoolLesson extends Eloquent
         return $this->hasMany('SchoolLessonAvailability');
     }
 
+    /**
+     * @return int
+     */
+    public function getNumberOfReviews()
+    {
+        return (int) $this->hasMany('SchoolLessonRating')->count();
+    }
+
+    /**
+     * @return float
+     */
     public function getLessonAvgRating()
     {
         if($this->ratings()->count())
@@ -36,19 +50,21 @@ class SchoolLesson extends Eloquent
             return (float) 3.0; //If there are no ratings for the lesson, default to 3.00
     }
 
+    /**
+     * @return float
+     */
     public function getLessonAvgRatingWithoutCorrection()
     {
         if($this->ratings()->count())
             return round($this->ratings()->avg('value'), 1);
         else
-            return -1; //If there are no ratings for the lesson, return -1
+            return -1.0; //If there are no ratings for the lesson, return -1
     }
 
-    public function getNumberOfReviews()
-    {
-        return $this->hasMany('SchoolLessonRating')->count();
-    }
-
+    /**
+     * @param $this_many
+     * @return mixed
+     */
     public function getFeaturedReviews($this_many) {
         $n = (int) $this_many;
         $featured = $this->ratings()

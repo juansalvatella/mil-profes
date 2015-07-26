@@ -12,16 +12,7 @@ class AddStatusColumns extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('schools', function(Blueprint $table)
-        {
-            $table->softDeletes();
-            $table->string('status')->nullable();
-        });
-        Schema::table('users', function(Blueprint $table)
-        {
-            $table->softDeletes();
-            $table->string('status')->nullable();
-        });
+//
 	}
 
 	/**
@@ -31,16 +22,7 @@ class AddStatusColumns extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('schools', function(Blueprint $table)
-        {
-            $table->dropColumn('deleted_at');
-            $table->dropColumn('status');
-        });
-        Schema::table('users', function(Blueprint $table)
-        {
-            $table->dropColumn('deleted_at');
-            $table->dropColumn('status');
-        });
+//
 	}
 
 }

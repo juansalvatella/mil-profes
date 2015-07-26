@@ -2,9 +2,9 @@
 
 class SchoolLessonRating extends Eloquent
 {
-    protected $fillable = [];
-
-    protected $table = 'school_lesson_ratings';
+    protected $fillable = ['value','comment'];
+    protected $dates = ['created_at','updated_at'];
+    protected $table = 's_lesson_ratings';
 
     //Each rating-comment belongs to 1 student and 1 school lesson (is made by a student and rates the taken lesson)
     public function student() {

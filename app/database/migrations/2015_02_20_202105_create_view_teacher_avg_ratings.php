@@ -14,12 +14,12 @@ class CreateViewTeacherAvgRatings extends Migration {
 	{
         DB::statement('
             CREATE VIEW teachers_average_ratings (teacher_id,teacher_avg_rating) AS
-            SELECT teachers.id, AVG(ratings.value)
+            SELECT teachers.id, AVG(t_lesson_ratings.value)
             FROM teachers
                 LEFT JOIN teacher_lessons
                 ON teacher_lessons.teacher_id = teachers.id
-                LEFT OUTER JOIN ratings
-                ON ratings.teacher_lesson_id = teacher_lessons.id
+                LEFT OUTER JOIN t_lesson_ratings
+                ON t_lesson_ratings.teacher_lesson_id = teacher_lessons.id
                 GROUP BY teachers.id
         ;');
 	}

@@ -21,3 +21,4 @@ public/img/subjects/
 
 app/views/sitemap/sitemap.php
 app/views/sitemap/sitemaps
+bootstrap/start.php

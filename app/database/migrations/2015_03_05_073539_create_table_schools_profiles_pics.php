@@ -12,7 +12,7 @@ class CreateTableSchoolsProfilesPics extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('schools_profile_pics', function(Blueprint $table)
+        Schema::create('school_pics', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('school_id')->unsigned();
@@ -29,7 +29,7 @@ class CreateTableSchoolsProfilesPics extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('schools_profile_pics');
+        Schema::drop('school_pics');
 	}
 
 }

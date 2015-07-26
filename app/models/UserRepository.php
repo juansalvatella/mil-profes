@@ -12,6 +12,7 @@ class UserRepository
      * Signup a new account with the given parameters
      *
      * @param  array $input Array containing 'username', 'email' and 'password'.
+     * @param  string $geocoded_user_address
      *
      * @return  User User object that may or may not be saved successfully. Check the id to make sure.
      */
@@ -38,12 +39,12 @@ class UserRepository
         $user->avatar = 'default_avatar.png';
         $user->description = '';
 
-        // The password confirmation will be removed from model
-        // before saving. This field will be used in Ardent's
-        // auto validation.
+        /* The password confirmation will be removed from model
+        * before saving. This field will be used in Ardent's
+        * auto validation. */
         $user->password_confirmation = array_get($input, 'password_confirmation');
         // Generate a random confirmation code
-        $user->confirmation_code     = md5(uniqid(mt_rand(), true));
+        $user->confirmation_code = md5(uniqid(mt_rand(), true));
         // Save if valid. Password field will be hashed before save
         $this->save($user);
 
@@ -70,7 +71,7 @@ class UserRepository
      * Checks if the credentials has been throttled by too
      * much failed login attempts
      *
-     * @param  array $credentials Array containing the credentials (email/username and password)
+     * @param  array $input Array containing the credentials (email/username and password)
      *
      * @return  boolean Is throttled
      */
@@ -83,7 +84,7 @@ class UserRepository
      * Checks if the given credentials correponds to a user that exists but
      * is not confirmed
      *
-     * @param  array $credentials Array containing the credentials (email/username and password)
+     * @param  array $input Array containing the credentials (email/username and password)
      *
      * @return  boolean Exists and is not confirmed?
      */

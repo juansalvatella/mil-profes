@@ -12,9 +12,7 @@ class DeleteColumnSubjectNameInTableSearches extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('searches',function($table){
-            $table->dropColumn('subject_name');
-        });
+//
 	}
 
 	/**
@@ -24,10 +22,7 @@ class DeleteColumnSubjectNameInTableSearches extends Migration {
 	 */
 	public function down()
 	{
-        Schema::table('searches', function(Blueprint $table)
-        { //old categories
-            $table->enum('subject_name', ['escolar', 'cfp', 'musica', 'idiomas', 'all', 'artes', 'universitario', 'deportes']);
-        });
+//
 	}
 
 }

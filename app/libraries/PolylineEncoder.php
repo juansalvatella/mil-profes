@@ -87,6 +87,9 @@ class PolylineEncoder {
 	protected $zoomLevelBreaks;
 
 	// Returns the supplied coordinates
+	/**
+	 * @return array
+     */
 	public function getPoints() {
 		return $this->points;
 	}
@@ -96,6 +99,9 @@ class PolylineEncoder {
 	// Returns an associative array containing the encoded points, levels,
 	// an escaped string literal containing the encoded points
 	// It also returns the zoomFactor and numLevels
+	/**
+	 * @return mixed
+     */
 	public function dpEncode() {
 	    if(count($this->points) > 2) {
 
@@ -138,6 +144,10 @@ class PolylineEncoder {
 		return $polyline;
 	}
 
+	/**
+	 * @param $dd
+	 * @return int
+     */
 	protected function computeLevel($dd) {
 	    if($dd > $this->verySmall) {
 	        $lev = 0;
@@ -149,6 +159,12 @@ class PolylineEncoder {
 	    return $lev;
 	}
 
+	/**
+	 * @param $p0
+	 * @param $p1
+	 * @param $p2
+	 * @return float
+     */
 	protected function distance($p0, $p1, $p2) {
 	    if($p1[0] == $p2[0] && $p1[1] == $p2[1]) {
 	        $out = sqrt(pow($p2[0]-$p0[0],2) + pow($p2[1]-$p0[1],2));
@@ -168,6 +184,10 @@ class PolylineEncoder {
 	    return $out;
 	}
 
+	/**
+	 * @param $num
+	 * @return string
+     */
 	protected static function encodeSignedNumber($num) {
 	   $sgn_num = $num << 1;
 
@@ -178,6 +198,11 @@ class PolylineEncoder {
 	   return self::encodeNumber($sgn_num);
 	}
 
+	/**
+	 * @param $points
+	 * @param $dists
+	 * @return string
+     */
 	protected static function createEncodings($points, $dists) {
 		$plat = 0;
 		$plng = 0;
@@ -201,6 +226,12 @@ class PolylineEncoder {
 	    return $encoded_points;
 	}
 
+	/**
+	 * @param $points
+	 * @param $dists
+	 * @param $absMaxDist
+	 * @return string
+     */
 	protected function encodeLevels($points, $dists, $absMaxDist) {
 		$encoded_levels = "";
 
@@ -225,6 +256,10 @@ class PolylineEncoder {
 	    return $encoded_levels;
 	}
 
+	/**
+	 * @param $num
+	 * @return string
+     */
 	protected static function encodeNumber($num) {
 		$encodeString = "";
 

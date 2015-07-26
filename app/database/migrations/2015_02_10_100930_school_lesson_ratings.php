@@ -12,11 +12,13 @@ class SchoolLessonRatings extends Migration {
      */
 	public function up()
 	{
-		Schema::create('school_lesson_ratings', function(Blueprint $table)
+		Schema::create('s_lesson_ratings', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->decimal('value');
 			$table->string('comment');
+			$table->integer('yes_helpful')->default(0);
+			$table->integer('total_helpful')->default(0);
 
 			//Each rating-comment belongs to 1 student and 1 school lesson
 			$table->integer('student_id')->unsigned()->nullable();
@@ -25,9 +27,7 @@ class SchoolLessonRatings extends Migration {
 			$table->foreign('school_lesson_id')->references('id')->on('school_lessons')->onDelete('cascade')->onUpdate('cascade');
 
 			$table->timestamps();
-
 		});
-
 	}
 
     /**
@@ -37,12 +37,6 @@ class SchoolLessonRatings extends Migration {
      */
 	public function down()
 	{
-
-		Schema::table('school_lesson_ratings', function($table) {
-			$table->dropIndex('search');
-		});
-
-		Schema::drop('school_lesson_ratings');
+		Schema::drop('s_lesson_ratings');
 	}
-
 }

@@ -12,11 +12,7 @@ class ExtendSchoolsWithAddressColumns extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('schools', function(Blueprint $table) {
-            $table->string('town')->nullable();
-            $table->string('postalcode')->nullable();
-            $table->string('region')->nullable();
-        });
+//
     }
 
     /**
@@ -26,11 +22,7 @@ class ExtendSchoolsWithAddressColumns extends Migration {
      */
     public function down()
     {
-        Schema::table('schools', function(Blueprint $table) {
-            $table->dropColumn('town');
-            $table->dropColumn('postalcode');
-            $table->dropColumn('region');
-        });
+//
 	}
 
 }

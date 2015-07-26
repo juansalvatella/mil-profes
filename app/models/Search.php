@@ -2,8 +2,8 @@
 
 class Search extends Eloquent
 {
-    protected $fillable = [];
-
+    protected $fillable = ['address','keywords','type'];
+    protected $dates = ['created_at','updated_at'];
     protected $table = 'searches';
 
     public function subject() {

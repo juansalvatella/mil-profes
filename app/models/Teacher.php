@@ -7,12 +7,12 @@ class Teacher extends Eloquent
     use SoftDeletingTrait;
 
     protected $fillable = [];
-    protected $dates = ['deleted_at'];
+    protected $dates = ['created_at','updated_at','deleted_at'];
     protected $table = 'teachers';
 
     public function user()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo('User', 'user_id');
     }
 
     public function lessons()
@@ -25,6 +25,9 @@ class Teacher extends Eloquent
         return $this->hasMany('TeacherAvailability');
     }
 
+    /**
+     * @return float
+     */
     public function getTeacherAvgRating()
     {
         $lessons = $this->lessons;
@@ -35,6 +38,7 @@ class Teacher extends Eloquent
         $lessons = $lessons->filter(function($lesson) { //filter lessons without rating (avg rating = -1)
             if ($lesson->average_rating != -1)
                 return true;
+            return false;
         });
         $n = $lessons->count();
         if($n) {
@@ -51,6 +55,9 @@ class Teacher extends Eloquent
         }
     }
 
+    /**
+     * @return int
+     */
     public function getNumberOfReviews()
     {
         $lessons = $this->lessons;

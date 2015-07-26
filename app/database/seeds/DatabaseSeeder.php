@@ -11,7 +11,18 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		if(App::environment() !== 'local')
+			exit('Not in local environment! SEEDING ABORTED!');
+
+		$this->call('PermissionsRolesSeeder');
+		$this->call('UsersSeeder');
+		$this->call('SchoolsSeeder');
+		$this->call('SubjectsSeeder');
+		$this->call('TeacherLessonsSeeder');
+		$this->call('SchoolLessonsSeeder');
+		$this->call('RatingsSeeder');
+
+		$this->command->info('Done!');
 	}
 
 }

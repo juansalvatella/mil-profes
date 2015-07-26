@@ -12,7 +12,7 @@ class DropOldPhoneVisualizations extends Migration {
      */
 	public function up()
 	{
-		Schema::drop('phone_visualizations');
+//
 	}
 
     /**
@@ -21,11 +21,8 @@ class DropOldPhoneVisualizations extends Migration {
      * @return void
      */
 	public function down()
-	{//We re-create it so it can be droped properly by its old create migration
-		Schema::create('phone_visualizations', function(Blueprint $table)
-		{
-			$table->increments('id');
-		});
+	{
+//
 	}
 
 }

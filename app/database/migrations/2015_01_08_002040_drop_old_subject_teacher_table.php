@@ -12,7 +12,7 @@ class DropOldSubjectTeacherTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::drop('subject_teacher');
+//
 	}
 
 	/**
@@ -21,11 +21,8 @@ class DropOldSubjectTeacherTable extends Migration {
 	 * @return void
 	 */
 	public function down()
-	{//We re-create it so it can be droped properly by its old create migration
-		Schema::create('subject_teacher', function($table)
-		{
-			$table->increments('id');
-		});
+	{
+//
 	}
 
 }

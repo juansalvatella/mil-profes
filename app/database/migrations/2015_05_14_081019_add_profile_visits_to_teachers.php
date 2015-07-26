@@ -12,9 +12,7 @@ class AddProfileVisitsToTeachers extends Migration {
 	 */
     public function up()
     {
-        Schema::table('teachers', function(Blueprint $table) {
-            $table->integer('profile_visits')->default(0);
-        });
+//
     }
 
     /**
@@ -24,9 +22,7 @@ class AddProfileVisitsToTeachers extends Migration {
      */
     public function down()
     {
-        Schema::table('teachers', function(Blueprint $table) {
-            $table->dropColumn('profile_visits');
-        });
+//
     }
 
 }
