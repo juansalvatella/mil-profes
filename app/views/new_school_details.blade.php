@@ -1,4 +1,36 @@
 @extends('layout')
+
+@section('page_meta')
+    <!-- gen meta -->
+    <meta name="gen-image" content="{{ asset('img/logos/'.$school->logo) }}" />
+    <meta name="gen-title" content="Academia {{{ $school->name }}}" />
+    <meta name="gen-url" content="{{ Request::url() }}" />
+    <meta name="gen-description" content="Infórmate de nuestra oferta de cursos en milPROFES.com ¿Qué vas a aprender hoy?" />
+
+    <!-- fb meta -->
+    <meta property="og:site_name" content="milPROFES." />
+    <meta property="og:title" content="{{{ $school->name }}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ Request::url() }}" />
+    <meta property="og:image" content="{{ asset('img/logos/'.$school->logo) }}" />
+    <meta property="og:description" content="Infórmate de nuestra oferta de cursos en milPROFES.com ¿Qué vas a aprender hoy?" />
+
+    <!-- twitter meta -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@milprofes" />
+    <meta name="twitter:title" content="{{{ $school->name }}}" />
+    <meta name="twitter:description" content="Infórmate de nuestra oferta de cursos en @milprofes ¿Qué vas a aprender hoy?: {{ Request::url() }}" />
+    <meta name="twitter:image" content="{{ asset('img/logos/'.$school->logo) }}" />
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+    {{ HTML::style('css/rrssb.css') }}
+@endsection
+
 @section('content')
 
 {{-- This inputs values are fetched as school.js vars --}}
@@ -167,38 +199,6 @@
                                 <div class="panel-body video-container">
                                     <input type="hidden" id="videoId" value="{{$school->video}}">
                                     <div id="player"></div>
-                                    <script>
-                                        var tag = document.createElement('script');
-                                        tag.src = "https://www.youtube.com/iframe_api";
-                                        var firstScriptTag = document.getElementsByTagName('script')[0];
-                                        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-                                        var player;
-                                        function onYouTubeIframeAPIReady() {
-                                            player = new YT.Player('player', {
-                                                height: '300',
-                                                width: '100%',
-                                                videoId: $('#videoId').val(),
-                                                events: {
-                                                    'onReady': onPlayerReady,
-                                                    'onStateChange': onPlayerStateChange
-                                                }
-                                            });
-                                        }
-                                        function onPlayerReady(event) {
-                                            event.target.mute();
-                                            event.target.playVideo();
-                                        }
-                                        var done = false;
-                                        function onPlayerStateChange(event) {
-                                            //if (event.data == YT.PlayerState.PLAYING && !done) {
-                                                //setTimeout(stopVideo, 6000);
-                                                //done = true;
-                                            //}
-                                        }
-                                        function stopVideo() {
-                                            player.stopVideo();
-                                        }
-                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -524,4 +524,41 @@
     </div>
 </div><!-- /.modal -->
 
+@endsection
+
+@section('page_js')
+    {{ HTML::script('js/rrssb.js') }}
+    {{ HTML::script('js/school.js') }}
+    <script type="text/javascript">
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '300',
+                width: '100%',
+                videoId: $('#videoId').val(),
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+        function onPlayerReady(event) {
+            event.target.mute();
+            event.target.playVideo();
+        }
+        var done = false;
+        function onPlayerStateChange(event) {
+            //if (event.data == YT.PlayerState.PLAYING && !done) {
+            //setTimeout(stopVideo, 6000);
+            //done = true;
+            //}
+        }
+        function stopVideo() {
+            player.stopVideo();
+        }
+    </script>
 @endsection

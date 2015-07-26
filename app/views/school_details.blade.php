@@ -1,4 +1,17 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
     {{ Form::open(array('id' => 'postForm')) }}
@@ -21,14 +34,7 @@
             <!-- Valoración -->
             <div class="row">
                 <div class="col-xs-offset-1 col-xs-10 school-rating">
-                    <span class="school-rating-span"><span class="vcorrect">@lang('school-profile.rating')</span> <span id="school-stars"></span></span>
-                    <script type="text/javascript">
-                        $('#school-stars').raty({
-                            readOnly: true,
-                            half: true,
-                            score: {{ $school->getSchoolAvgRating() }}
-                        });
-                    </script>
+                    <span class="school-rating-span" data-rating="{{ $school->getSchoolAvgRating() }}"><span class="vcorrect">@lang('school-profile.rating')</span> <span id="school-stars"></span></span>
                 </div>
             </div>
 
@@ -40,7 +46,7 @@
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
                             <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                            <?php $n = $slpics->count(); ?>
+                            <?php $n = (isset($slpics)) ? $slpics->count() : 0; ?>
                             @for($i=1;$i<$n;++$i)
                                 <li data-target="#carousel-example-generic" data-slide-to="{{ $i }}"></li>
                             @endfor
@@ -50,7 +56,7 @@
                             <?php $i=0; ?>
                             @foreach($slpics as $pic)
                             <div class="item @if($i==0) active @endif">
-                                <div class="carousel-table" style="background: url({{ asset('img/pics/'.$pic->pic) }}) center center no-repeat;background-size: cover;">&nbsp;</div>
+                                <div class="carousel-table" style="background: url('{{ asset('img/pics/'.$pic->pic) }}') center center no-repeat;background-size: cover;">&nbsp;</div>
                             </div>
                                 <?php ++$i; ?>
                             @endforeach
@@ -67,7 +73,6 @@
             </div>
         @endif
         <!-- /Carousel -->
-
 
         {{--School description--}}
         @if($school->description != '')
@@ -113,8 +118,6 @@
                                     </div>
 
                                     <div class="col-xs-12 col-sm-10 col-lg-11">
-
-
                                         <div class="col-xs-12 col-sm-7 col-lg-7">
 
                                             <div class="row">
@@ -167,45 +170,12 @@
                                                     &nbsp;
                                                 </div>
                                             </div>
-
                                         </div>
 
-
                                         <div class="col-xs-offset-0 col-sm-offset-0 col-lg-offset-2 col-xs-12 col-sm-5 col-lg-3">
-
-
                                             <div class="row text-center">
-                                                <span id="lesson-stars-{{$result->id}}"></span>
-                                                <script type="text/javascript">
-                                                    $('#lesson-stars-{{$result->id}}').raty({
-                                                        @if(!(Auth::check()))
-                                                        readOnly: true,
-                                                        @endif
-                                                        half: true,
-                                                        score: {{ $result->getLessonAvgRating() }}
-                                                    });
-                                                </script>
-                                                @if(Auth::check())
-                                                    <script type="text/javascript">
-                                                        $(document).on("click", "#lesson-stars-{{$result->id}}", function(e) {
-                                                            e.preventDefault();
-                                                            e.stopImmediatePropagation();
-                                                            //registrar valoración en base de datos
-                                                            var lesson_id = {{ $result->id }};
-                                                            var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');
-                                                            var postForm = $('form#postForm');
-                                                            $.post('/reviews/handleSchoolLessonReview', {
-                                                                _token: postForm.find('input[name=_token]').val(),
-                                                                review_lesson_id: lesson_id,
-                                                                review_rating: review_rating
-                                                            }, function (data) {
-                                                                $('#lesson-stars-{{$result->id}}').raty({readOnly:true,half:true,score:review_rating});
-                                                            });
-                                                        });
-                                                    </script>
-                                                @endif
+                                                <span class="lesson-stars" data-pk="{{$result->id}}"></span>
                                             </div>
-
                                             <div class="row text-center">
                                                 @if($result->price=='0')
                                                     <div class="row no-price-provided">Contáctanos<br>para saber<br>el precio</div>
@@ -219,38 +189,10 @@
                                             </div>
 
                                             <div class="row text-center top-buffer-15">
-
                                                 <a id="contact-me-{{ $result->id }}" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="top" title="Contacto">Contáctanos</a>
-                                                <script type="text/javascript">
-                                                    $(document).ready(function(){
-                                                        $("#contact-me-{{ $result->id }}").popover({
-                                                            html: true,
-                                                            content:    ''+
-                                                            @if($school->phone == '' && $school->email == '')  'Nuestra información de contacto aún no está disponible.'+ @endif
-                            @if ($school->phone != '')  '<div class="text-center contact-info-title1">Teléfono</div>'+
-                                                            '<div class="text-center contact-info-tel">{{ $school->phone }}</div>'+ @endif
-     @if($school->phone != '' && $school->email != '')  '<hr class="contact-info-hr">'+ @endif
-                             @if($school->email != '')  '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
-                                                            '<div class="text-center contact-info-mail">{{ $school->email  }}</div>'+ @endif
-                                                        ''
-                                                        });
-                                                    });
-                                                    $(document).on("click", "#contact-me-{{ $result->id }}", function(e) {
-                                                        e.preventDefault();
-                                                        e.stopImmediatePropagation();
-                                                        var postForm = $('form#postForm');
-                                                        $.post('/request/info/school/{{$result->id}}',{
-                                                            _token: postForm.find('input[name=_token]').val()
-                                                        },function(data){});
-                                                    });
-                                                </script>
                                             </div>
-
                                         </div>
-
-
                                     </div>
-
 
                             <!-- separator -->
                             <div class="col-xs-12">
@@ -262,37 +204,15 @@
                         </div>
                     </div>
 
-
                     {{--Show more link--}}
-                    <div class="col-sm-12 clear-left text-center show-more-link bottom-buffer-35" id="show-more-results-{{ $slices_showing }}">
-
-                        @if($display_show_more)
-                            <a href="#">
-                                MOSTRAR MAS RESULTADOS<br>
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-
-                            <script type="text/javascript">
-                                $(document).on("click", "#show-more-results-{{ $slices_showing }}", function(e) {
-                                    e.preventDefault();
-                                    e.stopImmediatePropagation();
-                                    var form = $('form#hiddenVar');
-                                    $.post('/academia/{{$school->slug}}',
-                                            {
-                                                _token: form.find('input[name=_token]').val(),
-                                                slices_showing: form.find('input[name=slices_showing]').val()
-                                            },
-                                            function(data) { //handle the controller response
-                                                $('.search-results-list').append($(data).find('#results-slice-{{ $slices_showing+1 }}'));
-                                                $('#show-more-results-{{ $slices_showing }}').replaceWith($(data).find('#show-more-results-{{ $slices_showing+1 }}'));
-                                            });
-                                    var ninput = $('#current-slices-showing');
-                                    var n = parseInt(ninput.val());
-                                    ninput.val(n+1);
-                                });
-                            </script>
-                        @endif
-                    </div><!--/#show-more-results -->
+                    <div class="col-sm-12 clear-left text-center show-more-link bottom-buffer-35" class="show-more-results">
+                    @if($display_show_more)
+                        <a href="#">
+                            MOSTRAR MAS RESULTADOS<br>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                    @endif
+                    </div>
 
 
                 </div>
@@ -311,4 +231,76 @@
         {{ Form::hidden('slices_showing', $slices_showing, array('id' => 'current-slices-showing')) }}
     {{ Form::close() }}
 
+@endsection
+
+@section('page_js')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#school-stars').raty({
+                readOnly: true,
+                half: true,
+                score: $(this).attr('data-rating')
+            });
+
+            $('.lesson-stars').raty({
+                @if(!(Auth::check())) readOnly: true, @endif
+                                                            half: true,
+                score: $(this).attr('data-pk')
+            });
+        @if(Auth::check())
+            $(document).on("click", ".lesson-stars", function(e) {
+                e.preventDefault();
+                //registrar valoración en base de datos
+                var lesson_id = $(this).attr('data-pk');
+                var review_rating = $(this).raty('score');
+                var postForm = $('form#postForm');
+                $.post('/reviews/handleSchoolLessonReview', {
+                    _token: postForm.find('input[name=_token]').val(),
+                    review_lesson_id: lesson_id,
+                    review_rating: review_rating
+                }, function (data) {
+                    $(this).raty({readOnly:true,half:true,score:review_rating});
+                });
+            });
+        @endif
+
+            $(document).on("click", ".show-more-results", function(e) {
+                e.preventDefault();
+                var nSlicesShowing = $('#current-slices-showing').val();
+                var nSlicesShowingPlus = nSlicesShowing + 1;
+                var form = $('form#hiddenVar');
+                $.post('/academia/{{$school->slug}}', {
+                    _token: form.find('input[name=_token]').val(),
+                    slices_showing: form.find('input[name=slices_showing]').val()
+                }, function(data) {
+                    $('.search-results-list').append($(data).find('#results-slice-'+nSlicesShowingPlus));
+                    $('#show-more-results-'+nSlicesShowingPlus).replaceWith($(data).find('#show-more-results-'+nSlicesShowingPlus));
+                });
+                var n = parseInt(nSlicesShowing.val());
+                nSlicesShowing.val(n+1);
+            });
+
+
+            $("#contact-me-"+"{{ $result->id }}").popover({
+                html: true,
+                content:    ''+
+                @if($school->phone == '' && $school->email == '')  'Nuestra información de contacto aún no está disponible.'+ @endif
+                @if ($school->phone != '')  '<div class="text-center contact-info-title1">Teléfono</div>'+
+                '<div class="text-center contact-info-tel">{{ $school->phone }}</div>'+ @endif
+                @if($school->phone != '' && $school->email != '')  '<hr class="contact-info-hr">'+ @endif
+                 @if($school->email != '')  '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
+                '<div class="text-center contact-info-mail">{{ $school->email  }}</div>'+ @endif
+                ''
+            });
+
+            $(document).on("click", "#contact-me-{{ $result->id }}", function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                var postForm = $('form#postForm');
+                $.post('/request/info/school/{{$result->id}}',{
+                    _token: postForm.find('input[name=_token]').val()
+                },function(data){});
+            });
+        });
+    </script>
 @endsection

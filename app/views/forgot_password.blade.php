@@ -1,4 +1,17 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
@@ -28,11 +41,6 @@
                             </div>
                         </div>
                     </form>
-                    <script type="text/javascript">
-                        $(document).ready(function(){
-                            $("#forgot-form").validator();
-                        });
-                    </script>
                 </div>
             </div>
         </div>
@@ -41,4 +49,12 @@
         <hr class="hr-page-end"/>
     </div>
 
+@endsection
+
+@section('page_js')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#forgot-form").validator();
+        });
+    </script>
 @endsection

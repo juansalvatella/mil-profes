@@ -1,4 +1,17 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
@@ -6,7 +19,7 @@
 
             <div><h1 class="generic-title">@lang('services.title')</h1></div>
 
-            <div><h2 class="generic-subtitle">@lang('services.subtitle')</h3></div>
+            <div><h3 class="generic-subtitle">@lang('services.subtitle')</h3></div>
 
         </div>
     </div>
@@ -111,5 +124,9 @@
     <div class="container-fluid background-gblack">
         <hr class="hr-page-end"/>
     </div>
+
+@endsection
+
+@section('page_js')
 
 @endsection

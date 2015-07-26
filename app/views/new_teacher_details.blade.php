@@ -1,7 +1,35 @@
 @extends('layout')
-@section('content')
 
-{{--Rich snippet--}}
+@section('page_meta')
+    <!-- general meta -->
+    <meta name="gen-image" content="{{ asset('img/avatars/'.$teacher->avatar) }}" />
+    <meta name="gen-title" content="Profe. {{{ $teacher->displayName }}}" />
+    <meta name="gen-url" content="{{ Request::url() }}" />
+    <meta name="gen-description" content="Visita mi perfil de profe. en milPROFES.com ¿Qué vas a aprender hoy?" />
+    <!-- fb meta -->
+    <meta property="og:site_name" content="milPROFES." />
+    <meta property="og:title" content="Profe. {{{ $teacher->displayName }}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ Request::url() }}" />
+    <meta property="og:image" content="{{ asset('img/avatars/'.$teacher->avatar) }}" />
+    <meta property="og:description" content="Visita mi perfil de profe. en milPROFES.com ¿Qué vas a aprender hoy?" />
+    <!-- twitter meta -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@milprofes" />
+    <meta name="twitter:title" content="Profe. {{{ $teacher->displayName }}}" />
+    <meta name="twitter:description" content="Visita mi perfil de profe. en @milprofes ¿Qué vas a aprender hoy?: {{ Request::url() }}" />
+    <meta name="twitter:image" content="{{ asset('img/avatars/'.$teacher->avatar) }}" />
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+    {{ HTML::style('css/rrssb.css') }}
+@endsection
+
+@section('content')
 
 {{-- This inputs values are fetched as teacher.js vars --}}
 <input type="hidden" id="_token" value="{{ Session::getToken() }}">
@@ -472,4 +500,9 @@
     </div>
 </div><!-- /.modal -->
 
+@endsection
+
+@section('page_js')
+    {{ HTML::script('js/rrssb.js') }}
+    {{ HTML::script('js/teachers.js') }}
 @endsection

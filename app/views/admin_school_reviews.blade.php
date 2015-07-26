@@ -1,4 +1,17 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
     <div class="page-header">
@@ -54,5 +67,9 @@
         @endif
         <div class="float-right">{{ $reviews->links() }}</div>
     </div>
+
+@endsection
+
+@section('page_js')
 
 @endsection

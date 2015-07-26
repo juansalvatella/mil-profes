@@ -1,4 +1,3 @@
-
 <div class="container-fluid top-padding-50 bottom-padding-50">
     <div class="col-xs-offset-0 col-xs-12 col-sm-12">
         <div class="row text-center become-teacher">

@@ -1,7 +1,20 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
-<div class="container top-buffer-15 bottom-buffer-45">
+    <div class="container top-buffer-15 bottom-buffer-45">
     <div class="page-header">
         <h1>¿Seguro que desea eliminar al profe. {{ $user->name }}?</h1>
     </div>
@@ -21,5 +34,9 @@
         </form>
     </div>
 </div>
+
+@endsection
+
+@section('page_js')
 
 @endsection

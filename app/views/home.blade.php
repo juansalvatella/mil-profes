@@ -1,4 +1,19 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+    {{ HTML::style('css/owl.carousel.css') }}
+    {{ HTML::style('css/owl.transitions.css') }}
+    {{ HTML::style('css/owl.theme.css') }}
+@endsection
+
 @section('content')
 
 <div class="home-splash">
@@ -35,43 +50,6 @@
                       </a>
                   </div>
               </div>
-              <script type="text/javascript">
-                  $(document).ready(function(){ // IP to Location Service Provided by Google
-                      var checknavgeo = navigator.geolocation;
-                      if(checknavgeo)
-                          $("#mi-ubicacion").removeClass('hidden');
-                      $('#mi-ubicacion-link').click(function (e) {
-                          e.preventDefault();
-                          if (navigator && checknavgeo) {
-                              navigator.geolocation.getCurrentPosition(geo_success, geo_error);
-                          } else {
-                              $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
-                          }
-                      });
-                  });
-                  function geo_success(position) {
-                      printAddress(position.coords.latitude, position.coords.longitude);
-                  }
-                  function geo_error() {
-                      $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
-                  }
-                  function printAddress(latitude, longitude) {
-                      var geocoder = new google.maps.Geocoder();
-                      var yourLocation = new google.maps.LatLng(latitude, longitude);
-                      geocoder.geocode({ 'latLng': yourLocation }, function (results, status) {
-                          if(status == google.maps.GeocoderStatus.OK) {
-                              if(results[0]) {
-                                  $('#user_address').val(''+results[0].formatted_address);
-                              } else {
-                                  $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
-                              }
-                          } else {
-                              $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
-                          }
-                      });
-                  }
-              </script>
-              <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
               <div class="row top-buffer-15">
                   <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0 text-left">
@@ -104,23 +82,6 @@
                                   </div>
                               </div>
                           </div><!-- /.input-group-btn -->
-                          <script type="text/javascript">
-                          @foreach(Subject::orderBy('name')->get() as $subj)
-                              var selector = "#action-{{ $subj->id }}";
-                              $(selector).click(function(e){
-                                  e.preventDefault();
-                                  $("#subject").val("{{$subj->name}}");
-                                  $("#subject-name").text("{{trans('subjects.'.$subj->name)}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_'.$subj->name)}}");
-                              });
-                          @endforeach
-                              $("#action-all").click(function(e){
-                                  e.preventDefault();
-                                  $("#subject").val("all");
-                                  $("#subject-name").text("{{trans('subjects.all')}}");
-                                  $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_all')}}");
-                              });
-                          </script>
 
                           <input type="text" name="keywords" id="keywords" placeholder="@lang('home.keywords_placeholder_all')" class="form-control input-lg">
 
@@ -141,21 +102,9 @@
                       <button type="submit" class="btn btn-primary btn-lg btn-home-search" id="btn-search-schools" value="@lang('home.schools')">
                           @lang('home.schools')&nbsp;&nbsp;<i class="glyphicon glyphicon-search"></i>
                       </button>
-                      <script type="text/javascript">
-                          $(document).on("click", "#btn-search-schools", function() {
-                              $("#prof_o_acad").val('academia');
-                              return true;
-                          });
-                      </script>
                       <button type="submit" class="btn btn-primary btn-lg btn-home-search" id="btn-search-teachers" value="@lang('home.teachers')">
                           @lang('home.teachers')&nbsp;&nbsp;<i class="glyphicon glyphicon-search"></i>
                       </button>
-                      <script type="text/javascript">
-                          $(document).on("click", "#btn-search-teachers", function() {
-                              $("#prof_o_acad").val('profesor');
-                              return true;
-                          });
-                      </script>
                   </div>
               </div>
               {{ Form::close() }}
@@ -265,4 +214,103 @@
     </div>
 </div>
 
+@endsection
+
+@section('page_js')
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+    @foreach(Subject::orderBy('name')->get() as $subj)
+        var selector = "#action-{{ $subj->id }}";
+        $(selector).click(function(e){
+            e.preventDefault();
+            $("#subject").val("{{$subj->name}}");
+            $("#subject-name").text("{{trans('subjects.'.$subj->name)}}");
+            $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_'.$subj->name)}}");
+        });
+    @endforeach
+        $("#action-all").click(function(e){
+            e.preventDefault();
+            $("#subject").val("all");
+            $("#subject-name").text("{{trans('subjects.all')}}");
+            $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_all')}}");
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).on("click", "#btn-search-schools", function() {
+            $("#prof_o_acad").val('academia');
+            return true;
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).on("click", "#btn-search-teachers", function() {
+            $("#prof_o_acad").val('profesor');
+            return true;
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){ // IP to Location Service Provided by Google
+            var checknavgeo = navigator.geolocation;
+            if(checknavgeo)
+                $("#mi-ubicacion").removeClass('hidden');
+            $('#mi-ubicacion-link').click(function (e) {
+                e.preventDefault();
+                if (navigator && checknavgeo) {
+                    navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+                } else {
+                    $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
+                }
+            });
+        });
+        function geo_success(position) {
+            printAddress(position.coords.latitude, position.coords.longitude);
+        }
+        function geo_error() {
+            $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
+        }
+        function printAddress(latitude, longitude) {
+            var geocoder = new google.maps.Geocoder();
+            var yourLocation = new google.maps.LatLng(latitude, longitude);
+            geocoder.geocode({ 'latLng': yourLocation }, function (results, status) {
+                if(status == google.maps.GeocoderStatus.OK) {
+                    if(results[0]) {
+                        $('#user_address').val(''+results[0].formatted_address);
+                    } else {
+                        $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
+                    }
+                } else {
+                    $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
+                }
+            });
+        }
+    </script>
+    {{ HTML::script('js/owl.carousel.js') }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var carousel = $("#schools-carousel");
+            carousel.owlCarousel({
+                items: 3,
+                loop: true,
+                autoWidth: false,
+                nav: true,
+                navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
+                dots: false,
+                navSpeed: 500,
+                autoplaySpeed: 500,
+                mouseDrag: false,
+                touchDrag: false,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true
+            });
+            $('.stars-container').raty({
+                readOnly: true,
+                half: true,
+                size: 15,
+                starHalf: '../img/star-half-small.png',
+                starOff : '../img/star-off-small.png',
+                starOn  : '../img/star-on-small.png',
+                score: function(){return $(this).attr('data-score');}
+            });
+        });
+    </script>
 @endsection

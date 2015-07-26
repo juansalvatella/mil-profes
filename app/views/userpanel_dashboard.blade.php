@@ -1,7 +1,20 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+    {{ HTML::style('css/jquery.Jcrop.min.css') }}
+@endsection
+
 @section('content')
 
-<div class="container-fluid top-padding-25 bottom-padding-150 background-lamp">
+    <div class="container-fluid top-padding-25 bottom-padding-150 background-lamp">
 
     <div class="profile-header">
         <div class="container">
@@ -196,20 +209,6 @@
                             <div id="chars_feedback"></div>
                         </div>
                     </div>
-                    <script type="text/javascript">
-                        $(document).ready(function(){
-                            var text_max = 450;
-                            var tbox = $('#description');
-                            var text_length = tbox.val().length;
-                            var text_remaining = text_max - text_length;
-                            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
-                            tbox.keyup(function() {
-                                var text_length = $('#description').val().length;
-                                var text_remaining = text_max - text_length;
-                                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
-                            });
-                        });
-                    </script>
 
                     <div class="form-group">
                         <div class="row">
@@ -350,14 +349,6 @@
 
                 </form>
 
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $("#user-data").validator();
-                        $("#user-social").validator();
-                        $("#user-passwd").validator();
-                    });
-                </script>
-
             </div>
         </div>
     </div>
@@ -394,102 +385,147 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-{{--Cropping related JS--}}
-<script type="text/javascript">
-    var xsize = 160,
-        ysize = 160,
-        imgSlc,
-        boundx,
-        boundy;
+@endsection
 
-    function checkCoords() {
-        if (parseInt($('#w').val())) return true;
-        return false;
-    }
-
-    //Handle preview "zooming"
-    function updatePreview(c) {
-        if (parseInt(c.w) > 0) {
-            var rx = xsize / c.w;
-            var ry = ysize / c.h;
-
-            imgSlc.css({
-                width: Math.round(rx * boundx) + 'px',
-                height: Math.round(ry * boundy) + 'px',
-                marginLeft: '-' + Math.round(rx * c.x) + 'px',
-                marginTop: '-' + Math.round(ry * c.y) + 'px'
+@section('page_js')
+    {{ HTML::script('js/jquery.Jcrop.min.js') }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var text_max = 450;
+            var tbox = $('#description');
+            var text_length = tbox.val().length;
+            var text_remaining = text_max - text_length;
+            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            tbox.keyup(function() {
+                var text_length = $('#description').val().length;
+                var text_remaining = text_max - text_length;
+                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
             });
-            //update form coords
-            $('#x').val(c.x);
-            $('#y').val(c.y);
-            $('#w').val(c.w);
-            $('#h').val(c.h);
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#user-data").validator();
+            $("#user-social").validator();
+            $("#user-passwd").validator();
+        });
+    </script>
+    {{--Cropping related JS--}}
+    <script type="text/javascript">
+        var xsize = 160,
+                ysize = 160,
+                imgSlc,
+                boundx,
+                boundy;
+
+        function checkCoords() {
+            if (parseInt($('#w').val())) return true;
+            return false;
         }
-    }
 
-    //Generate new canvas, preview and init jcrop
-    function readURL(input) {
-        if (input.files && input.files[0] && input.files[0].size < 1048576) {
-            $('#file-input').removeClass('has-error');
-            $('#file-input-error').html('Puedes utilizar imágenes del tipo JPG, PNG o GIF y tamaño inferior a 1 MB.');
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                //Remove previous content
-                jcrop_api = null;
-                $(".imgCanvas").remove();
-                $(".jcrop-preview").remove();
-                $(".jcrop-holder").remove();
-                //New content
-                var src = e.target.result;
-                var cContainer = $('#canvasContainer');
-                var pContainer = $('#previewContainer');
-                var jcrop_api;
-                cContainer.append('<img src="'+ src +'" class="imgCanvas" alt="Mi nueva imagen de perfil" />');
-                pContainer.append('<img src="'+ src +'" class="jcrop-preview" alt="Vista previa" />');
-                //Set new value for the file input
-                $('#cropAvatar').val(src);
-                //Init JCrop
-                var imgCan = $('.imgCanvas');
-                imgSlc = $('.jcrop-preview');
-                //modify jcrop canvas width depending of modal width <=> screen width
-                var wW = $(window).width();
-                var cropModalWidth;
-                if(wW < 768) {
-                    cropModalWidth = wW - 93;
-                } else {
-                    cropModalWidth = 600 - 60;
-                }
-                imgCan.Jcrop({
-                    onChange: updatePreview,
-                    onSelect: updatePreview,
-                    boxWidth: cropModalWidth,
-                    boxHeight: 300,
-                    aspectRatio: 1
-                }, function () {
-                    // Use the API to get the real image size
-                    var bounds = this.getBounds();
-                    boundx = bounds[0];
-                    boundy = bounds[1];
-                    // Store the API in the jcrop_api variable
-                    jcrop_api = this;
+        //Handle preview "zooming"
+        function updatePreview(c) {
+            if (parseInt(c.w) > 0) {
+                var rx = xsize / c.w;
+                var ry = ysize / c.h;
 
-                    var holderH = $(".jcrop-holder").height();
-                    if(holderH<300) {
-                        $('#canvasContainer').height(trackerH);
-                    }
+                imgSlc.css({
+                    width: Math.round(rx * boundx) + 'px',
+                    height: Math.round(ry * boundy) + 'px',
+                    marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                    marginTop: '-' + Math.round(ry * c.y) + 'px'
                 });
-            };
-            reader.readAsDataURL(input.files[0]);
-            $('#cropModal').modal('show');
-        } else if(! input.files[0].size < 1048576) {
-            $('#file-input').addClass('has-error');
-            $('#file-input-error').html('La imagen elegida supera el tamaño máximo de 1 MB.');
+                //update form coords
+                $('#x').val(c.x);
+                $('#y').val(c.y);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+            }
         }
-    }
 
-    $("#avatar").change(function(){
-        readURL(this);
-    });
-</script>
+        //Generate new canvas, preview and init jcrop
+        function readURL(input) {
+            if (input.files && input.files[0] && input.files[0].size < 1048576) {
+                $('#file-input').removeClass('has-error');
+                $('#file-input-error').html('Puedes utilizar imágenes del tipo JPG, PNG o GIF y tamaño inferior a 1 MB.');
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    //Remove previous content
+                    jcrop_api = null;
+                    $(".imgCanvas").remove();
+                    $(".jcrop-preview").remove();
+                    $(".jcrop-holder").remove();
+                    //New content
+                    var src = e.target.result;
+                    var cContainer = $('#canvasContainer');
+                    var pContainer = $('#previewContainer');
+                    var jcrop_api;
+                    cContainer.append('<img src="'+ src +'" class="imgCanvas" alt="Mi nueva imagen de perfil" />');
+                    pContainer.append('<img src="'+ src +'" class="jcrop-preview" alt="Vista previa" />');
+                    //Set new value for the file input
+                    $('#cropAvatar').val(src);
+                    //Init JCrop
+                    var imgCan = $('.imgCanvas');
+                    imgSlc = $('.jcrop-preview');
+                    //modify jcrop canvas width depending of modal width <=> screen width
+                    var wW = $(window).width();
+                    var cropModalWidth;
+                    if(wW < 768) {
+                        cropModalWidth = wW - 93;
+                    } else {
+                        cropModalWidth = 600 - 60;
+                    }
+                    imgCan.Jcrop({
+                        onChange: updatePreview,
+                        onSelect: updatePreview,
+                        boxWidth: cropModalWidth,
+                        boxHeight: 300,
+                        aspectRatio: 1
+                    }, function () {
+                        // Use the API to get the real image size
+                        var bounds = this.getBounds();
+                        boundx = bounds[0];
+                        boundy = bounds[1];
+                        // Store the API in the jcrop_api variable
+                        jcrop_api = this;
+
+                        var holderH = $(".jcrop-holder").height();
+                        if(holderH<300) {
+                            $('#canvasContainer').height(trackerH);
+                        }
+                    });
+                };
+                reader.readAsDataURL(input.files[0]);
+                $('#cropModal').modal('show');
+            } else if(! input.files[0].size < 1048576) {
+                $('#file-input').addClass('has-error');
+                $('#file-input-error').html('La imagen elegida supera el tamaño máximo de 1 MB.');
+            }
+        }
+
+        $("#avatar").change(function(){
+            readURL(this);
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            @for($i=1;$i<9;++$i)
+                $(document).on("click","#avail-control-add{{$i}}",function(e){
+                        e.preventDefault();
+                        $("#avail"+"{{$i+1}}").removeClass("hidden");
+                        $("#avail-controls"+"{{$i+1}}").removeClass("hidden");
+                        $("#avail-controls"+"{{$i}}").addClass("hidden");
+                    });
+
+            $(document).on("click","#avail-control-del"+"{{$i+1}}",function(e){
+                e.preventDefault();
+                $("#avail"+"{{$i+1}}").addClass("hidden");
+                $("[name=day"+"{{$i+1}}]").val("");
+                $("#avail-controls"+"{{$i}}").removeClass("hidden");
+                $("#avail-controls"+"{{$i+1}}").addClass("hidden");
+            });
+            @endfor
+        });
+    </script>
 
 @endsection

@@ -1,7 +1,20 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
-{{--token needed for ajax POST requests--}}
+    {{--token needed for ajax POST requests--}}
 <input id="token" type="hidden" name="_token" value="{{{ Session::getToken() }}}"/>
 
 <div class="page-header">
@@ -72,5 +85,9 @@
     @endif
 
 </div>
+
+@endsection
+
+@section('page_js')
 
 @endsection

@@ -1,7 +1,20 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
-<div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
+    <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
     <div class="container">
         <div><h1 class="generic-title">@lang('contact.contact-us')</h1></div>
         <div><h2 class="generic-subtitle">@lang('contact.ask-us')</h2></div>
@@ -86,4 +99,8 @@
     <hr class="hr-page-end"/>
 </div>
 
+@endsection
+
+@section('page_js')
+    {{ HTML::script('js/contact.js') }}
 @endsection

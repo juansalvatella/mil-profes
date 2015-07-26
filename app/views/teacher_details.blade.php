@@ -1,4 +1,17 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
     {{ Form::open(array('id' => 'postForm')) }}
@@ -22,13 +35,6 @@
             <div class="row">
                 <div class="col-xs-offset-1 col-xs-10 teacher-rating">
                     <span class="teacher-rating-span"><span class="vcorrect">@lang('teacher-profile.rating')</span> <span id="teacher-stars"></span></span>
-                    <script type="text/javascript">
-                        $('#teacher-stars').raty({
-                            readOnly: true,
-                            half: true,
-                            score: {{ $teacher->getTeacherAvgRating() }}
-                        });
-                    </script>
                 </div>
             </div>
 
@@ -107,46 +113,6 @@
 
                                 <div class="row text-center">
                                     <span id="lesson-stars-{{$result->id}}" class="stars-container"></span>
-                                    <script type="text/javascript">
-                                        $('#lesson-stars-{{$result->id}}').raty({
-                                            @if(!(Auth::check()))
-                                            readOnly: true,
-                                            @endif
-                                            half: true,
-                                            size: 15,
-                                            starHalf: '{{ url('/img') }}/star-half-small.png',
-                                            starOff : '{{ url('/img') }}/star-off-small.png',
-                                            starOn  : '{{ url('/img') }}/star-on-small.png',
-                                            score: {{ $result->getLessonAvgRating() }}
-                                        });
-                                    </script>
-                                    @if(Auth::check())
-                                        <script type="text/javascript">
-                                            $(document).on("click", "#lesson-stars-{{$result->id}}", function(e) {
-                                                e.preventDefault();
-                                                e.stopImmediatePropagation();
-                                                //registrar valoración en base de datos
-                                                var lesson_id = {{ $result->id }};
-                                                var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');
-                                                var postForm = $('form#postForm');
-                                                $.post('/reviews/handleReview', {
-                                                    _token: postForm.find('input[name=_token]').val(),
-                                                    review_lesson_id: lesson_id,
-                                                    review_rating: review_rating
-                                                }, function (data) {
-                                                    $('#lesson-stars-{{$result->id}}').raty({
-                                                        readOnly:true,
-                                                        half:true,
-                                                        size: 15,
-                                                        starHalf: '{{ url('/img') }}/star-half-small.png',
-                                                        starOff : '{{ url('/img') }}/star-off-small.png',
-                                                        starOn  : '{{ url('/img') }}/star-on-small.png',
-                                                        score:review_rating
-                                                    });
-                                                });
-                                            });
-                                        </script>
-                                    @endif
                                 </div>
                             </div>
 
@@ -170,30 +136,7 @@
             </div>
 
             <div class="row text-center">
-
                 <a id="contact-me" class="btn btn-milprofes" role="button" data-toggle="popover" data-placement="top" title="Contacto">Contáctame</a>
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $("#contact-me").popover({
-                            html: true,
-                            content:    ''+
-@if($teacher->phone != '')  '<div class="text-center contact-info-title1">Teléfono</div>'+
-                            '<div class="text-center contact-info-tel">{{ $teacher->phone }}</div>'+
-                            '<hr class="contact-info-hr">'+ @endif
-                            '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
-                            '<div class="text-center contact-info-mail">{{ $teacher->email  }}</div>'
-                        });
-                    });
-                    $(document).on("click", "#contact-me", function(e) {
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
-                        var postForm = $('form#postForm');
-                        $.post('/request/info/teacher/all/{{$teacher->id}}',{
-                            _token: postForm.find('input[name=_token]').val()
-                        },function(data){});
-                    });
-                </script>
-
             </div>
 
         </div>
@@ -203,4 +146,75 @@
         <hr class="hr-page-end"/>
     </div>
 
+@endsection
+
+@section('page_js')
+    <script type="text/javascript">
+        $('#teacher-stars').raty({
+            readOnly: true,
+            half: true,
+            score: {{ $teacher->getTeacherAvgRating() }}
+                        });
+    </script>
+    <script type="text/javascript">
+        $('#lesson-stars-{{$result->id}}').raty({
+            @if(!(Auth::check()))
+            readOnly: true,
+            @endif
+            half: true,
+            size: 15,
+            starHalf: '{{ url('/img') }}/star-half-small.png',
+            starOff : '{{ url('/img') }}/star-off-small.png',
+            starOn  : '{{ url('/img') }}/star-on-small.png',
+            score: {{ $result->getLessonAvgRating() }}
+                                        });
+    </script>
+    @if(Auth::check())
+        <script type="text/javascript">
+            $(document).on("click", "#lesson-stars-{{$result->id}}", function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                //registrar valoración en base de datos
+                var lesson_id = {{ $result->id }};
+                var review_rating = $('#lesson-stars-{{$result->id}}').raty('score');
+                var postForm = $('form#postForm');
+                $.post('/reviews/handleReview', {
+                    _token: postForm.find('input[name=_token]').val(),
+                    review_lesson_id: lesson_id,
+                    review_rating: review_rating
+                }, function (data) {
+                    $('#lesson-stars-{{$result->id}}').raty({
+                        readOnly:true,
+                        half:true,
+                        size: 15,
+                        starHalf: '{{ url('/img') }}/star-half-small.png',
+                        starOff : '{{ url('/img') }}/star-off-small.png',
+                        starOn  : '{{ url('/img') }}/star-on-small.png',
+                        score:review_rating
+                    });
+                });
+            });
+        </script>
+    @endif
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#contact-me").popover({
+                html: true,
+                content:    ''+
+                @if($teacher->phone != '')  '<div class="text-center contact-info-title1">Teléfono</div>'+
+                '<div class="text-center contact-info-tel">{{ $teacher->phone }}</div>'+
+                '<hr class="contact-info-hr">'+ @endif
+                            '<div class="text-center contact-info-title2">E-mail</div><div class="arrow"></div>'+
+                '<div class="text-center contact-info-mail">{{ $teacher->email  }}</div>'
+            });
+        });
+        $(document).on("click", "#contact-me", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var postForm = $('form#postForm');
+            $.post('/request/info/teacher/all/{{$teacher->id}}',{
+                _token: postForm.find('input[name=_token]').val()
+            },function(data){});
+        });
+    </script>
 @endsection

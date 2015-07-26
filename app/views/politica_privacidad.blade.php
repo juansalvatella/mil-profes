@@ -1,4 +1,17 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
@@ -19,5 +32,9 @@
     <div class="container-fluid background-gblack">
         <hr class="hr-page-end"/>
     </div>
+
+@endsection
+
+@section('page_js')
 
 @endsection

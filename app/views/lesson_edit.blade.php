@@ -1,7 +1,20 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
 
-<div class="container top-buffer-15 bottom-buffer-45">
+    <div class="container top-buffer-15 bottom-buffer-45">
 
     <div class="page-header">
         <h1>@lang('course_edit.edit_course_of') {{ $school->name }}</h1>
@@ -155,27 +168,6 @@
                     <a href="#" id="avail-control-del9" class="btn btn-default"><i class="glyphicon glyphicon-minus-sign"></i> @lang('buttons.delete')</a>
                 </div>
 
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        @for($i=1;$i<9;++$i)
-                        $(document).on("click","#avail-control-add{{$i}}",function(e){
-                            e.preventDefault();
-                            $("#avail{{$i+1}}").removeClass("hidden");
-                            $("#avail-controls{{$i+1}}").removeClass("hidden");
-                            $("#avail-controls{{$i}}").addClass("hidden");
-                        });
-
-                        $(document).on("click","#avail-control-del{{$i+1}}",function(e){
-                            e.preventDefault();
-                            $("#avail{{$i+1}}").addClass("hidden");
-                            $('[name=day{{$i+1}}]').val('');
-                            $("#avail-controls{{$i}}").removeClass("hidden");
-                            $("#avail-controls{{$i+1}}").addClass("hidden");
-                        });
-                        @endfor
-                    });
-                </script>
-
             </div>
         </div>
 
@@ -190,4 +182,27 @@
 
 </div>
 
+@endsection
+
+@section('page_js')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            @for($i=1;$i<9;++$i)
+            $(document).on("click","#avail-control-add{{$i}}",function(e){
+                        e.preventDefault();
+                        $("#avail"+"{{$i+1}}").removeClass("hidden");
+                        $("#avail-controls"+"{{$i+1}}").removeClass("hidden");
+                        $("#avail-controls"+"{{$i}}").addClass("hidden");
+                    });
+
+            $(document).on("click","#avail-control-del{{$i+1}}",function(e){
+                e.preventDefault();
+                $("#avail"+"{{$i+1}}").addClass("hidden");
+                $("[name=day"+"{{$i+1}}]").val("");
+                $("#avail-controls"+"{{$i}}").removeClass("hidden");
+                $("#avail-controls"+"{{$i+1}}").addClass("hidden");
+            });
+            @endfor
+        });
+    </script>
 @endsection

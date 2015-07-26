@@ -1,6 +1,20 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
-<div class="container top-buffer-15 bottom-buffer-45">
+
+    <div class="container top-buffer-15 bottom-buffer-45">
     <div class="page-header">
         <h1>@lang('course_dashboard.course_editor') <small>{{ $school->name }}</small></h1>
     </div>
@@ -52,5 +66,9 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('page_js')
 
 @endsection

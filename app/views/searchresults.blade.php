@@ -1,49 +1,24 @@
 @extends('layout')
+
+@section('page_meta')
+
+@endsection
+
+@section('page_head')
+
+@endsection
+
+@section('page_css')
+
+@endsection
+
 @section('content')
+    {{ Form::open(array('action' => 'SearchController@search', 'id' => 'newSearchForm')) }}
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        function async_search() {
-            var soForm = $('form#newSearchForm');
-            var ninput = $('#current-slices-showing');
-            ninput.val(0);
-            $.post('/resultados',
-                {
-                _token: soForm.find('input[name=_token]').val(),
-                user_lat: soForm.find('input[name=user_lat]').val(),
-                user_lon: soForm.find('input[name=user_lon]').val(),
-                keywords: soForm.find('input[name=keywords]').val(),
-                user_address: soForm.find('input[name=user_address]').val(),
-                prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
-                search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
-                subject: $('input[name=subject]:checked', '#newSearchForm').val(),
-                price: $('input[name=price]:checked', '#newSearchForm').val(),
-                slices_showing: 0
-                },
-                function(data) { //handle the controller response
-                    $('#price-tags').replaceWith($(data).find('#price-tags'));
-                    $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
-                    initialize_map(); //necesario tras cargar el código js del gmap de forma asíncrona
-                    $('#results-main-content').replaceWith($(data).find('#results-main-content'));
-            });
-            ninput.val(1);
-        }
-        $(".radio").change(function(e){
-            e.stopImmediatePropagation();
-            async_search();
-        });
-    });
-</script>
-
-{{ Form::open(array('action' => 'SearchController@search', 'id' => 'newSearchForm')) }}
-
-    <!-- Hidden form data -->
     {{ Form::hidden('user_lat', $user_lat) }}
     {{ Form::hidden('user_lon', $user_lon) }}
     {{ Form::hidden('slices_showing', $slices_showing, array('id' => 'current-slices-showing')) }}
-    <!--/Hidden form data -->
 
-    {{--sub-header search options--}}
     <div id="sub-header-menu" class="container-fluid">
 
         <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
@@ -72,15 +47,6 @@
                     <div class="">
                         {{ Form::submit('Encontrar',array('id'=>'btn-submit-search','class'=>'form-control mp-submit-find')) }}
                     </div>
-                    <script type="text/javascript">
-                        $(document).ready(function(){
-                            $(document).on("click", "#btn-submit-search", function(e) {
-                                var ninput = $('#current-slices-showing');
-                                ninput.val(0);
-                                return true;
-                            });
-                        });
-                    </script>
                 </div>
 
             </div>
@@ -116,14 +82,6 @@
                 <div class="staticMap">
                     <img class="staticMapImg" src="{{{ $MapImgURL }}}" alt="Área de búsqueda"/>
                 </div>
-                <script type="text/javascript">
-                    $(document).on("click", ".staticMapImg", function(e) {
-                        e.stopImmediatePropagation();
-                        $('.staticMap').hide();
-                        $('.dynMap').removeClass('hidden');
-                        initialize_map();
-                    });
-                </script>
                 <div class="dynMap hidden">
                     {{ $gmap['js'] }}
                     {{ $gmap['html'] }}
@@ -233,34 +191,6 @@
                 @endif
 
             </div>
-            <script type="text/javascript">
-                $(document).on("change", ".radio-price", function(e) {
-                    e.stopImmediatePropagation();
-                    var ninput = $('#current-slices-showing');
-                    ninput.val(0);
-                    var soForm = $('form#newSearchForm');
-                    $.post('/resultados',
-                            {
-                                _token: soForm.find('input[name=_token]').val(),
-                                user_lat: soForm.find('input[name=user_lat]').val(),
-                                user_lon: soForm.find('input[name=user_lon]').val(),
-                                keywords: soForm.find('input[name=keywords]').val(),
-                                user_address: soForm.find('input[name=user_address]').val(),
-                                prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
-                                search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
-                                subject: $('input[name=subject]:checked', '#newSearchForm').val(),
-                                price: $('input[name=price]:checked', '#newSearchForm').val(),
-                                slices_showing: 0
-                            },
-                            function(data) { //handle the controller response
-                                $('#price-tags').replaceWith($(data).find('#price-tags'));
-                                $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
-                                initialize_map(); //necesario tras cargar el código js del gmap de forma asíncrona
-                                $('#results-main-content').replaceWith($(data).find('#results-main-content'));
-                            });
-                    ninput.val(1);
-                });
-            </script>
 
             <hr class="hr-sm-separator"/>
 
@@ -284,7 +214,7 @@
 
     <div class="col-xs-12 col-sm-10 col-md-8 co-lg-8" id="results-main-content">
 
-        <div id="saveReviewAlertDiv" class="bb-alert alert alert-info" style="display:none;position: fixed;top: 25%;right: 0px;margin-bottom: 0px;font-size: 1.2em;padding: 1em 1.3em;z-index: 2000;">
+        <div id="saveReviewAlertDiv" class="bb-alert alert alert-info" style="display:none;position: fixed;top: 25%;right: 0;margin-bottom: 0;font-size: 1.2em;padding: 1em 1.3em;z-index: 2000;">
             <span id="saveReviewAlert">Save review success/failure alert</span>
         </div>
 
@@ -307,7 +237,6 @@
                 </div></div>
             </div>
         </div>
-
 
         {{ Form::open(array('id' => 'aPostForm')) }}
         {{ Form::close() }}
@@ -384,22 +313,13 @@
                         @endif
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 hidden-md hidden-lg specialsep">
                                 &nbsp;
                             </div>
                         </div>
-
-                        <div class="row text-center">
-                            <span id="lesson-stars-{{$result->id}}"></span>
-                            <script type="text/javascript">
-                                $('#lesson-stars-{{$result->id}}').raty({
-                                    readOnly: true,
-                                    half: true,
-                                    score: {{ $result->lesson_avg_rating }}
-                                });
-                            </script>
+                        <div class="row text-center lesson-stars-container">
+                            <span class="lesson-stars" data-pk="{{ $result->id }}"></span>
                         </div>
                         <div class="row text-center">
                             @if($result->price=='0')
@@ -429,28 +349,76 @@
                         </div>
                     </div>
                 </div>
-                <!-- separator -->
                 <div class="col-xs-12">
                     <div class="col-xs-offset-0 col-sm-offset-2 col-xs-12 col-sm-8 lessons-separator">&nbsp;</div>
                 </div>
             @endforeach
             </div>
         </div>
-
-        <div class="col-sm-12 clear-left text-center show-more-link bottom-buffer-35" id="show-more-results-{{ $slices_showing }}">
-        {{--Show more link--}}
+        <div class="col-sm-12 clear-left text-center show-more-link bottom-buffer-35" class="show-more-results">
         @if($display_show_more)
             <a href="#">
                 MOSTRAR MAS RESULTADOS<br>
                 <i class="fa fa-angle-down"></i>
             </a>
+        @endif
+        </div>
+    </div>
+</div>
 
-            <script type="text/javascript">
-                $(document).on("click", "#show-more-results-{{ $slices_showing }}", function(e) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                    var soForm = $('form#newSearchForm');
-                    $.post('/resultados',
+<div class="modal-loading"></div>
+
+@endsection
+
+@section('page_js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function async_search() {
+                var soForm = $('form#newSearchForm');
+                var ninput = $('#current-slices-showing');
+                ninput.val(0);
+                $.post('/resultados',
+                        {
+                            _token: soForm.find('input[name=_token]').val(),
+                            user_lat: soForm.find('input[name=user_lat]').val(),
+                            user_lon: soForm.find('input[name=user_lon]').val(),
+                            keywords: soForm.find('input[name=keywords]').val(),
+                            user_address: soForm.find('input[name=user_address]').val(),
+                            prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
+                            search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
+                            subject: $('input[name=subject]:checked', '#newSearchForm').val(),
+                            price: $('input[name=price]:checked', '#newSearchForm').val(),
+                            slices_showing: 0
+                        },
+                        function(data) { //handle the controller response
+                            $('#price-tags').replaceWith($(data).find('#price-tags'));
+                            $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
+                            initialize_map();
+                            $('#results-main-content').replaceWith($(data).find('#results-main-content'));
+                        });
+                ninput.val(1);
+            }
+
+            $(".radio").change(function(e){
+                e.stopImmediatePropagation();
+                async_search();
+            });
+
+            var body = $("body");
+            $(document).on({
+                ajaxSend: function(evt, request, settings) {
+                    if(!settings.url.match('^/request/info/')) {
+                        body.addClass("loading");
+                    }
+                },
+                ajaxStop: function() { body.removeClass("loading"); },
+                ajaxError: function() { body.removeClass("loading"); }
+            });
+
+            $(document).on("click", ".show-more-results", function(e) {
+                e.preventDefault();
+                var soForm = $('form#newSearchForm');
+                $.post('/resultados',
                         {
                             _token: soForm.find('input[name=_token]').val(),
                             user_lat: soForm.find('input[name=user_lat]').val(),
@@ -464,36 +432,58 @@
                             slices_showing: soForm.find('input[name=slices_showing]').val()
                         },
                         function(data) { //handle the controller response
-                            $('.search-results-list').append($(data).find('#results-slice-{{ $slices_showing+1 }}'));
-                            $('#show-more-results-{{ $slices_showing }}').replaceWith($(data).find('#show-more-results-{{ $slices_showing+1 }}'));
-                    });
-                    var ninput = $('#current-slices-showing');
-                    var n = parseInt(ninput.val());
-                    ninput.val(n+1);
-                });
-            </script>
-        @endif
-        </div><!--/#show-more-results -->
+                            var nSlicesShowing = $('#current-slices-showing').val();
+                            var nSlicesShowingPlus = nSlicesShowing + 1;
+                            $('.search-results-list').append($(data).find('#results-slice-'+nSlicesShowingPlus));
+                            $('#show-more-results-'+nSlicesShowing).replaceWith($(data).find('#show-more-results-'+nSlicesShowingPlus));
+                        });
+                var ninput = $('#current-slices-showing');
+                var n = parseInt(ninput.val());
+                ninput.val(n+1);
+            });
 
-    </div><!--/.col-xs-8 /#results-main-content -->
+            $(document).on("change", ".radio-price", function(e) {
+                var ninput = $('#current-slices-showing');
+                ninput.val(0);
+                var soForm = $('form#newSearchForm');
+                $.post('/resultados', {
+                            _token: soForm.find('input[name=_token]').val(),
+                            user_lat: soForm.find('input[name=user_lat]').val(),
+                            user_lon: soForm.find('input[name=user_lon]').val(),
+                            keywords: soForm.find('input[name=keywords]').val(),
+                            user_address: soForm.find('input[name=user_address]').val(),
+                            prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
+                            search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
+                            subject: $('input[name=subject]:checked', '#newSearchForm').val(),
+                            price: $('input[name=price]:checked', '#newSearchForm').val(),
+                            slices_showing: 0
+                        }, function(data) {
+                            $('#price-tags').replaceWith($(data).find('#price-tags'));
+                            $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
+                            initialize_map(); //necesario tras cargar el código js del gmap de forma asíncrona
+                            $('#results-main-content').replaceWith($(data).find('#results-main-content'));
+                        });
+                ninput.val(1);
+            });
 
-</div><!--/.container-fluid-->
+            $(document).on("click", "#btn-submit-search", function(e) {
+                var ninput = $('#current-slices-showing');
+                ninput.val(0);
+                return true;
+            });
 
-{{--Loader overlay--}}
-<div class="modal-loading"></div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $body = $("body");
-        $(document).on({
-            ajaxSend: function(evt, request, settings) {
-                if(!settings.url.match('^/request/info/')) {
-                    $body.addClass("loading");
-                }
-            },
-            ajaxStop: function() { $body.removeClass("loading"); },
-            ajaxError: function() { $body.removeClass("loading"); }
+            $(document).on("click", ".staticMapImg", function(e) {
+                e.stopImmediatePropagation();
+                $('.staticMap').hide();
+                $('.dynMap').removeClass('hidden');
+                initialize_map();
+            });
+
+            $('.lesson-stars').raty({
+                readOnly: true,
+                half: true,
+                score:  $(this).attr('data-pk')
+            });
         });
-    });
-</script>
-
+    </script>
 @endsection
