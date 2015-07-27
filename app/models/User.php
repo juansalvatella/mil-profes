@@ -12,7 +12,7 @@ class User extends Eloquent implements ConfideUserInterface, SluggableInterface 
 	use ConfideUser, HasRole, SluggableTrait, SoftDeletingTrait;
 
     protected $sluggable = ['build_from' => 'username', 'save_to' => 'slug'];
-    protected $dates = ['date_of_birth','created_at','updated_at','deleted_at'];
+    protected $dates = ['date_of_birth','deleted_at'];
     protected $fillable = [
 		'username',
 		'name',
@@ -29,6 +29,7 @@ class User extends Eloquent implements ConfideUserInterface, SluggableInterface 
 		'description'
 	];
 	protected $table = 'users';
+	protected $guarded = [];
 
 	public function student()
 	{

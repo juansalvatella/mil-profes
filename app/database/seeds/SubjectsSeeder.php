@@ -30,6 +30,8 @@ class SubjectsSeeder extends Seeder
                 'name' => $s
             ]);
         }
+
+        Subject::where('name','like','dummy%')->delete(); //delete dummy subjects
     }
 }
 

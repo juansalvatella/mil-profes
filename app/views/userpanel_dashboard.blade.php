@@ -371,7 +371,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <form style="display: inline;" action="{{ action('UsersController@updateAvatar') }}" method="post" onsubmit="return checkCoords();">
+                <form style="display: inline;" action="{{ route('userpanel.dashboard.update.avatar') }}" method="post" onsubmit="return checkCoords();">
                     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                     <input type="hidden" name="avatar" id="cropAvatar"/>
                     <input type="hidden" id="x" name="x" />
@@ -412,16 +412,9 @@
     </script>
     {{--Cropping related JS--}}
     <script type="text/javascript">
-        var xsize = 160,
-                ysize = 160,
-                imgSlc,
-                boundx,
-                boundy;
+        var xsize = 160, ysize = 160, imgSlc, boundx, boundy;
 
-        function checkCoords() {
-            if (parseInt($('#w').val())) return true;
-            return false;
-        }
+        function checkCoords() { return !!parseInt($('#w').val()); }
 
         //Handle preview "zooming"
         function updatePreview(c) {
@@ -488,7 +481,6 @@
                         boundy = bounds[1];
                         // Store the API in the jcrop_api variable
                         jcrop_api = this;
-
                         var holderH = $(".jcrop-holder").height();
                         if(holderH<300) {
                             $('#canvasContainer').height(trackerH);

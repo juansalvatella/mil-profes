@@ -2,13 +2,13 @@
 
 class UsersController extends Controller
 {
-
-    // Displays the form for account creation
-    // @return  Illuminate\Http\Response
+    /**
+     * Displays the form for account creation
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function create()
     {
-//        return View::make(Config::get('confide::signup_form'));
-        return Redirect::to('/')
+        return Redirect::route('home')
             ->with('show_register_modal',true);
     }
 
@@ -90,7 +90,7 @@ class UsersController extends Controller
         $validator =  Validator::make($input, $rules);
 
         if($validator->fails()) {
-            return Redirect::to('/')
+            return Redirect::route('home')
                 ->withInput(Input::except('password'))
                 ->with('reg-error', 'No se cumplimentaron los campos correctamente. Vuelve a intentarlo.')
                 ->with('show_register_modal', true);
@@ -99,7 +99,7 @@ class UsersController extends Controller
         //is it possible to geocode address?
         $geocode = Geocoding::geocode($input['address']);
         if(!$geocode) {
-            return Redirect::to('/')
+            return Redirect::route('home')
                 ->withInput(Input::except('password'))
                 ->with('reg-error', 'La dirección proporcionada no parece ser válida. Prueba escribiendo tu calle, número y ciudad.')
                 ->with('show_register_modal', true);
@@ -130,17 +130,15 @@ class UsersController extends Controller
                 );
             }
 
-            //TODO: eliminar las siguientes líneas para hacerse profesor por defecto, cuando se implante sistema de pago
-            //HACERSE PROFESOR POR DEFECTO
+            //TODO: modificar estas líneas para implementar nuevo sistema estudiante-profesor según >0 clases existentes
             $teacher = new Teacher();
             $teacher->user()->associate($user);
             $teacher->save();
             //Añadir rol(permisos) de profesor a usuario
             $teacher_role = Role::where('name', 'teacher')->first();
             $user->attachRole($teacher_role);
-            //ELIMINAR HASTA AQUÍ
 
-            return Redirect::to('/')
+            return Redirect::route('home')
                 ->with('log-notice', trans('messages.user_just_registered'))
                 ->with('show_login_modal',true)
                 ->with('success','')
@@ -150,7 +148,7 @@ class UsersController extends Controller
             $error = $user->errors()->all(':message');
 
             //return Redirect::action('UsersController@create')
-            return Redirect::to('/')
+            return Redirect::route('home')
                 ->withInput(Input::except('password'))
                 ->with('reg-error', $error)
                 ->with('show_register_modal', true);
@@ -171,10 +169,9 @@ class UsersController extends Controller
     public function login()
     {
         if (Confide::user()) {
-            return Redirect::to('/')->with('show_login_modal',true);
+            return Redirect::route('home')->with('show_login_modal',true);
         } else {
-//            return View::make(Config::get('confide::login_form'));
-            return Redirect::to('/')->with('show_login_modal',true);
+            return Redirect::route('home')->with('show_login_modal',true);
         }
     }
 
@@ -201,7 +198,7 @@ class UsersController extends Controller
                 $err_msg = trans('messages.alerts.wrong_credentials');
 
             //return Redirect::action('UsersController@login')
-            return Redirect::to('/') //redirect to home and show login modal with errors
+            return Redirect::route('home') //redirect to home and show login modal with errors
                 ->withInput(Input::except('password'))
                 ->with('log-error', $err_msg)
                 ->with('show_login_modal',true);
@@ -216,13 +213,13 @@ class UsersController extends Controller
         if (Confide::confirm($code)) {
             $notice_msg = trans('messages.positive_confirmation');
             //return Redirect::action('UsersController@login')
-            return Redirect::to('/')
+            return Redirect::route('home')
                 ->with('log-notice', $notice_msg)
                 ->with('show_login_modal',true);
         } else {
             $error_msg = trans('messages.wrong_confirmation');
             //return Redirect::action('UsersController@login')
-            return Redirect::to('/')
+            return Redirect::route('home')
                 ->with('log-error', $error_msg)
                 ->with('show_login_modal',true);
         }
@@ -247,7 +244,7 @@ class UsersController extends Controller
         if (Confide::forgotPassword(Input::get('email'))) {
             $notice_msg = trans('messages.alerts.password_forgot');
             //return Redirect::action('UsersController@login')
-            return Redirect::to('/')
+            return Redirect::route('home')
                 ->with('log-notice', $notice_msg)
                 ->with('show_login_modal',true);
         } else {
@@ -292,7 +289,7 @@ class UsersController extends Controller
         if ($repo->resetPassword($input)) {
             $notice_msg = trans('messages.alerts.password_reset');
             //return Redirect::action('UsersController@login')
-            return Redirect::to('/')
+            return Redirect::route('home')
                 ->with('log-notice', $notice_msg)
                 ->with('show_login_modal',true);
         } else {
@@ -313,7 +310,7 @@ class UsersController extends Controller
         Confide::logout();
 
         if(Request::is('userpanel/*') || Request::is('admin/*'))
-            return Redirect::to('/');
+            return Redirect::route('home');
         else
             return Redirect::back();
     }
@@ -336,7 +333,7 @@ class UsersController extends Controller
             //Is the input valid? new_password confirmed and meets requirements
             if ($validator->fails()) {
                 Session::flash('validationErrors', $validator->messages());
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->withInput()
                     ->with('error','No fue posible cambiar la contraseña. Asegúrate de introducir una nueva contraseña adecuada y diferente a la actual.')
                     ->with('Etitle', 'Error')
@@ -344,7 +341,7 @@ class UsersController extends Controller
             }
             //Is the old password correct?
             if(!Hash::check(Input::get('old_password'), $user->password)){
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->withInput()
                     ->with('error','La contraseña actual no es la correcta.')
                     ->with('Etitle', 'Error')
@@ -358,13 +355,13 @@ class UsersController extends Controller
             $user->save();
             Confide::logout();
 
-            return Redirect::to('/')
+            return Redirect::route('home')
                 ->with('log-success','Tu contraseña se ha actualizado con éxito. Por favor, accede con tu nueva contraseña.')
                 ->with('show_login_modal',true);
 
         } else {
 
-            return Redirect::route('/')
+            return Redirect::route('home')
                 ->with('log-notice', 'No se fue posible actualizar tu contraseña. Tu sesión ha caducado, por favor, vuelve a iniciar sesión e inténtalo de nuevo.')
                 ->with('show_login_modal',true);
 
@@ -379,6 +376,7 @@ class UsersController extends Controller
         if($user = Confide::user())
         {
             $input = Input::all();
+
             $rules = array(
                 'avatar' => 'required|string',
                 'x' => 'required|string',
@@ -387,52 +385,48 @@ class UsersController extends Controller
                 'h' => 'required|string'
             );
             $validator = Validator::make($input, $rules);
-//            dd($input);
-//            dd($validator->passes());
+
             if($validator->fails()) {
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->with('error','No ha sido posible actualizar tu foto de perfil. Inténtalo de nuevo.')
                     ->with('Etitle', 'Error')
                     ->with('Emsg', 'No ha sido posible actualizar tu foto de perfil. Inténtalo de nuevo.');
             } else {
                 $targ_w = $targ_h = 160;
                 $jpeg_quality = 90;
-//                dd($input['avatar']);
                 $file = preg_replace('#^data:image/[^;]+;base64,#', '', $input['avatar']);
-//                dd($file);
                 $file = base64_decode($file);
-//                dd($file);
                 $path = public_path() . '/img/avatars/';
                 $filename = Str::random(30) . '.jpg';
+                $user->avatar = $filename;
 
                 $img_r = imagecreatefromstring($file);
-                if ($img_r == false) {
-                    return Redirect::route('userpanel')->withInput()
+                if ($img_r == false)
+                    return Redirect::route('userpanel.dashboard')->withInput()
                         ->with('error', 'Error al actualizar tu imagen de perfil: asegúrate de que tu imagen es del tipo PNG, JPG o GIF.')
                         ->with('Etitle', 'Error')
                         ->with('Emsg', 'Error al actualizar tu imagen de perfil: asegúrate de que tu imagen es del tipo PNG, JPG o GIF.');
-                }
+
                 $dst_r = ImageCreateTrueColor($targ_w, $targ_h);
                 imagecopyresampled($dst_r, $img_r, 0, 0, $input['x'], $input['y'], $targ_w, $targ_h, $input['w'], $input['h']);
                 header('Content-type: image/jpeg');
                 imagejpeg($dst_r, $path . $filename , $jpeg_quality);
                 imagedestroy($img_r);
 
-                $user->avatar = $filename;
                 if ($user->save()) {
-                    return Redirect::route('userpanel')
+                    return Redirect::route('userpanel.dashboard')
                         ->with('success', 'Tu imagen de perfil se ha actualizado con éxito')
                         ->with('Stitle', 'Éxito')
                         ->with('Smsg', 'Tu imagen de perfil ha sido actualizada.');
                 } else {
-                    return Redirect::route('userpanel')->withInput()
+                    return Redirect::route('userpanel.dashboard')->withInput()
                         ->with('error', 'Error al actualizar tu imagen de perfil. Inténtalo de nuevo.')
                         ->with('Etitle', 'Error')
                         ->with('Emsg', 'Error al actualizar tu imagen de perfil. Inténtalo de nuevo.');
                 }
             }
         } else {
-            return Redirect::route('/')
+            return Redirect::route('home')
                 ->with('log-notice', 'No ha sido posible actualizar tu imagen de perfil porque tu sesión ha caducado. Por favor, vuelve a iniciar sesión e inténtalo de nuevo.')
                 ->with('show_login_modal',true);
         }
@@ -460,8 +454,9 @@ class UsersController extends Controller
                 'description'   => 'string|max:450',
             );
             $validator = Validator::make($input, $rules);
+
             if($validator->fails()) {
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->withInput()
                     ->with('error','No ha sido posible actualizar tus datos. Asegúrate de haber rellenado los campos correctamente.')
                     ->with('Etitle', 'Error')
@@ -488,7 +483,7 @@ class UsersController extends Controller
                 $user->address = $input['address'];
                 $geocoding = Geocoding::geocode($user->address);
                 if(!$geocoding) {
-                    return Redirect::route('userpanel')
+                    return Redirect::route('userpanel.dashboard')
                         ->withInput()
                         ->with('error','No fue posible actualizar tus datos. La dirección proporcionada parece no ser válida.')
                         ->with('Etitle', 'Error')
@@ -512,12 +507,12 @@ class UsersController extends Controller
                 $user->description = $input['description'];
 
             if($user->save()) {
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->with('success', 'Tus datos se han actualizado con éxito')
                     ->with('Stitle', 'Éxito')
                     ->with('Smsg', 'Se han actualizado tus datos.');
             } else {
-                return Redirect::route('userpanel')->withInput()
+                return Redirect::route('userpanel.dashboard')->withInput()
                     ->with('error', 'Error al actualizar tus datos')
                     ->with('Etitle', 'Error')
                     ->with('Emsg', 'Error al tratar de actualizar tus datos. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
@@ -547,7 +542,7 @@ class UsersController extends Controller
             );
             $validator = Validator::make($input, $rules);
             if ($validator->fails()) {
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->withInput()
                     ->with('error', 'No ha sido posible actualizar los enlaces a redes sociales. Asegúrate de haber introducido direcciones web válidas.')
                     ->with('Etitle', 'Error')
@@ -568,12 +563,12 @@ class UsersController extends Controller
                 $user->link_web = $input['web'];
 
             if($user->save())
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->with('success', 'Tus enlaces a redes sociales se han actualizado con éxito.')
                     ->with('Stitle', 'Éxito')
                     ->with('Smsg', 'Tus enlaces a redes sociales han sido actualizados.');
             else
-                return Redirect::route('userpanel')->withInput()
+                return Redirect::route('userpanel.dashboard')->withInput()
                     ->with('error', 'Error al actualizar tus datos')
                     ->with('Etitle', 'Error')
                     ->with('Emsg', 'Error al tratar de actualizar tus enlaces sociales.');
@@ -595,7 +590,7 @@ class UsersController extends Controller
         {
             if($user->hasRole('teacher'))
             { //Advertir de que ya es profesor!
-                return Redirect::route('userpanel')->with('success', '¡Ya eres profe.! ¡Publica tus clases!');
+                return Redirect::route('userpanel.dashboard')->with('success', '¡Ya eres profe.! ¡Publica tus clases!');
             } else { //Añadir a tabla de profesores
                 $teacher = new Teacher();
                 $teacher->user()->associate($user);
@@ -605,7 +600,7 @@ class UsersController extends Controller
                 $teacher_role = Role::where('name', 'teacher')->first();
                 $user->attachRole($teacher_role);
 
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->with('success', '¡Ahora ya eres profe.! ¡Publica tus clases!')
                     ->with('Stitle', 'Éxito')
                     ->with('Smsg', '¡Ya eres profe.! ¡Publica tus clase para aparecer en los resultados de las búsquedas!');

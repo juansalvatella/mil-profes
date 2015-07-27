@@ -23,7 +23,7 @@ class SearchController extends BaseController
         );
         $validator =  Validator::make($input, $rules);
         if($validator->fails())
-            return Redirect::to('/');
+            return Redirect::route('home');
 
         //prepare all vars
         $address = Input::has('user_address') ? $input['user_address'] : '';
@@ -82,7 +82,7 @@ class SearchController extends BaseController
                             users.phone,
                             users.avatar,
                             users.username,
-                            AVG(ratings.value) AS lesson_avg_rating,
+                            AVG(t_lesson_ratings.value) AS lesson_avg_rating,
                             teachers_average_ratings.teacher_avg_rating,
                             users.status,
                             users.deleted_at
@@ -90,7 +90,7 @@ class SearchController extends BaseController
                             LEFT JOIN teachers ON teachers.id = teacher_lessons.teacher_id
                             LEFT JOIN users ON users.id = teachers.user_id
                             LEFT JOIN teachers_average_ratings ON teachers_average_ratings.teacher_id = teachers.id
-                            LEFT JOIN ratings ON ratings.teacher_lesson_id = teacher_lessons.id
+                            LEFT JOIN t_lesson_ratings ON t_lesson_ratings.teacher_lesson_id = teacher_lessons.id
                           WHERE teacher_lessons.subject_id = ?
                           AND users.deleted_at IS NULL
                           AND MATCH(teacher_lessons.description,teacher_lessons.title) AGAINST(? IN BOOLEAN MODE)
@@ -127,7 +127,7 @@ class SearchController extends BaseController
                             users.phone,
                             users.avatar,
                             users.username,
-                            AVG(ratings.value) AS lesson_avg_rating,
+                            AVG(t_lesson_ratings.value) AS lesson_avg_rating,
                             teachers_average_ratings.teacher_avg_rating,
                             users.status,
                             users.deleted_at
@@ -135,7 +135,7 @@ class SearchController extends BaseController
                             LEFT JOIN teachers ON teachers.id = teacher_lessons.teacher_id
                             LEFT JOIN users ON users.id = teachers.user_id
                             LEFT JOIN teachers_average_ratings ON teachers_average_ratings.teacher_id = teachers.id
-                            LEFT JOIN ratings ON ratings.teacher_lesson_id = teacher_lessons.id
+                            LEFT JOIN t_lesson_ratings ON t_lesson_ratings.teacher_lesson_id = teacher_lessons.id
                           WHERE teacher_lessons.subject_id = ?
                           AND users.deleted_at IS NULL
                           GROUP BY teacher_lessons.id
@@ -177,7 +177,7 @@ class SearchController extends BaseController
                             users.phone,
                             users.avatar,
                             users.username,
-                            AVG(ratings.value) AS lesson_avg_rating,
+                            AVG(t_lesson_ratings.value) AS lesson_avg_rating,
                             teachers_average_ratings.teacher_avg_rating,
                             users.status,
                             users.deleted_at
@@ -185,7 +185,7 @@ class SearchController extends BaseController
                             LEFT JOIN teachers ON teachers.id = teacher_lessons.teacher_id
                             LEFT JOIN users ON users.id = teachers.user_id
                             LEFT JOIN teachers_average_ratings ON teachers_average_ratings.teacher_id = teachers.id
-                            LEFT JOIN ratings ON ratings.teacher_lesson_id = teacher_lessons.id
+                            LEFT JOIN t_lesson_ratings ON t_lesson_ratings.teacher_lesson_id = teacher_lessons.id
                           WHERE users.deleted_at IS NULL
                           AND MATCH(teacher_lessons.description,teacher_lessons.title) AGAINST(? IN BOOLEAN MODE)
                           GROUP BY teacher_lessons.id
@@ -217,7 +217,7 @@ class SearchController extends BaseController
                             users.phone,
                             users.avatar,
                             users.username,
-                            AVG(ratings.value) AS lesson_avg_rating,
+                            AVG(t_lesson_ratings.value) AS lesson_avg_rating,
                             teachers_average_ratings.teacher_avg_rating,
                             users.status,
                             users.deleted_at
@@ -225,7 +225,7 @@ class SearchController extends BaseController
                             LEFT JOIN teachers ON teachers.id = teacher_lessons.teacher_id
                             LEFT JOIN users ON users.id = teachers.user_id
                             LEFT JOIN teachers_average_ratings ON teachers_average_ratings.teacher_id = teachers.id
-                            LEFT JOIN ratings ON ratings.teacher_lesson_id = teacher_lessons.id
+                            LEFT JOIN t_lesson_ratings ON t_lesson_ratings.teacher_lesson_id = teacher_lessons.id
                           WHERE users.deleted_at IS NULL
                           GROUP BY teacher_lessons.id
                         ) AS t1
@@ -265,14 +265,14 @@ class SearchController extends BaseController
                             schools.email,
                             schools.phone,
                             schools.logo,
-                            AVG(school_lesson_ratings.value) as lesson_avg_rating,
+                            AVG(s_lesson_ratings.value) as lesson_avg_rating,
                             schools_average_ratings.school_avg_rating,
                             schools.status,
                             schools.deleted_at
                           FROM school_lessons
                             LEFT JOIN schools ON schools.id = school_lessons.school_id
                             LEFT JOIN schools_average_ratings ON schools_average_ratings.school_id = schools.id
-                            LEFT JOIN school_lesson_ratings ON school_lesson_ratings.school_lesson_id = school_lessons.id
+                            LEFT JOIN s_lesson_ratings ON s_lesson_ratings.school_lesson_id = school_lessons.id
                           WHERE school_lessons.subject_id = ?
                           AND schools.deleted_at IS NULL
                           AND (schools.status <> 'Crawled' OR schools.status IS NULL)
@@ -286,14 +286,14 @@ class SearchController extends BaseController
 //                    $results = DB::table('school_lessons')
 //                        ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
 //                        ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
-//                        ->leftJoin('school_lesson_ratings','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
+//                        ->leftJoin('s_lesson_ratings','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
 //                        ->groupBy('school_lessons.id')
 //                        ->where('subject_id', $subj_id)
 //                        ->whereRaw("MATCH(school_lessons.description,school_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
 //                        ->orderBy('lesson_avg_rating', 'DESC')
 //                        ->orderBy('school_avg_rating', 'DESC')
 //                        ->orderBy('school_lessons.id','ASC')
-//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
+//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(s_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
 
                 } else { //school, with subject, without keywords
                     $results = DB::select(DB::raw("
@@ -306,14 +306,14 @@ class SearchController extends BaseController
                             schools.email,
                             schools.phone,
                             schools.logo,
-                            AVG(school_lesson_ratings.value) as lesson_avg_rating,
+                            AVG(s_lesson_ratings.value) as lesson_avg_rating,
                             schools_average_ratings.school_avg_rating,
                             schools.status,
                             schools.deleted_at
                           FROM school_lessons
                             LEFT JOIN schools ON schools.id = school_lessons.school_id
                             LEFT JOIN schools_average_ratings ON schools_average_ratings.school_id = schools.id
-                            LEFT JOIN school_lesson_ratings ON school_lesson_ratings.school_lesson_id = school_lessons.id
+                            LEFT JOIN s_lesson_ratings ON s_lesson_ratings.school_lesson_id = school_lessons.id
                           WHERE school_lessons.subject_id = ?
                           AND schools.deleted_at IS NULL
                           AND (schools.status <> 'Crawled' OR schools.status IS NULL)
@@ -325,13 +325,13 @@ class SearchController extends BaseController
 //                    $results = DB::table('school_lessons')
 //                        ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
 //                        ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
-//                        ->leftJoin('school_lesson_ratings','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
+//                        ->leftJoin('s_lesson_ratings','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
 //                        ->groupBy('school_lessons.id')
 //                        ->where('subject_id', $subj_id)
 //                        ->orderBy('lesson_avg_rating', 'DESC')
 //                        ->orderBy('school_avg_rating', 'DESC')
 //                        ->orderBy('school_lessons.id','ASC')
-//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
+//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(s_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
                 }
             } else { //search all subjects
                 if($check_keywords) { //school, without subject, with keywords
@@ -352,14 +352,14 @@ class SearchController extends BaseController
                             schools.email,
                             schools.phone,
                             schools.logo,
-                            AVG(school_lesson_ratings.value) as lesson_avg_rating,
+                            AVG(s_lesson_ratings.value) as lesson_avg_rating,
                             schools_average_ratings.school_avg_rating,
                             schools.status,
                             schools.deleted_at
                           FROM school_lessons
                             LEFT JOIN schools ON schools.id = school_lessons.school_id
                             LEFT JOIN schools_average_ratings ON schools_average_ratings.school_id = schools.id
-                            LEFT JOIN school_lesson_ratings ON school_lesson_ratings.school_lesson_id = school_lessons.id
+                            LEFT JOIN s_lesson_ratings ON s_lesson_ratings.school_lesson_id = school_lessons.id
                           WHERE schools.deleted_at IS NULL
                           AND (schools.status <> 'Crawled' OR schools.status IS NULL)
                           AND MATCH(school_lessons.description,school_lessons.title) AGAINST(? IN BOOLEAN MODE)
@@ -371,13 +371,13 @@ class SearchController extends BaseController
 //                    $results = DB::table('school_lessons')
 //                        ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
 //                        ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
-//                        ->leftJoin('school_lesson_ratings','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
+//                        ->leftJoin('s_lesson_ratings','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
 //                        ->groupBy('school_lessons.id')
 //                        ->whereRaw("MATCH(school_lessons.description,school_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
 //                        ->orderBy('lesson_avg_rating', 'DESC')
 //                        ->orderBy('school_avg_rating', 'DESC')
 //                        ->orderBy('school_lessons.id','ASC')
-//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
+//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(s_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
                 } else { //school, without subject, without keywords
                     $results = DB::select(DB::raw("
                         SELECT t1.*, COUNT(t1.school_id) AS aggregated
@@ -389,14 +389,14 @@ class SearchController extends BaseController
                             schools.email,
                             schools.phone,
                             schools.logo,
-                            AVG(school_lesson_ratings.value) as lesson_avg_rating,
+                            AVG(s_lesson_ratings.value) as lesson_avg_rating,
                             schools_average_ratings.school_avg_rating,
                             schools.status,
                             schools.deleted_at
                           FROM school_lessons
                             LEFT JOIN schools ON schools.id = school_lessons.school_id
                             LEFT JOIN schools_average_ratings ON schools_average_ratings.school_id = schools.id
-                            LEFT JOIN school_lesson_ratings ON school_lesson_ratings.school_lesson_id = school_lessons.id
+                            LEFT JOIN s_lesson_ratings ON s_lesson_ratings.school_lesson_id = school_lessons.id
                           WHERE schools.deleted_at IS NULL
                           AND (schools.status <> 'Crawled' OR schools.status IS NULL)
                           GROUP BY school_lessons.id
@@ -407,12 +407,12 @@ class SearchController extends BaseController
 //                    $results = DB::table('school_lessons')
 //                        ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
 //                        ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
-//                        ->leftJoin('school_lesson_ratings','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
+//                        ->leftJoin('s_lesson_ratings','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
 //                        ->groupBy('school_lessons.id')
 //                        ->orderBy('lesson_avg_rating', 'DESC')
 //                        ->orderBy('school_avg_rating', 'DESC')
 //                        ->orderBy('school_lessons.id','ASC')
-//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(school_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
+//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(s_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
                 }
             }
         }

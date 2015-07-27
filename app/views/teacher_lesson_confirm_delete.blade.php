@@ -36,7 +36,7 @@
                     </ul>
                 </div>
                 <div class="top-buffer-25">
-                    <form action="{{ action('TeachersController@deleteLesson') }}" method="post" role="form">
+                    <form action="{{ action('TeachersController@doDeleteLesson') }}" method="post" role="form">
                         <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                         <input type="hidden" name="lesson_id" value="{{ $lesson->id }}"/>
                         <input type="submit" class="btn btn-danger" value="Confirmar"/>

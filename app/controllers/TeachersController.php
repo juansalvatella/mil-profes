@@ -63,12 +63,12 @@ class TeachersController extends BaseController
         $lesson->teacher()->associate($teacher);
 
         if($lesson->save())
-            return Redirect::route('userpanel')
+            return Redirect::route('userpanel.dashboard')
                 ->with('success', 'Clase creada con éxito')
                 ->with('Stitle', 'Éxito')
                 ->with('Smsg', 'Tu clase ha sido dada de alta y aparecerá en los resultados de las búsquedas.');
         else
-            return Redirect::route('userpanel')
+            return Redirect::route('userpanel.dashboard')
                 ->with('error', '¡Error! No se pudo crear la clase. Ponte en contacto con el equipo de milPROFES si el problema persiste.')
                 ->with('Etitle', 'Error')
                 ->with('Emsg', 'Error al tratar de crear la clase. Ponte en contacto con el equipo de milPROFES si el problema persiste.');
@@ -125,17 +125,17 @@ class TeachersController extends BaseController
             $lesson->subject()->associate($subject);
 
             if ($lesson->save())
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->with('success', 'Datos de la clase actualizados con éxito')
                     ->with('Stitle', 'Éxito')
                     ->with('Smsg', 'Se han actualizado los datos de tu clase.');
             else
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->with('error', '¡Error! No se pudo actualizar los datos de la clase')
                     ->with('Etitle', 'Error')
                     ->with('Emsg', 'No se pudieron actualizar los datos de tu clase. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
         } else {
-            return Redirect::route('userpanel')
+            return Redirect::route('userpanel.dashboard')
                 ->with('error', '¡Error! No se pudo actualizar los datos de la clase.')
                 ->with('Etitle', 'Error')
                 ->with('Emsg', 'No se pudieron actualizar los datos de tu clase. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
@@ -159,7 +159,7 @@ class TeachersController extends BaseController
         if($teacher->id==$lesson_teacher->id) //Comprobamos que no se esté tratando de editar clases de otros usuarios
             return View::make('teacher_lesson_edit', compact('lesson','subject'));
         else
-            return Redirect::route('userpanel')
+            return Redirect::route('userpanel.dashboard')
                 ->with('error', '¡Error! Tu clase no ha sido encontrada')
                 ->with('Etitle', 'Error')
                 ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
@@ -182,17 +182,16 @@ class TeachersController extends BaseController
         if($teacher->id==$lesson_teacher->id) //Comprobamos que no se está tratando de eliminar las clases de otros usuarios
             return View::make('teacher_lesson_confirm_delete', compact('user','lesson','subject'));
         else
-            return Redirect::route('userpanel')
+            return Redirect::route('userpanel.dashboard')
                 ->with('error', 'Error! Tu clase no ha sido encontrada')
                 ->with('Etitle', 'Error')
                 ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
     }
 
-
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    /**public function deleteLesson()
+    public function doDeleteLesson()
     {
         $lesson_id = Input::get('lesson_id');
         $lesson = TeacherLesson::findOrFail($lesson_id);
@@ -203,21 +202,20 @@ class TeachersController extends BaseController
         {
             $lesson->delete();
             if($lesson->exists)
-                return Redirect::route('userpanel')
+                return Redirect::route('userpanel.dashboard')
                     ->with('error', '¡Error! La clase no pudo ser eliminada')
                     ->with('Etitle', 'Error')
                     ->with('Emsg', 'La clase no pudo ser eliminada. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
             else
-                return Redirect::route('userpanel')->with('success', 'Clase eliminada con éxito')
+                return Redirect::route('userpanel.dashboard')->with('success', 'Clase eliminada con éxito')
                     ->with('Stitle', 'Éxito')
                     ->with('Smsg', 'Se ha eliminado la clase.');
         } else {
-            return Redirect::route('userpanel')->with('error', '¡Error! La clase no pudo ser eliminada.')
+            return Redirect::route('userpanel.dashboard')->with('error', '¡Error! La clase no pudo ser eliminada.')
                 ->with('Etitle', 'Error')
                 ->with('Emsg', 'La clase no pudo ser eliminada. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
         }
-
-    }*/
+    }
 
     /**
      * Saves the availability.
@@ -261,7 +259,7 @@ class TeachersController extends BaseController
         );
         $validator = Validator::make($input, $rules);
         if ($validator->fails()){
-            return Redirect::route('userpanel')
+            return Redirect::route('userpanel.dashboard')
                 ->with('error', '¡Error! No se pudo actualizar tu disponibilidad.')
                 ->with('Etitle', 'Error')
                 ->with('Emsg', 'No se pudo actualizar tu disponibilidad. Los datos introducidos no son válidos.');
@@ -279,7 +277,7 @@ class TeachersController extends BaseController
                 $pick->start = $input['start'.$i];
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('userpanel')
+                    return Redirect::route('userpanel.dashboard')
                         ->with('error', '¡Error! No se pudo actualizar tu disponibilidad.')
                         ->with('Etitle', 'Error')
                         ->with('Emsg', 'No se pudo actualizar tu disponibilidad. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
@@ -312,7 +310,7 @@ class TeachersController extends BaseController
                 $pick->start = $cleanInput['start'.$i];
                 $pick->end = $cleanInput['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('userpanel')
+                    return Redirect::route('userpanel.dashboard')
                         ->with('error', '¡Error! No se pudo actualizar tu disponibilidad.')
                         ->with('Etitle', 'Error')
                         ->with('Emsg', 'No se pudo actualizar tu disponibilidad. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
@@ -321,7 +319,7 @@ class TeachersController extends BaseController
             }
         }
 
-        return Redirect::route('userpanel')
+        return Redirect::route('userpanel.dashboard')
             ->with('success', 'Tu disponibilidad ha sido actualizada con éxito')
             ->with('Stitle', 'Éxito')
             ->with('Smsg', 'Tu disponibilidad ha sido actualizada.');

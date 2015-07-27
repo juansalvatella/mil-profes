@@ -75,8 +75,8 @@ class AdminController extends BaseController
      */
     public function schoolReviews()
     {
-        $reviews = DB::table('school_lesson_ratings')
-            ->leftJoin('school_lessons','school_lesson_ratings.school_lesson_id','=','school_lessons.id')
+        $reviews = DB::table('s_lesson_ratings')
+            ->leftJoin('school_lessons','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
             ->leftJoin('schools','school_lessons.school_id','=','schools.id')
             ->whereNull('schools.deleted_at')
             ->paginate(10);
@@ -586,7 +586,7 @@ class AdminController extends BaseController
                 $pick->start = $input['start'.$i];
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('userpanel')
+                    return Redirect::route('userpanel.dashboard')
                         ->with('warning', 'Aviso! Se actualizaron los datos de la clase con errores')
                         ->with('Wtitle', 'Aviso')
                         ->with('Wmsg', 'Se actualizaron los datos de la clase con posibles errores en las disponibilidades.');

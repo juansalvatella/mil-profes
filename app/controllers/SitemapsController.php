@@ -79,7 +79,7 @@ class SitemapsController extends BaseController
         //Generate sitemaps/teacher.xml sitemap index that links all the generated teachers sitemaps
         for($j=1;$j<($i+1);++$j) {
             $sitemaps[] = [
-                'loc'       => URL::to('/').'/sitemaps/teachers-'.$j, //.xml
+                'loc'       => URL::route('home').'/sitemaps/teachers-'.$j, //.xml
                 'lastmod'   => $now
             ];
         }
@@ -126,7 +126,7 @@ class SitemapsController extends BaseController
         //Generate sitemaps/school.xml sitemap index that links all the generated teachers sitemaps
         for($j=1;$j<($i+1);++$j) {
             $sitemaps[] = [
-                'loc'       => URL::to('/').'/sitemaps/schools-'.$j, //.xml
+                'loc'       => URL::route('home').'/sitemaps/schools-'.$j, //.xml
                 'lastmod'   => $now
             ];
         }
