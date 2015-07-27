@@ -8,7 +8,7 @@ class SchoolPic extends Eloquent
 
     //Each pic belongs to one school
     public function school() {
-        return $this->belongsTo('School');
+        return $this->belongsTo('School','school_id');
     }
 
 }

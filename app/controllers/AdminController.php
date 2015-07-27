@@ -116,7 +116,7 @@ class AdminController extends BaseController
     }
 
     /**
-     * Given the parameter $school_id, and deletes the
+     * Given the parameter $school_id, shows the warning before deleting school
      * @param $school_id
      * @return \Illuminate\View\View
      */
@@ -147,6 +147,7 @@ class AdminController extends BaseController
         $school->description = $input['description'];
         $school->status = 'Active'; //manually created schools are active by default because there is no need to review their data
         $school->origin = $input['origin'];
+        $school->video = $input['video'];
         $school->link_web = $input['web'];
         $school->link_facebook = $input['facebook'];
         $school->link_twitter = $input['twitter'];
@@ -183,12 +184,6 @@ class AdminController extends BaseController
 
         if($school->save()) {
 
-            //associate video
-            $video = new Video();
-            $video->video = $input['video'];
-            $video->school()->associate($school);
-            $video->save();
-
             //associate pics
             if (Input::hasFile('pics')) {
                 $all_uploads = Input::file('pics');
@@ -219,7 +214,7 @@ class AdminController extends BaseController
                         $filename = Str::random(30) . '.' . $file_extension;
                         $path = public_path() . '/img/pics/';
                         $upload->move($path, $filename);
-                        $pic = new Pic();
+                        $pic = new SchoolPic();
                         $pic->pic = $filename;
                         $pic->school()->associate($school);
                         if(!$pic->save()){
@@ -271,10 +266,10 @@ class AdminController extends BaseController
     }
 
     /**
-     * Shows the messages after deleting the school.
+     * Delete school after confirmation
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function showDeleteSchool()
+    public function doDeleteSchool()
     {
         $school_id = Input::get('id');
         $school = School::findOrFail($school_id);
@@ -388,7 +383,7 @@ class AdminController extends BaseController
                     $filename = Str::random(30) . '.' . $file_extension;
                     $path = public_path() . '/img/pics/';
                     $upload->move($path, $filename);
-                    $pic = new Pic();
+                    $pic = new SchoolPic();
                     $pic->pic = $filename;
                     $pic->school()->associate($school);
                     if(!$pic->save()){
