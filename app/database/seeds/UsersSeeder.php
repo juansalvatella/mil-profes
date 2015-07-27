@@ -59,13 +59,15 @@ class UsersSeeder extends Seeder
         $adminUser->attachRole($student_role);
         $adminUser->attachRole($teacher_role);
 
-        for($i=0;$i<140;++$i) {
+        $files = glob(public_path('img/avatars').'/*.*'); //avatars list
+        for($i=0;$i<40;++$i) {
             $gender = $faker->randomElement(['male','female']);
             $username = $faker->unique()->userName();
             $street = 'Mayor';
             $number = $faker->randomDigit(2);
             $town = $faker->randomElement(['Barcelona','Badalona','Sant Just','Sant Joan','Martorell','Igualada','Castellbisbal','Manresa','Tarragona','Lleida','Girona','Sabadell','Sant Cugat','Vic']);
             $address = $street.', '.$number.', '.$town;
+            $avatarFileName = basename($files[array_rand($files)]); //pick random avatar
             $geocoding = Geocoding::geocode($address);
             $newUserData = [[
                 'username' => $username,
@@ -80,6 +82,7 @@ class UsersSeeder extends Seeder
                 'region' => isset($geocoding[3]['admin_2']) ? $geocoding[3]['admin_2'] : null,
                 'date_of_birth' => $faker->date(),
                 'gender' => $gender,
+                'avatar' => $avatarFileName,
                 'link_web' => 'http://'.$faker->domainName(),
                 'link_facebook' => 'http://'.$faker->domainName(),
                 'link_twitter' => 'http://'.$faker->domainName(),

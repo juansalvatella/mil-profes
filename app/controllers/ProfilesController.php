@@ -82,11 +82,8 @@ class ProfilesController extends BaseController
             $teacher->last_update = $last_one->format('d/m/Y h:i');
 
         //Calcular edad
-        if ($user->date_of_birth) {
-            $birthDate = $user->date_of_birth;
-            $birthDate = explode("-", $birthDate);
-            $teacher->age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[2], $birthDate[0]))) > date("md") ? ((date("Y") - $birthDate[0]) - 1) : (date("Y") - $birthDate[0]));
-        }
+        if ($user->date_of_birth)
+            $teacher->age = $user->date_of_birth->age;
 
         //Otros datos (importados de user table)
         $teacher->slug = $user_slug;

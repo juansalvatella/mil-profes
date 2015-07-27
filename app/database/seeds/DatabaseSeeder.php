@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('TeacherLessonsSeeder');
 		$this->call('SchoolLessonsSeeder');
 		$this->call('RatingsSeeder');
+		$this->call('VisualizationsSeeder');
 
 		$this->command->info('Done!');
 	}

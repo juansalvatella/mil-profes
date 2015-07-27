@@ -10,8 +10,13 @@ class Student extends Eloquent
         return $this->belongsTo('User');
     }
 
-    public function ratings()
+    public function teacher_ratings()
     {
-        return $this->hasMany('Rating');
+        return $this->hasMany('TeacherLessonRating');
+    }
+
+    public function school_ratings()
+    {
+        return $this->hasMany('SchoolLessonRating');
     }
 }

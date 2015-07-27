@@ -23,7 +23,7 @@ class ReviewsController extends BaseController
         $user = Confide::user();
         $student = $user->student()->first();
         $lesson_id = $input['lessonId'];
-        $existingRating = Rating::where('student_id','=',''.$student->id)->where('teacher_lesson_id','=',''.$lesson_id)->get();
+        $existingRating = TeacherLessonRating::where('student_id','=',''.$student->id)->where('teacher_lesson_id','=',''.$lesson_id)->get();
         if ($existingRating->count() != 0)
             return Response::json(['success'=>'warning','msg'=>'No es posible valorar la misma clase dos veces.'],200);
 
@@ -48,7 +48,7 @@ class ReviewsController extends BaseController
             $lesson_id = (int) Input::get('review_lesson_id');
             $user = Confide::user();
             $student = $user->student()->first();
-            $lesson_rating = Rating::where('student_id','=',''.$student->id)->where('teacher_lesson_id','=',''.$lesson_id)->get();
+            $lesson_rating = TeacherLessonRating::where('student_id','=',''.$student->id)->where('teacher_lesson_id','=',''.$lesson_id)->get();
 
             if ($lesson_rating->count() == 0) {
                 if(Input::has('review_comment'))
@@ -161,7 +161,7 @@ class ReviewsController extends BaseController
         if (!Session::has('r_helpful_'.$review_id)) {
             Session::put('r_helpful_'.$review_id, true);
             Session::save();
-            $review = Rating::findOrFail($review_id);
+            $review = TeacherLessonRating::findOrFail($review_id);
             $review->yes_helpful = $review->yes_helpful + 1;
             $review->total_helpful = $review->total_helpful + 1;
             if($review->save())
@@ -185,7 +185,7 @@ class ReviewsController extends BaseController
         if (!Session::has('r_helpful_'.$review_id)) {
             Session::put('r_helpful_'.$review_id, true);
             Session::save();
-            $review = Rating::findOrFail($review_id);
+            $review = TeacherLessonRating::findOrFail($review_id);
             $review->total_helpful = $review->total_helpful + 1;
             if($review->save())
                 return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);

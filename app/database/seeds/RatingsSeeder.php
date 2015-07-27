@@ -16,7 +16,7 @@ class RatingsSeeder extends Seeder
                     'comment' => $faker->text(200),
                     'yes_helpful' => (int) $yes = mt_rand(0,100),
                     'total_helpful' => (int) mt_rand(0,100) + $yes,
-                    'student_id' => (int) mt_rand(1,140),
+                    'student_id' => (int) mt_rand(1,40),
                     'teacher_lesson_id' => $tl->id
                 ]);
 
@@ -28,7 +28,7 @@ class RatingsSeeder extends Seeder
                     'comment' => $faker->text(200),
                     'yes_helpful' => $yes = mt_rand(0,100),
                     'total_helpful' => mt_rand(0,100) + $yes,
-                    'student_id' => mt_rand(1,140),
+                    'student_id' => mt_rand(1,40),
                     'school_lesson_id' => $sl->id
                 ]);
     }

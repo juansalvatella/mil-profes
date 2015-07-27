@@ -17,7 +17,7 @@ class TeacherLesson extends Eloquent
 
     public function ratings()
     {
-        return $this->hasMany('Rating');
+        return $this->hasMany('TeacherLessonRating');
     }
 
     public function visualizations() {
@@ -51,7 +51,7 @@ class TeacherLesson extends Eloquent
      */
     public function getNumberOfReviews()
     {
-        return (int) $this->hasMany('Rating')->count();
+        return (int) $this->hasMany('TeacherLessonRating')->count();
     }
 
     /**

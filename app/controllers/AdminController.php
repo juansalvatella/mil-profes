@@ -55,7 +55,7 @@ class AdminController extends BaseController
      */
     public function teacherReviews()
     {
-        $reviews = Rating::paginate(10);
+        $reviews = TeacherLessonRating::paginate(10);
         foreach($reviews as $review) {
             $lesson_reviewed = TeacherLesson::find($review->teacher_lesson_id);
             $reviewed_user = $lesson_reviewed->teacher->user;
@@ -682,7 +682,7 @@ class AdminController extends BaseController
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteTeacherReview($id) {
-        $rating = Rating::findOrFail($id);
+        $rating = TeacherLessonRating::findOrFail($id);
         $rating->delete();
         if($rating->exists)
             return Redirect::to('admin/teacher/reviews')
