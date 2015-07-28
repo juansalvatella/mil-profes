@@ -9,7 +9,7 @@
 @endsection
 
 @section('page_css')
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+    {{ HTML::style('//cdn.datatables.net/1.10.7/css/jquery.dataTables.css') }}
 @endsection
 
 @section('content')
@@ -106,53 +106,10 @@
 @endsection
 
 @section('page_js')
-    {{ HTML::script('js/schools-dashboard.js') }}
-    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+    {{ HTML::script('//cdn.datatables.net/1.10.7/js/jquery.dataTables.js') }}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#table_schools').DataTable({
-                "language": {
-                    "sProcessing":     "Procesando...",
-                    "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix":    "",
-                    "sSearch":         "Buscar:",
-                    "sUrl":            "",
-                    "sInfoThousands":  ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst":    "Primero",
-                        "sLast":     "Último",
-                        "sNext":     "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                },
-                "pagingType": "full_numbers",
-                "order": [[ 0, 'asc' ]],
-                "pageLength": 10,
-                "columns": [
-                    { "orderDataType": "dom-text" },
-                    { "orderable": false, "searchable": false },
-                    { "orderable": false, "searchable": false },
-                    { "orderable": false, "searchable": false },
-                    { "orderable": false, "searchable": false },
-                    { "orderable": false, "searchable": false },
-                    { "orderable": false, "searchable": false },
-                    { "orderable": false, "searchable": false },
-                    { "orderable": false, "searchable": false },
-                    { "orderable": false, "searchable": false },
-                    { "orderDataType": "dom-text", "type": "numeric" },
-                    { "orderable": false, "searchable": false }
-                ]
-            });
+            SchoolsDashboard.init();
         });
     </script>
 @endsection

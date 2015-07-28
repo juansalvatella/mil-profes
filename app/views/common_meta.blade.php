@@ -2,6 +2,7 @@
 <meta name="author" content="milPROFES S.L." />
 <meta name="viewport" content="width=device-width" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
 {{--META ROBOTS--}}
 <meta name="robots" content="
     @if(Request::is('/') || Request::is('milprofes') || Request::is('preguntas-frecuentes') || Request::is('contacta') || Request::is('profe/*') || Request::is('academia/*'))
@@ -10,6 +11,7 @@
         noindex,nofollow
     @endif
 "/>
+
 {{--META DESCRIPTION--}}
 <meta name="Description" content="
     @if(Request::is('milprofes'))

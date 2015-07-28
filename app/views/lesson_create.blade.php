@@ -66,38 +66,13 @@
                 <div class="col-xs-4">@lang('forms.common.day')</div>
                 <div class="col-xs-4">@lang('forms.common.from')</div>
                 <div class="col-xs-4">@lang('forms.common.to')</div>
-
-                <div class="col-xs-4 clear-left">
-                    <div class="form-group">
-                        <select class="form-control" id="day1" name="day1">
-                            <option value="" selected="selected"> </option>
-                            <option value="@lang('forms.common.monday-tag')">@lang('forms.common.monday')</option>
-                            <option value="@lang('forms.common.tuesday-tag')">@lang('forms.common.tuesday')</option>
-                            <option value="@lang('forms.common.wednesday-tag')">@lang('forms.common.wednesday')</option>
-                            <option value="@lang('forms.common.thursday-tag')">@lang('forms.common.thursday')</option>
-                            <option value="@lang('forms.common.friday-tag')">@lang('forms.common.friday')</option>
-                            <option value="@lang('forms.common.saturday-tag')">@lang('forms.common.saturday')</option>
-                            <option value="@lang('forms.common.sunday-tag')">@lang('forms.common.sunday')</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="bfh-timepicker background-white" data-time="@lang('forms.new_course.default_start_time')" data-name="start1"></div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="bfh-timepicker background-white" data-time="@lang('forms.new_course.default_end_time')" data-name="end1"></div>
-                </div>
-
-                <div class="col-xs-12 clear-left" id="avail-controls1">
-                    <a href="#" id="avail-control-add1" class="btn btn-default"><i class="glyphicon glyphicon-plus-sign"></i> @lang('buttons.add')</a>
-                </div>
-
-                @for($i=2,$h=1;$i<9;++$i,++$h)
-                    <div class="hidden" id="avail{{$i}}">
+                <div class="container-fluid" id="avails-container">
+                    @for($i=1;$i<10;++$i)
+                    <div class="row availability @if($i!=1) hidden @endif" data-pos="{{$i}}">
                         <div class="col-xs-4 clear-left">
                             <div class="form-group">
-                                <select class="form-control" id="day{{$i}}" name="day{{$i}}">
-                                    <option value="" selected="selected"> </option>
+                                <select class="form-control" name="day{{$i}}">
+                                    <option value="" selected="selected">&nbsp; </option>
                                     <option value="@lang('forms.common.monday-tag')">@lang('forms.common.monday')</option>
                                     <option value="@lang('forms.common.tuesday-tag')">@lang('forms.common.tuesday')</option>
                                     <option value="@lang('forms.common.wednesday-tag')">@lang('forms.common.wednesday')</option>
@@ -115,39 +90,14 @@
                             <div class="bfh-timepicker background-white" data-time="@lang('forms.new_course.default_end_time')" data-name="end{{$i}}"></div>
                         </div>
                     </div>
-                    <div class="col-xs-12 hidden clear-left" id="avail-controls{{$i}}">
-                        <a href="#" id="avail-control-add{{$i}}" class="btn btn-default"><i class="glyphicon glyphicon-plus-sign"></i> @lang('buttons.add')</a> <a href="#" id="avail-control-del{{$i}}" class="btn btn-default"><i class="glyphicon glyphicon-minus-sign"></i> @lang('buttons.delete')</a>
-                    </div>
-                @endfor
-
-                <div class="hidden" id="avail9">
-                    <div class="col-xs-4 clear-left">
-                        <div class="form-group">
-                            <select class="form-control" id="day9" name="day9">
-                                <option value="" selected="selected"> </option>
-                                <option value="@lang('forms.common.monday-tag')">@lang('forms.common.monday')</option>
-                                <option value="@lang('forms.common.tuesday-tag')">@lang('forms.common.tuesday')</option>
-                                <option value="@lang('forms.common.wednesday-tag')">@lang('forms.common.wednesday')</option>
-                                <option value="@lang('forms.common.thursday-tag')">@lang('forms.common.thursday')</option>
-                                <option value="@lang('forms.common.friday-tag')">@lang('forms.common.friday')</option>
-                                <option value="@lang('forms.common.saturday-tag')">@lang('forms.common.saturday')</option>
-                                <option value="@lang('forms.common.sunday-tag')">@lang('forms.common.sunday')</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="bfh-timepicker background-white" data-time="@lang('forms.new_course.default_start_time')" data-name="start9"></div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="bfh-timepicker background-white" data-time="@lang('forms.new_course.default_end_time')" data-name="end9"></div>
-                    </div>
+                    @endfor
                 </div>
-                <div class="col-xs-12 hidden clear-left" id="avail-controls9">
-                    <a href="#" id="avail-control-del9" class="btn btn-default"><i class="glyphicon glyphicon-minus-sign"></i> @lang('buttons.delete')</a>
+                <div class="col-xs-12 clear-left" id="avail-controls">
+                    <a href="#" id="avail-control-add" class="btn btn-default"><i class="glyphicon glyphicon-plus-sign"></i> @lang('buttons.add')</a>
+                    <a href="#" id="avail-control-del" class="btn btn-default hidden"><i class="glyphicon glyphicon-minus-sign"></i> @lang('buttons.delete')</a>
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10 text-right">
                 <input type="submit" value="@lang('buttons.create')" class="btn btn-primary"/>
@@ -164,22 +114,7 @@
 @section('page_js')
     <script type="text/javascript">
         $(document).ready(function(){
-            @for($i=1;$i<9;++$i)
-            $(document).on("click","#avail-control-add{{$i}}",function(e){
-                        e.preventDefault();
-                        $("#avail"+"{{$i+1}}").removeClass("hidden");
-                        $("#avail-controls"+"{{$i+1}}").removeClass("hidden");
-                        $("#avail-controls"+"{{$i}}").addClass("hidden");
-                    });
-
-            $(document).on("click","#avail-control-del{{$i+1}}",function(e){
-                e.preventDefault();
-                $("#avail"+"{{$i+1}}").addClass("hidden");
-                $("[name=day"+"{{$i+1}}]").val("");
-                $("#avail-controls"+"{{$i}}").removeClass("hidden");
-                $("#avail-controls"+"{{$i+1}}").addClass("hidden");
-            });
-            @endfor
+            Availabilities.init();
         });
     </script>
 @endsection

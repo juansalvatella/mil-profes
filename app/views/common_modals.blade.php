@@ -1,3 +1,4 @@
+{{--LOGIN MODAL--}}
 <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="modal-login" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -59,6 +60,7 @@
     </div>
 </div>
 
+{{--REGISTER MODAL--}}
 <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

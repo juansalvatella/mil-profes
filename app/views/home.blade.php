@@ -15,103 +15,105 @@
 @endsection
 
 @section('content')
-    <div class="home-splash">
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-xs-12 col-md-6">
-                  <div class="row">
-                      <div class="col-xs-12 col-md-offset-1 col-md-11 text-left hidden-xs hidden-sm">
-                          <h3 id="welcome-responsive">@lang('home.welcome')</h3>
-                      </div>
-                      <div class="col-xs-12 col-md-offset-1 col-md-11 text-center hidden-md hidden-lg">
-                          <h3 id="welcome-responsive">@lang('home.welcome')</h3>
-                      </div>
+<div class="home-splash">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-xs-12 col-md-6">
+              <div class="row">
+                  <div class="col-xs-12 col-md-offset-1 col-md-11 text-left hidden-xs hidden-sm">
+                      <h3 id="welcome-responsive">@lang('home.welcome')</h3>
+                  </div>
+                  <div class="col-xs-12 col-md-offset-1 col-md-11 text-center hidden-md hidden-lg">
+                      <h3 id="welcome-responsive">@lang('home.welcome')</h3>
                   </div>
               </div>
-              <div class="col-xs-12 col-md-6">
-                  {{ Form::open(array('action' => 'SearchController@search')) }}
-                  <input type="hidden" name="first_search" value="true">
-                  <div class="row top-buffer-15">
-                      <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0 text-left">
-                          <div class="form-group">
-                              {{ Form::label('user_address', trans('home.where_are_you'), array('class'=>'main-home-label')) }}
-                              @if(Auth::check())
-                                  {{ Form::text('user_address', Confide::user()->address, array('class'=>'form-control input-lg','placeholder'=>trans('home.where_placeholder'))) }}
-                              @else
-                                  {{ Form::text('user_address', '', array('class'=>'form-control input-lg','placeholder'=>trans('home.where_placeholder'))) }}
-                              @endif
-                          </div>
-                      </div>
-                      <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0  text-left" id="mi-ubicacion">
-                          <a href="#" id="mi-ubicacion-link">
-                              <div id="mi-ubicacion-marcador"></div>
-                              @lang('home.location')
-                          </a>
+          </div>
+          <div class="col-xs-12 col-md-6">
+              {{ Form::open(array('action' => 'SearchController@search')) }}
+              <input type="hidden" name="first_search" value="true">
+              <div class="row top-buffer-15">
+                  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0 text-left">
+                      <div class="form-group">
+                          {{ Form::label('user_address', trans('home.where_are_you'), array('class'=>'main-home-label')) }}
+                          @if(Auth::check())
+                              {{ Form::text('user_address', Confide::user()->address, array('class'=>'form-control input-lg','placeholder'=>trans('home.where_placeholder'))) }}
+                          @else
+                              {{ Form::text('user_address', '', array('class'=>'form-control input-lg','placeholder'=>trans('home.where_placeholder'))) }}
+                          @endif
                       </div>
                   </div>
-
-                  <div class="row top-buffer-15">
-                      <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0 text-left">
-                          <span class="main-home-label">{{ trans('home.what_to_learn') }}</span>
-                          <div class="input-group">
-                              <div class="input-group-btn">
-                                  <button type="button" class="btn btn-default btn-lg dropdown-toggle btn-pick-subject" data-toggle="dropdown">
-                                      <input name="subject" id="subject" type="hidden" value="all">
-                                      <span id="subject-name">{{ trans('subjects.all') }}</span>
-                                      <span class="caret"></span>
-                                  </button>
-                                  <div class="dropdown-menu multi-column">
-                                      <div class="row">
-                                          <div class="col-md-6" id="multi-column-1">
-                                              <ul class="dropdown-menu">
-                                              <?php $half = intval(ceil(Subject::all()->count() / 2)) + 3; ?>
-                                              @foreach(Subject::where('id','<=',$half)->orderBy('name')->get() as $subj)
-                                                  <li><a href="#" id="action-{{ $subj->id }}">@lang('subjects.'.$subj->name)</a></li>
-                                              @endforeach
-                                              </ul>
-                                          </div>
-                                          <div class="col-md-6" id="multi-column-2">
-                                              <ul class="dropdown-menu">
-                                              @foreach(Subject::where('id','>',$half)->orderBy('name')->get() as $subj)
-                                                  <li><a href="#" id="action-{{ $subj->id }}">@lang('subjects.'.$subj->name)</a></li>
-                                              @endforeach
-                                                  <li><a href="#" id="action-all">@lang('subjects.all')</a></li>
-                                              </ul>
-                                          </div>
+                  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0  text-left" id="mi-ubicacion">
+                      <a href="#" id="mi-ubicacion-link">
+                          <div id="mi-ubicacion-marcador"></div>
+                          @lang('home.location')
+                      </a>
+                  </div>
+              </div>
+              <div class="row top-buffer-15">
+                  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0 text-left">
+                      <span class="main-home-label">{{ trans('home.what_to_learn') }}</span>
+                      <div class="input-group">
+                          <div class="input-group-btn">
+                              <button type="button" class="btn btn-default btn-lg dropdown-toggle btn-pick-subject" data-toggle="dropdown">
+                                  <input name="subject" id="subject" type="hidden" value="all">
+                                  <span id="subject-name">{{ trans('subjects.all') }}</span>
+                                  <span class="caret"></span>
+                              </button>
+                              <div class="dropdown-menu multi-column">
+                                  <div class="row">
+                                      <div class="col-md-6" id="multi-column-1">
+                                          <ul class="dropdown-menu">
+                                          <?php $half = intval(ceil(Subject::all()->count() / 2)) + 3; ?>
+                                          @foreach(Subject::where('id','<=',$half)->orderBy('name')->get() as $subj)
+                                              <li><a href="#" class="subject-selector" data-pk="{{$subj->id}}">@lang('subjects.'.$subj->name)</a></li>
+                                          @endforeach
+                                          </ul>
                                       </div>
+                                      <div class="col-md-6" id="multi-column-2">
+                                          <ul class="dropdown-menu">
+                                          @foreach(Subject::where('id','>',$half)->orderBy('name')->get() as $subj)
+                                              <li><a href="#" class="subject-selector" data-pk="{{$subj->id}}">@lang('subjects.'.$subj->name)</a></li>
+                                          @endforeach
+                                              <li><a href="#" class="subject-selector" data-pk="0">@lang('subjects.all')</a></li>
+                                          </ul>
+                                      </div>
+                                      <input type="hidden" id="subj-val-0" value="all">
+                                      <input type="hidden" id="subj-name-0" value="{{trans('subjects.all')}}">
+                                      <input type="hidden" id="subj-ph-0" value="{{trans('home.keywords_placeholder_all')}}">
+                                      @foreach(Subject::orderBy('name')->get() as $subj)
+                                          <input type="hidden" id="subj-val-{{$subj->id}}" value="{{$subj->name}}">
+                                          <input type="hidden" id="subj-name-{{$subj->id}}" value="{{trans('subjects.'.$subj->name)}}">
+                                          <input type="hidden" id="subj-ph-{{$subj->id}}" value="{{trans('home.keywords_placeholder_'.$subj->name)}}">
+                                      @endforeach
                                   </div>
-                              </div><!-- /.input-group-btn -->
-
-                              <input type="text" name="keywords" id="keywords" placeholder="@lang('home.keywords_placeholder_all')" class="form-control input-lg">
-
-                          </div><!-- /.input-group -->
-                      </div><!-- /.col -->
-                  </div><!-- /.row -->
-
-                  <div class="row">
-                      <div class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0  text-center">
-                          <h1 id="find-responsive">@lang('home.find')</h1>
-                      </div>
+                              </div>
+                          </div><!-- /.input-group-btn -->
+                          <input type="text" name="keywords" id="keywords" placeholder="@lang('home.keywords_placeholder_all')" class="form-control input-lg">
+                      </div><!-- /.input-group -->
+                  </div><!-- /.col -->
+              </div><!-- /.row -->
+              <div class="row">
+                  <div class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0  text-center">
+                      <h1 id="find-responsive">@lang('home.find')</h1>
                   </div>
+              </div>
+              <div class="row top-buffer-15">
+                  <div class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0  text-center">
+                      <input name="prof_o_acad" id="prof_o_acad" type="hidden" value="academia">
 
-                  <div class="row top-buffer-15">
-                      <div class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0  text-center">
-                          <input name="prof_o_acad" id="prof_o_acad" type="hidden" value="academia">
-
-                          <button type="submit" class="btn btn-primary btn-lg btn-home-search" id="btn-search-schools" value="@lang('home.schools')">
-                              @lang('home.schools')&nbsp;&nbsp;<i class="glyphicon glyphicon-search"></i>
-                          </button>
-                          <button type="submit" class="btn btn-primary btn-lg btn-home-search" id="btn-search-teachers" value="@lang('home.teachers')">
-                              @lang('home.teachers')&nbsp;&nbsp;<i class="glyphicon glyphicon-search"></i>
-                          </button>
-                      </div>
+                      <button type="submit" class="btn btn-primary btn-lg btn-home-search" id="btn-search-schools" value="@lang('home.schools')">
+                          @lang('home.schools')&nbsp;&nbsp;<i class="glyphicon glyphicon-search"></i>
+                      </button>
+                      <button type="submit" class="btn btn-primary btn-lg btn-home-search" id="btn-search-teachers" value="@lang('home.teachers')">
+                          @lang('home.teachers')&nbsp;&nbsp;<i class="glyphicon glyphicon-search"></i>
+                      </button>
                   </div>
-                  {{ Form::close() }}
-              </div><!-- /.col -->
-
-          </div><!-- /.row -->
-      </div><!-- /.container -->
-    </div><!-- /.home-splash -->
+              </div>
+              {{ Form::close() }}
+          </div><!-- /.col -->
+      </div><!-- /.row -->
+  </div><!-- /.container -->
+</div><!-- /.home-splash -->
 @if(count($popular_teachers) >= 15)
     <div class="container-fluid" style="overflow: hidden;background-color: #fff;">
         <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-4">
@@ -127,7 +129,6 @@
                 <div class="hidden-sm hidden-lg" style="height:70px;"></div>
             </div>
         </div>
-
         <div class="hidden-xs col-sm-offset-2 col-sm-10 col-md-offset-1 col-md-6" style="overflow: visible;">
             <div class="hidden-xs hidden-sm" style="height:70px;text-align:center;"></div>
             <div id="diamond-container" style="display: inline-block;">
@@ -218,100 +219,10 @@
 @endsection
 
 @section('page_js')
-    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script type="text/javascript">
-    @foreach(Subject::orderBy('name')->get() as $subj)
-        var selector = "#action-{{ $subj->id }}";
-        $(selector).click(function(e){
-            e.preventDefault();
-            $("#subject").val("{{$subj->name}}");
-            $("#subject-name").text("{{trans('subjects.'.$subj->name)}}");
-            $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_'.$subj->name)}}");
-        });
-    @endforeach
-        $("#action-all").click(function(e){
-            e.preventDefault();
-            $("#subject").val("all");
-            $("#subject-name").text("{{trans('subjects.all')}}");
-            $("#keywords").attr("placeholder", "{{trans('home.keywords_placeholder_all')}}");
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).on("click", "#btn-search-schools", function() {
-            $("#prof_o_acad").val('academia');
-            return true;
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).on("click", "#btn-search-teachers", function() {
-            $("#prof_o_acad").val('profesor');
-            return true;
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(){ // IP to Location Service Provided by Google
-            var checknavgeo = navigator.geolocation;
-            if(checknavgeo)
-                $("#mi-ubicacion").removeClass('hidden');
-            $('#mi-ubicacion-link').click(function (e) {
-                e.preventDefault();
-                if (navigator && checknavgeo) {
-                    navigator.geolocation.getCurrentPosition(geo_success, geo_error);
-                } else {
-                    $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
-                }
-            });
-        });
-        function geo_success(position) {
-            printAddress(position.coords.latitude, position.coords.longitude);
-        }
-        function geo_error() {
-            $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
-        }
-        function printAddress(latitude, longitude) {
-            var geocoder = new google.maps.Geocoder();
-            var yourLocation = new google.maps.LatLng(latitude, longitude);
-            geocoder.geocode({ 'latLng': yourLocation }, function (results, status) {
-                if(status == google.maps.GeocoderStatus.OK) {
-                    if(results[0]) {
-                        $('#user_address').val(''+results[0].formatted_address);
-                    } else {
-                        $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
-                    }
-                } else {
-                    $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente");
-                }
-            });
-        }
-    </script>
     {{ HTML::script('js/owl.carousel.js') }}
     <script type="text/javascript">
-        $(document).ready(function() {
-            var carousel = $("#schools-carousel");
-            carousel.owlCarousel({
-                items: 3,
-                loop: true,
-                autoWidth: false,
-                nav: true,
-                navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
-                dots: false,
-                navSpeed: 500,
-                autoplaySpeed: 500,
-                mouseDrag: false,
-                touchDrag: false,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true
-            });
-            $('.stars-container').raty({
-                readOnly: true,
-                half: true,
-                size: 15,
-                starHalf: '../img/star-half-small.png',
-                starOff : '../img/star-off-small.png',
-                starOn  : '../img/star-on-small.png',
-                score: function(){return $(this).attr('data-score');}
-            });
+        $(document).ready(function(){
+            Home.init();
         });
     </script>
 @endsection

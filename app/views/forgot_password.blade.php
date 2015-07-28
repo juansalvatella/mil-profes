@@ -54,7 +54,7 @@
 @section('page_js')
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#forgot-form").validator();
+            ForgotPassword.init();
         });
     </script>
 @endsection

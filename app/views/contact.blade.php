@@ -102,5 +102,9 @@
 @endsection
 
 @section('page_js')
-    {{ HTML::script('js/contact.js') }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Contact.init();
+        });
+    </script>
 @endsection

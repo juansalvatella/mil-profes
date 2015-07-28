@@ -319,7 +319,7 @@
                             </div>
                         </div>
                         <div class="row text-center lesson-stars-container">
-                            <span class="lesson-stars" data-pk="{{ $result->id }}"></span>
+                            <span class="lesson-stars" data-pk="{{ $result->id }}" data-score="{{ $result->lesson_avg_rating }}"></span>
                         </div>
                         <div class="row text-center">
                             @if($result->price=='0')
@@ -367,123 +367,12 @@
 </div>
 
 <div class="modal-loading"></div>
-
 @endsection
 
 @section('page_js')
     <script type="text/javascript">
         $(document).ready(function() {
-            function async_search() {
-                var soForm = $('form#newSearchForm');
-                var ninput = $('#current-slices-showing');
-                ninput.val(0);
-                $.post('/resultados',
-                        {
-                            _token: soForm.find('input[name=_token]').val(),
-                            user_lat: soForm.find('input[name=user_lat]').val(),
-                            user_lon: soForm.find('input[name=user_lon]').val(),
-                            keywords: soForm.find('input[name=keywords]').val(),
-                            user_address: soForm.find('input[name=user_address]').val(),
-                            prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
-                            search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
-                            subject: $('input[name=subject]:checked', '#newSearchForm').val(),
-                            price: $('input[name=price]:checked', '#newSearchForm').val(),
-                            slices_showing: 0
-                        },
-                        function(data) { //handle the controller response
-                            $('#price-tags').replaceWith($(data).find('#price-tags'));
-                            $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
-                            initialize_map();
-                            $('#results-main-content').replaceWith($(data).find('#results-main-content'));
-                        });
-                ninput.val(1);
-            }
-
-            $(".radio").change(function(e){
-                e.stopImmediatePropagation();
-                async_search();
-            });
-
-            var body = $("body");
-            $(document).on({
-                ajaxSend: function(evt, request, settings) {
-                    if(!settings.url.match('^/request/info/')) {
-                        body.addClass("loading");
-                    }
-                },
-                ajaxStop: function() { body.removeClass("loading"); },
-                ajaxError: function() { body.removeClass("loading"); }
-            });
-
-            $(document).on("click", ".show-more-results", function(e) {
-                e.preventDefault();
-                var soForm = $('form#newSearchForm');
-                $.post('/resultados',
-                        {
-                            _token: soForm.find('input[name=_token]').val(),
-                            user_lat: soForm.find('input[name=user_lat]').val(),
-                            user_lon: soForm.find('input[name=user_lon]').val(),
-                            keywords: soForm.find('input[name=keywords]').val(),
-                            user_address: soForm.find('input[name=user_address]').val(),
-                            prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
-                            search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
-                            subject: $('input[name=subject]:checked', '#newSearchForm').val(),
-                            price: $('input[name=price]:checked', '#newSearchForm').val(),
-                            slices_showing: soForm.find('input[name=slices_showing]').val()
-                        },
-                        function(data) { //handle the controller response
-                            var nSlicesShowing = $('#current-slices-showing').val();
-                            var nSlicesShowingPlus = nSlicesShowing + 1;
-                            $('.search-results-list').append($(data).find('#results-slice-'+nSlicesShowingPlus));
-                            $('#show-more-results-'+nSlicesShowing).replaceWith($(data).find('#show-more-results-'+nSlicesShowingPlus));
-                        });
-                var ninput = $('#current-slices-showing');
-                var n = parseInt(ninput.val());
-                ninput.val(n+1);
-            });
-
-            $(document).on("change", ".radio-price", function(e) {
-                var ninput = $('#current-slices-showing');
-                ninput.val(0);
-                var soForm = $('form#newSearchForm');
-                $.post('/resultados', {
-                            _token: soForm.find('input[name=_token]').val(),
-                            user_lat: soForm.find('input[name=user_lat]').val(),
-                            user_lon: soForm.find('input[name=user_lon]').val(),
-                            keywords: soForm.find('input[name=keywords]').val(),
-                            user_address: soForm.find('input[name=user_address]').val(),
-                            prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
-                            search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
-                            subject: $('input[name=subject]:checked', '#newSearchForm').val(),
-                            price: $('input[name=price]:checked', '#newSearchForm').val(),
-                            slices_showing: 0
-                        }, function(data) {
-                            $('#price-tags').replaceWith($(data).find('#price-tags'));
-                            $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
-                            initialize_map(); //necesario tras cargar el código js del gmap de forma asíncrona
-                            $('#results-main-content').replaceWith($(data).find('#results-main-content'));
-                        });
-                ninput.val(1);
-            });
-
-            $(document).on("click", "#btn-submit-search", function(e) {
-                var ninput = $('#current-slices-showing');
-                ninput.val(0);
-                return true;
-            });
-
-            $(document).on("click", ".staticMapImg", function(e) {
-                e.stopImmediatePropagation();
-                $('.staticMap').hide();
-                $('.dynMap').removeClass('hidden');
-                initialize_map();
-            });
-
-            $('.lesson-stars').raty({
-                readOnly: true,
-                half: true,
-                score:  $(this).attr('data-pk')
-            });
+            SearchResults.init();
         });
     </script>
 @endsection

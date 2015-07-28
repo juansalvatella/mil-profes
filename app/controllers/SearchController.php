@@ -465,7 +465,6 @@ class SearchController extends BaseController
             foreach($results as $result)
             {
                 //get display name
-//                $result->displayName = ucwords($result->name).' '.substr(ucwords($result->lastname),0,1).'.';
                 if($result->lastname)
                     $result->displayName = ucwords($result->name).' '.substr(ucwords($result->lastname),0,1).'.';
                 else
@@ -523,7 +522,7 @@ class SearchController extends BaseController
                 $teacher_rating_reversed = str_pad((string) round((500 - 100*$r->teacher_avg_rating), 0),3,'0', STR_PAD_LEFT);
                 $idStr = (string) $r->id; //id can be a number of any length, but I don't expect it to be a value over a 100 000 000
                 $idStrPad = str_pad($idStr, 9, '0', STR_PAD_LEFT);
-//                echo(sprintf('%s%s%s%s - ', $distStrPad, $lesson_rating_reversed, $teacher_rating_reversed, $idStrPad));
+
                 return sprintf('%s%s%s%s', $distStrPad, $lesson_rating_reversed, $teacher_rating_reversed, $idStrPad);
             });
         } else {
@@ -534,7 +533,7 @@ class SearchController extends BaseController
                 $school_rating_reversed = str_pad((string) round((500 - 100*$r->school_avg_rating), 0),3,'0', STR_PAD_LEFT);
                 $idStr = (string) $r->id;
                 $idStrPad = str_pad($idStr, 9, '0', STR_PAD_LEFT);
-//                echo(sprintf('%s%s%s%s - ', $distStrPad, $lesson_rating_reversed, $school_rating_reversed, $idStrPad));
+
                 return sprintf('%s%s%s%s', $distStrPad, $lesson_rating_reversed, $school_rating_reversed, $idStrPad);
             });
         }

@@ -1,8 +1,6 @@
     {{--TITLE--}}
     <title>
-    @if(Request::is('/'))
-        milPROFES. | Profesores particulares y academias
-    @elseif(Request::is('milprofes'))
+    @if(Request::is('milprofes'))
         milPROFES.
     @elseif(Request::is('preguntas-frecuentes'))
         Respuestas a las preguntas frecuentes de milPROFES.

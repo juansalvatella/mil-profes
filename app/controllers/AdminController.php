@@ -308,21 +308,7 @@ class AdminController extends BaseController
         $school->link_linkedin = $input['linkedin'];
         $school->link_googleplus = $input['googleplus'];
         $school->link_instagram = $input['instagram'];
-
-        if($school->video()->first()) {
-            $video = $school->video()->first();
-            $video->video = $input['video'];
-        } else {
-            $video = new Video();
-            $video->video = $input['video'];
-            $video->school()->associate($school);
-        }
-
-        if(!$video->save())
-            return Redirect::back()->withInput()
-                ->with('error', 'Fallo al guardar el código del vídeo asociado a la academia.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'Fallo al guardar el código del vídeo asociado a la academia.');
+        $school->video = $input['video'];
 
         if(Input::get('address') != $school->address) {
             $school->address = $input['address'];
