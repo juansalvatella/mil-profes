@@ -17,7 +17,8 @@
 		"fzaninotto/faker": "^1.5",
 		"artdarek/oauth-4-laravel": "1.0.5",
 		"barryvdh/laravel-ide-helper": "v1.11.6",
-		"cocur/slugify": "^1.2"
+		"cocur/slugify": "^1.2",
+		"doctrine/dbal": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
