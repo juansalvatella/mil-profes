@@ -1,5 +1,29 @@
 <?php
 
+/**
+ * SchoolLessonRating
+ *
+ * @property integer $id 
+ * @property float $value 
+ * @property string $comment 
+ * @property integer $yes_helpful 
+ * @property integer $total_helpful 
+ * @property integer $student_id 
+ * @property integer $school_lesson_id 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property-read \Student $student 
+ * @property-read \SchoolLesson $lesson 
+ * @method static \Illuminate\Database\Query\Builder|\SchoolLessonRating whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\SchoolLessonRating whereValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\SchoolLessonRating whereComment($value)
+ * @method static \Illuminate\Database\Query\Builder|\SchoolLessonRating whereYesHelpful($value)
+ * @method static \Illuminate\Database\Query\Builder|\SchoolLessonRating whereTotalHelpful($value)
+ * @method static \Illuminate\Database\Query\Builder|\SchoolLessonRating whereStudentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\SchoolLessonRating whereSchoolLessonId($value)
+ * @method static \Illuminate\Database\Query\Builder|\SchoolLessonRating whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\SchoolLessonRating whereUpdatedAt($value)
+ */
 class SchoolLessonRating extends Eloquent
 {
     protected $fillable = ['value','comment'];

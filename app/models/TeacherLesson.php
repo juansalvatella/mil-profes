@@ -1,5 +1,35 @@
 <?php
 
+/**
+ * TeacherLesson
+ *
+ * @property integer $id 
+ * @property string $title 
+ * @property float $price 
+ * @property string $description 
+ * @property string $address 
+ * @property float $lat 
+ * @property float $lon 
+ * @property integer $teacher_id 
+ * @property integer $subject_id 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property-read \Teacher $teacher 
+ * @property-read \Subject $subject 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\TeacherLessonRating[] $ratings 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\TeacherPhoneVisualization[] $visualizations 
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereLat($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereLon($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereTeacherId($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereSubjectId($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\TeacherLesson whereUpdatedAt($value)
+ */
 class TeacherLesson extends Eloquent
 {
     protected $fillable = ['title','price','description','address'];

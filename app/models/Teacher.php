@@ -2,6 +2,25 @@
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
+/**
+ * Teacher
+ *
+ * @property integer $id 
+ * @property integer $profile_visits 
+ * @property integer $user_id 
+ * @property \Carbon\Carbon $created_at 
+ * @property \Carbon\Carbon $updated_at 
+ * @property \Carbon\Carbon $deleted_at 
+ * @property-read \User $user 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\TeacherLesson[] $lessons 
+ * @property-read \Illuminate\Database\Eloquent\Collection|\TeacherAvailability[] $availabilities 
+ * @method static \Illuminate\Database\Query\Builder|\Teacher whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Teacher whereProfileVisits($value)
+ * @method static \Illuminate\Database\Query\Builder|\Teacher whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Teacher whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Teacher whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Teacher whereDeletedAt($value)
+ */
 class Teacher extends Eloquent
 {
     use SoftDeletingTrait;
