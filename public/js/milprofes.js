@@ -2,6 +2,88 @@
  * Created by Mitxel on 28/07/2015.
  */
 
+var Consent = function() {
+    return {
+        init: function() {
+            var consentIsSet = "unknown";
+            var cookieBanner = "#cookieBanner";
+            var consentString = "cookieConsent=";
+
+            // Sets a cookie granting/denying consent, and displays some text on console/banner
+            function setCookie(console_log, banner_text, consent) {
+                $(cookieBanner).text(banner_text);
+                $(cookieBanner).hide(); //hide instead of .fadeOut(5000);
+                var d = new Date();
+                var exdays = 30*12; //  1 year
+                d.setTime(d.getTime()+(exdays*24*60*60*1000));
+                var expires = "expires="+d.toGMTString();
+                document.cookie = consentString + consent + "; " + expires + ";path=/";
+                consentIsSet = consent;
+            }
+
+            function denyConsent() {
+                setCookie("Consent denied", "No consientes el uso de cookies en milProfes.", "false");
+            }
+
+            function grantConsent() {
+                if (consentIsSet == "true") return; // Don't grant twice
+                setCookie("Consent granted", "Gracias por consentir el uso de cookies en milProfes.", "true");
+                doConsent();
+            }
+
+            // Run the consent code. We may be called either from grantConsent() or
+            // from the main routine
+            function doConsent() {
+                initAnalytics();
+            }
+
+            function initAnalytics() {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                ga('create', 'UA-61042823-1', 'auto');
+                ga('send', 'pageview');
+
+                initAnalyticsEvents();
+            }
+
+            function initAnalyticsEvents() {
+                $('#register-link').click(function(){
+                    ga('send', 'event', 'attempts', 'registration','');
+                });
+                $('#register-submit-button').click(function(){
+                    ga('send', 'event', 'actions', 'registration','submit');
+                });
+                $('#register-cancel-button').click(function(){
+                    ga('send', 'event', 'actions', 'registration','cancel');
+                });
+            }
+
+            // main routine
+            // First, check if cookie is present
+            var cookies = document.cookie.split(";");
+            for (var i = 0; i < cookies.length; i++) {
+                var c = cookies[i].trim();
+                if (c.indexOf(consentString) == 0) {
+                    consentIsSet = c.substring(consentString.length, c.length);
+                }
+            }
+
+            if (consentIsSet == "unknown") {
+                $(cookieBanner).fadeIn();
+                //For now, consent is only granted when click on any link (unless it is the privacy terms link)
+                $("a:not(.noconsent)").click(grantConsent);
+                $(".denyConsent").click(denyConsent);
+                //Allow cookies re-enabling
+                $(".allowConsent").click(grantConsent);
+            } else if (consentIsSet == "true") {
+                doConsent();
+            }
+        }
+    }
+}();
+
 var Milprofes = function() {
     return {
         init: function() {
@@ -348,10 +430,39 @@ var SearchResults = function() {
     return {
         init: function() {
 
-            function async_search() {
+            function initRatingStars() {
+                $('.lesson-stars').raty({
+                    readOnly: true,
+                    half: true,
+                    score: function () { return $(this).attr('data-score'); }
+                });
+            }
+            initRatingStars(); //onload page init rating stars
+
+            function initHandlers() {
+                $(".radio").change(function(e) {
+                    e.stopImmediatePropagation();
+                    async_search(0);
+                });
+            }
+            initHandlers();
+
+            //trigger infinite scrolling/loading of more results
+            var triggerScrollingFlag = true;
+            $(window).scroll(function() {
+                // -240 because that's the footer height, more or less, so we trigger it sooner
+                if(($(window).scrollTop() + $(window).height() >= $(document).height() - 240) && triggerScrollingFlag && ($('#show-more').val() == 'yes')) {
+                    triggerScrollingFlag = false;
+                    async_search(parseInt($('#current-slices-showing').val()));
+                }
+            });
+
+            function async_search(slicesShowing) {
+                if(slicesShowing == 0) {
+                    $('.search-results-list').empty();
+                }
+                $('#loading-more-img').removeClass('hidden');
                 var soForm = $('form#newSearchForm');
-                var ninput = $('#current-slices-showing');
-                ninput.val(0);
                 $.post('/resultados',
                     {
                         _token: soForm.find('input[name=_token]').val(),
@@ -363,117 +474,34 @@ var SearchResults = function() {
                         search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
                         subject: $('input[name=subject]:checked', '#newSearchForm').val(),
                         price: $('input[name=price]:checked', '#newSearchForm').val(),
-                        slices_showing: 0
+                        slices_showing: slicesShowing
                     },
                     function(data) { //handle the controller response
                         $('#price-tags').replaceWith($(data).find('#price-tags'));
+                        initHandlers();
                         $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
+                        $('#results-info').replaceWith($(data).find('#results-info'));
+                        $(data).find('.search-results-list').children().appendTo(".search-results-list");
+                        $('#current-slices-showing').val(slicesShowing+1);
+                        $('#show-more').val($(data).find('#show-more').val());
+                        initRatingStars();
                         initialize_map();
-                        $('#results-main-content').replaceWith($(data).find('#results-main-content'));
-                        $('.lesson-stars').raty({
-                            readOnly: true,
-                            half: true,
-                            score: function () { return $(this).attr('data-score'); }
-                        });
                     }
-                );
-                ninput.val(1);
+                ).always(function(){
+                    $('#loading-more-img').addClass('hidden');
+                    triggerScrollingFlag = true;
+                });
             }
 
-            $(".radio").change(function(e){
-                e.stopImmediatePropagation();
-                async_search();
-            });
-
-            var body = $("body");
-            $(document).on({
-                ajaxSend: function(evt, request, settings) {
-                    if(!settings.url.match('^/request/info/')) {
-                        body.addClass("loading");
-                    }
-                },
-                ajaxStop: function() { body.removeClass("loading"); },
-                ajaxError: function() { body.removeClass("loading"); }
-            });
-
-            $(document).on("click", ".show-more-results", function(e) {
-                e.preventDefault();
-                var soForm = $('form#newSearchForm');
-                $.post('/resultados',
-                    {
-                        _token: soForm.find('input[name=_token]').val(),
-                        user_lat: soForm.find('input[name=user_lat]').val(),
-                        user_lon: soForm.find('input[name=user_lon]').val(),
-                        keywords: soForm.find('input[name=keywords]').val(),
-                        user_address: soForm.find('input[name=user_address]').val(),
-                        prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
-                        search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
-                        subject: $('input[name=subject]:checked', '#newSearchForm').val(),
-                        price: $('input[name=price]:checked', '#newSearchForm').val(),
-                        slices_showing: soForm.find('input[name=slices_showing]').val()
-                    },
-                    function(data) { //handle the controller response
-                        var nSlicesShowing = $('#current-slices-showing').val();
-                        var nSlicesShowingPlus = nSlicesShowing + 1;
-                        $('.search-results-list').append($(data).find('#results-slice-'+nSlicesShowingPlus));
-                        $('#show-more-results-'+nSlicesShowing).replaceWith($(data).find('#show-more-results-'+nSlicesShowingPlus));
-                        $('.lesson-stars').raty({
-                            readOnly: true,
-                            half: true,
-                            score: function () { return $(this).attr('data-score'); }
-                        });
-                    });
-                var ninput = $('#current-slices-showing');
-                var n = parseInt(ninput.val());
-                ninput.val(n+1);
-            });
-
-            $(document).on("change", ".radio-price", function(e) {
-                var ninput = $('#current-slices-showing');
-                ninput.val(0);
-                var soForm = $('form#newSearchForm');
-                $.post('/resultados', {
-                    _token: soForm.find('input[name=_token]').val(),
-                    user_lat: soForm.find('input[name=user_lat]').val(),
-                    user_lon: soForm.find('input[name=user_lon]').val(),
-                    keywords: soForm.find('input[name=keywords]').val(),
-                    user_address: soForm.find('input[name=user_address]').val(),
-                    prof_o_acad: $('input[name=prof_o_acad]:checked', '#newSearchForm').val(),
-                    search_distance: $('input[name=search_distance]:checked', '#newSearchForm').val(),
-                    subject: $('input[name=subject]:checked', '#newSearchForm').val(),
-                    price: $('input[name=price]:checked', '#newSearchForm').val(),
-                    slices_showing: 0
-                }, function(data) {
-                    $('#price-tags').replaceWith($(data).find('#price-tags'));
-                    $('#gmapDiv').replaceWith($(data).find('#gmapDiv'));
-                    initialize_map(); //necesario tras cargar el código js del gmap de forma asíncrona
-                    $('#results-main-content').replaceWith($(data).find('#results-main-content'));
-                    $('.lesson-stars').raty({
-                        readOnly: true,
-                        half: true,
-                        score: function () { return $(this).attr('data-score'); }
-                    });
-                });
-                ninput.val(1);
-            });
-
-            $(document).on("click", "#btn-submit-search", function(e) {
-                var ninput = $('#current-slices-showing');
-                ninput.val(0);
+            $(document).on("click", "#btn-submit-search", function() {
+                $('#current-slices-showing').val(0);
                 return true;
             });
 
-            $(document).on("click", ".staticMapImg", function(e) {
-                e.stopImmediatePropagation();
+            $(document).on("click", ".staticMapImg", function() {
                 $('.staticMap').hide();
                 $('.dynMap').removeClass('hidden');
                 initialize_map();
-            });
-
-            $('.lesson-stars').raty({
-                readOnly: true,
-                half: true,
-                score: function () { return $(this).attr('data-score'); }
             });
 
         }

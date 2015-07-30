@@ -13,7 +13,7 @@ class SearchController extends BaseController
     {
         $results_per_slice = 6; //TODO: put this var in constants file
 
-        //form validation
+        //Search form validation
         $input = Input::all();
         $rules = array(
             'user_address' => 'string',
@@ -67,8 +67,7 @@ class SearchController extends BaseController
                     $kw_array = explode(" ", $keywords);
                     $searchStr = "";
                     foreach($kw_array as $kw) {
-                        if($kw!='')
-                            $searchStr .= "+".$kw."* ";
+                        if($kw!='') $searchStr .= "+".$kw."* ";
                     }
                     $results = DB::select(DB::raw("
                         SELECT t1.*, COUNT(t1.teacher_id) AS aggregated
@@ -99,22 +98,7 @@ class SearchController extends BaseController
                         GROUP BY t1.teacher_id
                         ORDER BY t1.lesson_avg_rating DESC, t1.teacher_avg_rating DESC, t1.id ASC
                     "),[$subj_id,$searchStr]);
-
-//                    $results = DB::table('teacher_lessons')
-//                        ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
-//                        ->leftJoin('users', 'users.id', '=', 'teachers.user_id')
-//                        ->leftJoin('teachers_average_ratings','teachers_average_ratings.teacher_id','=','teachers.id')
-//                        ->leftJoin('ratings','ratings.teacher_lesson_id','=','teacher_lessons.id')
-//                        ->groupBy('teacher_lessons.id')
-//                        ->where('subject_id', $subj_id)
-//                        ->whereRaw("MATCH(teacher_lessons.description,teacher_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
-//                        ->orderBy('lesson_avg_rating', 'DESC')
-//                        ->orderBy('teacher_avg_rating', 'DESC')
-//                        ->orderBy('teacher_lessons.id','ASC')
-//                        ->get(array('teacher_lessons.*', 'users.slug', 'users.name', 'users.lastname', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating','users.status','users.deleted_at'));
-
                 } else { //no keywords
-
                     $results = DB::select(DB::raw("
                         SELECT t1.*, COUNT(t1.teacher_id) AS aggregated
                         FROM (
@@ -143,18 +127,6 @@ class SearchController extends BaseController
                         GROUP BY t1.teacher_id
                         ORDER BY t1.lesson_avg_rating DESC, t1.teacher_avg_rating DESC, t1.id ASC
                     "),[$subj_id]);
-
-//                    $results = DB::table('teacher_lessons')
-//                        ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
-//                        ->leftJoin('users', 'users.id', '=', 'teachers.user_id')
-//                        ->leftJoin('teachers_average_ratings','teachers_average_ratings.teacher_id','=','teachers.id')
-//                        ->leftJoin('ratings','ratings.teacher_lesson_id','=','teacher_lessons.id')
-//                        ->groupBy('teacher_lessons.id')
-//                        ->where('subject_id', $subj_id)
-//                        ->orderBy('lesson_avg_rating', 'DESC')
-//                        ->orderBy('teacher_avg_rating', 'DESC')
-//                        ->orderBy('teacher_lessons.id','ASC')
-//                        ->get(array('teacher_lessons.*', 'users.slug', 'users.name', 'users.lastname', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating','users.status','users.deleted_at'));
                 }
             } else { //search all subjects
                 if($check_keywords) { //teachers, without subject, with keywords
@@ -193,17 +165,6 @@ class SearchController extends BaseController
                         GROUP BY t1.teacher_id
                         ORDER BY t1.lesson_avg_rating DESC, t1.teacher_avg_rating DESC, t1.id ASC
                     "),[$searchStr]);
-//                    $results = DB::table('teacher_lessons')
-//                        ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
-//                        ->leftJoin('users', 'users.id', '=', 'teachers.user_id')
-//                        ->leftJoin('teachers_average_ratings','teachers_average_ratings.teacher_id','=','teachers.id')
-//                        ->leftJoin('ratings','ratings.teacher_lesson_id','=','teacher_lessons.id')
-//                        ->groupBy('teacher_lessons.id')
-//                        ->whereRaw("MATCH(teacher_lessons.description,teacher_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
-//                        ->orderBy('lesson_avg_rating', 'DESC')
-//                        ->orderBy('teacher_avg_rating', 'DESC')
-//                        ->orderBy('teacher_lessons.id','ASC')
-//                        ->get(array('teacher_lessons.*', 'users.slug', 'users.name', 'users.lastname', 'users.email', 'users.phone', 'users.avatar', 'users.username',DB::raw('AVG(ratings.value) as lesson_avg_rating'),'teachers_average_ratings.teacher_avg_rating','users.status','users.deleted_at'));
                 } else { //teachers, no subject, no keywords
                     $results = DB::select(DB::raw("
                         SELECT t1.*, COUNT(t1.teacher_id) AS aggregated
@@ -232,16 +193,6 @@ class SearchController extends BaseController
                         GROUP BY t1.teacher_id
                         ORDER BY t1.lesson_avg_rating DESC, t1.teacher_avg_rating DESC, t1.id ASC
                     "));
-//                    $results = DB::table('teacher_lessons')
-//                        ->leftJoin('teachers', 'teachers.id', '=', 'teacher_lessons.teacher_id')
-//                        ->leftJoin('users', 'users.id', '=', 'teachers.user_id')
-//                        ->leftJoin('teachers_average_ratings','teachers_average_ratings.teacher_id','=','teachers.id')
-//                        ->leftJoin('ratings','ratings.teacher_lesson_id','=','teacher_lessons.id')
-//                        ->groupBy('teacher_lessons.id')
-//                        ->orderBy('lesson_avg_rating', 'DESC')
-//                        ->orderBy('teacher_avg_rating', 'DESC')
-//                        ->orderBy('teacher_lessons.id','ASC')
-//                        ->get(array('teacher_lessons.*', 'users.slug', 'users.name', 'users.lastname', 'users.email', 'users.phone', 'users.avatar', 'users.username', DB::raw('AVG(ratings.value) as lesson_avg_rating'), 'teachers_average_ratings.teacher_avg_rating','users.status','users.deleted_at'));
                 }
             }
         } else { //school
@@ -282,19 +233,6 @@ class SearchController extends BaseController
                         GROUP BY t1.school_id
                         ORDER BY t1.lesson_avg_rating DESC, t1.school_avg_rating DESC, t1.id ASC
                     "),[$subj_id,$searchStr]);
-
-//                    $results = DB::table('school_lessons')
-//                        ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
-//                        ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
-//                        ->leftJoin('s_lesson_ratings','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
-//                        ->groupBy('school_lessons.id')
-//                        ->where('subject_id', $subj_id)
-//                        ->whereRaw("MATCH(school_lessons.description,school_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
-//                        ->orderBy('lesson_avg_rating', 'DESC')
-//                        ->orderBy('school_avg_rating', 'DESC')
-//                        ->orderBy('school_lessons.id','ASC')
-//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(s_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
-
                 } else { //school, with subject, without keywords
                     $results = DB::select(DB::raw("
                         SELECT t1.*, COUNT(t1.school_id) AS aggregated
@@ -322,16 +260,6 @@ class SearchController extends BaseController
                         GROUP BY t1.school_id
                         ORDER BY t1.lesson_avg_rating DESC, t1.school_avg_rating DESC, t1.id ASC
                     "),[$subj_id]);
-//                    $results = DB::table('school_lessons')
-//                        ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
-//                        ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
-//                        ->leftJoin('s_lesson_ratings','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
-//                        ->groupBy('school_lessons.id')
-//                        ->where('subject_id', $subj_id)
-//                        ->orderBy('lesson_avg_rating', 'DESC')
-//                        ->orderBy('school_avg_rating', 'DESC')
-//                        ->orderBy('school_lessons.id','ASC')
-//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(s_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
                 }
             } else { //search all subjects
                 if($check_keywords) { //school, without subject, with keywords
@@ -368,16 +296,6 @@ class SearchController extends BaseController
                         GROUP BY t1.school_id
                         ORDER BY t1.lesson_avg_rating DESC, t1.school_avg_rating DESC, t1.id ASC
                     "),[$searchStr]);
-//                    $results = DB::table('school_lessons')
-//                        ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
-//                        ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
-//                        ->leftJoin('s_lesson_ratings','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
-//                        ->groupBy('school_lessons.id')
-//                        ->whereRaw("MATCH(school_lessons.description,school_lessons.title) AGAINST(? IN BOOLEAN MODE)", array($searchStr))
-//                        ->orderBy('lesson_avg_rating', 'DESC')
-//                        ->orderBy('school_avg_rating', 'DESC')
-//                        ->orderBy('school_lessons.id','ASC')
-//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(s_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
                 } else { //school, without subject, without keywords
                     $results = DB::select(DB::raw("
                         SELECT t1.*, COUNT(t1.school_id) AS aggregated
@@ -404,27 +322,11 @@ class SearchController extends BaseController
                         GROUP BY t1.school_id
                         ORDER BY t1.lesson_avg_rating DESC, t1.school_avg_rating DESC, t1.id ASC
                     "));
-//                    $results = DB::table('school_lessons')
-//                        ->leftJoin('schools', 'schools.id', '=', 'school_lessons.school_id')
-//                        ->leftJoin('schools_average_ratings','schools_average_ratings.school_id','=','schools.id')
-//                        ->leftJoin('s_lesson_ratings','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
-//                        ->groupBy('school_lessons.id')
-//                        ->orderBy('lesson_avg_rating', 'DESC')
-//                        ->orderBy('school_avg_rating', 'DESC')
-//                        ->orderBy('school_lessons.id','ASC')
-//                        ->get(array('school_lessons.*', 'schools.slug', 'schools.name', 'schools.email', 'schools.phone', 'schools.logo',DB::raw('AVG(s_lesson_ratings.value) as lesson_avg_rating'),'schools_average_ratings.school_avg_rating','schools.status','schools.deleted_at'));
                 }
             }
         }
         $results = new Collection($results); //array to collection
-
-        //Filter soft deleted results (because a raw database search does not automatically do it!)
-        //Also filter crawled school that has not been reviewed yet from the admin panel
-//        $results = $results->filter(function($result) {
-//            if ( (! $result->deleted_at) && ($result->status!='Crawled') )
-//                return true;
-//            return false;
-//        });
+        $resultsBAK = $results;
 
         //===============================================================================
         //  Filter results that belong to teachers whose payments are not up to date
@@ -439,8 +341,6 @@ class SearchController extends BaseController
         //                return $user->thisUserPaymentIsCurrent();
         //            });
         //        }
-
-        $resultsBAK = $results;
 
         // Filter by distance and price
         $results = Geocoding::findWithinDistance($user_lat,$user_lon,$search_distance,$results); //filter results within distance boundaries
@@ -538,15 +438,16 @@ class SearchController extends BaseController
             });
         }
 
-        //no more filters, results sorted >>>> pagination of results
+        //no more filters, results sorted >>>> PAGINATION of results
         $total_results = $results->count(); //update count
-        $max_slices = ceil($total_results/$results_per_slice);
+        $max_slices = ceil($total_results / $results_per_slice);
         $slices_showing = Input::has('slices_showing') ? (int) $input['slices_showing'] : 0;
-        $sl_offset = $slices_showing*6;
+        $sl_offset = $slices_showing * $results_per_slice;
         $sl_length = $results_per_slice;
         $results = $results->slice($sl_offset,$sl_length);
         ++$slices_showing;
-        $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
+//        $display_show_more = ($total_results==0 || $slices_showing == $max_slices) ? false : true;
+        $show_more = ($total_results==0 || $slices_showing == $max_slices) ? 'no' : 'yes';
 
         //set GoogleMap
         if ($search_distance=='rang2') {
@@ -559,7 +460,7 @@ class SearchController extends BaseController
         $config = array();
         $config['center'] = $user_lat.','.$user_lon;
         if($search_distance=='rang2')
-            $config['zoom'] = '7'; //PASAR A CONFIG
+            $config['zoom'] = '7'; //TODO: PASAR A CONFIG constants
         else if($search_distance=='rang1')
             $config['zoom'] = '11';
         else //rang0
@@ -590,7 +491,7 @@ class SearchController extends BaseController
         $circle['clickable'] = false;
         Gmaps::add_circle($circle);
 
-        $gmap =  Gmaps::create_map(); //generate map view code with given options
+        $gmap =  Gmaps::create_map(); //generate gmap html and JS code with the given options
 
         /* GMap Static image generation */
         $Zoom = $config['zoom'];
@@ -617,23 +518,18 @@ class SearchController extends BaseController
         $search = new Search();
         $search->address = $search_user_address;
         $search->subject_id = $search_subj_id;
-//        $search->subject_name = $subject;
         $search->keywords = $keywords;
         $search->type = $prof_o_acad;
         $search->results = (int) $total_results;
         $search->save();
-
-//        ini_set('xdebug.var_display_max_data', 2000);
-//        var_dump($gmap['html']);
-//        dd($MapImgURL);
-//        ini_set('xdebug.var_display_max_data', 1024);
 
         return View::make('searchresults', compact(
             'gmap',
             'MapImgURL',
             'total_results',
             'slices_showing',
-            'display_show_more',
+//            'display_show_more',
+            'show_more',
             'results',
             'prof_o_acad',
             'subject',

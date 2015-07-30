@@ -120,7 +120,6 @@ class AdminController extends BaseController
      * @param $school_id
      * @return \Illuminate\View\View
      */
-
     public function deleteSchool($school_id)
     {
         $school = School::findOrFail($school_id);

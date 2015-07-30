@@ -991,8 +991,8 @@ div.diamond span i {
 /* SEARCH */
 .modal-loading {
     display:    none;
-    position:   fixed;
-    z-index:    2000;
+    position:   absolute;
+    z-index:    9999;
     top:        0;
     left:       0;
     height:     100%;

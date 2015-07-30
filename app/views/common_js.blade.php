@@ -2,12 +2,10 @@
 {{ HTML::script('js/jquery.min.js') }}
 {{ HTML::script('js/jquery.raty.js') }}
 {{ HTML::script('js/bootbox.min.js') }}
-{{ HTML::script('js/consent.js') }}
 {{ HTML::script('js/toastr.min.js') }}
 {{ HTML::script('js/bootstrap.min.js') }}
 {{ HTML::script('js/bootstrap-formhelpers.min.js') }}
 {{ HTML::script('js/validator.js') }}
-{{ HTML::script('js/analytics.js') }}
 
 {{--CUSTOM MAIN JS AND SPECIFIC PAGES HANDLERS--}}
 {{ HTML::script('js/milprofes.js') }}
@@ -27,7 +25,8 @@ $(document).ready(function() {
     @if(Session::has('show_login_modal')) $('#modal-login').modal('show'); @endif
     @if(Session::has('show_register_modal')) $('#modal-register').modal('show'); @endif
 
-    Milprofes.init(); //load common handlers
+    Consent.init(); //cookies consent related JS >>> initializes analytics
+    Milprofes.init(); //layout common handlers
 });
 </script>
 
