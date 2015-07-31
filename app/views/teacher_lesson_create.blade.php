@@ -17,9 +17,9 @@
     <div class="container-fluid top-padding-70 bottom-padding-150 background-lamp">
         <div class="container">
 
-            <div><h1 class="generic-title">@lang('lesson_crate.title')</h1></div>
+            <div><h1 class="generic-title">@lang('lesson_create.title')</h1></div>
 
-            <div><h2 class="generic-subtitle">@lang('lesson_crate.subtitle')</h2></div>
+            <div><h2 class="generic-subtitle">@lang('lesson_create.subtitle')</h2></div>
 
         </div>
     </div>

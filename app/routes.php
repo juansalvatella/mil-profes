@@ -69,7 +69,7 @@ Route::get('userpanel/become/teacher', ['as' => 'userpanel.become.teacher', 'use
 //======================
 // Teacher dashboard
 //======================
-Route::get('teacher/create/lesson', ['as' => 'teacher.create.lesson', 'uses' => 'TeachersController@createLesson']);
+Route::get('teacher/create/lesson', ['as' => 'teacher.create.lesson', 'uses' => 'TeachersController@createLessonForm']);
 Route::post('teacher/create/lesson', ['as' => 'teacher.request.create.lesson', 'uses' => 'TeachersController@createLesson']);
 Route::get('teacher/edit/lesson/{lesson_id}', ['as' => 'teacher.edit.lesson', 'uses' => 'TeachersController@editLesson']);
 Route::post('teacher/save/lesson', ['as' => 'teacher.save.lesson', 'uses' =>'TeachersController@saveLesson']);

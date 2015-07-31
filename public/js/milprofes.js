@@ -125,11 +125,11 @@ var Home = function() {
 
             //Search schools and teachers button handlers
             $('#btn-search-schools').click(function(){
-                $("#prof_o_acad").val('academia');
+                $("#prof_o_acad").val(trans('js.school'));
                 return true;
             });
             $('#btn-search-teachers').click(function(){
-                $("#prof_o_acad").val('profesor');
+                $("#prof_o_acad").val(trans('js.teacher'));
                 return true;
             });
 
@@ -206,11 +206,11 @@ var TeacherLessonCreate = function() {
             var tbox = $('#description');
             var text_length = tbox.val().length;
             var text_remaining = text_max - text_length;
-            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            $('#chars_feedback').html('(' + text_remaining + ' ' + trans('js.remaining-chars') + ')');
             tbox.keyup(function() {
                 var text_length = $('#description').val().length;
                 var text_remaining = text_max - text_length;
-                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+                $('#chars_feedback').html('(' + text_remaining + ' ' + trans('js.remaining-chars') + ')');
             });
         }
     }
@@ -225,11 +225,11 @@ var TeacherLessonEdit = function() {
             var tbox = $('#description');
             var text_length = tbox.val().length;
             var text_remaining = text_max - text_length;
-            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            $('#chars_feedback').html('(' + text_remaining + ' ' + trans('js.remaining-chars') + ')');
             tbox.keyup(function() {
                 var text_length = $('#description').val().length;
                 var text_remaining = text_max - text_length;
-                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+                $('#chars_feedback').html('(' + text_remaining + ' ' + trans('js.remaining-chars') + ')');
             });
         }
     }
@@ -241,17 +241,14 @@ var MyProfileDashboard = function() {
 
             //Cropping related JS
             var xsize = 160, ysize = 160, imgSlc, boundx, boundy;
-
             function checkCoords() {
                 return !!parseInt($('#w').val());
             }
-
             //Handle preview "zooming"
             function updatePreview(c) {
                 if (parseInt(c.w) > 0) {
                     var rx = xsize / c.w;
                     var ry = ysize / c.h;
-
                     imgSlc.css({
                         width: Math.round(rx * boundx) + 'px',
                         height: Math.round(ry * boundy) + 'px',
@@ -265,12 +262,11 @@ var MyProfileDashboard = function() {
                     $('#h').val(c.h);
                 }
             }
-
             //Generate new canvas, preview and init jcrop
             function readURL(input) {
                 if (input.files && input.files[0] && input.files[0].size < 1048576) {
                     $('#file-input').removeClass('has-error');
-                    $('#file-input-error').html('Puedes utilizar imágenes del tipo JPG, PNG o GIF y tamaño inferior a 1 MB.');
+                    $('#file-input-error').html(trans('js.file-input-info'));
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         //Remove previous content
@@ -283,8 +279,8 @@ var MyProfileDashboard = function() {
                         var cContainer = $('#canvasContainer');
                         var pContainer = $('#previewContainer');
                         var jcrop_api;
-                        cContainer.append('<img src="'+ src +'" class="imgCanvas" alt="Mi nueva imagen de perfil" />');
-                        pContainer.append('<img src="'+ src +'" class="jcrop-preview" alt="Vista previa" />');
+                        cContainer.append('<img src="'+ src +'" class="imgCanvas" alt="' + trans('js.my-new-avatar') + '" />');
+                        pContainer.append('<img src="'+ src +'" class="jcrop-preview" alt="' + trans('js.preview') + '" />');
                         //Set new value for the file input
                         $('#cropAvatar').val(src);
                         //Init JCrop
@@ -322,10 +318,9 @@ var MyProfileDashboard = function() {
                     $('#cropModal').modal('show');
                 } else if(! input.files[0].size < 1048576) {
                     $('#file-input').addClass('has-error');
-                    $('#file-input-error').html('La imagen elegida supera el tamaño máximo de 1 MB.');
+                    $('#file-input-error').html(trans('js.file-input-error'));
                 }
             }
-
             $("#avatar").change(function(){
                 readURL(this);
             });
@@ -335,11 +330,11 @@ var MyProfileDashboard = function() {
             var tbox = $('#description');
             var text_length = tbox.val().length;
             var text_remaining = text_max - text_length;
-            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            $('#chars_feedback').html('(' + text_remaining + ' ' + trans('js.remaining-chars') + ')');
             tbox.keyup(function() {
                 var text_length = $('#description').val().length;
                 var text_remaining = text_max - text_length;
-                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+                $('#chars_feedback').html('(' + text_remaining + ' ' + trans('js.remaining-chars') + ')');
             });
 
             //Forms validation
@@ -470,7 +465,7 @@ var SchoolEdit = function() {
             var control = $("#pics");
             $("#remove").click(function() {
                 resetFormElement(control);
-                $('.btn-file-2-label').text('No hay imágenes de perfil seleccionadas'); //TODO!
+                $('.btn-file-2-label').text(trans('js.no-pictures-selected'));
             });
 
             $(document).on('change', '.btn-file-1 :file', function() {
@@ -481,7 +476,7 @@ var SchoolEdit = function() {
                 displayLogoPreview(this);
             });
             $('.btn-file-1 :file').on('fileselect', function(event, numFiles, label) {
-                $('.btn-file-1-label').text('Has seleccionado la imagen '+label+' como nuevo logotipo'); //TODO!
+                $('.btn-file-1-label').text('' + trans('js.youve-selected-pic') + ' ' + label + ' ' + trans('as-new-logo'));
             });
 
             $(document).on('change', '.btn-file-2 :file', function() {
@@ -492,7 +487,7 @@ var SchoolEdit = function() {
                 displayPicsPreview(this);
             });
             $('.btn-file-2 :file').on('fileselect', function(event, numFiles, label) {
-                $('.btn-file-2-label').text('Has seleccionado '+numFiles+' imágenes nuevas para el perfil');
+                $('.btn-file-2-label').text('' + trans('js.youve-selected') + ' ' + numFiles + ' ' + trans('js.new-profile-pics'));
             });
 
         }
@@ -533,28 +528,7 @@ var SchoolsDashboard = function() {
             //Schools dashboard datatables config
             $('#table_schools').DataTable({
                 "language": {
-                    "sProcessing":     "Procesando...", //TODO! 273-293
-                    "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix":    "",
-                    "sSearch":         "Buscar:",
-                    "sUrl":            "",
-                    "sInfoThousands":  ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst":    "Primero",
-                        "sLast":     "Último",
-                        "sNext":     "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
+                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
                 },
                 "pagingType": "full_numbers",
                 "order": [[ 0, 'asc' ]],
@@ -699,18 +673,18 @@ var Profile = function() {
             var rtbox = $('#review-comment');
             var rtext_length = rtbox.val().length;
             var rtext_remaining = rtext_max - rtext_length;
-            $('#rchars_feedback').html('(' + rtext_remaining + ' caracteres disponibles)');
+            $('#rchars_feedback').html('(' + rtext_remaining + ' ' + trans('js.remaining-chars') + ')');
             rtbox.keyup(function() {
                 var rtext_length = rtbox.val().length;
                 var rtext_remaining = rtext_max - rtext_length;
-                $('#rchars_feedback').html('(' + rtext_remaining + ' caracteres disponibles)');
+                $('#rchars_feedback').html('(' + rtext_remaining + ' ' + trans('js.remaining-chars') + ')');
             });
 
             $('#modal-review').on('hidden.bs.modal', function () {
                 formReview.find('input[name=lessonId]').val('-1');
                 formReview.find('input[name=score]').val('3');
                 formReview.find('textarea[name=comment]').val('');
-                $('#rchars_feedback').html('(255 caracteres disponibles)');
+                $('#rchars_feedback').html('(' + trans('js.255-chars-remaining') + ')');
                 $('#review-stars').raty({
                     readOnly: false,
                     half: true,
@@ -733,8 +707,8 @@ var Profile = function() {
                 e.preventDefault();
                 var dynAlert = $('#dynalert');
                 dynAlert.removeClass('hidden').show().append('' +
-                    'Accede a milProfes. para realizar valoraciones. ' +
-                    '¿Aún no tienes cuenta? <a href="javascript:" class="trigger-register">¡Regístrate gratis!</a>' +
+                    '' + trans('js.login-to-comment') +
+                    '' + trans('js.no-account-yet') + ' <a href="javascript:" class="trigger-register">' + trans('js.register-for-free') + '</a>' +
                     '');
                 $('#modal-login').modal('show');
             });
@@ -800,7 +774,7 @@ var TeacherProfile = function() {
                     $('#modal-review').modal('hide');
                     //notify fail/success
                     if(data.success == 'success') {
-                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                        toastr['success'](''+data.msg, trans('js.review-sent'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -818,7 +792,7 @@ var TeacherProfile = function() {
                             location.reload();
                         },1000);
                     } else if (data.success == 'warning') {
-                        toastr['warning'](''+data.msg, 'Aviso', {
+                        toastr['warning'](''+data.msg, trans('js.warning'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -833,7 +807,7 @@ var TeacherProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'error') {
-                        toastr['error'](''+data.msg, 'Error', {
+                        toastr['error'](''+data.msg, trans('js.error'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -906,7 +880,7 @@ var TeacherProfile = function() {
                             plusMinusOne(helpSum,'plus');
                         if(helpSum.closest('div').find('i').hasClass('fa-minus'))
                             plusMinusOne(helpSum,'minus');
-                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                        toastr['success'](''+data.msg, trans('js.review-sent'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -921,7 +895,7 @@ var TeacherProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'warning') {
-                        toastr['warning'](''+data.msg, 'Aviso', {
+                        toastr['warning'](''+data.msg, trans('js.warning'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -936,7 +910,7 @@ var TeacherProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'error') {
-                        toastr['error'](''+data.msg, 'Error', {
+                        toastr['error'](''+data.msg, trans('js.error'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -971,7 +945,7 @@ var TeacherProfile = function() {
                             plusMinusOne(helpSum,'minus');
                         if(helpSum.closest('div').find('i').hasClass('fa-minus'))
                             plusMinusOne(helpSum,'plus');
-                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                        toastr['success'](''+data.msg, trans('js.review-sent'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -986,7 +960,7 @@ var TeacherProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'warning') {
-                        toastr['warning'](''+data.msg, 'Aviso', {
+                        toastr['warning'](''+data.msg, trans('js.warning'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1001,7 +975,7 @@ var TeacherProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'error') {
-                        toastr['error'](''+data.msg, 'Error', {
+                        toastr['error'](''+data.msg, trans('js.error'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1021,7 +995,7 @@ var TeacherProfile = function() {
 
             $('.trigger-itsme').click(function(e) {
                 e.preventDefault();
-                toastr['warning']('No es posible valorar las propias clases.', 'Acción no permitida', {
+                toastr['warning'](trans('js.review-own-not-possible'), trans('js.action-disallowed'), {
                     "closeButton": true,
                     "debug": false,
                     "positionClass": "toast-bottom-right",
@@ -1087,7 +1061,7 @@ var SchoolProfile = function() {
                     $('#modal-review').modal('hide');
                     //notify fail/success
                     if(data.success == 'success') {
-                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                        toastr['success'](''+data.msg, trans('js.review-sent'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1105,7 +1079,7 @@ var SchoolProfile = function() {
                             location.reload();
                         },1000);
                     } else if (data.success == 'warning') {
-                        toastr['warning'](''+data.msg, 'Aviso', {
+                        toastr['warning'](''+data.msg, trans('js.warning'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1120,7 +1094,7 @@ var SchoolProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'error') {
-                        toastr['error'](''+data.msg, 'Error', {
+                        toastr['error'](''+data.msg, trans('js.error'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1182,7 +1156,7 @@ var SchoolProfile = function() {
                             plusMinusOne(helpSum,'plus');
                         if(helpSum.closest('div').find('i').hasClass('fa-minus'))
                             plusMinusOne(helpSum,'minus');
-                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                        toastr['success'](''+data.msg, trans('js.review-sent'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1197,7 +1171,7 @@ var SchoolProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'warning') {
-                        toastr['warning'](''+data.msg, 'Aviso', {
+                        toastr['warning'](''+data.msg, trans('js.warning'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1212,7 +1186,7 @@ var SchoolProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'error') {
-                        toastr['error'](''+data.msg, 'Error', {
+                        toastr['error'](''+data.msg, trans('js.error'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1247,7 +1221,7 @@ var SchoolProfile = function() {
                             plusMinusOne(helpSum,'minus');
                         if(helpSum.closest('div').find('i').hasClass('fa-minus'))
                             plusMinusOne(helpSum,'plus');
-                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                        toastr['success'](''+data.msg, trans('js.review-sent'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1262,7 +1236,7 @@ var SchoolProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'warning') {
-                        toastr['warning'](''+data.msg, 'Aviso', {
+                        toastr['warning'](''+data.msg, trans('js.warning'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",
@@ -1277,7 +1251,7 @@ var SchoolProfile = function() {
                             "hideMethod": "fadeOut"
                         });
                     } else if (data.success == 'error') {
-                        toastr['error'](''+data.msg, 'Error', {
+                        toastr['error'](''+data.msg, trans('js.error'), {
                             "closeButton": true,
                             "debug": false,
                             "positionClass": "toast-bottom-right",

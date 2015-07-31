@@ -1,3 +1,4 @@
+@include('js-localization::head')
 <!DOCTYPE html>
 <html lang="es" @if(Request::is('profe/*') || Request::is('academia/*')) prefix="og: http://ogp.me/ns#" @endif>
 <head>
@@ -6,6 +7,8 @@
     @yield('page_meta')
 
     @include('common_head')
+
+    @yield('js-localization.head')
 
     @yield('page_head')
 

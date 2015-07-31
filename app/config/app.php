@@ -78,7 +78,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKey!!!',
+	'key' => 'ICAijJ7H88cnB80LvmDFvojj5THXr7N3',
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
@@ -130,6 +130,7 @@ return array(
         'Cviebrock\EloquentSluggable\SluggableServiceProvider',
         'Watson\Sitemap\SitemapServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+		'JsLocalization\JsLocalizationServiceProvider',
 
 	),
 

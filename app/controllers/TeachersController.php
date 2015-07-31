@@ -6,7 +6,7 @@ class TeachersController extends BaseController
      * Displays the View to create lesson.
      * @return \Illuminate\View\View
      */
-    public function creteLessonForm()
+    public function createLessonForm()
     {
         $user = Auth::user();
         $teacher = $user->teacher()->first();
