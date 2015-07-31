@@ -1,7 +1,7 @@
 <div class="container-fluid top-padding-25 bottom-padding-25">
     <div class="panel panel-milprofes">
         <div class="panel-heading">
-            <h3 class="panel-title">Tu disponibilidad semanal</h3>
+            <h3 class="panel-title">@lang('userpanel.your-availability')</h3>
         </div>
         <div class="panel-body">
             <form class="form-horizontal" action="{{ action("TeachersController@saveAvailability") }}" method="post" role="form" id="availabilityForm">
@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-xs-12 top-buffer-10">
                     <button type="submit" class="btn btn-primary pull-right">
-                        <i class="fa fa-save"></i> Guardar cambios
+                        <i class="fa fa-save"></i> @lang('buttons.save_changes')
                     </button>
                 </div>
             </form>
@@ -57,18 +57,18 @@
     </div>
     <div class="panel panel-milprofes">
         <div class="panel-heading">
-            <h3 class="panel-title">Tus clases</h3>
+            <h3 class="panel-title">@lang('userpanel.your-lessons')</h3>
         </div>
         <div class="panel-body">
             @if (!$lessons->isEmpty())
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th class="hidden-xs">Categoría</th>
-                            <th class="min-width-150">Título</th>
-                            <th class="hidden-xs">Descripción</th>
-                            <th class="hidden-xs">Precio<br>(€/hora)</th>
-                            <th class="min-width-115-300">Acciones</th>
+                            <th class="hidden-xs">@lang('userpanel.subject')</th>
+                            <th class="min-width-150">@lang('userpanel.title')</th>
+                            <th class="hidden-xs">@lang('userpanel.description')</th>
+                            <th class="hidden-xs">@lang('userpanel.price')<br>@lang('userpanel.price-unit')</th>
+                            <th class="min-width-115-300">@lang('userpanel.actions')</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +78,7 @@
                             <td>{{{ $lesson->title }}}</td>
                             <td class="hidden-xs">{{{ $lesson->description }}}</td>
                             {{-- + 0 removes zeros to the right of the decimal separator --}}
-                            <td class="hidden-xs">@if($lesson->price!=0.0) {{{ str_replace(".", ",", $lesson->price + 0) }}} @else Sin precio @endif</td>
+                            <td class="hidden-xs">@if($lesson->price!=0.0) {{{ str_replace(".", ",", $lesson->price + 0) }}} @else @lang('userpanel.no-price') @endif</td>
                             <td>
                                 <a href="{{ url("teacher/edit/lesson",array($lesson->id)) }}" class="btn btn-default bottom-buffer-5"><i class="fa fa-edit"></i><span class="hidden-xs hidden-sm"> @lang("buttons.edit")</span></a>
                                 &nbsp;
@@ -91,12 +91,12 @@
             @endif
             <div class="clear-left col-xs-12">
             @if (!$lessons->isEmpty())
-                <div class="pull-left">Tienes publicadas {{ count($lessons) }} clases</div>
+                <div class="pull-left">@lang('userpanel.you-have-published') {{ count($lessons) }} @choice('messages.lessons',count($lessons))</div>
             @else
-                <div class="pull-left">Aún no tienes clases publicadas.</div>
+                <div class="pull-left">@lang('userpanel.no-lessons')</div>
             @endif
                 <a href="{{ url("teacher/create/lesson") }}" class="btn btn-primary pull-right top-buffer-10">
-                    <i class="fa fa-plus"></i> Nueva clase
+                    <i class="fa fa-plus"></i> @lang('userpanel.new-lesson')
                 </a>
             </div>
         </div>

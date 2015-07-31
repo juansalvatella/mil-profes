@@ -31,26 +31,26 @@
             <div class="col-xs-12 col-sm-6 col-md-5">
                 <div class="row">
                     <div class="col-xs-4 footer-sitemap">
-                        <h4>Navegar</h4>
+                        <h4>@lang('footer.navigation')</h4>
                         <ul class="list-unstyled">
-                            <li><a href="{{ route('home') }}">Inicio</a></li>
-                            <li><a href="{{ route('who') }}">Quiénes somos</a></li>
-                            <li><a href="{{ route('faqs')  }}">FAQs</a></li>
-                            <li><a href="{{ route('contact') }}">Contáctanos</a></li>
+                            <li><a href="{{ route('home') }}">@lang('footer.home')</a></li>
+                            <li><a href="{{ route('who') }}">@lang('footer.who')</a></li>
+                            <li><a href="{{ route('faqs')  }}">@lang('footer.faqs')</a></li>
+                            <li><a href="{{ route('contact') }}">@lang('footer.contact')</a></li>
                         </ul>
                     </div>
                     <div class="col-xs-4 footer-sitemap">
-                        <h4>Servicios</h4>
+                        <h4>@lang('footer.services')</h4>
                         <ul class="list-unstyled">
-                            <li><a href="{{ route('services') }}">Servicios para academias</a></li>
+                            <li><a href="{{ route('services') }}">@lang('footer.schools')</a></li>
                         </ul>
                     </div>
                     <div class="col-xs-4 footer-sitemap">
-                        <h4>Legal</h4>
+                        <h4>@lang('footer.legal')</h4>
                         <ul class="list-unstyled">
-                            <li><a href="{{ route('terms') }}">Condiciones de uso</a></li>
-                            <li><a href="{{ route('privacy') }}">Política de privacidad</a></li>
-                            <li><a href="{{ route('cookies') }}">Política de cookies</a></li>
+                            <li><a href="{{ route('terms') }}">@lang('footer.terms')</a></li>
+                            <li><a href="{{ route('privacy') }}">@lang('footer.privacy')</a></li>
+                            <li><a href="{{ route('cookies') }}">@lang('footer.cookies')</a></li>
                         </ul>
                     </div>
                 </div>
