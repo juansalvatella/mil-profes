@@ -48,5 +48,8 @@
 	"config": {
 		"preferred-install": "dist"
 	},
+	"require-dev": {
+	  "mockery/mockery": "dev-master@dev"
+	},
 	"minimum-stability": "stable"
 }

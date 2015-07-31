@@ -9,7 +9,7 @@ class UsersController extends Controller
     public function create()
     {
         return Redirect::route('home')
-            ->with('show_register_modal',true);
+            ->with(trans('hardcoded.userscontroller.create.show_register_modal'));
     }
 
     /**
@@ -92,8 +92,8 @@ class UsersController extends Controller
         if($validator->fails()) {
             return Redirect::route('home')
                 ->withInput(Input::except('password'))
-                ->with('reg-error', 'No se cumplimentaron los campos correctamente. Vuelve a intentarlo.')
-                ->with('show_register_modal', true);
+                ->with(trans('hardcoded.userscontroller.store.reg-error'))
+                ->with(trans('hardcoded.userscontroller.store.show_register_modal'));
         }
 
         //is it possible to geocode address?
@@ -101,8 +101,8 @@ class UsersController extends Controller
         if(!$geocode) {
             return Redirect::route('home')
                 ->withInput(Input::except('password'))
-                ->with('reg-error', 'La dirección proporcionada no parece ser válida. Prueba escribiendo tu calle, número y ciudad.')
-                ->with('show_register_modal', true);
+                ->with(trans('hardcoded.userscontroller.store.reg-error-dir'))
+                ->with(trans('hardcoded.userscontroller.store.show_register_modal'));
         }
 
         //geocoding done, try to register the user
@@ -139,11 +139,11 @@ class UsersController extends Controller
             $user->attachRole($teacher_role);
 
             return Redirect::route('home')
-                ->with('log-notice', trans('messages.user_just_registered'))
-                ->with('show_login_modal',true)
-                ->with('success','')
-                ->with('Stitle','Confirma tu e-mail')
-                ->with('Smsg','En breve recibirás un e-mail de milPROFES con el que podrás confirmar tu dirección de correo electrónico.');
+                ->with(trans('hardcoded.userscontroller.store.log-notice'))
+                ->with(trans('hardcoded.userscontroller.store.show_login_modal'))
+                ->with(trans('hardcoded.userscontroller.store.success'))
+                ->with(trans('hardcoded.userscontroller.store.Stitle'))
+                ->with(trans('hardcoded.userscontroller.store.Smsg'));
         } else {
             $error = $user->errors()->all(':message');
 
@@ -151,7 +151,7 @@ class UsersController extends Controller
             return Redirect::route('home')
                 ->withInput(Input::except('password'))
                 ->with('reg-error', $error)
-                ->with('show_register_modal', true);
+                ->with(trans('hardcoded.userscontroller.store.show_register_modal'));
         }
 
     }
@@ -335,17 +335,17 @@ class UsersController extends Controller
                 Session::flash('validationErrors', $validator->messages());
                 return Redirect::route('userpanel.dashboard')
                     ->withInput()
-                    ->with('error','No fue posible cambiar la contraseña. Asegúrate de introducir una nueva contraseña adecuada y diferente a la actual.')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'No fue posible cambiar la contraseña. Asegúrate de introducir una nueva contraseña adecuada y diferente a la actual.');
+                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.error'))
+                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.Etitle'))
+                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.Emsg'));
             }
             //Is the old password correct?
             if(!Hash::check(Input::get('old_password'), $user->password)){
                 return Redirect::route('userpanel.dashboard')
                     ->withInput()
-                    ->with('error','La contraseña actual no es la correcta.')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'La vieja contraseña proporcionada no es la correcta.');
+                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.error_pwd'))
+                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.Etitle'))
+                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.Emsg_pwd'));
             }
             //Set new password
             $user->password = Input::get('new_password');
@@ -356,13 +356,13 @@ class UsersController extends Controller
             Confide::logout();
 
             return Redirect::route('home')
-                ->with('log-success','Tu contraseña se ha actualizado con éxito. Por favor, accede con tu nueva contraseña.')
+                ->with(trans('hardcoded.userscontroller.updateUserPasswd.log-success'))
                 ->with('show_login_modal',true);
 
         } else {
 
             return Redirect::route('home')
-                ->with('log-notice', 'No se fue posible actualizar tu contraseña. Tu sesión ha caducado, por favor, vuelve a iniciar sesión e inténtalo de nuevo.')
+                ->with(trans('hardcoded.userscontroller.updateUserPasswd.log-notice'))
                 ->with('show_login_modal',true);
 
         }
@@ -388,9 +388,9 @@ class UsersController extends Controller
 
             if($validator->fails()) {
                 return Redirect::route('userpanel.dashboard')
-                    ->with('error','No ha sido posible actualizar tu foto de perfil. Inténtalo de nuevo.')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'No ha sido posible actualizar tu foto de perfil. Inténtalo de nuevo.');
+                    ->with(trans('hardcoded.userscontroller.updateAvatar.error'))
+                    ->with(trans('hardcoded.userscontroller.updateAvatar.Etitle'))
+                    ->with(trans('hardcoded.userscontroller.updateAvatar.Emsg'));
             } else {
                 $targ_w = $targ_h = 160;
                 $jpeg_quality = 90;
@@ -403,9 +403,9 @@ class UsersController extends Controller
                 $img_r = imagecreatefromstring($file);
                 if ($img_r == false)
                     return Redirect::route('userpanel.dashboard')->withInput()
-                        ->with('error', 'Error al actualizar tu imagen de perfil: asegúrate de que tu imagen es del tipo PNG, JPG o GIF.')
-                        ->with('Etitle', 'Error')
-                        ->with('Emsg', 'Error al actualizar tu imagen de perfil: asegúrate de que tu imagen es del tipo PNG, JPG o GIF.');
+                        ->with(trans('hardcoded.userscontroller.updateAvatar.error_image_profile'))
+                        ->with(trans('hardcoded.userscontroller.updateAvatar.Etitle'))
+                        ->with(trans('hardcoded.userscontroller.updateAvatar.Emsg_image_profile'));
 
                 $dst_r = ImageCreateTrueColor($targ_w, $targ_h);
                 imagecopyresampled($dst_r, $img_r, 0, 0, $input['x'], $input['y'], $targ_w, $targ_h, $input['w'], $input['h']);
@@ -415,19 +415,19 @@ class UsersController extends Controller
 
                 if ($user->save()) {
                     return Redirect::route('userpanel.dashboard')
-                        ->with('success', 'Tu imagen de perfil se ha actualizado con éxito')
-                        ->with('Stitle', 'Éxito')
-                        ->with('Smsg', 'Tu imagen de perfil ha sido actualizada.');
+                        ->with(trans('hardcoded.userscontroller.updateAvatar.success'))
+                        ->with(trans('hardcoded.userscontroller.updateAvatar.Stitle'))
+                        ->with(trans('hardcoded.userscontroller.updateAvatar.Smsg'));
                 } else {
                     return Redirect::route('userpanel.dashboard')->withInput()
-                        ->with('error', 'Error al actualizar tu imagen de perfil. Inténtalo de nuevo.')
-                        ->with('Etitle', 'Error')
-                        ->with('Emsg', 'Error al actualizar tu imagen de perfil. Inténtalo de nuevo.');
+                        ->with(trans('hardcoded.userscontroller.updateAvatar.error_image'))
+                        ->with(trans('hardcoded.userscontroller.updateAvatar.Etitle'))
+                        ->with(trans('hardcoded.userscontroller.updateAvatar.Emsg_image'));
                 }
             }
         } else {
             return Redirect::route('home')
-                ->with('log-notice', 'No ha sido posible actualizar tu imagen de perfil porque tu sesión ha caducado. Por favor, vuelve a iniciar sesión e inténtalo de nuevo.')
+                ->with(trans('hardcoded.userscontroller.updateAvatar.log-notice'))
                 ->with('show_login_modal',true);
         }
     }
@@ -458,9 +458,9 @@ class UsersController extends Controller
             if($validator->fails()) {
                 return Redirect::route('userpanel.dashboard')
                     ->withInput()
-                    ->with('error','No ha sido posible actualizar tus datos. Asegúrate de haber rellenado los campos correctamente.')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'No ha sido posible actualizar tus datos. Asegúrate de haber rellenado los campos correctamente.');
+                    ->with(trans('hardcoded.userscontroller.updateUser.error'))
+                    ->with(trans('hardcoded.userscontroller.updateUser.Etitle'))
+                    ->with(trans('hardcoded.userscontroller.updateUser.EmsgField'));
             }
 
             if($input['name'] != $user->name)
@@ -485,9 +485,9 @@ class UsersController extends Controller
                 if(!$geocoding) {
                     return Redirect::route('userpanel.dashboard')
                         ->withInput()
-                        ->with('error','No fue posible actualizar tus datos. La dirección proporcionada parece no ser válida.')
-                        ->with('Etitle', 'Error')
-                        ->with('Emsg', 'No fue posible actualizar tus datos. La dirección proporcionada parece no ser válida.');
+                        ->with(trans('hardcoded.userscontroller.updateUser.errorDir'))
+                        ->with(trans('hardcoded.userscontroller.updateUser.Etitle'))
+                        ->with(trans('hardcoded.userscontroller.updateUser.Emsg'));
                 }
                 $user->lat = $geocoding[0]; //guargar latitud
                 $user->lon = $geocoding[1]; //guardar longitud
@@ -508,18 +508,18 @@ class UsersController extends Controller
 
             if($user->save()) {
                 return Redirect::route('userpanel.dashboard')
-                    ->with('success', 'Tus datos se han actualizado con éxito')
-                    ->with('Stitle', 'Éxito')
-                    ->with('Smsg', 'Se han actualizado tus datos.');
+                    ->with(trans('hardcoded.userscontroller.updateUser.success'))
+                    ->with(trans('hardcoded.userscontroller.updateUser.Stitle'))
+                    ->with(trans('hardcoded.userscontroller.updateUser.Smsg'));
             } else {
                 return Redirect::route('userpanel.dashboard')->withInput()
-                    ->with('error', 'Error al actualizar tus datos')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'Error al tratar de actualizar tus datos. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
+                    ->with(trans('hardcoded.userscontroller.updateUser.errorData'))
+                    ->with(trans('hardcoded.userscontroller.updateUser.Etitle'))
+                    ->with(trans('hardcoded.userscontroller.updateUser.EmsgData'));
             }
         } else {
             return Redirect::route('/')
-                ->with('log-notice', 'Tu sesión ha caducado y no fue posible actualizar tus datos. Por favor, vuelve a acceder e inténtalo de nuevo.')
+                ->with(trans('hardcoded.userscontroller.updateUser.log-notice'))
                 ->with('show_login_modal',true);
         }
     }
@@ -544,9 +544,9 @@ class UsersController extends Controller
             if ($validator->fails()) {
                 return Redirect::route('userpanel.dashboard')
                     ->withInput()
-                    ->with('error', 'No ha sido posible actualizar los enlaces a redes sociales. Asegúrate de haber introducido direcciones web válidas.')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'No ha sido posible actualizar tus enlaces a redes sociales. Asegúrate de haber introducido direcciones web válidas.');
+                    ->with(trans('hardcoded.userscontroller.updateSocial.error'))
+                    ->with(trans('hardcoded.userscontroller.updateSocial.Etitle'))
+                    ->with(trans('hardcoded.userscontroller.updateSocial.Emsg'));
             }
 
             if ($input['facebook'] != $user->link_facebook)
@@ -564,18 +564,18 @@ class UsersController extends Controller
 
             if($user->save())
                 return Redirect::route('userpanel.dashboard')
-                    ->with('success', 'Tus enlaces a redes sociales se han actualizado con éxito.')
-                    ->with('Stitle', 'Éxito')
-                    ->with('Smsg', 'Tus enlaces a redes sociales han sido actualizados.');
+                    ->with(trans('hardcoded.userscontroller.updateSocial.success'))
+                    ->with(trans('hardcoded.userscontroller.updateSocial.Stitle'))
+                    ->with(trans('hardcoded.userscontroller.updateSocial.Smsg'));
             else
                 return Redirect::route('userpanel.dashboard')->withInput()
-                    ->with('error', 'Error al actualizar tus datos')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'Error al tratar de actualizar tus enlaces sociales.');
+                    ->with(trans('hardcoded.userscontroller.updateSocial.errorData'))
+                    ->with(trans('hardcoded.userscontroller.updateSocial.Etitle'))
+                    ->with(trans('hardcoded.userscontroller.updateSocial.EmsgLink'));
 
         } else {
             return Redirect::route('/')
-                ->with('log-notice', 'Tu sesión ha caducado y no fue posible actualizar tus datos. Por favor, vuelve a acceder e inténtalo de nuevo.')
+                ->with(trans('hardcoded.userscontroller.updateSocial.log-notice'))
                 ->with('show_login_modal',true);
         }
     }
@@ -601,13 +601,13 @@ class UsersController extends Controller
                 $user->attachRole($teacher_role);
 
                 return Redirect::route('userpanel.dashboard')
-                    ->with('success', '¡Ahora ya eres profe.! ¡Publica tus clases!')
-                    ->with('Stitle', 'Éxito')
-                    ->with('Smsg', '¡Ya eres profe.! ¡Publica tus clase para aparecer en los resultados de las búsquedas!');
+                    ->with(trans('hardcoded.userscontroller.becomeATeacher.success'))
+                    ->with(trans('hardcoded.userscontroller.becomeATeacher.Stitle'))
+                    ->with(trans('hardcoded.userscontroller.becomeATeacher.Smsg'));
             }
         } else {
             return Redirect::route('/')
-                ->with('log-notice', 'Al parece tu sesión ha caducado. Por favor, vuelve a acceder e inténtalo de nuevo.')
+                ->with(trans('hardcoded.userscontroller.becomeATeacher.log-notice'))
                 ->with('show_login_modal',true);
         }
     }

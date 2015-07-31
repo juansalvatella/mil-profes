@@ -41,13 +41,13 @@ class ContactController extends Controller {
             });
 
             return Redirect::back()
-                ->with('minicontact-success', 'Tu mensaje ha sido enviado. ¡Muchas gracias!');
+                ->with(trans('hardcoded.contactcontroller.getMiniContactForm.minicontact-success'));
         }
         else
         {
             //return contact form with errors
             return Redirect::back()
-                ->with('minicontact-error', 'Faltan campos por rellenar.');
+                ->with(trans('hardcoded.contactcontroller.getMiniContactForm.minicontact-error'));
         }
 
     }
@@ -79,18 +79,18 @@ class ContactController extends Controller {
             });
 
             return Redirect::to('contactanos')
-                ->with('success', 'Tu mensaje ha sido enviado. ¡Muchas gracias!')
-                ->with('Stitle','Éxito')
-                ->with('Smsg','Tu mensaje ha sido enviado. ¡Muchas gracias!.');
+                ->with(trans('hardcoded.contactcontroller.getContactForm.success'))
+                ->with(trans('hardcoded.contactcontroller.getContactForm.Stitle'))
+                ->with(trans('hardcoded.contactcontroller.getContactForm.Smsg'));
         }
         else
         {
             //return contact form with errors
             return Redirect::to('contactanos')
                 ->withInput()
-                ->with('error', '¡Error! Faltan campos por rellenar.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'No se pudo enviar tu mensaje. Asegúrate de que todos los campos están rellenados correctamente.');
+                ->with(trans('hardcoded.contactcontroller.getContactForm.error'))
+                ->with(trans('hardcoded.contactcontroller.getContactForm.Etitle'))
+                ->with(trans('hardcoded.contactcontroller.getContactForm.Emsg'));
         }
 
     }
