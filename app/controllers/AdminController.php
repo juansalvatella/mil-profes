@@ -159,9 +159,9 @@ class AdminController extends BaseController
         if(!$geocoding){
             return Redirect::back()
                 ->withInput()
-                ->with('error', 'No se pudo crear la acadamia. Error al tratar de guardar la dirección.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'No se pudo crear la acadamia. Se produjo un error al tratar de guardar la dirección.');
+                ->with(trans('hardcoded.admincontroller.createSchool.errorDir'))
+                ->with(trans('hardcoded.admincontroller.createSchool.Etitle'))
+                ->with(trans('hardcoded.admincontroller.createSchool.EmsgDir'));
         }
         $school->lat = $geocoding[0]; //latitud
         $school->lon = $geocoding[1]; //longitud
@@ -203,12 +203,12 @@ class AdminController extends BaseController
                     $img = $upload->getClientOriginalName();
                     if ($validator->fails()) {
                         return Redirect::to('admin/schools')
-                            ->with('warning', 'La academia fue creada pero se dieron errores en el proceso.')
-                            ->with('Wtitle', 'Aviso')
-                            ->with('Wmsg', 'La academia fue creada pero se dieron errores en el proceso.')
-                            ->with('error', 'Error al tratar de subir la imagen de perfil: ' . $img)
-                            ->with('Etitle', 'Error')
-                            ->with('Emsg', 'Error al subir la imagen de perfil: ' . $img);
+                            ->with(trans('hardcoded.admincontroller.createSchool.warning'))
+                            ->with(trans('hardcoded.admincontroller.createSchool.Wtitle'))
+                            ->with(trans('hardcoded.admincontroller.createSchool.Wmsg'))
+                            ->with(trans('hardcoded.admincontroller.createSchool.errorProfile') . $img)
+                            ->with(trans('hardcoded.admincontroller.createSchool.Etitle'))
+                            ->with(trans('hardcoded.admincontroller.createSchool.EmsgProfile') . $img);
                     } else {
                         $file_extension = $upload->getClientOriginalExtension();
                         $filename = Str::random(30) . '.' . $file_extension;
@@ -219,27 +219,27 @@ class AdminController extends BaseController
                         $pic->school()->associate($school);
                         if(!$pic->save()){
                             return Redirect::to('admin/schools')
-                                ->with('warning', 'La academia fue creada pero se dieron errores en el proceso.')
-                                ->with('Wtitle', 'Aviso')
-                                ->with('Wmsg', 'La academia fue creada pero se dieron errores en el proceso.')
-                                ->with('error', 'Error al subir la imagen de perfil: ' . $img)
-                                ->with('Etitle', 'Error')
-                                ->with('Emsg', 'Error al subir la imagen de perfil: ' . $img);
+                                ->with(trans('hardcoded.admincontroller.createSchool.warning'))
+                                ->with(trans('hardcoded.admincontroller.createSchool.Wtitle'))
+                                ->with(trans('hardcoded.admincontroller.createSchool.Wmsg'))
+                                ->with(trans('hardcoded.admincontroller.createSchool.errorProfile ') . $img)
+                                ->with(trans('hardcoded.admincontroller.createSchool.Etitle'))
+                                ->with(trans('hardcoded.admincontroller.createSchool.EmsgProfile ') . $img);
                         }
                     }
                 }
             }
             return Redirect::to('admin/schools')
-                ->with('success', 'Academia creada con éxito')
-                ->with('Stitle','Academia creada con éxito')
-                ->with('Smsg','Se ha añadido la nueva academia a la base de datos.');
+                ->with(trans('hardcoded.admincontroller.createSchool.successAcademy'))
+                ->with(trans('hardcoded.admincontroller.createSchool.StitleCreate'))
+                ->with(trans('hardcoded.admincontroller.createSchool.Smsg'));
         }
         else
             return Redirect::to('admin/schools')
                 ->withInput()
-                ->with('error', 'Error al tratar de guardar la academia en base de datos')
-                ->with('Etitle','Error')
-                ->with('Emsg','Se ha producido un error al tratar de guardar la academia en base de datos.');
+                ->with(trans('hardcoded.admincontroller.createSchool.errorDB'))
+                ->with(trans('hardcoded.admincontroller.createSchool.Etitle'))
+                ->with(trans('hardcoded.admincontroller.createSchool.EmsgDB'));
     }
 
     /**
@@ -255,14 +255,14 @@ class AdminController extends BaseController
 
         if($user->trashed() && $teacher->trashed())
             return Redirect::to('admin/teachers')
-                ->with('success', 'Usuario eliminado con éxito')
-                ->with('Stitle','Usuario eliminado con éxito')
-                ->with('Smsg','Se ha eliminado el usuario de la base de datos.');
+                ->with(trans('hardcoded.admincontroller.deleteUser.successUser'))
+                ->with(trans('hardcoded.admincontroller.deleteUser.StitleUser'))
+                ->with(trans('hardcoded.admincontroller.deleteUser.SmsgUser'));
         else
             return Redirect::to('admin/teachers')
-                ->with('error', '¡Error! El usuario no pudo ser eliminado correctamente.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'El usuario no pudo ser eliminado correctamente.');
+                ->with(trans('hardcoded.admincontroller.deleteUser.errorUser'))
+                ->with(trans('hardcoded.admincontroller.deleteUser.Etitle'))
+                ->with(trans('hardcoded.admincontroller.deleteUser.EmsgUser'));
     }
 
     /**
@@ -277,14 +277,14 @@ class AdminController extends BaseController
 
         if($school->trashed())
             return Redirect::to('admin/schools')
-                ->with('success', 'Academia eliminada con éxito')
-                ->with('Stitle', 'Éxito')
-                ->with('Smsg', 'Academia eliminada con éxito.');
+                ->with(trans('hardcoded.admincontroller.doDeleteSchool.successAcademyD'))
+                ->with(trans('hardcoded.admincontroller.doDeleteSchool.Stitle'))
+                ->with(trans('hardcoded.admincontroller.doDeleteSchool.SmsgD'));
         else
             return Redirect::to('admin/schools')
-                ->with('error', 'Error! La academia no pudo ser eliminada')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'La academia no pudo ser eliminada.');
+                ->with(trans('hardcoded.admincontroller.doDeleteSchool.errorAcademy'))
+                ->with(trans('hardcoded.admincontroller.doDeleteSchool.Etitle'))
+                ->with(trans('hardcoded.admincontroller.doDeleteSchool.EmsgD'));
     }
 
     /**
@@ -320,9 +320,9 @@ class AdminController extends BaseController
 
         if(!$video->save())
             return Redirect::back()->withInput()
-                ->with('error', 'Fallo al guardar el código del vídeo asociado a la academia.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'Fallo al guardar el código del vídeo asociado a la academia.');
+                ->with(trans('hardcoded.admincontroller.saveSchool.errorSaveAcademy'))
+                ->with(trans('hardcoded.admincontroller.saveSchool.Etitle'))
+                ->with(trans('hardcoded.admincontroller.saveSchool.EmsgSaveAcademy'));
 
         if(Input::get('address') != $school->address) {
             $school->address = $input['address'];
@@ -330,9 +330,9 @@ class AdminController extends BaseController
             if(!$geocoding) {
                 return Redirect::back()
                     ->withInput()
-                    ->with('error', 'No se pudo modificar los datos de la acadamia. Fallo al guardar la dirección.')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'Se produjo un error al tratar de guardar la dirección. No se pudo modificar los datos de la acadamia.');
+                    ->with(trans('hardcoded.admincontroller.saveSchool.errorDir'))
+                    ->with(trans('hardcoded.admincontroller.saveSchool.Etitle'))
+                    ->with(trans('hardcoded.admincontroller.saveSchool.EmsgDir'));
             }
             if(isset($geocoding[0]))
                 $school->lat = $geocoding[0]; //latitud
@@ -375,9 +375,9 @@ class AdminController extends BaseController
                 if ($validator->fails()) {
                     return Redirect::back()
                         ->withInput()
-                        ->with('error', 'Error al subir la imagen de perfil: ' . $img)
-                        ->with('Etitle', 'Error')
-                        ->with('Emsg', 'Error al subir la imagen de perfil: ' . $img);
+                        ->with(trans('hardcoded.admincontroller.saveSchool.errorPostAvatar')  . $img)
+                        ->with(trans('hardcoded.admincontroller.saveSchool.Etitle'))
+                        ->with(trans('hardcoded.admincontroller.saveSchool.EmsgSaveAvatar') . $img);
                 } else {
                     $file_extension = $upload->getClientOriginalExtension();
                     $filename = Str::random(30) . '.' . $file_extension;
@@ -389,9 +389,9 @@ class AdminController extends BaseController
                     if(!$pic->save()){
                         return Redirect::back()
                             ->withInput()
-                            ->with('error', 'Error al guardar la imagen de perfil: ' . $img)
-                            ->with('Etitle', 'Error')
-                            ->with('Emsg', 'Error al guardar la imagen de perfil: ' . $img);
+                            ->with(trans('hardcoded.admincontroller.saveSchool.errorSaveAvatar') . $img)
+                            ->with(trans('hardcoded.admincontroller.saveSchool.Etitle'))
+                            ->with(trans('hardcoded.admincontroller.saveSchool.EmsgSaveAvatar') . $img);
                     }
                 }
             }
@@ -399,14 +399,14 @@ class AdminController extends BaseController
 
         if($school->save())
             return Redirect::to('admin/schools')
-                ->with('success', 'Datos de academia actualizados con éxito')
-                ->with('Stitle', 'Éxito')
-                ->with('Smsg', 'Datos de academia actualizados con éxito');
+                ->with(trans('hardcoded.admincontroller.saveSchool.successUpdate'))
+                ->with(trans('hardcoded.admincontroller.saveSchool.Etitle'))
+                ->with(trans('hardcoded.admincontroller.saveSchool.SmsgUpdate'));
         else
             return Redirect::to('admin/schools')
-                ->with('error', '¡Error! No se pudo actualizar datos de la academia')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'No se pudo actualizar datos de la academia.');
+                ->with(trans('hardcoded.admincontroller.saveSchool.errorUpdate'))
+                ->with(trans('hardcoded.admincontroller.saveSchool.Etitle'))
+                ->with(trans('hardcoded.admincontroller.saveSchool.EmsgUpdate'));
     }
 
     /**
@@ -451,9 +451,9 @@ class AdminController extends BaseController
 //            return Redirect::route('lessons', array('school_id' => $school_id))
             return Redirect::back()
                 ->withInput()
-                ->with('error', 'No se pudo crear nueva clase. Error al guardar la dirección.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'No se pudo crear nueva clase. Error al guardar la dirección.');
+                ->with(trans('hardcoded.admincontroller.createLesson.errorLesson'))
+                ->with(trans('hardcoded.admincontroller.createLesson.Etitle'))
+                ->with(trans('hardcoded.admincontroller.createLesson.EmsgLeesson'));
         }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
@@ -467,9 +467,9 @@ class AdminController extends BaseController
 
         if(!$lesson->save()) {
             return Redirect::route('lessons', array('school_id' => $school_id))
-                ->with('error', 'Error! No se pudo crear la clase')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'No se pudo crear la clase.');
+                ->with(trans('hardcoded.admincontroller.createLesson.errorSave'))
+                ->with(trans('hardcoded.admincontroller.createLesson.Etitle'))
+                ->with(trans('hardcoded.admincontroller.createLesson.EmsgCreate'));
         }
         else {
             $lesson_id = $lesson->id;
@@ -483,17 +483,17 @@ class AdminController extends BaseController
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
                     return Redirect::route('lessons', array('school_id' => $school_id))
-                        ->with('warning', 'Aviso: La clase se creó con errores')
-                        ->with('Wtitle', 'Aviso')
-                        ->with('Wmsg', 'El curso se creó satisfactoriamente pero con errores en las disponibilidades asociadas.');
+                        ->with(trans('hardcoded.admincontroller.createLesson.warningCreateClass'))
+                        ->with(trans('hardcoded.admincontroller.createLesson.Wtitle'))
+                        ->with(trans('hardcoded.admincontroller.createLesson.Wmsg'));
                 }
             }
         }
 
         return Redirect::route('lessons',array('school_id' => $school_id))
-            ->with('success', 'Clase creada con éxito')
-            ->with('Stitle', 'Éxito')
-            ->with('Smsg', 'Curso creado satisfactoriamente.');
+            ->with(trans('hardcoded.admincontroller.createLesson.successClass'))
+            ->with(trans('hardcoded.admincontroller.createLesson.Stitle'))
+            ->with(trans('hardcoded.admincontroller.createLesson.Smsg'));
     }
 
     /**
@@ -552,9 +552,9 @@ class AdminController extends BaseController
 //            return Redirect::route('lessons', array('school_id' => $school_id))
             return Redirect::back()
                 ->withInput()
-                ->with('error', 'No se pudo actualizar datos. Error al guardar la nueva dirección.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'Error al tratar de guardar la nueva dirección. No se pudieron actualizar los datos.');
+                ->with(trans('hardcoded.admincontroller.saveLesson.errorSaveDir'))
+                ->with(trans('hardcoded.admincontroller.saveLesson.Etitle'))
+                ->with(trans('hardcoded.admincontroller.saveLesson.EmsgSave'));
         }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
@@ -565,9 +565,9 @@ class AdminController extends BaseController
 
         if(!$lesson->save()) {
             return Redirect::route('lessons', array('school_id' => $school_id))
-                ->with('error', 'Error! No se pudo actualizar datos de la clase')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'No se pudieron actualizar los datos de la clase.');
+                ->with(trans('hardcoded.admincontroller.saveLesson.errorUpdate'))
+                ->with(trans('hardcoded.admincontroller.saveLesson.Etitle'))
+                ->with(trans('hardcoded.admincontroller.saveLesson.EmsgUpdate'));
         } else { //update availabilities
             $lesson_id = $lesson->id;
             $previous_picks = $lesson->availabilities()->get();
@@ -582,18 +582,18 @@ class AdminController extends BaseController
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
                     return Redirect::route('userpanel.dashboard')
-                        ->with('warning', 'Aviso! Se actualizaron los datos de la clase con errores')
-                        ->with('Wtitle', 'Aviso')
-                        ->with('Wmsg', 'Se actualizaron los datos de la clase con posibles errores en las disponibilidades.');
+                        ->with(trans('hardcoded.admincontroller.saveLesson.warningUpdate'))
+                        ->with(trans('hardcoded.admincontroller.saveLesson.Wtitle'))
+                        ->with(trans('hardcoded.admincontroller.saveLesson.Wmsg'));
                 }
                 ++$i;
             }
         }
 
         return Redirect::route('lessons',array('school_id' => $school_id))
-            ->with('success', 'Datos de la clase actualizados con éxito')
-            ->with('Stitle', 'Éxito')
-            ->with('Smsg', 'Los datos del curso se actualizaron con éxito.');
+            ->with(trans('hardcoded.admincontroller.saveLesson.successLesson'))
+            ->with(trans('hardcoded.admincontroller.saveLesson.Stitle'))
+            ->with(trans('hardcoded.admincontroller.saveLesson.Smsg'));
     }
 
     /**
@@ -623,14 +623,14 @@ class AdminController extends BaseController
 
         if($lesson->exists)
             return Redirect::route('lessons',array('school_id' => $school_id))
-                ->with('error', 'Error! La clase no pudo ser eliminada')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'La clase no pudo ser eliminada.');
+                ->with(trans('hardcoded.admincontroller.deleteLesson.errorDelete'))
+                ->with(trans('hardcoded.admincontroller.deleteLesson.Etitle'))
+                ->with(trans('hardcoded.admincontroller.deleteLesson.EmsgDelete'));
         else
             return Redirect::route('lessons',array('school_id' => $school_id))
-                ->with('success', 'Clase eliminada con éxito')
-                ->with('Stitle', 'Éxito')
-                ->with('Smsg', 'Clase eliminada con éxito.');
+                ->with(trans('hardcoded.admincontroller.deleteLesson.successDelete'))
+                ->with(trans('hardcoded.admincontroller.deleteLesson.Stitle'))
+                ->with(trans('hardcoded.admincontroller.deleteLesson.SmsgLeeson'));
     }
 
     /**
@@ -643,14 +643,14 @@ class AdminController extends BaseController
         $rating->delete();
         if($rating->exists)
             return Redirect::to('admin/school/reviews')
-                ->with('error', 'Error! La valoración no pudo ser eliminada')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'La valoración no pudo ser eliminada.');
+                ->with(trans('hardcoded.admincontroller.deleteSchoolReview.errorReview'))
+                ->with(trans('hardcoded.admincontroller.deleteSchoolReview.Etitle'))
+                ->with(trans('hardcoded.admincontroller.deleteSchoolReview.EmsgReview'));
         else
             return Redirect::to('admin/school/reviews')
-                ->with('success', 'Valoración eliminada con éxito')
-                ->with('Stitle', 'Éxito')
-                ->with('Smsg', 'Se eliminó la valoración.');
+                ->with(trans('hardcoded.admincontroller.deleteSchoolReview.successReview'))
+                ->with(trans('hardcoded.admincontroller.deleteSchoolReview.Stitle'))
+                ->with(trans('hardcoded.admincontroller.deleteSchoolReview.SmsgReview'));
     }
 
     /**
@@ -681,14 +681,14 @@ class AdminController extends BaseController
         $rating->delete();
         if($rating->exists)
             return Redirect::to('admin/teacher/reviews')
-                ->with('error', 'Error! La valoración no pudo ser eliminada')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'La valoración no pudo ser eliminada.');
+                ->with(trans('hardcoded.admincontroller.deleteTeacherReview.errorReview'))
+                ->with(trans('hardcoded.admincontroller.deleteTeacherReview.Stitle'))
+                ->with(trans('hardcoded.admincontroller.deleteTeacherReview.Emsg'));
         else
             return Redirect::to('admin/teacher/reviews')
-                ->with('success', 'Valoración eliminada con éxito')
-                ->with('Stitle', 'Éxito')
-                ->with('Smsg', 'Se eliminó la valoración.');
+                ->with(trans('hardcoded.admincontroller.deleteTeacherReview.success'))
+                ->with(trans('hardcoded.admincontroller.deleteTeacherReview.Stitle'))
+                ->with(trans('hardcoded.admincontroller.deleteTeacherReview.Smsg'));
     }
 
 }

@@ -32,9 +32,9 @@ class TeachersController extends BaseController
         if($validator->fails()) {
             return Redirect::back()
                 ->withInput()
-                ->with('error', '¡Error! Los datos introducidos pueden no ser válidos. Asegúrate de haber rellenado los campos correctamente.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'Los datos introducidos pueden no ser válidos. Asegúrate de haber rellenado los campos correctamente.');
+                ->with(trans('hardcoded.teachercontroller.createLesson.error'))
+                ->with(trans('hardcoded.teachercontroller.createLesson.Etitle'))
+                ->with(trans('hardcoded.teachercontroller.createLesson.Emsg'));
         }
 
         $lesson = new TeacherLesson();
@@ -47,9 +47,9 @@ class TeachersController extends BaseController
         if(!$geocoding){
             return Redirect::to('teacher/create/lesson')
                 ->withInput()
-                ->with('error', '¡Error! La dirección proporcionada parece no ser válida.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'La dirección proporcionada parece no ser válida. Comprueba si está escrita correctamente.');
+                ->with(trans('hardcoded.teachercontroller.createLesson.errorDir'))
+                ->with(trans('hardcoded.teachercontroller.createLesson.Etitle'))
+                ->with(trans('hardcoded.teachercontroller.createLesson.EmsgDir'));
         }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
@@ -64,14 +64,14 @@ class TeachersController extends BaseController
 
         if($lesson->save())
             return Redirect::route('userpanel.dashboard')
-                ->with('success', 'Clase creada con éxito')
-                ->with('Stitle', 'Éxito')
-                ->with('Smsg', 'Tu clase ha sido dada de alta y aparecerá en los resultados de las búsquedas.');
+                ->with(trans('hardcoded.teachercontroller.createLesson.success'))
+                ->with(trans('hardcoded.teachercontroller.createLesson.Stitle'))
+                ->with(trans('hardcoded.teachercontroller.createLesson.Smsg'));
         else
             return Redirect::route('userpanel.dashboard')
-                ->with('error', '¡Error! No se pudo crear la clase. Ponte en contacto con el equipo de milPROFES si el problema persiste.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'Error al tratar de crear la clase. Ponte en contacto con el equipo de milPROFES si el problema persiste.');
+                ->with(trans('hardcoded.teachercontroller.createLesson.errorLesson'))
+                ->with(trans('hardcoded.teachercontroller.createLesson.Etitle'))
+                ->with(trans('hardcoded.teachercontroller.createLesson.EmsgLesson'));
     }
 
     /**
@@ -93,9 +93,9 @@ class TeachersController extends BaseController
         if($validator->fails()) {
             return Redirect::back()
                 ->withInput()
-                ->with('error', '¡Error! No se pudo actualizar los datos de tu clase. Asegúrate de haber rellenado los campos correctamente.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'No se pudo actualizar los datos de tu clase. Asegúrate de haber rellenado los campos correctamente.');
+                ->with(trans('hardcoded.teachercontroller.saveLesson.error'))
+                ->with(trans('hardcoded.teachercontroller.saveLesson.Etitle'))
+                ->with(trans('hardcoded.teachercontroller.saveLesson.Emsg'));
         }
 
         $lesson_id = $input['lesson_id'];
@@ -113,9 +113,9 @@ class TeachersController extends BaseController
             if (!$geocoding) {
                 return Redirect::back()
                     ->withInput()
-                    ->with('error', '¡Error! La dirección proporcionada parece no ser válida.')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'La dirección proporcionada parece no ser válida. Asegúrate de haber escrito la dirección correctamente.');
+                    ->with(trans('hardcoded.teachercontroller.saveLesson.errorDir'))
+                    ->with(trans('hardcoded.teachercontroller.saveLesson.Etitle'))
+                    ->with(trans('hardcoded.teachercontroller.saveLesson.EmsgDir'));
             }
             $lesson->lat = $geocoding[0]; //latitud
             $lesson->lon = $geocoding[1]; //longitud
@@ -126,19 +126,19 @@ class TeachersController extends BaseController
 
             if ($lesson->save())
                 return Redirect::route('userpanel.dashboard')
-                    ->with('success', 'Datos de la clase actualizados con éxito')
-                    ->with('Stitle', 'Éxito')
-                    ->with('Smsg', 'Se han actualizado los datos de tu clase.');
+                    ->with(trans('hardcoded.teachercontroller.saveLesson.success'))
+                    ->with(trans('hardcoded.teachercontroller.saveLesson.Stitle'))
+                    ->with(trans('hardcoded.teachercontroller.saveLesson.Smsg'));
             else
                 return Redirect::route('userpanel.dashboard')
-                    ->with('error', '¡Error! No se pudo actualizar los datos de la clase')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'No se pudieron actualizar los datos de tu clase. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
+                    ->with(trans('hardcoded.teachercontroller.saveLesson.errorData'))
+                    ->with(trans('hardcoded.teachercontroller.saveLesson.Etitle'))
+                    ->with(trans('hardcoded.teachercontroller.saveLesson.EmsgData'));
         } else {
             return Redirect::route('userpanel.dashboard')
-                ->with('error', '¡Error! No se pudo actualizar los datos de la clase.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'No se pudieron actualizar los datos de tu clase. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
+                ->with(trans('hardcoded.teachercontroller.saveLesson.errorData'))
+                ->with(trans('hardcoded.teachercontroller.saveLesson.Etitle'))
+                ->with(trans('hardcoded.teachercontroller.saveLesson.EmsgData'));
         }
     }
 
@@ -160,9 +160,9 @@ class TeachersController extends BaseController
             return View::make('teacher_lesson_edit', compact('lesson','subject'));
         else
             return Redirect::route('userpanel.dashboard')
-                ->with('error', '¡Error! Tu clase no ha sido encontrada')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
+                ->with(trans('hardcoded.teachercontroller.editLesson.error'))
+                ->with(trans('hardcoded.teachercontroller.editLesson.Etitle'))
+                ->with(trans('hardcoded.teachercontroller.editLesson.Emsg'));
     }
 
     /**
@@ -183,9 +183,9 @@ class TeachersController extends BaseController
             return View::make('teacher_lesson_confirm_delete', compact('user','lesson','subject'));
         else
             return Redirect::route('userpanel.dashboard')
-                ->with('error', 'Error! Tu clase no ha sido encontrada')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'Tu clase no ha sido encontrada. Si el problema persiste ponte en contacto con el equipo de milPROFES.');
+                ->with(trans('hardcoded.teachercontroller.deleteLesson.error'))
+                ->with(trans('hardcoded.teachercontroller.deleteLesson.Etitle'))
+                ->with(trans('hardcoded.teachercontroller.deleteLesson.Emsg'));
     }
 
     /**
@@ -203,17 +203,17 @@ class TeachersController extends BaseController
             $lesson->delete();
             if($lesson->exists)
                 return Redirect::route('userpanel.dashboard')
-                    ->with('error', '¡Error! La clase no pudo ser eliminada')
-                    ->with('Etitle', 'Error')
-                    ->with('Emsg', 'La clase no pudo ser eliminada. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
+                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.error'))
+                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Etitle'))
+                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Emsg'));
             else
-                return Redirect::route('userpanel.dashboard')->with('success', 'Clase eliminada con éxito')
-                    ->with('Stitle', 'Éxito')
-                    ->with('Smsg', 'Se ha eliminado la clase.');
+                return Redirect::route('userpanel.dashboard')->with(trans('hardcoded.teachercontroller.doDeleteLesson.success'))
+                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Stitle'))
+                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Smsg'));
         } else {
-            return Redirect::route('userpanel.dashboard')->with('error', '¡Error! La clase no pudo ser eliminada.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'La clase no pudo ser eliminada. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
+            return Redirect::route('userpanel.dashboard')->with(trans('hardcoded.teachercontroller.doDeleteLesson.errorDelete'))
+                ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Etitle'))
+                ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Emsg'));
         }
     }
 
@@ -260,9 +260,9 @@ class TeachersController extends BaseController
         $validator = Validator::make($input, $rules);
         if ($validator->fails()){
             return Redirect::route('userpanel.dashboard')
-                ->with('error', '¡Error! No se pudo actualizar tu disponibilidad.')
-                ->with('Etitle', 'Error')
-                ->with('Emsg', 'No se pudo actualizar tu disponibilidad. Los datos introducidos no son válidos.');
+                ->with(trans('hardcoded.teachercontroller.saveAvailability.error'))
+                ->with(trans('hardcoded.teachercontroller.saveAvailability.Etitle'))
+                ->with(trans('hardcoded.teachercontroller.saveAvailability.EmsgData'));
         }
 
         $previous_picks = $teacher->availabilities()->get();
@@ -278,9 +278,9 @@ class TeachersController extends BaseController
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
                     return Redirect::route('userpanel.dashboard')
-                        ->with('error', '¡Error! No se pudo actualizar tu disponibilidad.')
-                        ->with('Etitle', 'Error')
-                        ->with('Emsg', 'No se pudo actualizar tu disponibilidad. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
+                    >with(trans('hardcoded.teachercontroller.saveAvailability.error'))
+                        ->with(trans('hardcoded.teachercontroller.saveAvailability.Etitle'))
+                        ->with(trans('hardcoded.teachercontroller.saveAvailability.Emsg'));
                 }
             }
         } else { //if there exists 9 previous saved picks (even empty ones, in DB), update them with the input
@@ -311,17 +311,17 @@ class TeachersController extends BaseController
                 $pick->end = $cleanInput['end'.$i];
                 if(!$pick->save()) {
                     return Redirect::route('userpanel.dashboard')
-                        ->with('error', '¡Error! No se pudo actualizar tu disponibilidad.')
-                        ->with('Etitle', 'Error')
-                        ->with('Emsg', 'No se pudo actualizar tu disponibilidad. Si el problema persiste, ponte en contacto con el equipo de milPROFES.');
+                    >with(trans('hardcoded.teachercontroller.saveAvailability.error'))
+                        ->with(trans('hardcoded.teachercontroller.saveAvailability.Etitle'))
+                        ->with(trans('hardcoded.teachercontroller.saveAvailability.Emsg'));
                 }
                 ++$i;
             }
         }
 
         return Redirect::route('userpanel.dashboard')
-            ->with('success', 'Tu disponibilidad ha sido actualizada con éxito')
-            ->with('Stitle', 'Éxito')
-            ->with('Smsg', 'Tu disponibilidad ha sido actualizada.');
+            ->with(trans('hardcoded.teachercontroller.saveAvailability.success'))
+            ->with(trans('hardcoded.teachercontroller.saveAvailability.Stitle'))
+            ->with(trans('hardcoded.teachercontroller.saveAvailability.Smsg'));
     }
 }
