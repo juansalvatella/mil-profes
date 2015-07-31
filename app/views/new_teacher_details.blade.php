@@ -504,5 +504,10 @@
 
 @section('page_js')
     {{ HTML::script('js/rrssb.js') }}
-    {{ HTML::script('js/teachers.js') }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            Profile.init();
+            TeacherProfile.init();
+        });
+    </script>
 @endsection

@@ -64,7 +64,7 @@
 @section('page_js')
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#reset-form").validator();
+            ResetPassword.init();
         });
     </script>
 @endsection

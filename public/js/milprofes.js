@@ -93,6 +93,14 @@ var Milprofes = function() {
     }
 }();
 
+var ResetPassword = function() {
+    return {
+        init: function() {
+            $("#reset-form").validator();
+        }
+    }
+}();
+
 var Contact = function() {
     return {
         init: function() {
@@ -193,6 +201,155 @@ var Home = function() {
                 starOff : '../img/star-off-small.png',
                 starOn  : '../img/star-on-small.png',
                 score: function(){return $(this).attr('data-score');}
+            });
+
+        }
+    }
+}();
+
+var TeacherLessonCreate = function() {
+    return {
+        init: function() {
+            $("#create-l-form").validator();
+
+            var text_max = 200;
+            var tbox = $('#description');
+            var text_length = tbox.val().length;
+            var text_remaining = text_max - text_length;
+            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            tbox.keyup(function() {
+                var text_length = $('#description').val().length;
+                var text_remaining = text_max - text_length;
+                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            });
+        }
+    }
+}();
+
+var TeacherLessonEdit = function() {
+    return {
+        init: function() {
+            $("#edit-l-form").validator();
+
+            var text_max = 200;
+            var tbox = $('#description');
+            var text_length = tbox.val().length;
+            var text_remaining = text_max - text_length;
+            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            tbox.keyup(function() {
+                var text_length = $('#description').val().length;
+                var text_remaining = text_max - text_length;
+                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            });
+        }
+    }
+}();
+
+var MyProfileDashboard = function() {
+    return {
+        init: function() {
+
+            //Textboxes char limit feedback
+            var text_max = 450;
+            var tbox = $('#description');
+            var text_length = tbox.val().length;
+            var text_remaining = text_max - text_length;
+            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            tbox.keyup(function() {
+                var text_length = $('#description').val().length;
+                var text_remaining = text_max - text_length;
+                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            });
+
+            //Forms validation
+            $("#user-data").validator();
+            $("#user-social").validator();
+            $("#user-passwd").validator();
+
+            //Cropping related JS
+            var xsize = 160, ysize = 160, imgSlc, boundx, boundy;
+            function checkCoords() { return !!parseInt($('#w').val()); }
+            //Handle preview "zooming"
+            function updatePreview(c) {
+                if (parseInt(c.w) > 0) {
+                    var rx = xsize / c.w;
+                    var ry = ysize / c.h;
+                    imgSlc.css({
+                        width: Math.round(rx * boundx) + 'px',
+                        height: Math.round(ry * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry * c.y) + 'px'
+                    });
+                    //update form coords
+                    $('#x').val(c.x);
+                    $('#y').val(c.y);
+                    $('#w').val(c.w);
+                    $('#h').val(c.h);
+                }
+            }
+
+            //Generate new canvas, preview and init jcrop
+            function readURL(input) {
+                if (input.files && input.files[0] && input.files[0].size < 1048576) {
+                    var imgCanvas = $('.imgCanvas');
+                    var jcropPreview = $('.jcrop-preview');
+                    $('#file-input').removeClass('has-error');
+                    $('#file-input-error').html('Puedes utilizar imágenes del tipo JPG, PNG o GIF y tamaño inferior a 1 MB.');
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        //Remove previous content
+                        jcrop_api = null;
+                        imgCanvas.remove();
+                        jcropPreview.remove();
+                        $('.jcrop-holder').remove();
+                        //New content
+                        var src = e.target.result;
+                        var cContainer = $('#canvasContainer');
+                        var pContainer = $('#previewContainer');
+                        var jcrop_api;
+                        cContainer.append('<img src="'+ src +'" class="imgCanvas" alt="Mi nueva imagen de perfil" />');
+                        pContainer.append('<img src="'+ src +'" class="jcrop-preview" alt="Vista previa" />');
+                        //Set new value for the file input
+                        $('#cropAvatar').val(src);
+                        //Init JCrop
+                        var imgCan = imgCanvas;
+                        imgSlc = jcropPreview;
+                        //modify jcrop canvas width depending of modal width <=> screen width
+                        var wW = $(window).width();
+                        var cropModalWidth;
+                        if(wW < 768) {
+                            cropModalWidth = wW - 93;
+                        } else {
+                            cropModalWidth = 600 - 60;
+                        }
+                        imgCan.Jcrop({
+                            onChange: updatePreview,
+                            onSelect: updatePreview,
+                            boxWidth: cropModalWidth,
+                            boxHeight: 300,
+                            aspectRatio: 1
+                        }, function () {
+                            // Use the API to get the real image size
+                            var bounds = this.getBounds();
+                            boundx = bounds[0];
+                            boundy = bounds[1];
+                            // Store the API in the jcrop_api variable
+                            jcrop_api = this;
+                            var holderH = $(".jcrop-holder").height();
+                            if(holderH<300) {
+                                $('#canvasContainer').height(trackerH);
+                            }
+                        });
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    $('#cropModal').modal('show');
+                } else if(! input.files[0].size < 1048576) {
+                    $('#file-input').addClass('has-error');
+                    $('#file-input-error').html('La imagen elegida supera el tamaño máximo de 1 MB.');
+                }
+            }
+            $("#avatar").change(function(){
+                readURL(this);
             });
 
         }
@@ -493,7 +650,7 @@ var SearchResults = function() {
                 });
             }
 
-            $(document).on("click", "#btn-submit-search", function() {
+            $("#btn-submit-search").click(function() {
                 $('#current-slices-showing').val(0);
                 return true;
             });
@@ -502,6 +659,645 @@ var SearchResults = function() {
                 $('.staticMap').hide();
                 $('.dynMap').removeClass('hidden');
                 initialize_map();
+            });
+
+        }
+    }
+}();
+
+var Profile = function() {
+    return {
+        init: function() {
+
+            $('.trigger-all-reviews').click(function() {
+                var lessonId = $(this).attr('data-lessonId');
+                $('#modal-all-reviews-lesson-'+lessonId).modal('show');
+            });
+            $('.stars-container').raty({
+                readOnly: true,
+                half: true,
+                size: 15,
+                starHalf: '../img/star-half-small.png',
+                starOff : '../img/star-off-small.png',
+                starOn  : '../img/star-on-small.png',
+                score: function(){return $(this).attr('data-score');}
+            });
+            $('.ratings-stars').raty({
+                readOnly: true,
+                half: true,
+                size: 15,
+                starHalf: '../img/star-half-small.png',
+                starOff : '../img/star-off-small.png',
+                starOn  : '../img/star-on-small.png',
+                score: function(){return $(this).attr('data-score');}
+            });
+            $('#review-stars').raty({
+                readOnly: false,
+                half: true,
+                size: 23,
+                starHalf: '../img/star-half.png',
+                starOff : '../img/star-off.png',
+                starOn  : '../img/star-on.png',
+                score: function(){return $(this).attr('data-score');}
+            });
+            var rtext_max = 255;
+            var rtbox = $('#review-comment');
+            var rtext_length = rtbox.val().length;
+            var rtext_remaining = rtext_max - rtext_length;
+            $('#rchars_feedback').html('(' + rtext_remaining + ' caracteres disponibles)');
+            rtbox.keyup(function() {
+                var rtext_length = rtbox.val().length;
+                var rtext_remaining = rtext_max - rtext_length;
+                $('#rchars_feedback').html('(' + rtext_remaining + ' caracteres disponibles)');
+            });
+
+            $('#modal-review').on('hidden.bs.modal', function () {
+                formReview.find('input[name=lessonId]').val('-1');
+                formReview.find('input[name=score]').val('3');
+                formReview.find('textarea[name=comment]').val('');
+                $('#rchars_feedback').html('(255 caracteres disponibles)');
+                $('#review-stars').raty({
+                    readOnly: false,
+                    half: true,
+                    size: 23,
+                    starHalf: '../img/star-half.png',
+                    starOff : '../img/star-off.png',
+                    starOn  : '../img/star-on.png',
+                    score: function(){return $(this).attr('data-score');}
+                });
+            });
+
+            $('.trigger-review').click(function(e){
+                e.preventDefault();
+                var lessonId = $(this).attr('data-lessonId');
+                $('#form-lessonId').val(lessonId);
+                $('#modal-review').modal('show');
+            });
+
+            $('.trigger-login').click(function(e) {
+                e.preventDefault();
+                var dynAlert = $('#dynalert');
+                dynAlert.removeClass('hidden').show().append('' +
+                    'Accede a milProfes. para realizar valoraciones. ' +
+                    '¿Aún no tienes cuenta? <a href="javascript:" class="trigger-register">¡Regístrate gratis!</a>' +
+                    '');
+                $('#modal-login').modal('show');
+            });
+
+            var modalLogin = $('#modal-login');
+            modalLogin.on('click', '.trigger-register', function (e) {
+                e.preventDefault();
+                $('#modal-login').modal('hide');
+                $('#modal-register').modal('show');
+            });
+
+            modalLogin.on('hidden.bs.modal', function () {
+                $('#dynalert').empty().hide();
+            });
+
+        }
+    }
+}();
+
+var TeacherProfile = function() {
+    return {
+        init: function() {
+
+            function getUrlParameter(sParam)
+            {
+                var sPageURL = window.location.search.substring(1);
+                var sURLVariables = sPageURL.split('&');
+                for (var i = 0; i < sURLVariables.length; i++)
+                {
+                    var sParameterName = sURLVariables[i].split('=');
+                    if (sParameterName[0] == sParam)
+                    {
+                        return sParameterName[1];
+                    }
+                }
+            }
+
+            //Teacher profile info related JS
+            $('#teacher-stars').raty({
+                readOnly: true,
+                half: true,
+                score: $('#teacher-rating').val()
+            });
+
+            var formReview = $("#form-review");
+            formReview.validator();
+            formReview.on("click", "#send-review", function(e) {
+                e.preventDefault();
+                if($('#send-review').hasClass("disabled"))
+                    return false;
+                var form = $('#form-review');
+                var token = form.find('input[name=_token]').val();
+                var lessonId = form.find('input[name=lessonId]').val();
+                var score = form.find('input[name=score]').val();
+                var comment = form.find('textarea[name=comment]').val();
+                $.post('/review/lesson', {
+                    dataType: 'json',
+                    _token: token,
+                    lessonId: lessonId,
+                    score: score,
+                    comment: comment
+                }, function (data) {
+                    $('#modal-review').modal('hide');
+                    //notify fail/success
+                    if(data.success == 'success') {
+                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
+                    } else if (data.success == 'warning') {
+                        toastr['warning'](''+data.msg, 'Aviso', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'error') {
+                        toastr['error'](''+data.msg, 'Error', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    }
+                });
+            });
+
+            $("#contact-me").one("click", function(e) {
+                e.preventDefault();
+                var teacherId =  $('#teacherId').val();
+                var token = $('#_token').val();
+                var lesson = getUrlParameter('clase');
+
+                $.get('/request/persData/teacher', {
+                    dataType: 'json',
+                    teacherId: teacherId
+                }, function(response){
+                    $('.info-loader').hide();
+                    if(response.telephone)
+                        $('span.tlf-number').text(response.telephone);
+                    $('a.e-mail').attr("href", response.mailto).text(response.email);
+                });
+
+                $.post('/request/info/teacher', {
+                    dataType: 'json',
+                    teacherId: teacherId,
+                    lessonId: lesson,
+                    _token: token
+                }, function(data){
+                    //console.log(data);
+                });
+            });
+
+            var plusMinusOne = (function(obj, mode) {
+                var objVal = parseInt(obj.first().text());
+                if(objVal != 0 && objVal != 1) { //avoid changing sign conflict
+                    if (mode == 'plus')
+                        objVal++;
+                    if (mode == 'minus')
+                        objVal--;
+                }
+                obj.empty().text(objVal.toString());
+                return false;
+            });
+
+            $('.itwashelpful').click(function(e) {
+                e.preventDefault();
+                var reviewId = $(this).attr('data-reviewId');
+                var token = $('#_token').val();
+                $.post('/review/was/helpful/'+reviewId, {
+                    dataType: 'json',
+                    _token: token
+                }, function(data){
+                    if(data.success == 'success') {
+                        $('.btn-yes[data-reviewId='+reviewId+']').hide();
+                        $('.btn-no[data-reviewId='+reviewId+']').hide();
+                        $('.reviewed-thanks[data-reviewId='+reviewId+']').removeClass('hidden');
+                        var helpSum = $('.helpSum[data-reviewId='+reviewId+']');
+                        if(helpSum.closest('div').find('i').hasClass('fa-plus'))
+                            plusMinusOne(helpSum,'plus');
+                        if(helpSum.closest('div').find('i').hasClass('fa-minus'))
+                            plusMinusOne(helpSum,'minus');
+                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'warning') {
+                        toastr['warning'](''+data.msg, 'Aviso', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'error') {
+                        toastr['error'](''+data.msg, 'Error', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    }
+                });
+            });
+
+            $('.nothelpful').click(function(e) {
+                e.preventDefault();
+                var reviewId = $(this).attr('data-reviewId');
+                var token = $('#_token').val();
+                $.post('/review/not/helpful/'+reviewId, {
+                    dataType: 'json',
+                    _token: token
+                }, function(data){
+                    if(data.success == 'success') {
+                        $('.btn-yes[data-reviewId='+reviewId+']').hide();
+                        $('.btn-no[data-reviewId='+reviewId+']').hide();
+                        $('.reviewed-thanks[data-reviewId='+reviewId+']').removeClass('hidden');
+                        var helpSum = $('.helpSum[data-reviewId='+reviewId+']');
+                        if(helpSum.closest('div').find('i').hasClass('fa-plus'))
+                            plusMinusOne(helpSum,'minus');
+                        if(helpSum.closest('div').find('i').hasClass('fa-minus'))
+                            plusMinusOne(helpSum,'plus');
+                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'warning') {
+                        toastr['warning'](''+data.msg, 'Aviso', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'error') {
+                        toastr['error'](''+data.msg, 'Error', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    }
+                });
+            });
+
+            $('.trigger-itsme').click(function(e) {
+                e.preventDefault();
+                toastr['warning']('No es posible valorar las propias clases.', 'Acción no permitida', {
+                    "closeButton": true,
+                    "debug": false,
+                    "positionClass": "toast-bottom-right",
+                    "onclick": null,
+                    "showDuration": "1000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                });
+            });
+
+        }
+    }
+}();
+
+var SchoolProfile = function() {
+    return {
+        init: function() {
+
+            function getUrlParameter(sParam)
+            {
+                var sPageURL = window.location.search.substring(1);
+                var sURLVariables = sPageURL.split('&');
+                for (var i = 0; i < sURLVariables.length; i++)
+                {
+                    var sParameterName = sURLVariables[i].split('=');
+                    if (sParameterName[0] == sParam)
+                    {
+                        return sParameterName[1];
+                    }
+                }
+            }
+
+            //School profile info related JS
+            $('#teacher-stars').raty({
+                readOnly: true,
+                half: true,
+                score: $('#school-rating').val()
+            });
+
+            var formReview = $("#form-review");
+            formReview.validator();
+            formReview.on("click", "#send-review", function(e) {
+                e.preventDefault();
+                if($('#send-review').hasClass("disabled"))
+                    return false;
+                var form = $('#form-review');
+                var token = form.find('input[name=_token]').val();
+                var lessonId = form.find('input[name=lessonId]').val();
+                var score = form.find('input[name=score]').val();
+                var comment = form.find('textarea[name=comment]').val();
+                $.post('/review/school/lesson', {
+                    dataType: 'json',
+                    _token: token,
+                    lessonId: lessonId,
+                    score: score,
+                    comment: comment
+                }, function (data) {
+                    $('#modal-review').modal('hide');
+                    //notify fail/success
+                    if(data.success == 'success') {
+                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
+                    } else if (data.success == 'warning') {
+                        toastr['warning'](''+data.msg, 'Aviso', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'error') {
+                        toastr['error'](''+data.msg, 'Error', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    }
+                });
+            });
+
+            $("#contact-me").one("click", function(e) {
+                e.preventDefault();
+                var schoolId =  $('#schoolId').val();
+                var token = $('#_token').val();
+                var curso = getUrlParameter('curso');
+                $.post('/request/info/school', {
+                    dataType: 'json',
+                    schoolId: schoolId,
+                    courseId: curso,
+                    _token: token
+                }, function(data){
+                    //console.log(data);
+                });
+            });
+
+            var plusMinusOne = (function(obj, mode) {
+                var objVal = parseInt(obj.first().text());
+                if(objVal != 0 && objVal != 1) { //avoid changing sign conflict
+                    if (mode == 'plus')
+                        objVal++;
+                    if (mode == 'minus')
+                        objVal--;
+                }
+                obj.empty().text(objVal.toString());
+                return false;
+            });
+
+            $('.itwashelpful').click(function(e) {
+                e.preventDefault();
+                var reviewId = $(this).attr('data-reviewId');
+                var token = $('#_token').val();
+                $.post('/review/school/was/helpful/'+reviewId, {
+                    dataType: 'json',
+                    _token: token
+                }, function(data){
+                    if(data.success == 'success') {
+                        $('.btn-yes[data-reviewId='+reviewId+']').hide();
+                        $('.btn-no[data-reviewId='+reviewId+']').hide();
+                        $('.reviewed-thanks[data-reviewId='+reviewId+']').removeClass('hidden');
+                        var helpSum = $('.helpSum[data-reviewId='+reviewId+']');
+                        if(helpSum.closest('div').find('i').hasClass('fa-plus'))
+                            plusMinusOne(helpSum,'plus');
+                        if(helpSum.closest('div').find('i').hasClass('fa-minus'))
+                            plusMinusOne(helpSum,'minus');
+                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'warning') {
+                        toastr['warning'](''+data.msg, 'Aviso', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'error') {
+                        toastr['error'](''+data.msg, 'Error', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    }
+                });
+            });
+
+            $('.nothelpful').click(function(e) {
+                e.preventDefault();
+                var reviewId = $(this).attr('data-reviewId');
+                var token = $('#_token').val();
+                $.post('/review/school/not/helpful/'+reviewId, {
+                    dataType: 'json',
+                    _token: token
+                }, function(data){
+                    if(data.success == 'success') {
+                        $('.btn-yes[data-reviewId='+reviewId+']').hide();
+                        $('.btn-no[data-reviewId='+reviewId+']').hide();
+                        $('.reviewed-thanks[data-reviewId='+reviewId+']').removeClass('hidden');
+                        var helpSum = $('.helpSum[data-reviewId='+reviewId+']');
+                        if(helpSum.closest('div').find('i').hasClass('fa-plus'))
+                            plusMinusOne(helpSum,'minus');
+                        if(helpSum.closest('div').find('i').hasClass('fa-minus'))
+                            plusMinusOne(helpSum,'plus');
+                        toastr['success'](''+data.msg, 'Valoración enviada', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'warning') {
+                        toastr['warning'](''+data.msg, 'Aviso', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    } else if (data.success == 'error') {
+                        toastr['error'](''+data.msg, 'Error', {
+                            "closeButton": true,
+                            "debug": false,
+                            "positionClass": "toast-bottom-right",
+                            "onclick": null,
+                            "showDuration": "1000",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        });
+                    }
+                });
             });
 
         }

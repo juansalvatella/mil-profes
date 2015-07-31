@@ -62,7 +62,6 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="day1">@lang('forms.new_course.schedule')</label>
             <div class="col-sm-10">
-
                 <div class="col-xs-4">@lang('forms.common.day')</div>
                 <div class="col-xs-4">@lang('forms.common.from')</div>
                 <div class="col-xs-4">@lang('forms.common.to')</div>

@@ -94,18 +94,7 @@
 @section('page_js')
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#create-l-form").validator();
-
-            var text_max = 200;
-            var tbox = $('#description');
-            var text_length = tbox.val().length;
-            var text_remaining = text_max - text_length;
-            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
-            tbox.keyup(function() {
-                var text_length = $('#description').val().length;
-                var text_remaining = text_max - text_length;
-                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
-            });
+            TeacherLessonCreate.init();
         });
     </script>
 @endsection

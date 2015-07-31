@@ -29,16 +29,9 @@
                 <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10">
                     <div class="row">
                         <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-6 col-md-offset-0 col-md-5 col-lg-offset-1 col-lg-5 services">
-                            <h3>Búsquedas geolocalizadas:</h3>
-                            <p>
-                                Una de las principales causas de abandono en las academias por parte de los estudiantes
-                                es la distancia hasta al centro. Nuestra página tiene una solución a este problema:
-                            </p>
-                            <p>
-                                Ofrecemos resultados ordenados por proximidad, aumentando así la probabilidad de que los
-                                estudiantes de su municipio se pongan en contacto con su centro de estudios y reduciendo
-                                la posibilidad de abandono y fracaso educativo.
-                            </p>
+                            <h3>@lang('services.title1')</h3>
+                            <p>@lang('services.p1-1')</p>
+                            <p>@lang('services.p1-2')</p>
                         </div>
                         <div class="col-xs-12 col-sm-6 text-center services">
                             <div class="hidden-xs hidden-sm" style="height:20px;">&nbsp;</div>
@@ -54,31 +47,17 @@
                             <img style="display: inline-block" src="http://milprofes.com/img/news/profiles300.png" alt="Cero anuncios. Todo perfiles">
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5 services">
-                            <h3>Cero anuncios. Todo perfiles:</h3>
-                            <p>
-                                El equipo de milProfes crea el perfil de su centro educativo con toda la información que
-                                el estudiante necesita (horarios, cursos, localizaci&oacute;n...).
-                            </p>
-                            <p>
-                                Adem&aacute;as, nuestro equipo gestiona y actualiza su perfil regularmente para que los
-                                empleados de su academia no tengan que dedicar tiempo a estas tareas.
-                            </p>
+                            <h3>@lang('services.title2')</h3>
+                            <p>@lang('services.p2-1')</p>
+                            <p>@lang('services.p2-2')</p>
                         </div>
                     </div>
                     <hr class="hr-servicios-sep"/>
                     <div class="row">
                         <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-6 col-md-offset-0 col-md-5 col-lg-offset-1 col-lg-5 services">
-                            <h3>Posicionamiento en buscadores, SEO y redes sociales:</h3>
-                            <p>
-                                Su perfil no sólo es accesible desde nuestra web, sino que trabajamos constantemente para
-                                situarle en los primeros puestos de los principales motores de búsqueda y difundir su oferta de
-                                cursos en las redes sociales.
-                            </p>
-                            <p>
-                                Nuestro equipo gestiona diferentes canales de publicidad, desde Facebook hasta carteles
-                                publicitarios. Nos encargamos del SEO en nuestra web para que no tengan que ocuparse de ese
-                                trabajo y puedan dedicar sus esfuerzos a ser los mejores en su área.
-                            </p>
+                            <h3>@lang('services.title3')</h3>
+                            <p>@lang('services.p3-1')</p>
+                            <p>@lang('services.p3-2')</p>
                         </div>
                         <div class="hidden-xs col-xs-12 col-sm-6 text-center services">
                             <div class="hidden-xs hidden-sm" style="height:20px;">&nbsp;</div>
@@ -94,13 +73,8 @@
                             <img style="display: inline-block" src="http://milprofes.com/img/news/informes.png" alt="Informes mensuales">
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5 services">
-                            <h3>Informes mensuales:</h3>
-                            <p>
-                                Le informamos periódicamente de las estadísticas que pueden serle de interés: número de
-                                personas que se han interesado en contactarle, búsquedas relacionadas de usuarios cercanos,
-                                demanda de sus cursos publicados... Además adjuntamos las valoraciones y comentarios de los
-                                alumnos de su academia.
-                            </p>
+                            <h3>@lang('services.title4')</h3>
+                            <p>@lang('services.p4-1')</p>
                             <p>
                                 <a href="{{ asset('pdf/ejemplo-report.pdf') }}" target="_blank"><strong>Ver ejemplo</strong></a>
                             </p>
@@ -109,9 +83,7 @@
                     <hr class="hr-servicios-sep"/>
                     <div class="row top-buffer-25">
                         <div class="col-xs-12 text-center services">
-                            <p>
-                                Para formar parte de nuestra web, puede llamarnos al <strong>696089184</strong> o contactar con nosotros
-                            </p>
+                            <p>@lang('services.call-us')</p>
                         </div>
                         <div class="col-xs-12 text-center">
                             <a href="{{ route('contact') }}" class="btn input-lg faqs-btn">@lang('services.contact-us')</a>
