@@ -19,7 +19,8 @@
 		"barryvdh/laravel-ide-helper": "v1.11.6",
 		"cocur/slugify": "^1.2",
 		"doctrine/dbal": "dev-master",
-		"phpunit/phpunit": "4.7.7"
+		"phpunit/phpunit": "4.7.7",
+	  	"andywer/js-localization": "dev-laravel-4.2"
 	},
 	"autoload": {
 		"classmap": [
