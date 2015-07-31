@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'contact-us' => 'Contáctanos',
     'ask-us' => 'Pregúntanos o coméntanos, encantados',
@@ -18,4 +18,4 @@ return array(
     'subject_placeholder' => 'Asunto',
     'message_placeholder' => 'Tu mensaje',
 
-);
+];

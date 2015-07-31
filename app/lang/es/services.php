@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'title' => 'Servicios para academias',
     'subtitle' => 'Consulta aquí lo que podemos ofrecerte',
@@ -33,4 +33,4 @@ return array(
                alumnos de su academia.',
     'p4-2' => '',
 
-);
+];

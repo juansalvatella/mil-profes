@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     //Content row 1
     'welcome' => 'Los mejores profesores y<br/>academias te están esperando',
@@ -8,8 +8,6 @@ return array(
     'where_are_you' => '¿Dónde estás?',
     'where_placeholder' => 'Avenida Fulanita 123, 08080 Lepe',
     'what_to_learn' => '¿Qué quieres aprender?',
-//    'keywords_placeholder_general education 2' => 'estética, diseño, comercio, hostelería...',
-//    'keywords_placeholder_general education 3' => 'álgebra, EDOs, AI, redes...',
 
     'keywords_placeholder_general education' => 'repaso, deberes, ESO, bachillerato...',
     'keywords_placeholder_science' => 'biología, álgebra, geología, física...',
@@ -27,18 +25,10 @@ return array(
     'keywords_placeholder_hobbies' => 'yoga, jardinería, cocina, manualidades...',
     'keywords_placeholder_all' => 'baile, informática, diseño, música oriental...',
 
-//    'subject_escolar' => 'Escolar',
-//	'subject_cfp' => 'Formación profesional',
-//	'subject_universitario' => 'Universitario',
-//	'subject_artes' => 'Artes',
-//	'subject_musica' => 'Música',
-//	'subject_idiomas' => 'Idiomas',
-//	'subject_deportes' => 'Deportes',
-//    'subject_salud' => 'Salud y bienestar',
-//    'subject_all' => 'De todo',
     'find' => 'Encontrar:',
 
     'location' => 'Usar mi ubicación actual',
+    'couldnt-resolve' => 'No se pudo resolver tu dirección, introdúcela manualmente',
 
     'schools' => 'Academias',
     'teachers' => 'Profes.',
@@ -48,4 +38,4 @@ return array(
     'more_popular_schools' => 'Las <span style="color:#337AB7;">academias</span> más populares',
     'more_popular_teachers' => 'Los <span style="color:#337AB7;">profes.</span> más populares',
 
-);
+];

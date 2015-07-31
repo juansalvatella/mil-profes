@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'subtitle' => 'Perfil de academia',
     'school' => 'Perfil de academia',
@@ -34,4 +34,4 @@ return array(
     'lesson-description' => 'DESCRIPCIÓN DEL CURSO',
     'availability' => 'HORARIO DEL CURSO',
 
-);
+];

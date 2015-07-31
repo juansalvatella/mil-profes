@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'common' => [
         'actions' => 'Acciones',
@@ -99,12 +99,22 @@ return array(
     'new_lesson' => [
         'title' => 'Título',
         'title-ph' => '¿Cuál es el título de tu clase?',
+        'title-error' => 'Rellena este campo.',
+        'title-helper' => 'En pocas palabras, por ejemplo: Clase de guitarra clásica.',
+        'subject' => 'Categoría',
+        'subject-helper' => '¿En qué categoría clasificarías tu clase?',
         'price' => 'Precio (€/hora)',
         'price-ph' => '¿Cuál es el precio por hora de tu clase?',
+        'price-error' => 'Introduce una cifra, por ejemplo: 15',
+        'price-helper' => 'Introduce una cifra, por ejemplo.: 15. Si lo prefieres, puedes dejarlo en blanco',
         'where' => 'Lugar',
         'where-ph' => '¿Dónde se dará la clase?',
+        'where-error' => 'Rellena este campo.',
+        'where-helper' => 'Introduce calle, número, ciudad...',
         'description' => 'Descripción breve',
-        'description-ph' => '',
+        'description-ph' => 'Describe los contenidos de tu clase',
+        'description-error' => 'Rellena este campo.',
+        'description-helper' => 'Introduce una descripción breve y atractiva de tu clase',
 
         'schedule' => 'Horario de la clase',
         'default_start_time' => '15:00',
@@ -130,6 +140,6 @@ return array(
     'new_school' => [
 
     ],
-    
 
-);
+
+];

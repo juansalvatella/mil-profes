@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'navigation' => 'Navegar',
     'home' => 'Inicio',
@@ -14,4 +14,4 @@ return array(
     'privacy' => 'Política de privacidad',
     'cookies' => 'Política de cookies',
 
-);
+];

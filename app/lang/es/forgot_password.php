@@ -1,8 +1,8 @@
 <?php
 
-return array(
+return [
 
     'title' => 'Restablecer contraseña',
     'subtitle' => '',
 
-);
+];

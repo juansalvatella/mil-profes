@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'title' => 'Política de cookies',
     'subtitle' => '',
@@ -122,4 +122,4 @@ return array(
 
     'logo' => '<span class="who-logo-mil">mil</span> <span class="who-logo-profes">PROFES.</span>',
 
-);
+];

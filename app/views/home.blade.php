@@ -34,6 +34,7 @@
               <div class="row top-buffer-15">
                   <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-11 col-md-offset-0 text-left">
                       <div class="form-group">
+                          <input type="hidden" name="couldnt-resolve-ph" value="@lang('home.couldnt-resolve')">
                           {{ Form::label('user_address', trans('home.where_are_you'), array('class'=>'main-home-label')) }}
                           @if(Auth::check())
                               {{ Form::text('user_address', Confide::user()->address, array('class'=>'form-control input-lg','placeholder'=>trans('home.where_placeholder'))) }}
@@ -219,6 +220,9 @@
 @endsection
 
 @section('page_js')
+    {{--IP TO GEOLOCATION--}}
+    {{ HTML::script('//maps.googleapis.com/maps/api/js?sensor=false') }}
+    {{--SCHOOLS CAROUSEL--}}
     {{ HTML::script('js/owl.carousel.js') }}
     <script type="text/javascript">
         $(document).ready(function(){

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'title' => 'Condiciones de uso',
     'subtitle' => '',
@@ -248,4 +248,4 @@ return array(
 
     'logo' => '<span class="who-logo-mil">mil</span> <span class="who-logo-profes">PROFES.</span>',
 
-);
+];

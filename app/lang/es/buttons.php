@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     //Common buttons
     'back'          => 'Volver',
@@ -22,6 +22,7 @@ return array(
     'yes'           => 'Sí',
     'no'            => 'No',
     'share'         => 'Compartir',
+    'find'          => 'Encontrar',
 
     //Milprofes. buttons
     'new_school'        => 'Añadir academia',
@@ -33,5 +34,4 @@ return array(
     'edit_lesson'       => 'Editar clase',
     'delete_lesson'     => 'Eliminar clase',
 
-
-);
+];

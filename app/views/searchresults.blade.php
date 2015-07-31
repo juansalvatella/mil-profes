@@ -27,7 +27,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="">
-                        <div class="">{{ Form::label('keywords', 'Busco clases de:') }}</div>
+                        <div class="">{{ Form::label('keywords', trans('search.keywords-lbl') }}</div>
                     </div>
                     <div class="">
                         <div class="">{{ Form::text('keywords', $keywords, array('class'=>'form-control')) }}</div>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="">
-                        <div class="">{{ Form::label('user_address', 'Estoy en:') }}</div>
+                        <div class="">{{ Form::label('user_address', trans('search.user_address-ph')) }}</div>
                     </div>
                     <div class="">
                         <div class="">{{ Form::text('user_address', $user_address, array('class'=>'form-control')) }}</div>
@@ -46,7 +46,7 @@
                         <div class="">{{ Form::label('', '') }}</div>
                     </div>
                     <div class="">
-                        {{ Form::submit('Encontrar',array('id'=>'btn-submit-search','class'=>'form-control mp-submit-find')) }}
+                        {{ Form::submit(trans('buttons.find'), array('id'=>'btn-submit-search','class'=>'form-control mp-submit-find')) }}
                     </div>
                 </div>
 
@@ -60,28 +60,28 @@
         <div id="search-options-menu-container">
 
             <div class="row text-center">
-                {{ Form::label('', 'Quién enseña') }}
+                {{ Form::label('', trans('search.who-teaches-lbl')) }}
             </div>
 
             <div class="row">
                 @if($prof_o_acad=='profesor')
-                    <div class="radio"><label>{{ Form::radio('prof_o_acad', 'academia', false, array('id'=>'pa_1')) }} @lang('search.schools') </label></div>
-                    <div class="radio"><label>{{ Form::radio('prof_o_acad', 'profesor', true, array('id'=>'pa_2')) }} @lang('search.teachers') </label></div>
+                    <div class="radio"><label>{{ Form::radio('prof_o_acad', trans('search.school'), false, array('id'=>'pa_1')) }} @lang('search.schools') </label></div>
+                    <div class="radio"><label>{{ Form::radio('prof_o_acad', trans('search.teacher'), true, array('id'=>'pa_2')) }} @lang('search.teachers') </label></div>
                 @else
-                    <div class="radio"><label>{{ Form::radio('prof_o_acad', 'academia', true, array('id'=>'pa_1')) }} @lang('search.schools') </label></div>
-                    <div class="radio"><label>{{ Form::radio('prof_o_acad', 'profesor', false, array('id'=>'pa_2')) }} @lang('search.teachers') </label></div>
+                    <div class="radio"><label>{{ Form::radio('prof_o_acad', trans('search.school'), true, array('id'=>'pa_1')) }} @lang('search.schools') </label></div>
+                    <div class="radio"><label>{{ Form::radio('prof_o_acad', trans('search.teacher'), false, array('id'=>'pa_2')) }} @lang('search.teachers') </label></div>
                 @endif
             </div>
 
             <hr class="hr-sm-separator"/>
 
             <div class="row text-center top-buffer-15">
-                {{ Form::label('search_distance', 'Distancia') }}
+                {{ Form::label('search_distance',  trans('search.distance-lbl')) }}
             </div>
             {{--GoogleMap--}}
             <div id="gmapDiv" class="row text-center">
                 <div class="staticMap">
-                    <img class="staticMapImg" src="{{{ $MapImgURL }}}" alt="Área de búsqueda"/>
+                    <img class="staticMapImg" src="{{{ $MapImgURL }}}" alt="@lang('search.static-img-alt')"/>
                 </div>
                 <div class="dynMap hidden">
                     {{ $gmap['js'] }}
@@ -110,93 +110,82 @@
             <hr class="hr-sm-separator"/>
 
             <div id="price-tags">
-
+                <div class="row text-center top-buffer-15">
+                    {{ Form::label('price', trans('search.prices')) }}
+                </div>
                 @if($prof_o_acad=='profesor')
-
-                    <div class="row text-center top-buffer-15">
-                        {{ Form::label('price', 'Precios') }}
-                    </div>
-
-                    <div class="row text-left">
-                        @if($price=='all')
-                            <div class="radio"><label>{{ Form::radio('price', 'all', true, array('id'=>'pr_1')) }} @lang('search.tprice1') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'all', false, array('id'=>'pr_1')) }} @lang('search.tprice1') </label></div>
-                        @endif
-                        @if($price == 'rang0')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang0', true, array('id'=>'pr_2')) }} @lang('search.tprice2') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang0', false, array('id'=>'pr_2')) }} @lang('search.tprice2') </label></div>
-                        @endif
-                        @if($price== 'rang1')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang1', true, array('id'=>'pr_3')) }} @lang('search.tprice3') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang1', false, array('id'=>'pr_3')) }} @lang('search.tprice3') </label></div>
-                        @endif
-                        @if($price == 'rang2')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang2', true, array('id'=>'pr_4')) }} @lang('search.tprice4') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang2', false, array('id'=>'pr_4')) }} @lang('search.tprice4') </label></div>
-                        @endif
-                        @if($price == 'rang3')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang3', true, array('id'=>'pr_5')) }} @lang('search.tprice5') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang3', false, array('id'=>'pr_5')) }} @lang('search.tprice5') </label></div>
-                        @endif
-                        @if($price == 'rang4')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang4', true, array('id'=>'pr_6')) }} @lang('search.tprice6') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang4', false, array('id'=>'pr_6')) }} @lang('search.tprice6') </label></div>
-                        @endif
-                    </div>
-
+                <div class="row text-left">
+                    @if($price=='all')
+                        <div class="radio"><label>{{ Form::radio('price', 'all', true, array('id'=>'pr_1')) }} @lang('search.tprice1') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'all', false, array('id'=>'pr_1')) }} @lang('search.tprice1') </label></div>
+                    @endif
+                    @if($price == 'rang0')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang0', true, array('id'=>'pr_2')) }} @lang('search.tprice2') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang0', false, array('id'=>'pr_2')) }} @lang('search.tprice2') </label></div>
+                    @endif
+                    @if($price== 'rang1')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang1', true, array('id'=>'pr_3')) }} @lang('search.tprice3') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang1', false, array('id'=>'pr_3')) }} @lang('search.tprice3') </label></div>
+                    @endif
+                    @if($price == 'rang2')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang2', true, array('id'=>'pr_4')) }} @lang('search.tprice4') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang2', false, array('id'=>'pr_4')) }} @lang('search.tprice4') </label></div>
+                    @endif
+                    @if($price == 'rang3')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang3', true, array('id'=>'pr_5')) }} @lang('search.tprice5') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang3', false, array('id'=>'pr_5')) }} @lang('search.tprice5') </label></div>
+                    @endif
+                    @if($price == 'rang4')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang4', true, array('id'=>'pr_6')) }} @lang('search.tprice6') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang4', false, array('id'=>'pr_6')) }} @lang('search.tprice6') </label></div>
+                    @endif
+                </div>
                 @else
-
-                    <div class="row text-center top-buffer-15">
-                        {{ Form::label('price', 'Precios') }}
-                    </div>
-
-                    <div class="row text-left">
-                        @if($price=='all')
-                            <div class="radio"><label>{{ Form::radio('price', 'all', true, array('id'=>'pr_1')) }} @lang('search.sprice1') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'all', false, array('id'=>'pr_1')) }} @lang('search.sprice1') </label></div>
-                        @endif
-                        @if($price == 'rang0')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang0', true, array('id'=>'pr_2')) }} @lang('search.sprice2') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang0', false, array('id'=>'pr_2')) }} @lang('search.sprice2') </label></div>
-                        @endif
-                        @if($price== 'rang1')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang1', true, array('id'=>'pr_3')) }} @lang('search.sprice3') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang1', false, array('id'=>'pr_3')) }} @lang('search.sprice3') </label></div>
-                        @endif
-                        @if($price == 'rang2')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang2', true, array('id'=>'pr_4')) }} @lang('search.sprice4') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang2', false, array('id'=>'pr_4')) }} @lang('search.sprice4') </label></div>
-                        @endif
-                        @if($price == 'rang3')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang3', true, array('id'=>'pr_5')) }} @lang('search.sprice5') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang3', false, array('id'=>'pr_5')) }} @lang('search.sprice5') </label></div>
-                        @endif
-                        @if($price == 'rang4')
-                            <div class="radio"><label>{{ Form::radio('price', 'rang4', true, array('id'=>'pr_6')) }} @lang('search.sprice6') </label></div>
-                        @else
-                            <div class="radio"><label>{{ Form::radio('price', 'rang4', false, array('id'=>'pr_6')) }} @lang('search.sprice6') </label></div>
-                        @endif
-                    </div>
-
+                <div class="row text-left">
+                    @if($price=='all')
+                        <div class="radio"><label>{{ Form::radio('price', 'all', true, array('id'=>'pr_1')) }} @lang('search.sprice1') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'all', false, array('id'=>'pr_1')) }} @lang('search.sprice1') </label></div>
+                    @endif
+                    @if($price == 'rang0')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang0', true, array('id'=>'pr_2')) }} @lang('search.sprice2') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang0', false, array('id'=>'pr_2')) }} @lang('search.sprice2') </label></div>
+                    @endif
+                    @if($price== 'rang1')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang1', true, array('id'=>'pr_3')) }} @lang('search.sprice3') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang1', false, array('id'=>'pr_3')) }} @lang('search.sprice3') </label></div>
+                    @endif
+                    @if($price == 'rang2')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang2', true, array('id'=>'pr_4')) }} @lang('search.sprice4') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang2', false, array('id'=>'pr_4')) }} @lang('search.sprice4') </label></div>
+                    @endif
+                    @if($price == 'rang3')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang3', true, array('id'=>'pr_5')) }} @lang('search.sprice5') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang3', false, array('id'=>'pr_5')) }} @lang('search.sprice5') </label></div>
+                    @endif
+                    @if($price == 'rang4')
+                        <div class="radio"><label>{{ Form::radio('price', 'rang4', true, array('id'=>'pr_6')) }} @lang('search.sprice6') </label></div>
+                    @else
+                        <div class="radio"><label>{{ Form::radio('price', 'rang4', false, array('id'=>'pr_6')) }} @lang('search.sprice6') </label></div>
+                    @endif
+                </div>
                 @endif
-
             </div>
 
             <hr class="hr-sm-separator"/>
 
             <div class="row text-center top-buffer-15">
-                {{ Form::label('subject', 'Categorías') }}
+                {{ Form::label('subject',  trans('search.subjects')) }}
             </div>
 
             <div class="row">
@@ -215,24 +204,20 @@
 
     <div class="col-xs-12 col-sm-10 col-md-8 co-lg-8" id="results-main-content">
 
-        <div id="saveReviewAlertDiv" class="bb-alert alert alert-info" style="display:none;position: fixed;top: 25%;right: 0;margin-bottom: 0;font-size: 1.2em;padding: 1em 1.3em;z-index: 2000;">
-            <span id="saveReviewAlert">Save review success/failure alert</span>
-        </div>
-
         <div id="results-info" class="panel panel-default mp-shadow">
             <div class="panel-body search-total">
                 <div class="row"><div class="col-xs-12">
                 @if($prof_o_acad=='profesor')
                     @if($total_results==0)
-                        <span><strong>No se encontraron profes.</strong></span>
+                        <span><strong>@lang('search.no-teachers-found')</strong></span>
                     @else
-                        <span><strong>{{ $total_results }} @choice('profe.|profes.',$total_results) cerca de ti</strong></span>
+                        <span><strong>{{ $total_results }} @choice('search.found-teachers',$total_results) @lang('search.close-to-you')</strong></span>
                     @endif
                 @else
                     @if($total_results==0)
-                        <span><strong>No se encontraron academias.</strong></span>
+                        <span><strong>@lang('search.no-schools-found')</strong></span>
                     @else
-                        <span><strong>{{ $total_results }} @choice('academia|academias',$total_results) cerca de ti</strong></span>
+                        <span><strong>{{ $total_results }} @choice('search.found-schools',$total_results) @lang('search.close-to-you')</strong></span>
                     @endif
                 @endif
                 </div></div>
@@ -278,10 +263,10 @@
                         @endif
                     </div>
                     <div class="row result-distance">
-                        Dentro de {{ $result->dist_to_user }} Km <img alt="marcador" src="{{ asset('../img/marcador-distancia.png') }}"/>
+                        @lang('search.within') {{ $result->dist_to_user }} @lang('search.distance-unit') <img alt="marcador" src="{{ asset('../img/marcador-distancia.png') }}"/>
                     </div>
                     <div class="row result-description-title top-srs-separator">
-                        DESCRIPCIÓN
+                        @lang('search.DESCRIPTION')
                     </div>
                     <div class="row result-description bottom-srs-separator">
                         <small>{{{ $result->description }}}</small>
@@ -289,7 +274,7 @@
                     <div class="row result-availability-title">
                         @if(!$result->availability->isEmpty())
                             @if($result->availability->first()->day != '')
-                                DISPONIBILIDAD
+                                @lang('search.AVAILABILITY')
                             @endif
                         @endif
                     </div>
@@ -303,9 +288,9 @@
                     @if($result->aggregated > 1)
                     <div class="row result-aggregated">
                         @if($prof_o_acad=='profesor')
-                            <a class="btn btn-default btn-sm" href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('clase|clases',$result->aggregated-1) más de {{ $result->displayName }} que @choice('podría|podrían',$result->aggregated-1) interesarte.</a>
+                            <a class="btn btn-default btn-sm" href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}"><i class="fa fa-search-plus"></i> @lang('search.see') {{ $result->aggregated-1 }} @choice('search.lessons',$result->aggregated-1) @lang('search.more-of') {{ $result->displayName }} @lang('search.that') @choice('search.may',$result->aggregated-1) @lang('search.interest-you').</a>
                         @else
-                            <a class="btn btn-default btn-sm" href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('curso|cursos',$result->aggregated-1) más de {{ $result->name }} que @choice('podría|podrían',$result->aggregated-1) interesarte.</a>
+                            <a class="btn btn-default btn-sm" href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('search.courses',$result->aggregated-1) @lang('search.more-of') {{ $result->name }} @lang('search.that') @choice('search.may',$result->aggregated-1) @lang('search.interest-you').</a>
                         @endif
                     </div>
                     @endif
@@ -322,9 +307,9 @@
                     <div class="row text-center">
                         @if($result->price=='0')
                             @if($prof_o_acad=='profesor')
-                                <div class="row no-price-provided">Contáctame<br>para saber<br>el precio</div>
+                                <div class="row no-price-provided">@lang('search.t-price-unkown')</div>
                             @else
-                                <div class="row no-price-provided">Contáctanos<br>para saber<br>el precio</div>
+                                <div class="row no-price-provided">@lang('search.s-price-unkown')</div>
                             @endif
                         @else
                             <div class="row price">
@@ -340,9 +325,9 @@
                     </div>
                     <div class="row text-center top-buffer-15">
                         @if($prof_o_acad=='profesor')
-                            <a id="contact-me-{{ $result->id }}" href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}" class="btn btn-milprofes">Contáctame</a>
+                            <a id="contact-me-{{ $result->id }}" href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}" class="btn btn-milprofes">@lang('search.t-contact-me')</a>
                         @else
-                            <a id="contact-me-{{ $result->id }}" href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}" class="btn btn-milprofes">Contáctanos</a>
+                            <a id="contact-me-{{ $result->id }}" href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}" class="btn btn-milprofes">@lang('search.s-contact-me')</a>
                         @endif
                     </div>
                 </div>

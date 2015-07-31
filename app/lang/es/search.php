@@ -1,21 +1,10 @@
 <?php
 
-return array(
+return [
 
     'distance1' => '<i class="map-icon-walking dist-icon1"></i> Andando (2 Km)',
     'distance2' => '<i class="fa fa-subway dist-icon2"></i> Tr. Público (5 Km)',
     'distance3' => '<i class="fa fa-car dist-icon3"></i> En coche (50 Km)',
-
-    //old categories
-//    'escolar' => 'Escolar',
-//    'cfp' => 'Ciclos',
-//    'universitario' => 'Universitario',
-//    'artes' => 'Artes',
-//    'musica' => 'Música',
-//    'idiomas' => 'Idiomas',
-//    'deportes' => 'Deportes',
-//    'salud' => 'Salud y bienestar',
-//    'all' => 'Todas',
 
     'schools' => 'Academias',
     'teachers' => 'Profes.',
@@ -45,24 +34,41 @@ return array(
     'per_hour' => 'por hora',
     'per_course' => 'por curso',
 
-    //old categories
-//    'of_subject_escolar' => 'DE NIVEL ESCOLAR',
-//    'of_subject_cfp' => 'DE FORMACIÓN PROFESIONAL',
-//    'of_subject_universitario' => 'DE NIVEL UNIVERSITARIO',
-//    'of_subject_artes' => 'DE ARTE',
-//    'of_subject_musica' => 'DE MÚSICA',
-//    'of_subject_idiomas' => 'DE IDIOMAS',
-//    'of_subject_deportes' => 'DE DEPORTES',
-//    'of_subject_salud' => 'DE SALUD Y BIENESTAR',
+    'school' => 'academia',
+    'teacher' => 'profesor',
+    'keywords-lbl' => 'Busco clases de:',
+    'user_address-ph' => 'Estoy en:',
+    'where-lbl' => 'Estoy en:',
+    'who-teaches-lbl' => 'Quién enseña',
+    'distance-lbl' => 'Distancia',
+    'static-img-alt' => 'Área de búsqueda',
+    'prices' => 'Precios',
+    'subjects' => 'Categorías',
 
-    //old categories
-//    'subject_escolar' => 'NIVEL ESCOLAR',
-//    'subject_cfp' => 'FORMACIÓN PROFESIONAL',
-//    'subject_universitario' => 'NIVEL UNIVERSITARIO',
-//    'subject_artes' => 'ARTE',
-//    'subject_musica' => 'MÚSICA',
-//    'subject_idiomas' => 'IDIOMAS',
-//    'subject_deportes' => 'DEPORTES',
-//    'subject_salud' => 'SALUD Y BIENESTAR',
+    'no-teachers-found' => 'No se encontraron profes.',
+    'no-schools-found' => 'No se encontraron academias.',
+    'found-teachers' => 'profe.|profes.',
+    'found-schools' => 'academia|academias',
+    'close-to-you' => 'cerca de ti',
 
-);
+    'within' => 'Dentro de',
+    'distance-unit' => 'Km',
+    'DESCRIPTION' => 'DESCRIPCIÓN',
+    'AVAILABILITY' => 'DISPONIBILIDAD',
+
+    'see' => 'ver',
+    'lessons' => 'clase|clases',
+    'courses' => 'curso|cursos',
+    'more-of' => 'más de',
+    'that' => 'que',
+    'may' => 'podría|podrían',
+    'interest-you' => 'interesarte',
+
+    't-price-unkown' => 'Contáctame<br>para saber<br>el precio',
+    's-price-unknown' => 'Contáctanos<br>para saber<br>el precio',
+
+    't-contact-me' => 'Contáctame',
+    's-contact-me' => 'Contáctanos',
+    '' => '',
+
+];

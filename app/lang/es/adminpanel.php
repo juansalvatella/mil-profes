@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'reviews' => [
         'dashboard' => 'Panel de control',
         'title_school' => 'Valoración de academias',
@@ -26,4 +26,4 @@ return array(
     'crawled' => 'Revisar',
     'active' => 'Activa',
 
-);
+];

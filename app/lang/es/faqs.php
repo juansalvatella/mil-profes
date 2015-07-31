@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'title' => 'F.A.Q.s',
     'subtitle' => 'Preguntas y respuestas frecuentes',
@@ -19,4 +19,4 @@ return array(
 
     'doubts' => '¿Tienes más dudas?',
 
-);
+];

@@ -1,7 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Mitxel
- * Date: 19/04/2015
- * Time: 19:24
- */
+
+return [
+
+    'title' => 'Editar clase',
+    'subtitle' => 'Edita los datos de tu clase',
+
+];

@@ -10,8 +10,7 @@ var Consent = function() {
             var consentString = "cookieConsent=";
 
             // Sets a cookie granting/denying consent, and displays some text on console/banner
-            function setCookie(console_log, banner_text, consent) {
-                $(cookieBanner).text(banner_text);
+            function setCookie(consent) {
                 $(cookieBanner).hide(); //hide instead of .fadeOut(5000);
                 var d = new Date();
                 var exdays = 30*12; //  1 year
@@ -22,18 +21,12 @@ var Consent = function() {
             }
 
             function denyConsent() {
-                setCookie("Consent denied", "No consientes el uso de cookies en milProfes.", "false");
+                setCookie("false");
             }
 
             function grantConsent() {
                 if (consentIsSet == "true") return; // Don't grant twice
-                setCookie("Consent granted", "Gracias por consentir el uso de cookies en milProfes.", "true");
-                doConsent();
-            }
-
-            // Run the consent code. We may be called either from grantConsent() or
-            // from the main routine
-            function doConsent() {
+                setCookie("true");
                 initAnalytics();
             }
 
@@ -78,7 +71,7 @@ var Consent = function() {
                 //Allow cookies re-enabling
                 $(".allowConsent").click(grantConsent);
             } else if (consentIsSet == "true") {
-                doConsent();
+                initAnalytics();
             }
         }
     }
@@ -142,6 +135,7 @@ var Home = function() {
 
             //IP to GEO by Google
             var checknavgeo = navigator.geolocation;
+            var couldntResolvePh = $('input[name=couldnt-resolve-ph]').val();
             if(checknavgeo)
                 $("#mi-ubicacion").removeClass('hidden');
             $('#mi-ubicacion-link').click(function (e) {
@@ -149,27 +143,23 @@ var Home = function() {
                 if (navigator && checknavgeo) {
                     navigator.geolocation.getCurrentPosition(geo_success, geo_error);
                 } else {
-                    $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente"); //TODO!
+                    $("#user_address").attr("placeholder", couldntResolvePh);
                 }
             });
             function geo_success(position) {
                 printAddress(position.coords.latitude, position.coords.longitude);
             }
             function geo_error() {
-                $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente"); //TODO!
+                $("#user_address").attr("placeholder", couldntResolvePh);
             }
             function printAddress(latitude, longitude) {
                 var geocoder = new google.maps.Geocoder();
                 var yourLocation = new google.maps.LatLng(latitude, longitude);
                 geocoder.geocode({ 'latLng': yourLocation }, function (results, status) {
-                    if(status == google.maps.GeocoderStatus.OK) {
-                        if(results[0]) {
-                            $('#user_address').val(''+results[0].formatted_address);
-                        } else {
-                            $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente"); //TODO!
-                        }
+                    if(status == google.maps.GeocoderStatus.OK && results[0]) {
+                        $('#user_address').val(''+results[0].formatted_address);
                     } else {
-                        $("#user_address").attr("placeholder", "No se pudo resolver tu dirección, introdúcela manualmente"); //TODO!
+                        $("#user_address").attr("placeholder", couldntResolvePh);
                     }
                 });
             }
@@ -249,31 +239,19 @@ var MyProfileDashboard = function() {
     return {
         init: function() {
 
-            //Textboxes char limit feedback
-            var text_max = 450;
-            var tbox = $('#description');
-            var text_length = tbox.val().length;
-            var text_remaining = text_max - text_length;
-            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
-            tbox.keyup(function() {
-                var text_length = $('#description').val().length;
-                var text_remaining = text_max - text_length;
-                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
-            });
-
-            //Forms validation
-            $("#user-data").validator();
-            $("#user-social").validator();
-            $("#user-passwd").validator();
-
             //Cropping related JS
             var xsize = 160, ysize = 160, imgSlc, boundx, boundy;
-            function checkCoords() { return !!parseInt($('#w').val()); }
+
+            function checkCoords() {
+                return !!parseInt($('#w').val());
+            }
+
             //Handle preview "zooming"
             function updatePreview(c) {
                 if (parseInt(c.w) > 0) {
                     var rx = xsize / c.w;
                     var ry = ysize / c.h;
+
                     imgSlc.css({
                         width: Math.round(rx * boundx) + 'px',
                         height: Math.round(ry * boundy) + 'px',
@@ -291,17 +269,15 @@ var MyProfileDashboard = function() {
             //Generate new canvas, preview and init jcrop
             function readURL(input) {
                 if (input.files && input.files[0] && input.files[0].size < 1048576) {
-                    var imgCanvas = $('.imgCanvas');
-                    var jcropPreview = $('.jcrop-preview');
                     $('#file-input').removeClass('has-error');
                     $('#file-input-error').html('Puedes utilizar imágenes del tipo JPG, PNG o GIF y tamaño inferior a 1 MB.');
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         //Remove previous content
                         jcrop_api = null;
-                        imgCanvas.remove();
-                        jcropPreview.remove();
-                        $('.jcrop-holder').remove();
+                        $(".imgCanvas").remove();
+                        $(".jcrop-preview").remove();
+                        $(".jcrop-holder").remove();
                         //New content
                         var src = e.target.result;
                         var cContainer = $('#canvasContainer');
@@ -312,8 +288,8 @@ var MyProfileDashboard = function() {
                         //Set new value for the file input
                         $('#cropAvatar').val(src);
                         //Init JCrop
-                        var imgCan = imgCanvas;
-                        imgSlc = jcropPreview;
+                        var imgCan = $('.imgCanvas');
+                        imgSlc = $('.jcrop-preview');
                         //modify jcrop canvas width depending of modal width <=> screen width
                         var wW = $(window).width();
                         var cropModalWidth;
@@ -335,6 +311,7 @@ var MyProfileDashboard = function() {
                             boundy = bounds[1];
                             // Store the API in the jcrop_api variable
                             jcrop_api = this;
+
                             var holderH = $(".jcrop-holder").height();
                             if(holderH<300) {
                                 $('#canvasContainer').height(trackerH);
@@ -348,9 +325,27 @@ var MyProfileDashboard = function() {
                     $('#file-input-error').html('La imagen elegida supera el tamaño máximo de 1 MB.');
                 }
             }
+
             $("#avatar").change(function(){
                 readURL(this);
             });
+
+            //Textboxes char limit feedback
+            var text_max = 450;
+            var tbox = $('#description');
+            var text_length = tbox.val().length;
+            var text_remaining = text_max - text_length;
+            $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            tbox.keyup(function() {
+                var text_length = $('#description').val().length;
+                var text_remaining = text_max - text_length;
+                $('#chars_feedback').html('(' + text_remaining + ' caracteres disponibles)');
+            });
+
+            //Forms validation
+            $("#user-data").validator();
+            $("#user-social").validator();
+            $("#user-passwd").validator();
 
         }
     }
@@ -530,7 +525,7 @@ var SchoolsDashboard = function() {
                         activeStatus: activeStatus
                     },
                     function (data) { //controller response
-                        console.log(data);
+                        //console.log(data);
                     }
                 );
             });

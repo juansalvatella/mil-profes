@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'title' => 'Mapa del sitio',
     'subtitle' => '',
@@ -9,4 +9,4 @@ return array(
 
     'logo' => '<span class="who-logo-mil">mil</span> <span class="who-logo-profes">PROFES.</span>',
 
-);
+];

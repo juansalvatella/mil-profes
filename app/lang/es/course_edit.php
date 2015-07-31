@@ -1,6 +1,7 @@
 <?php
 
-return array(
+return [
+
     'edit_course_of' => 'Editar curso de',
 
-);
+];

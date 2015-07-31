@@ -14,15 +14,6 @@ return array(
     'lessons' => 'Clases que ofrecezco',
     'lesson_of' => 'Clase de',
 
-//    'of_subject_escolar' => 'de nivel escolar',
-//    'of_subject_cfp' => 'de formación profesional',
-//    'of_subject_universitario' => 'de nivel universitario',
-//    'of_subject_artes' => 'de arte',
-//    'of_subject_musica' => 'de música',
-//    'of_subject_idiomas' => 'de idiomas',
-//    'of_subject_deportes' => 'de deportes',
-//    'of_subject_salud' => 'de salud y bienestar',
-
     'lesson-description' => '',
 
     'title_availability' => 'Mi disponibilidad semanal',

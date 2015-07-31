@@ -108,7 +108,6 @@ return array(
 
     'subject' => 'Categoría',
     'title' => 'Título',
-    'description' => 'Descripción',
     'price' => 'Precio',
     'price-unit' => '(€/hora)',
     'actions' => 'Acciones',

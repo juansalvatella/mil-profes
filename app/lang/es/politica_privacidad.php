@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     'title' => 'Política de privacidad',
     'subtitle' => '',
@@ -56,6 +56,4 @@ return array(
         encuentra tras el formulario de recogida de datos.
     ',
 
-    'logo' => '<span class="who-logo-mil">mil</span> <span class="who-logo-profes">PROFES.</span>',
-
-);
+];
