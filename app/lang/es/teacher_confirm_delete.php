@@ -1,10 +1,10 @@
 <?php
 
 return array(
-    'title' => 'øSeguro que desea eliminar al profe.',
+    'title' => '¬øSeguro que desea eliminar al profe.',
 
-    'warning1' => 'Se eliminar·n todas las clases asociadas al profesor',
-    'warning2' => 'Se eliminar·n todos los datos del profesor',
-    'warning3' => 'No se podr· deshacer esta acciÛn',
+    'warning1' => 'Se eliminar√°n todas las clases asociadas al profesor',
+    'warning2' => 'Se eliminar√°n todos los datos del profesor',
+    'warning3' => 'No se podr√° deshacer esta acci√≥n',
 
 );
