@@ -1,24 +1,45 @@
+# Security
 *.pem
 *.ppk
+
+# Git, composer, laravel...
 *.gitkeep
 composer.phar
-
 .idea/
-
 app/storage/
 app/config/local/
 app/config/testing/
+
+# IDE related files
 app/_ide_helpers.php
 _ide_helper.php
 
+# Laravel dependencies
 vendor/
 
+# Teachers/schools profile pics in local env
 public/img/news/
 public/img/pics/
 public/img/logos/
 public/img/avatars/
-public/img/subjects/
 
+# Generated sitemap files in local env
 app/views/sitemap/sitemap.php
 app/views/sitemap/sitemaps
+
+# Local env detection
 bootstrap/start.php
+
+# Node.js related files and folders
+logs
+*.log
+pids
+*.pid
+*.seed
+lib-cov
+coverage
+.grunt
+.lock-wscript
+build/Release
+node_modules
+package.json

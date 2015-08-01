@@ -20,7 +20,8 @@
 		"cocur/slugify": "^1.2",
 		"doctrine/dbal": "dev-master",
 		"phpunit/phpunit": "4.7.7",
-	  	"andywer/js-localization": "dev-laravel-4.2"
+	  	"andywer/js-localization": "dev-laravel-4.2",
+	  	"ceesvanegmond/minify": "2.0.*"
 	},
 	"autoload": {
 		"classmap": [
