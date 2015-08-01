@@ -122,6 +122,7 @@ class AdminController extends BaseController
      */
     public function deleteSchool($school_id)
     {
+
         $school = School::findOrFail($school_id);
 
         return View::make('school_confirm_delete',compact('school'));

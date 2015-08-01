@@ -56,18 +56,14 @@ class AdminControllerTest extends TestCase
         $this->call('GET', 'admin/create/school');
     }
 
-    /*public function testCreateSchool()
+    public function testCreateSchool()
     {
         $input = Input::all();
-        Input::replace($input);
-        $this->mock->shouldReceive('createSchool')
-            ->once()
-            ->with($input)
-            ->andReturn(false);
+        exit(var_dump($input));
 
         $this->action('POST', 'AdminController@createSchool');
         $this->assertRedirectedTo('admin/schools');
-    }*/
+    }
 
     //ErrorException: Call to undefined method Illuminate\Database\Query\Builder::video() (View: C:\laravel-projects\milprofes\app\views\school_edit.blade.php)
     // Caused by BadMethodCallException: Call to undefined method Illuminate\Database\Query\Builder::video()
