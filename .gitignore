@@ -43,3 +43,7 @@ coverage
 build/Release
 node_modules
 package.json
+
+# Minify CSS and JS
+public/js/builds/
+public/css/builds/

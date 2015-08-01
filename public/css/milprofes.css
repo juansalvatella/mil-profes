@@ -140,56 +140,56 @@
 
 @font-face {
     font-family: raleway-thin;
-    src: url(../fonts/Raleway-Thin.ttf);
+    src: url(/fonts/Raleway-Thin.ttf);
     font-weight: 100;
 }
 @font-face {
     font-family: raleway-xlight;
-    src: url(../fonts/Raleway-ExtraLight.ttf);
+    src: url(/fonts/Raleway-ExtraLight.ttf);
     font-weight: 200;
 }
 @font-face {
     font-family: raleway-light;
-    src: url(../fonts/Raleway-Light.ttf);
+    src: url(/fonts/Raleway-Light.ttf);
     font-weight: 300;
 }
 @font-face {
     font-family: raleway-regular;
-    src: url(../fonts/Raleway-Regular.ttf);
+    src: url(/fonts/Raleway-Regular.ttf);
     font-weight: 400;
 }
 @font-face {
     font-family: raleway-medium;
-    src: url(../fonts/Raleway-Medium.ttf);
+    src: url(/fonts/Raleway-Medium.ttf);
     font-weight: 500;
 }
 @font-face {
     font-family: raleway-semibold;
-    src: url(../fonts/Raleway-SemiBold.ttf);
+    src: url(/fonts/Raleway-SemiBold.ttf);
     font-weight: 600;
 }
 @font-face {
     font-family: raleway-bold;
-    src: url(../fonts/Raleway-Bold.ttf);
+    src: url(/fonts/Raleway-Bold.ttf);
     font-weight: 700;
 }
 @font-face {
     font-family: raleway-xbold;
-    src: url(../fonts/Raleway-ExtraBold.ttf);
+    src: url(/fonts/Raleway-ExtraBold.ttf);
     font-weight: 800;
 }
 @font-face {
     font-family: raleway-heavy;
-    src: url(../fonts/Raleway-Heavy.ttf);
+    src: url(/fonts/Raleway-Heavy.ttf);
     font-weight: 900;
 }
 @font-face {
     font-family: 'texgyreadventorregular';
-    src: url('../fonts/texgyreadventor-regular-webfont.eot');
-    src: url('../fonts/texgyreadventor-regular-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/texgyreadventor-regular-webfont.woff') format('woff'),
-    url('../fonts/texgyreadventor-regular-webfont.ttf') format('truetype'),
-    url('../fonts/texgyreadventor-regular-webfont.svg#texgyreadventorregular') format('svg');
+    src: url('/fonts/texgyreadventor-regular-webfont.eot');
+    src: url('/fonts/texgyreadventor-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/texgyreadventor-regular-webfont.woff') format('woff'),
+    url('/fonts/texgyreadventor-regular-webfont.ttf') format('truetype'),
+    url('/fonts/texgyreadventor-regular-webfont.svg#texgyreadventorregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }

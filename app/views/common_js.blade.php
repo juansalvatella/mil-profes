@@ -1,14 +1,15 @@
 {{--COMMON LIBRARIES AND PLUGINS--}}
-{{ HTML::script('js/jquery.min.js') }}
-{{ HTML::script('js/jquery.raty.js') }}
-{{ HTML::script('js/bootbox.min.js') }}
-{{ HTML::script('js/toastr.min.js') }}
-{{ HTML::script('js/bootstrap.min.js') }}
-{{ HTML::script('js/bootstrap-formhelpers.min.js') }}
-{{ HTML::script('js/validator.js') }}
-
-{{--CUSTOM MAIN JS AND SPECIFIC PAGES HANDLERS--}}
-{{ HTML::script('js/milprofes.js') }}
+{{-- AND CUSTOM MAIN JS AND SPECIFIC PAGES HANDLERS--}}
+{{ Minify::javascript([
+    '/js/jquery.min.js',
+    '/js/jquery.raty.js',
+    '/js/bootbox.min.js',
+    '/js/toastr.min.js',
+    '/js/bootstrap.min.js',
+    '/js/bootstrap-formhelpers.min.js',
+    '/js/validator.js',
+    '/js/milprofes.js'
+]) }}
 
 {{--HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries--}}
 <!--[if lt IE 9]>
