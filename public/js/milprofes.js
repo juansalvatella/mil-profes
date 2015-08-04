@@ -187,9 +187,9 @@ var Home = function() {
                 readOnly: true,
                 half: true,
                 size: 15,
-                starHalf: '../img/star-half-small.png',
-                starOff : '../img/star-off-small.png',
-                starOn  : '../img/star-on-small.png',
+                starHalf: '/img/star-half-small.png',
+                starOff : '/img/star-off-small.png',
+                starOn  : '/img/star-on-small.png',
                 score: function(){return $(this).attr('data-score');}
             });
 
@@ -646,27 +646,27 @@ var Profile = function() {
                 readOnly: true,
                 half: true,
                 size: 15,
-                starHalf: '../img/star-half-small.png',
-                starOff : '../img/star-off-small.png',
-                starOn  : '../img/star-on-small.png',
+                starHalf: '/img/star-half-small.png',
+                starOff : '/img/star-off-small.png',
+                starOn  : '/img/star-on-small.png',
                 score: function(){return $(this).attr('data-score');}
             });
             $('.ratings-stars').raty({
                 readOnly: true,
                 half: true,
                 size: 15,
-                starHalf: '../img/star-half-small.png',
-                starOff : '../img/star-off-small.png',
-                starOn  : '../img/star-on-small.png',
+                starHalf: '/img/star-half-small.png',
+                starOff : '/img/star-off-small.png',
+                starOn  : '/img/star-on-small.png',
                 score: function(){return $(this).attr('data-score');}
             });
             $('#review-stars').raty({
                 readOnly: false,
                 half: true,
                 size: 23,
-                starHalf: '../img/star-half.png',
-                starOff : '../img/star-off.png',
-                starOn  : '../img/star-on.png',
+                starHalf: '/img/star-half.png',
+                starOff : '/img/star-off.png',
+                starOn  : '/img/star-on.png',
                 score: function(){return $(this).attr('data-score');}
             });
             var rtext_max = 255;
@@ -689,9 +689,9 @@ var Profile = function() {
                     readOnly: false,
                     half: true,
                     size: 23,
-                    starHalf: '../img/star-half.png',
-                    starOff : '../img/star-off.png',
-                    starOn  : '../img/star-on.png',
+                    starHalf: '/img/star-half.png',
+                    starOff : '/img/star-off.png',
+                    starOn  : '/img/star-on.png',
                     score: function(){return $(this).attr('data-score');}
                 });
             });

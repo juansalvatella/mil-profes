@@ -51,7 +51,7 @@
             {{--<meta itemprop="jobTitle" content="Profe.">--}}
             <meta itemprop="telephone" content="{{{ $school->phone }}}">
             <meta itemprop="email" content="{{{ $school->email }}}">
-            <?php list($imgWidth, $imgHeight) = getimagesize(asset('img/logos/'.$school->logo)); ?>
+            <?php list($imgWidth, $imgHeight) = getimagesize(str_replace(' ', '%20',asset('img/logos/'.$school->logo))); ?>
             <img itemprop="image" width="{{ $imgWidth }}" height="{{ $imgHeight }}" class="sprofile-logo thumbnail" src="{{ asset('img/logos/'.$school->logo) }}" alt="{{ $school->name }}">
             <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                 <meta itemprop="reviewCount" content="{{ $school->nReviews }}">

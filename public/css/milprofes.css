@@ -263,7 +263,7 @@ a, a:link, a:hover, a:active, a:visited {
     top: 0;
     left: 0;
     z-index: 2000;
-    background-image: url('../img/spacer.gif');
+    background-image: url('/img/spacer.gif');
 }
 .col-centered {
     display:inline-block;
@@ -314,8 +314,8 @@ a, a:link, a:hover, a:active, a:visited {
 .services {
     padding: 25px 0 25px 0;
 }
-.background-lamp { background: #B9B9B9 url(../img/fondo-header.jpg) top center no-repeat; }
-.background-gblack { background: #000 url(../img/home1.png) top left repeat; }
+.background-lamp { background: #B9B9B9 url(/img/fondo-header.jpg) top center no-repeat; }
+.background-gblack { background: #000 url(/img/home1.png) top left repeat; }
 .generic-title {
     font-family: raleway-semibold, sans-serif;
     margin-left: -15px;
@@ -518,7 +518,7 @@ a, a:link, a:hover, a:active, a:visited {
 /*.footer-section-3 {*/
 /*}*/
 /*#footer-apps {*/
-    /*background:url(../img/home1.png) top left repeat;*/
+    /*background:url(/img/home1.png) top left repeat;*/
     /*padding: 25px 0 25px 0;*/
     /*height: auto;*/
     /*width: 100%;*/
@@ -594,7 +594,7 @@ a, a:link, a:hover, a:active, a:visited {
 }
 #pre-footer {
     /*background-color: #202020;*/
-    background: #202020 url(../img/home1.png) repeat top left;
+    background: #202020 url(/img/home1.png) repeat top left;
     color: #ffffff;
     font-family: raleway-semibold, sans-serif;
 }
@@ -839,7 +839,7 @@ div.diamond span i {
     color: #FFF;
 }
 .home-splash {
-    background: url(../img/teacher.jpg) no-repeat top center;
+    background: url(/img/teacher.jpg) no-repeat top center;
     background-size: cover;
     width: 100%;
     max-width: 100%;
@@ -976,7 +976,7 @@ div.diamond span i {
 #mi-ubicacion-marcador {
     width: 13px;
     height: 19px;
-    background-image: url(../img/marcador-distancia.png);
+    background-image: url(/img/marcador-distancia.png);
     background-size: contain;
     display: inline-block;
 }
@@ -997,7 +997,7 @@ div.diamond span i {
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba( 255, 255, 255, .8 ) url(../img/ajax-loader_blue.gif) 50% 50% no-repeat;
+    background: rgba( 255, 255, 255, .8 ) url(/img/ajax-loader_blue.gif) 50% 50% no-repeat;
 }
 body.loading { /*turn off scrolling*/
     overflow: hidden;
@@ -1292,7 +1292,7 @@ body.loading .modal-loading { /*modal element will be visible */
 
 /* CONTACT */
 .contact-form-container {
-    background: #EEE url(../img/contacto_img.png) top center no-repeat;
+    background: #EEE url(/img/contacto_img.png) top center no-repeat;
     background-size: contain;
 }
 #contact-follow {

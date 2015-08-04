@@ -12,9 +12,7 @@ return array(
     |
     */
 
-    'ignore_environments' => array(
-	    'local',
-    ),
+    'ignore_environments' => [],
 
     /*
     |--------------------------------------------------------------------------

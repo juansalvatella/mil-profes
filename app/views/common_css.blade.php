@@ -1,10 +1,10 @@
 {{ Minify::stylesheet([
-    '/css/bootstrap.min.css',
-    '/css/font-awesome.min.css',
-    '/css/bootstrap-formhelpers.min.css',
+    '/css/bootstrap.css',
+    '/css/bootstrap-formhelpers.css',
+    '/css/bootstrap-slider.css',
+    '/css/font-awesome.css',
     '/css/jquery.raty.css',
-    '/css/map-icons.min.css',
-    '/css/toastr.min.css',
-    '/css/slider.css',
+    '/css/map-icons.css',
+    '/css/toastr.css',
     '/css/milprofes.css'
 ]) }}

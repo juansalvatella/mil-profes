@@ -59,7 +59,7 @@
     },
 
     _adjustCallback: function() {
-      var options = ['number', 'readOnly', 'score', 'scoreName', 'target'];
+      var options = ['number', 'readOnly', 'score', 'scoreName', 'target', 'path'];
 
       for (var i = 0; i < options.length; i++) {
         if (typeof this.opt[options[i]] === 'function') {
@@ -724,13 +724,13 @@
     cancel       : false,
     cancelClass  : 'raty-cancel',
     cancelHint   : 'Cancel this rating!',
-    cancelOff    : '../img/cancel-off.png',
-    cancelOn     : '../img/cancel-on.png',
+    cancelOff    : 'cancel-off.png',
+    cancelOn     : 'cancel-on.png',
     cancelPlace  : 'left',
     click        : undefined,
     half         : false,
     halfShow     : true,
-    hints        : ['Pobre', 'Regular', 'Buena', 'Muy buena', 'Excelente'],
+    hints        : ['bad', 'poor', 'regular', 'good', 'gorgeous'],
     iconRange    : undefined,
     mouseout     : undefined,
     mouseover    : undefined,
@@ -745,9 +745,9 @@
     scoreName    : 'score',
     single       : false,
     space        : true,
-    starHalf     : '../img/star-half.png',
-    starOff      : '../img/star-off.png',
-    starOn       : '../img/star-on.png',
+    starHalf     : 'star-half.png',
+    starOff      : 'star-off.png',
+    starOn       : 'star-on.png',
     starType     : 'img',
     target       : undefined,
     targetFormat : '{score}',

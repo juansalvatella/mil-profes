@@ -131,6 +131,7 @@ return array(
         'Watson\Sitemap\SitemapServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'JsLocalization\JsLocalizationServiceProvider',
+        'CeesVanEgmond\Minify\MinifyServiceProvider',
 
 	),
 

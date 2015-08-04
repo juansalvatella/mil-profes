@@ -1,12 +1,12 @@
 {{--COMMON LIBRARIES AND PLUGINS--}}
 {{-- AND CUSTOM MAIN JS AND SPECIFIC PAGES HANDLERS--}}
 {{ Minify::javascript([
-    '/js/jquery.min.js',
+    '/js/jquery-1.11.3.js',
     '/js/jquery.raty.js',
-    '/js/bootbox.min.js',
-    '/js/toastr.min.js',
-    '/js/bootstrap.min.js',
-    '/js/bootstrap-formhelpers.min.js',
+    '/js/bootbox.js',
+    '/js/toastr.js',
+    '/js/bootstrap.js',
+    '/js/bootstrap-formhelpers.js',
     '/js/validator.js',
     '/js/milprofes.js'
 ]) }}
