@@ -24,7 +24,7 @@
         <div class="container generic-box top-padding-50 bottom-padding-150 magic-align">
             <div class="row">
                 <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6">
-                    <form method="POST" class="form-horizontal" action="{{ URL::to('/users/forgot-password') }}" accept-charset="UTF-8" id="forgot-form">
+                    <form method="POST" class="form-horizontal" action="{{ URL::route('users.do.forgot.pwd') }}" accept-charset="UTF-8" id="forgot-form">
                         <input type="hidden" name="_token" value="{{ Session::getToken() }}">
                         <div class="col-xs-12">
                             <div class="form-group">

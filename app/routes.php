@@ -20,14 +20,14 @@ Route::get('contacta', ['as'=>'contact', 'uses' => 'ContactController@contactPag
 Route::post('contactanos', ['as' => 'contactaForm', 'uses' => 'ContactController@getContactForm']);
 Route::get('profe/{user_slug}', ['as' => 'profiles-teacher', 'uses' => 'ProfilesController@profilesTeacher']); //Teacher profiles
 Route::get('academia/{school_slug}', ['as'=>'profiles-school', 'uses' => 'ProfilesController@profilesSchool']); //School profiles
-Route::post('review/was/helpful/{review_id}', ['as' => 'review-was-helpful', 'uses' => 'ReviewsController@wasHelpful']); //Review was helpful
-Route::post('review/not/helpful/{review_id}', ['as' => 'review-not-helpful', 'uses' => 'ReviewsController@wasNotHelpful']); //Review not helpful
-Route::post('review/school/was/helpful/{review_id}', ['as' => 'review-helpful-sch', 'uses' => 'ReviewsController@wasHelpfulSchool']); //Review school was helpful
-Route::post('review/school/not/helpful/{review_id}', ['as' => 'review-not-helpful-sch', 'uses' => 'ReviewsController@wasNotHelpfulSchool']); //Review/school not helpful
-Route::post('/reviews/handleReview','ReviewsController@handleNewReview'); //Handle reviews (old)
-Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolLessonNewReview');
-Route::post('/review/lesson','ReviewsController@handleLessonReview'); //Rate lessons
-Route::post('/review/school/lesson','ReviewsController@handleSchoolLessonReview');
+Route::post('review/was/helpful/{review_id}', ['as' => 'review-was-helpful', 'uses' => 'ReviewsController@wasHelpful']); //Teacher review was helpful
+Route::post('review/not/helpful/{review_id}', ['as' => 'review-not-helpful', 'uses' => 'ReviewsController@wasNotHelpful']); //Teacher review not helpful
+Route::post('review/school/was/helpful/{review_id}', ['as' => 'review-helpful-sch', 'uses' => 'ReviewsController@wasHelpfulSchool']); //School review was helpful
+Route::post('review/school/not/helpful/{review_id}', ['as' => 'review-not-helpful-sch', 'uses' => 'ReviewsController@wasNotHelpfulSchool']); //School review was not helpful
+//Route::post('/reviews/handleReview','ReviewsController@handleNewReview'); //Handle reviews (old)
+//Route::post('/reviews/handleSchoolLessonReview','ReviewsController@handleSchoolLessonNewReview');
+Route::post('/review/lesson',['as'=>'rate.teacher.lesson','uses'=>'ReviewsController@handleLessonReview']); //Rate teacher lessons
+Route::post('/review/school/lesson',['as'=>'rate.school.lesson','uses'=>'ReviewsController@handleSchoolLessonReview']); //Rate school lesson
 //Mejorar el url de search tanto con input NULL como user input
 Route::get('resultados',['as'=>'resultsGet','uses'=>'SearchController@search']); //Search get
 Route::post('resultados',['as' => 'resultsPost', 'uses' => 'SearchController@search']); //Search post

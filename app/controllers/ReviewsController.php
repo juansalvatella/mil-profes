@@ -38,78 +38,78 @@ class ReviewsController extends BaseController
 
     }
 
-    /**
-     * Returns whether if the the review has been saved or not, otherwise returns error message.
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function handleNewReview()
-    {
-        if(Auth::check()) {
-            $lesson_id = (int) Input::get('review_lesson_id');
-            $user = Confide::user();
-            $student = $user->student()->first();
-            $lesson_rating = TeacherLessonRating::where('student_id','=',''.$student->id)->where('teacher_lesson_id','=',''.$lesson_id)->get();
-
-            if ($lesson_rating->count() == 0) {
-                if(Input::has('review_comment'))
-                    $comment = (string) Input::get('review_comment');
-                else
-                    $comment = '';
-                if(Input::get('review_rating')!='undefined')
-                    $score = (float) Input::get('review_rating');
-                else
-                    $score = (float) 3.0;
-                $rating = new Rating();
-                $rating->value = $score;
-                $rating->student_id = $student->id;
-                $rating->comment = $comment;
-                $rating->teacher_lesson_id = $lesson_id;
-                $rating->save();
-
-                return Response::json(['success'=>'success','msg'=>trans('hardcoded.reviewsController.handleNewReview.Smsg')],200);
-            } else {
-                return Response::json(["success"=>"warning","msg"=>trans('hardcoded.reviewsController.handleNewReview.Wmsg')],200);
-            }
-        } else {
-            return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.handleNewReview.Emsg')],200);
-        }
-    }
-
-    public function handleSchoolLessonNewReview()
-    {
-        if(Auth::check())
-        {
-            $lesson_id = (int) Input::get('review_lesson_id');
-            $user = Confide::user();
-            $student = $user->student()->first();
-            $lesson_rating = SchoolLessonRating::where('student_id','=',''.$student->id)->where('school_lesson_id','=',''.$lesson_id)->get();
-
-            if ($lesson_rating->count() == 0) {
-                if(Input::has('review_comment'))
-                    $comment = (string) Input::get('review_comment');
-                else
-                    $comment = '';
-                if(Input::get('review_rating')!='undefined')
-                    $score = (float) Input::get('review_rating');
-                else
-                    $score = (float) 3.0;
-                $rating = new SchoolLessonRating();
-                $rating->value = $score;
-                $rating->student_id = $student->id;
-                $rating->comment = $comment;
-                $rating->school_lesson_id = $lesson_id;
-                $rating->save();
-
-                return trans('hardcoded.reviewsController.handleSchoolLessonReview.Smsg');
-            } else {
-                return trans('hardcoded.reviewsController.handleSchoolLessonReview.Wmsg');
-            }
-        }
-        else
-        {
-            return trans('hardcoded.reviewsController.handleSchoolLessonReview.Emsg');
-        }
-    }
+//    /**
+//     * Returns whether if the the review has been saved or not, otherwise returns error message.
+//     * @return \Illuminate\Http\JsonResponse
+//     */
+//    public function handleNewReview()
+//    {
+//        if(Auth::check()) {
+//            $lesson_id = (int) Input::get('review_lesson_id');
+//            $user = Confide::user();
+//            $student = $user->student()->first();
+//            $lesson_rating = TeacherLessonRating::where('student_id','=',''.$student->id)->where('teacher_lesson_id','=',''.$lesson_id)->get();
+//
+//            if ($lesson_rating->count() == 0) {
+//                if(Input::has('review_comment'))
+//                    $comment = (string) Input::get('review_comment');
+//                else
+//                    $comment = '';
+//                if(Input::get('review_rating')!='undefined')
+//                    $score = (float) Input::get('review_rating');
+//                else
+//                    $score = (float) 3.0;
+//                $rating = new Rating();
+//                $rating->value = $score;
+//                $rating->student_id = $student->id;
+//                $rating->comment = $comment;
+//                $rating->teacher_lesson_id = $lesson_id;
+//                $rating->save();
+//
+//                return Response::json(['success'=>'success','msg'=>trans('hardcoded.reviewsController.handleNewReview.Smsg')],200);
+//            } else {
+//                return Response::json(["success"=>"warning","msg"=>trans('hardcoded.reviewsController.handleNewReview.Wmsg')],200);
+//            }
+//        } else {
+//            return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.handleNewReview.Emsg')],200);
+//        }
+//    }
+//
+//    public function handleSchoolLessonNewReview()
+//    {
+//        if(Auth::check())
+//        {
+//            $lesson_id = (int) Input::get('review_lesson_id');
+//            $user = Confide::user();
+//            $student = $user->student()->first();
+//            $lesson_rating = SchoolLessonRating::where('student_id','=',''.$student->id)->where('school_lesson_id','=',''.$lesson_id)->get();
+//
+//            if ($lesson_rating->count() == 0) {
+//                if(Input::has('review_comment'))
+//                    $comment = (string) Input::get('review_comment');
+//                else
+//                    $comment = '';
+//                if(Input::get('review_rating')!='undefined')
+//                    $score = (float) Input::get('review_rating');
+//                else
+//                    $score = (float) 3.0;
+//                $rating = new SchoolLessonRating();
+//                $rating->value = $score;
+//                $rating->student_id = $student->id;
+//                $rating->comment = $comment;
+//                $rating->school_lesson_id = $lesson_id;
+//                $rating->save();
+//
+//                return trans('hardcoded.reviewsController.handleSchoolLessonReview.Smsg');
+//            } else {
+//                return trans('hardcoded.reviewsController.handleSchoolLessonReview.Wmsg');
+//            }
+//        }
+//        else
+//        {
+//            return trans('hardcoded.reviewsController.handleSchoolLessonReview.Emsg');
+//        }
+//    }
 
     /**
      * Returns message that if user has sent off the assessment about school lesson, otherwise returns error message.

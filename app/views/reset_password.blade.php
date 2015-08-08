@@ -23,7 +23,7 @@
     <div class="container-fluid bottom-padding-80 background-gblack overflow-allowed">
         <div class="container generic-box top-padding-50 bottom-padding-150 magic-align">
             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
-                <form method="POST" class="form-horizontal" action="{{{ URL::to('/users/reset-password') }}}" accept-charset="UTF-8" id="reset-form">
+                <form method="POST" class="form-horizontal" action="{{{ URL::route('users.do.reset.pwd') }}}" accept-charset="UTF-8" id="reset-form">
                     <input type="hidden" name="token" value="{{{ $token }}}">
                     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                     <div class="col-xs-12 col-sm-6">

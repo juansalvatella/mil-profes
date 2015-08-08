@@ -475,7 +475,7 @@
                 <h4 class="modal-title">Valorar clase</h4>
             </div>
             <div class="modal-body">
-                <form role="form" method="POST" action="{{ URL::to('/review/lesson/') }}" accept-charset="UTF-8" id="form-review">
+                <form role="form" method="POST" action="{{ URL::route('rate.teacher.lesson') }}" accept-charset="UTF-8" id="form-review">
                     <input type="hidden" name="_token" value="{{ Session::getToken() }}">
                     <input type="hidden" id="form-lessonId" name="lessonId" value="-1">
                     <fieldset>

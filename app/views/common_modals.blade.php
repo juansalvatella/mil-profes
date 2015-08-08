@@ -9,7 +9,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12 top-buffer-15">
-                        <form role="form" method="POST" action="{{{ URL::to('/users/login') }}}" accept-charset="UTF-8" id="login-form">
+                        <form role="form" method="POST" action="{{{ URL::route('users.login') }}}" accept-charset="UTF-8" id="login-form">
                             <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                             <fieldset>
 
@@ -36,7 +36,7 @@
                                     <input class="form-control" tabindex="2" placeholder="@lang('layout.login-password')" type="password" name="password" id="password" required="required" data-error="Rellena este campo.">
                                     <small><span class="help-block with-errors"></span></small>
                                     <p class="help-block">
-                                        <a href="{{{ URL::to('/users/forgot-password') }}}">@lang('layout.login-forgot-passwd')</a>
+                                        <a href="{{{ URL::route('users.forgot.pwd') }}}">@lang('layout.login-forgot-passwd')</a>
                                     </p>
                                 </div>
                                 <div class="checkbox">
@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-xs-12 top-buffer-15">
 
-                        <form method="POST" action="{{{ URL::to('users') }}}" accept-charset="UTF-8" id="register-form">
+                        <form method="POST" action="{{{ URL::route('users') }}}" accept-charset="UTF-8" id="register-form">
                             <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                             <fieldset>
 
