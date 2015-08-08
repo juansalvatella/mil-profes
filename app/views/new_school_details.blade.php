@@ -68,7 +68,7 @@
     <div class="row overflow-hidden">
         <div class="col-md-offset-1 col-md-10 hdr-share text-right">
             <div class="sprofile-stars">
-                <div id="teacher-stars"></div><span id="teacher-n-reviews" title="@choice('teacher-profile.reviews',2)">({{ $school->nReviews }})</span>
+                <div id="school-stars"></div><span id="teacher-n-reviews" title="@choice('teacher-profile.reviews',2)">({{ $school->nReviews }})</span>
             </div>
             <span class="hidden-xs hidden-sm hidden-md share-me">@lang('school-profile.share-me') <i class="fa fa-chevron-right"></i></span>
             <div class="share-container">

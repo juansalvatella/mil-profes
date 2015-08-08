@@ -16,7 +16,7 @@
     .tprofile-avatar { top: 42px; left:0; right:0; margin: auto; }
     .tprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
     .tprofile-stars { top:0; left:0; width:100%; text-align:center; }
-    .sprofile-logo { top: 42px; left:0; right:0; margin: auto; max-height: 150px !important; max-width: 90% !important; }
+    .sprofile-logo { top: 42px; left:0; right:0; margin: auto; max-height: 180px !important; max-width: 90% !important; }
     .sprofile-name { top: 196px; left:0; right:0; margin:auto; text-align: center; }
     .sprofile-stars { top:0; left:0; width:100%; text-align:center; }
     /*.sprofile-logo { bottom: 110px; left:0; right:0; margin: auto; max-height: 130px !important; }*/
@@ -989,6 +989,9 @@ div.diamond span i {
 /************************ END HOME ************************/
 
 /* SEARCH */
+#loading-more {
+    padding: 0 0 45px 0;
+}
 .modal-loading {
     display:    none;
     position:   absolute;
@@ -1555,7 +1558,7 @@ body.loading .modal-loading { /*modal element will be visible */
     height:50px;
     /*positioning in media queries*/
 }
-#teacher-stars {
+#teacher-stars, #school-stars {
     display:inline-block;
     position:relative;
     top: 13px;

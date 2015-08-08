@@ -560,6 +560,9 @@ var SearchResults = function() {
                 $('.lesson-stars').raty({
                     readOnly: true,
                     half: true,
+                    starHalf: '/img/star-half.png',
+                    starOff : '/img/star-off.png',
+                    starOn  : '/img/star-on.png',
                     score: function () { return $(this).attr('data-score'); }
                 });
             }
@@ -576,8 +579,8 @@ var SearchResults = function() {
             //trigger infinite scrolling/loading of more results
             var triggerScrollingFlag = true;
             $(window).scroll(function() {
-                // -240 because that's the footer height, more or less, so we trigger it sooner
-                if(($(window).scrollTop() + $(window).height() >= $(document).height() - 240) && triggerScrollingFlag && ($('#show-more').val() == 'yes')) {
+                // -(240+352*2) because that's the footer height + two last results height (we trigger this before users reaches the bottom)
+                if(($(window).scrollTop() + $(window).height() >= $(document).height() - (240+352*2)) && triggerScrollingFlag && ($('#show-more').val() == 'yes')) {
                     triggerScrollingFlag = false;
                     async_search(parseInt($('#current-slices-showing').val()));
                 }
@@ -748,6 +751,9 @@ var TeacherProfile = function() {
 
             //Teacher profile info related JS
             $('#teacher-stars').raty({
+                starHalf: '/img/star-half.png',
+                starOff : '/img/star-off.png',
+                starOn  : '/img/star-on.png',
                 readOnly: true,
                 half: true,
                 score: $('#teacher-rating').val()
@@ -1034,7 +1040,10 @@ var SchoolProfile = function() {
             }
 
             //School profile info related JS
-            $('#teacher-stars').raty({
+            $('#school-stars').raty({
+                starHalf: '/img/star-half.png',
+                starOff : '/img/star-off.png',
+                starOn  : '/img/star-on.png',
                 readOnly: true,
                 half: true,
                 score: $('#school-rating').val()

@@ -79,6 +79,7 @@ class AdminController extends BaseController
             ->leftJoin('school_lessons','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
             ->leftJoin('schools','school_lessons.school_id','=','schools.id')
             ->whereNull('schools.deleted_at')
+            ->select('s_lesson_ratings.*','s_lesson_ratings.school_lesson_id')
             ->paginate(10);
 
         foreach($reviews as $review)
@@ -249,11 +250,17 @@ class AdminController extends BaseController
     public function deleteUser() {
         $user_id = Input::get('id');
         $user = User::findOrFail($user_id);
-        $teacher = $user->teacher()->first();
-        $teacher->delete();
+        if($user->hasRole('teacher')) {
+            $teacher = $user->teacher()->first();
+            $teacher->delete();
+            if(!$teacher->trashed())
+                return Redirect::route('teachers.dashboard')
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.admincontroller.deleteUser.Etitle'))
+                    ->with('Emsg',trans('hardcoded.admincontroller.deleteUser.EmsgUser'));
+        }
         $user->delete();
-
-        if($user->trashed() && $teacher->trashed())
+        if($user->trashed())
             return Redirect::route('teachers.dashboard')
                 ->with('success','')
                 ->with('Stitle',trans('hardcoded.admincontroller.deleteUser.StitleUser'))
@@ -277,12 +284,12 @@ class AdminController extends BaseController
 
         if($school->trashed())
             return Redirect::route('schools.dashboard')
-                ->with('success')
+                ->with('success','')
                 ->with('Stitle',trans('hardcoded.admincontroller.doDeleteSchool.Stitle'))
                 ->with('Smsg',trans('hardcoded.admincontroller.doDeleteSchool.SmsgD'));
         else
             return Redirect::route('schools.dashboard')
-                ->with('error')
+                ->with('error','')
                 ->with('Etitle',trans('hardcoded.admincontroller.doDeleteSchool.Etitle'))
                 ->with('Emsg',trans('hardcoded.admincontroller.doDeleteSchool.EmsgD'));
     }

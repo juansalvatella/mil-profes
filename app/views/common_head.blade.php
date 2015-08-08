@@ -11,7 +11,10 @@
     @elseif(Request::is('academia/*') && isset($school->name))
         {{{ $school->name }}} | milPROFES.
     @elseif(Request::is('resultados') && isset($subject) && isset($user_address))
-        <?php $subject2 = strtolower($subject); ?>
+        <?php
+            $subject2 = strtolower($subject);
+            if($subject2=='all') $subject2 = 'todo';
+        ?>
         Clases particulares de {{{ $subject2 }}} cerca de {{{ $user_address }}}
     @elseif(Request::is('userpanel/*') || Request::is('teacher/*'))
         Mi Panel de Control | milPROFES.

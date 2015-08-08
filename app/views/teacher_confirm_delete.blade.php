@@ -29,8 +29,8 @@
         <form action="{{ action('AdminController@deleteUser') }}" method="post" role="form">
             <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
             <input type="hidden" name="id" value="{{ $user->id }}"/>
-            <input type="submit" class="btn btn-danger" value="@lang('teacher_confirm_delete.confirm')"/>
-            <a href="{{ url('admin/teachers') }}" class="btn btn-default">@lang('teacher_confirm_delete.cancel')</a>
+            <input type="submit" class="btn btn-danger" value="@lang('buttons.confirm')"/>
+            <a href="{{ url('admin/teachers') }}" class="btn btn-default">@lang('buttons.cancel')</a>
         </form>
     </div>
 </div>
