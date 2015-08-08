@@ -32,9 +32,9 @@ class TeachersController extends BaseController
         if($validator->fails()) {
             return Redirect::back()
                 ->withInput()
-                ->with(trans('hardcoded.teachercontroller.createLesson.error'))
-                ->with(trans('hardcoded.teachercontroller.createLesson.Etitle'))
-                ->with(trans('hardcoded.teachercontroller.createLesson.Emsg'));
+                ->with('error','')
+                ->with('Etitle',trans('hardcoded.teachercontroller.createLesson.Etitle'))
+                ->with('Emsg',trans('hardcoded.teachercontroller.createLesson.Emsg'));
         }
 
         $lesson = new TeacherLesson();
@@ -45,11 +45,11 @@ class TeachersController extends BaseController
         $lesson->address = $input['address'];
         $geocoding = Geocoding::geocode(Input::get('address'));
         if(!$geocoding){
-            return Redirect::to('teacher/create/lesson')
+            return Redirect::route('teacher.create.lesson')
                 ->withInput()
-                ->with(trans('hardcoded.teachercontroller.createLesson.errorDir'))
-                ->with(trans('hardcoded.teachercontroller.createLesson.Etitle'))
-                ->with(trans('hardcoded.teachercontroller.createLesson.EmsgDir'));
+                ->with('error','')
+                ->with('Etitle',trans('hardcoded.teachercontroller.createLesson.Etitle'))
+                ->with('Emsg',trans('hardcoded.teachercontroller.createLesson.EmsgDir'));
         }
         $lesson->lat = $geocoding[0]; //latitud
         $lesson->lon = $geocoding[1]; //longitud
@@ -64,14 +64,14 @@ class TeachersController extends BaseController
 
         if($lesson->save())
             return Redirect::route('userpanel.dashboard')
-                ->with(trans('hardcoded.teachercontroller.createLesson.success'))
-                ->with(trans('hardcoded.teachercontroller.createLesson.Stitle'))
-                ->with(trans('hardcoded.teachercontroller.createLesson.Smsg'));
+                ->with('success','')
+                ->with('Stitle',trans('hardcoded.teachercontroller.createLesson.Stitle'))
+                ->with('Smsg',trans('hardcoded.teachercontroller.createLesson.Smsg'));
         else
             return Redirect::route('userpanel.dashboard')
-                ->with(trans('hardcoded.teachercontroller.createLesson.errorLesson'))
-                ->with(trans('hardcoded.teachercontroller.createLesson.Etitle'))
-                ->with(trans('hardcoded.teachercontroller.createLesson.EmsgLesson'));
+                ->with('error','')
+                ->with('Etitle',trans('hardcoded.teachercontroller.createLesson.Etitle'))
+                ->with('Emsg',trans('hardcoded.teachercontroller.createLesson.EmsgLesson'));
     }
 
     /**
@@ -93,9 +93,9 @@ class TeachersController extends BaseController
         if($validator->fails()) {
             return Redirect::back()
                 ->withInput()
-                ->with(trans('hardcoded.teachercontroller.saveLesson.error'))
-                ->with(trans('hardcoded.teachercontroller.saveLesson.Etitle'))
-                ->with(trans('hardcoded.teachercontroller.saveLesson.Emsg'));
+                ->with('error','')
+                ->with('Etitle',trans('hardcoded.teachercontroller.saveLesson.Etitle'))
+                ->with('Emsg',trans('hardcoded.teachercontroller.saveLesson.Emsg'));
         }
 
         $lesson_id = $input['lesson_id'];
@@ -113,9 +113,9 @@ class TeachersController extends BaseController
             if (!$geocoding) {
                 return Redirect::back()
                     ->withInput()
-                    ->with(trans('hardcoded.teachercontroller.saveLesson.errorDir'))
-                    ->with(trans('hardcoded.teachercontroller.saveLesson.Etitle'))
-                    ->with(trans('hardcoded.teachercontroller.saveLesson.EmsgDir'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.teachercontroller.saveLesson.Etitle'))
+                    ->with('Emsg',trans('hardcoded.teachercontroller.saveLesson.EmsgDir'));
             }
             $lesson->lat = $geocoding[0]; //latitud
             $lesson->lon = $geocoding[1]; //longitud
@@ -126,19 +126,19 @@ class TeachersController extends BaseController
 
             if ($lesson->save())
                 return Redirect::route('userpanel.dashboard')
-                    ->with(trans('hardcoded.teachercontroller.saveLesson.success'))
-                    ->with(trans('hardcoded.teachercontroller.saveLesson.Stitle'))
-                    ->with(trans('hardcoded.teachercontroller.saveLesson.Smsg'));
+                    ->with('success','')
+                    ->with('Stitle',trans('hardcoded.teachercontroller.saveLesson.Stitle'))
+                    ->with('Smsg',trans('hardcoded.teachercontroller.saveLesson.Smsg'));
             else
                 return Redirect::route('userpanel.dashboard')
-                    ->with(trans('hardcoded.teachercontroller.saveLesson.errorData'))
-                    ->with(trans('hardcoded.teachercontroller.saveLesson.Etitle'))
-                    ->with(trans('hardcoded.teachercontroller.saveLesson.EmsgData'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.teachercontroller.saveLesson.Etitle'))
+                    ->with('Emsg',trans('hardcoded.teachercontroller.saveLesson.EmsgData'));
         } else {
             return Redirect::route('userpanel.dashboard')
-                ->with(trans('hardcoded.teachercontroller.saveLesson.errorData'))
-                ->with(trans('hardcoded.teachercontroller.saveLesson.Etitle'))
-                ->with(trans('hardcoded.teachercontroller.saveLesson.EmsgData'));
+                ->with('error','')
+                ->with('Etitle',trans('hardcoded.teachercontroller.saveLesson.Etitle'))
+                ->with('Emsg',trans('hardcoded.teachercontroller.saveLesson.EmsgData'));
         }
     }
 
@@ -160,9 +160,9 @@ class TeachersController extends BaseController
             return View::make('teacher_lesson_edit', compact('lesson','subject'));
         else
             return Redirect::route('userpanel.dashboard')
-                ->with(trans('hardcoded.teachercontroller.editLesson.error'))
-                ->with(trans('hardcoded.teachercontroller.editLesson.Etitle'))
-                ->with(trans('hardcoded.teachercontroller.editLesson.Emsg'));
+                ->with('error','')
+                ->with('Etitle',trans('hardcoded.teachercontroller.editLesson.Etitle'))
+                ->with('Emsg',trans('hardcoded.teachercontroller.editLesson.Emsg'));
     }
 
     /**
@@ -183,9 +183,9 @@ class TeachersController extends BaseController
             return View::make('teacher_lesson_confirm_delete', compact('user','lesson','subject'));
         else
             return Redirect::route('userpanel.dashboard')
-                ->with(trans('hardcoded.teachercontroller.deleteLesson.error'))
-                ->with(trans('hardcoded.teachercontroller.deleteLesson.Etitle'))
-                ->with(trans('hardcoded.teachercontroller.deleteLesson.Emsg'));
+                ->with('error','')
+                ->with('Etitle',trans('hardcoded.teachercontroller.deleteLesson.Etitle'))
+                ->with('Emsg',trans('hardcoded.teachercontroller.deleteLesson.Emsg'));
     }
 
     /**
@@ -203,17 +203,19 @@ class TeachersController extends BaseController
             $lesson->delete();
             if($lesson->exists)
                 return Redirect::route('userpanel.dashboard')
-                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.error'))
-                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Etitle'))
-                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Emsg'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.teachercontroller.doDeleteLesson.Etitle'))
+                    ->with('Emsg',trans('hardcoded.teachercontroller.doDeleteLesson.Emsg'));
             else
-                return Redirect::route('userpanel.dashboard')->with(trans('hardcoded.teachercontroller.doDeleteLesson.success'))
-                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Stitle'))
-                    ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Smsg'));
+                return Redirect::route('userpanel.dashboard')
+                    ->with('success','')
+                    ->with('Stitle',trans('hardcoded.teachercontroller.doDeleteLesson.Stitle'))
+                    ->with('Smsg',trans('hardcoded.teachercontroller.doDeleteLesson.Smsg'));
         } else {
-            return Redirect::route('userpanel.dashboard')->with(trans('hardcoded.teachercontroller.doDeleteLesson.errorDelete'))
-                ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Etitle'))
-                ->with(trans('hardcoded.teachercontroller.doDeleteLesson.Emsg'));
+            return Redirect::route('userpanel.dashboard')
+                ->with('error','')
+                ->with('Etitle',trans('','hardcoded.teachercontroller.doDeleteLesson.Etitle'))
+                ->with('Emsg',trans('','hardcoded.teachercontroller.doDeleteLesson.Emsg'));
         }
     }
 
@@ -260,9 +262,9 @@ class TeachersController extends BaseController
         $validator = Validator::make($input, $rules);
         if ($validator->fails()){
             return Redirect::route('userpanel.dashboard')
-                ->with(trans('hardcoded.teachercontroller.saveAvailability.error'))
-                ->with(trans('hardcoded.teachercontroller.saveAvailability.Etitle'))
-                ->with(trans('hardcoded.teachercontroller.saveAvailability.EmsgData'));
+                ->with('error','')
+                ->with('Etitle',trans('hardcoded.teachercontroller.saveAvailability.Etitle'))
+                ->with('Emsg',trans('hardcoded.teachercontroller.saveAvailability.EmsgData'));
         }
 
         $previous_picks = $teacher->availabilities()->get();
@@ -278,9 +280,9 @@ class TeachersController extends BaseController
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
                     return Redirect::route('userpanel.dashboard')
-                    >with(trans('hardcoded.teachercontroller.saveAvailability.error'))
-                        ->with(trans('hardcoded.teachercontroller.saveAvailability.Etitle'))
-                        ->with(trans('hardcoded.teachercontroller.saveAvailability.Emsg'));
+                        ->with('error','')
+                        ->with('Etitle',trans('hardcoded.teachercontroller.saveAvailability.Etitle'))
+                        ->with('Emsg',trans('hardcoded.teachercontroller.saveAvailability.Emsg'));
                 }
             }
         } else { //if there exists 9 previous saved picks (even empty ones, in DB), update them with the input
@@ -311,17 +313,17 @@ class TeachersController extends BaseController
                 $pick->end = $cleanInput['end'.$i];
                 if(!$pick->save()) {
                     return Redirect::route('userpanel.dashboard')
-                    >with(trans('hardcoded.teachercontroller.saveAvailability.error'))
-                        ->with(trans('hardcoded.teachercontroller.saveAvailability.Etitle'))
-                        ->with(trans('hardcoded.teachercontroller.saveAvailability.Emsg'));
+                        ->with('error','')
+                        ->with('Etitle',trans('hardcoded.teachercontroller.saveAvailability.Etitle'))
+                        ->with('Emsg',trans('hardcoded.teachercontroller.saveAvailability.Emsg'));
                 }
                 ++$i;
             }
         }
 
         return Redirect::route('userpanel.dashboard')
-            ->with(trans('hardcoded.teachercontroller.saveAvailability.success'))
-            ->with(trans('hardcoded.teachercontroller.saveAvailability.Stitle'))
-            ->with(trans('hardcoded.teachercontroller.saveAvailability.Smsg'));
+            ->with('success','')
+            ->with('Stitle',trans('hardcoded.teachercontroller.saveAvailability.Stitle'))
+            ->with('Smsg',trans('hardcoded.teachercontroller.saveAvailability.Smsg'));
     }
 }

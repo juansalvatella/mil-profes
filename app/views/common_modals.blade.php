@@ -13,13 +13,13 @@
                             <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                             <fieldset>
 
-                                @if (Session::get('log-success'))
+                                @if(Session::has('log-success'))
                                     <div class="alert alert-success">{{{ Session::get('log-success') }}}</div>
                                 @endif
-                                @if (Session::get('log-error'))
+                                @if(Session::has('log-error'))
                                     <div class="alert alert-error alert-danger">{{{ Session::get('log-error') }}}</div>
                                 @endif
-                                @if (Session::get('log-notice'))
+                                @if(Session::has('log-notice'))
                                     <div class="alert">{{{ Session::get('log-notice') }}}</div>
                                 @endif
                                 <div id="dynalert" class="alert alert-warning hidden"></div>
@@ -76,8 +76,8 @@
                             <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
                             <fieldset>
 
-                                @if (Session::get('reg-error'))
-                                    @if (is_array(Session::get('reg-error')))
+                                @if(Session::has('reg-error'))
+                                    @if(is_array(Session::get('reg-error')))
                                         <div class="alert alert-error alert-danger">
                                             {{ head(Session::get('reg-error')) }}
                                         </div>
@@ -87,12 +87,12 @@
                                         </div>
                                     @endif
                                 @endif
-                                @if (Session::get('reg-failure'))
+                                @if(Session::has('reg-failure'))
                                     <div class="alert alert-error alert-danger">
                                         {{ Session::get('reg-failure') }}
                                     </div>
                                 @endif
-                                @if (Session::get('reg-notice'))
+                                @if(Session::has('reg-notice'))
                                     <div class="alert">{{ Session::get('reg-notice') }}</div>
                                 @endif
 

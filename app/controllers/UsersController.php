@@ -9,7 +9,7 @@ class UsersController extends Controller
     public function create()
     {
         return Redirect::route('home')
-            ->with(trans('hardcoded.userscontroller.create.show_register_modal'));
+            ->with('show_register_modal',true);
     }
 
     /**
@@ -54,20 +54,22 @@ class UsersController extends Controller
             }
             $picks = $picks->toArray();
 
-            return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_manage_lessons',compact('teacher','lessons','subjects','picks','n_picks_set'));
+            return View::make('userpanel_dashboard',compact('user'))
+                ->nest('content_teacher', 'userpanel_tabpanel_manage_lessons',compact('teacher','lessons','subjects','picks','n_picks_set'));
         }
         else
-            return View::make('userpanel_dashboard',compact('user'))->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
+            return View::make('userpanel_dashboard',compact('user'))
+                ->nest('content_teacher', 'userpanel_tabpanel_become_teacher');
     }
 
-    /**
-     *
-     * @return \Illuminate\View\View
-     */
-    public function usersRegister()
-    {
-        return View::make('users_register');  //Not exists users_register in View folder !
-    }
+//    /**
+//     *
+//     * @return \Illuminate\View\View
+//     */
+//    public function usersRegister()
+//    {
+//        return View::make('users_register');  //Not exists users_register in View folder !
+//    }
 
     /**
      * Stores new account
@@ -92,8 +94,8 @@ class UsersController extends Controller
         if($validator->fails()) {
             return Redirect::route('home')
                 ->withInput(Input::except('password'))
-                ->with(trans('hardcoded.userscontroller.store.reg-error'))
-                ->with(trans('hardcoded.userscontroller.store.show_register_modal'));
+                ->with('reg-error',trans('hardcoded.userscontroller.store.reg-error'))
+                ->with('show_register_modal',true);
         }
 
         //is it possible to geocode address?
@@ -101,8 +103,8 @@ class UsersController extends Controller
         if(!$geocode) {
             return Redirect::route('home')
                 ->withInput(Input::except('password'))
-                ->with(trans('hardcoded.userscontroller.store.reg-error-dir'))
-                ->with(trans('hardcoded.userscontroller.store.show_register_modal'));
+                ->with('reg-error',trans('hardcoded.userscontroller.store.reg-error-dir'))
+                ->with('show_register_modal',true);
         }
 
         //geocoding done, try to register the user
@@ -139,41 +141,42 @@ class UsersController extends Controller
             $user->attachRole($teacher_role);
 
             return Redirect::route('home')
-                ->with(trans('hardcoded.userscontroller.store.log-notice'))
-                ->with(trans('hardcoded.userscontroller.store.show_login_modal'))
-                ->with(trans('hardcoded.userscontroller.store.success'))
-                ->with(trans('hardcoded.userscontroller.store.Stitle'))
-                ->with(trans('hardcoded.userscontroller.store.Smsg'));
+                ->with('log-notice',trans('hardcoded.userscontroller.store.log-notice'))
+                ->with('show_login_modal',true)
+                ->with('success','')
+                ->with('Stitle',trans('hardcoded.userscontroller.store.Stitle'))
+                ->with('Smsg',trans('hardcoded.userscontroller.store.Smsg'));
         } else {
             $error = $user->errors()->all(':message');
 
-            //return Redirect::action('UsersController@create')
             return Redirect::route('home')
                 ->withInput(Input::except('password'))
                 ->with('reg-error', $error)
-                ->with(trans('hardcoded.userscontroller.store.show_register_modal'));
+                ->with('show_register_modal',true);
         }
 
     }
 
-    /**
-     * @return \Illuminate\View\View
-     */
-    public function UsersLogin()
-    {
-        return View::make('users_login');  //Not exists users_login in View folder !
-    }
+//    /**
+//     * @return \Illuminate\View\View
+//     */
+//    public function UsersLogin()
+//    {
+//        return View::make('users_login');  //Not exists users_login in View folder !
+//    }
 
-    // Displays the login form
-    // @return  Illuminate\Http\Response
-    public function login()
-    {
-        if (Confide::user()) {
-            return Redirect::route('home')->with('show_login_modal',true);
-        } else {
-            return Redirect::route('home')->with('show_login_modal',true);
-        }
-    }
+//    /**
+//     * Displays the login form
+//     * @return \Illuminate\Http\RedirectResponse
+//     */
+//    public function login()
+//    {
+//        if (Confide::user()) {
+//            return Redirect::route('home')->with('show_login_modal',true);
+//        } else {
+//            return Redirect::route('home')->with('show_login_modal',true);
+//        }
+//    }
 
     /**
      * Attempts to do login.
@@ -205,9 +208,11 @@ class UsersController extends Controller
         }
     }
 
-    // Attempts to confirm account with code
-    // @param  string $code
-    // @return  Illuminate\Http\Response
+    /**
+     * Attempts to confirm account with code
+     * @param $code
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function confirm($code)
     {
         if (Confide::confirm($code)) {
@@ -231,7 +236,6 @@ class UsersController extends Controller
      */
     public function forgotPassword()
     {
-//        return View::make(Config::get('confide::forgot_password_form'));
         return View::make('forgot_password');
     }
 
@@ -243,20 +247,16 @@ class UsersController extends Controller
     {
         if (Confide::forgotPassword(Input::get('email'))) {
             $notice_msg = trans('messages.alerts.password_forgot');
-            //return Redirect::action('UsersController@login')
             return Redirect::route('home')
                 ->with('log-notice', $notice_msg)
                 ->with('show_login_modal',true);
         } else {
             $error_msg = trans('messages.alerts.wrong_password_forgot');
-//            return Redirect::action('UsersController@doForgotPassword')
             return Redirect::back()
                 ->withInput()
-                ->with('error', $error_msg)
-                ->with('Etitle', 'Error')
+                ->with('error', '')
+                ->with('Etitle', trans('hardcoded.userscontroller.forgotPassword.Etitle'))
                 ->with('Emsg', $error_msg);
-//                ->with('log-error', $error_msg)
-//                ->with('show_login_modal',true);
         }
     }
 
@@ -267,7 +267,6 @@ class UsersController extends Controller
      */
     public function resetPassword($token)
     {
-//        return View::make(Config::get('confide::reset_password_form'))
         return View::make('reset_password')
                 ->with('token', $token);
     }
@@ -335,17 +334,17 @@ class UsersController extends Controller
                 Session::flash('validationErrors', $validator->messages());
                 return Redirect::route('userpanel.dashboard')
                     ->withInput()
-                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.error'))
-                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.Etitle'))
-                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.Emsg'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.userscontroller.updateUserPasswd.Etitle'))
+                    ->with('Emsg',trans('hardcoded.userscontroller.updateUserPasswd.Emsg'));
             }
             //Is the old password correct?
             if(!Hash::check(Input::get('old_password'), $user->password)){
                 return Redirect::route('userpanel.dashboard')
                     ->withInput()
-                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.error_pwd'))
-                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.Etitle'))
-                    ->with(trans('hardcoded.userscontroller.updateUserPasswd.Emsg_pwd'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.userscontroller.updateUserPasswd.Etitle'))
+                    ->with('Emsg',trans('hardcoded.userscontroller.updateUserPasswd.Emsg_pwd'));
             }
             //Set new password
             $user->password = Input::get('new_password');
@@ -356,13 +355,13 @@ class UsersController extends Controller
             Confide::logout();
 
             return Redirect::route('home')
-                ->with(trans('hardcoded.userscontroller.updateUserPasswd.log-success'))
+                ->with('log-success',trans('hardcoded.userscontroller.updateUserPasswd.log-success'))
                 ->with('show_login_modal',true);
 
         } else {
 
             return Redirect::route('home')
-                ->with(trans('hardcoded.userscontroller.updateUserPasswd.log-notice'))
+                ->with('log-notice',trans('hardcoded.userscontroller.updateUserPasswd.log-notice'))
                 ->with('show_login_modal',true);
 
         }
@@ -388,9 +387,9 @@ class UsersController extends Controller
 
             if($validator->fails()) {
                 return Redirect::route('userpanel.dashboard')
-                    ->with(trans('hardcoded.userscontroller.updateAvatar.error'))
-                    ->with(trans('hardcoded.userscontroller.updateAvatar.Etitle'))
-                    ->with(trans('hardcoded.userscontroller.updateAvatar.Emsg'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.userscontroller.updateAvatar.Etitle'))
+                    ->with('Emsg',trans('hardcoded.userscontroller.updateAvatar.Emsg'));
             } else {
                 $targ_w = $targ_h = 160;
                 $jpeg_quality = 90;
@@ -403,9 +402,9 @@ class UsersController extends Controller
                 $img_r = imagecreatefromstring($file);
                 if ($img_r == false)
                     return Redirect::route('userpanel.dashboard')->withInput()
-                        ->with(trans('hardcoded.userscontroller.updateAvatar.error_image_profile'))
-                        ->with(trans('hardcoded.userscontroller.updateAvatar.Etitle'))
-                        ->with(trans('hardcoded.userscontroller.updateAvatar.Emsg_image_profile'));
+                        ->with('error','')
+                        ->with('Etitle',trans('hardcoded.userscontroller.updateAvatar.Etitle'))
+                        ->with('Emsg',trans('hardcoded.userscontroller.updateAvatar.Emsg_image_profile'));
 
                 $dst_r = ImageCreateTrueColor($targ_w, $targ_h);
                 imagecopyresampled($dst_r, $img_r, 0, 0, $input['x'], $input['y'], $targ_w, $targ_h, $input['w'], $input['h']);
@@ -415,19 +414,19 @@ class UsersController extends Controller
 
                 if ($user->save()) {
                     return Redirect::route('userpanel.dashboard')
-                        ->with(trans('hardcoded.userscontroller.updateAvatar.success'))
-                        ->with(trans('hardcoded.userscontroller.updateAvatar.Stitle'))
-                        ->with(trans('hardcoded.userscontroller.updateAvatar.Smsg'));
+                        ->with('success','')
+                        ->with('Stitle',trans('hardcoded.userscontroller.updateAvatar.Stitle'))
+                        ->with('Smsg',trans('hardcoded.userscontroller.updateAvatar.Smsg'));
                 } else {
                     return Redirect::route('userpanel.dashboard')->withInput()
-                        ->with(trans('hardcoded.userscontroller.updateAvatar.error_image'))
-                        ->with(trans('hardcoded.userscontroller.updateAvatar.Etitle'))
-                        ->with(trans('hardcoded.userscontroller.updateAvatar.Emsg_image'));
+                        ->with('error','')
+                        ->with('Etitle',trans('hardcoded.userscontroller.updateAvatar.Etitle'))
+                        ->with('Emsg',trans('hardcoded.userscontroller.updateAvatar.Emsg_image'));
                 }
             }
         } else {
             return Redirect::route('home')
-                ->with(trans('hardcoded.userscontroller.updateAvatar.log-notice'))
+                ->with('log-notice',trans('hardcoded.userscontroller.updateAvatar.log-notice'))
                 ->with('show_login_modal',true);
         }
     }
@@ -458,9 +457,9 @@ class UsersController extends Controller
             if($validator->fails()) {
                 return Redirect::route('userpanel.dashboard')
                     ->withInput()
-                    ->with(trans('hardcoded.userscontroller.updateUser.error'))
-                    ->with(trans('hardcoded.userscontroller.updateUser.Etitle'))
-                    ->with(trans('hardcoded.userscontroller.updateUser.EmsgField'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.userscontroller.updateUser.Etitle'))
+                    ->with('Emsg',trans('hardcoded.userscontroller.updateUser.EmsgField'));
             }
 
             if($input['name'] != $user->name)
@@ -485,9 +484,9 @@ class UsersController extends Controller
                 if(!$geocoding) {
                     return Redirect::route('userpanel.dashboard')
                         ->withInput()
-                        ->with(trans('hardcoded.userscontroller.updateUser.errorDir'))
-                        ->with(trans('hardcoded.userscontroller.updateUser.Etitle'))
-                        ->with(trans('hardcoded.userscontroller.updateUser.Emsg'));
+                        ->with('error','')
+                        ->with('Etitle',trans('hardcoded.userscontroller.updateUser.Etitle'))
+                        ->with('Emsg',trans('hardcoded.userscontroller.updateUser.Emsg'));
                 }
                 $user->lat = $geocoding[0]; //guargar latitud
                 $user->lon = $geocoding[1]; //guardar longitud
@@ -508,18 +507,18 @@ class UsersController extends Controller
 
             if($user->save()) {
                 return Redirect::route('userpanel.dashboard')
-                    ->with(trans('hardcoded.userscontroller.updateUser.success'))
-                    ->with(trans('hardcoded.userscontroller.updateUser.Stitle'))
-                    ->with(trans('hardcoded.userscontroller.updateUser.Smsg'));
+                    ->with('success','')
+                    ->with('Stitle',trans('hardcoded.userscontroller.updateUser.Stitle'))
+                    ->with('Smsg',trans('hardcoded.userscontroller.updateUser.Smsg'));
             } else {
                 return Redirect::route('userpanel.dashboard')->withInput()
-                    ->with(trans('hardcoded.userscontroller.updateUser.errorData'))
-                    ->with(trans('hardcoded.userscontroller.updateUser.Etitle'))
-                    ->with(trans('hardcoded.userscontroller.updateUser.EmsgData'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.userscontroller.updateUser.Etitle'))
+                    ->with('Emsg',trans('hardcoded.userscontroller.updateUser.EmsgData'));
             }
         } else {
             return Redirect::route('/')
-                ->with(trans('hardcoded.userscontroller.updateUser.log-notice'))
+                ->with('log-notice',trans('hardcoded.userscontroller.updateUser.log-notice'))
                 ->with('show_login_modal',true);
         }
     }
@@ -544,9 +543,9 @@ class UsersController extends Controller
             if ($validator->fails()) {
                 return Redirect::route('userpanel.dashboard')
                     ->withInput()
-                    ->with(trans('hardcoded.userscontroller.updateSocial.error'))
-                    ->with(trans('hardcoded.userscontroller.updateSocial.Etitle'))
-                    ->with(trans('hardcoded.userscontroller.updateSocial.Emsg'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.userscontroller.updateSocial.Etitle'))
+                    ->with('Emsg',trans('hardcoded.userscontroller.updateSocial.Emsg'));
             }
 
             if ($input['facebook'] != $user->link_facebook)
@@ -564,18 +563,18 @@ class UsersController extends Controller
 
             if($user->save())
                 return Redirect::route('userpanel.dashboard')
-                    ->with(trans('hardcoded.userscontroller.updateSocial.success'))
-                    ->with(trans('hardcoded.userscontroller.updateSocial.Stitle'))
-                    ->with(trans('hardcoded.userscontroller.updateSocial.Smsg'));
+                    ->with('success','')
+                    ->with('Stitle',trans('hardcoded.userscontroller.updateSocial.Stitle'))
+                    ->with('Smsg',trans('hardcoded.userscontroller.updateSocial.Smsg'));
             else
                 return Redirect::route('userpanel.dashboard')->withInput()
-                    ->with(trans('hardcoded.userscontroller.updateSocial.errorData'))
-                    ->with(trans('hardcoded.userscontroller.updateSocial.Etitle'))
-                    ->with(trans('hardcoded.userscontroller.updateSocial.EmsgLink'));
+                    ->with('error','')
+                    ->with('Etitle',trans('hardcoded.userscontroller.updateSocial.Etitle'))
+                    ->with('Emsg',trans('hardcoded.userscontroller.updateSocial.EmsgLink'));
 
         } else {
             return Redirect::route('/')
-                ->with(trans('hardcoded.userscontroller.updateSocial.log-notice'))
+                ->with('log-notice',trans('hardcoded.userscontroller.updateSocial.log-notice'))
                 ->with('show_login_modal',true);
         }
     }
@@ -590,7 +589,10 @@ class UsersController extends Controller
         {
             if($user->hasRole('teacher'))
             { //Advertir de que ya es profesor!
-                return Redirect::route('userpanel.dashboard')->with('success', '¡Ya eres profe.! ¡Publica tus clases!');
+                return Redirect::route('userpanel.dashboard')
+                    ->with('info','')
+                    ->with('Ititle',trans('hardcoded.userscontroller.becomeATeacher.Ititle'))
+                    ->with('Imsg',trans('hardcoded.userscontroller.becomeATeacher.Imsg'));
             } else { //Añadir a tabla de profesores
                 $teacher = new Teacher();
                 $teacher->user()->associate($user);
@@ -601,13 +603,13 @@ class UsersController extends Controller
                 $user->attachRole($teacher_role);
 
                 return Redirect::route('userpanel.dashboard')
-                    ->with(trans('hardcoded.userscontroller.becomeATeacher.success'))
-                    ->with(trans('hardcoded.userscontroller.becomeATeacher.Stitle'))
-                    ->with(trans('hardcoded.userscontroller.becomeATeacher.Smsg'));
+                    ->with('success','')
+                    ->with('Stitle',trans('hardcoded.userscontroller.becomeATeacher.Stitle'))
+                    ->with('Smsg',trans('hardcoded.userscontroller.becomeATeacher.Smsg'));
             }
         } else {
             return Redirect::route('/')
-                ->with(trans('hardcoded.userscontroller.becomeATeacher.log-notice'))
+                ->with('log-notice',trans('hardcoded.userscontroller.becomeATeacher.log-notice'))
                 ->with('show_login_modal',true);
         }
     }

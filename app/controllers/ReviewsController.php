@@ -66,12 +66,12 @@ class ReviewsController extends BaseController
                 $rating->teacher_lesson_id = $lesson_id;
                 $rating->save();
 
-                return Response::json(['success'=>'success','msg'=>'Your review has been saved. Thank you'],200);
+                return Response::json(['success'=>'success','msg'=>trans('hardcoded.reviewsController.handleNewReview.Smsg')],200);
             } else {
-                return Response::json(["success"=>"warning","msg"=>"You can not review a lesson more than once!"],200);
+                return Response::json(["success"=>"warning","msg"=>trans('hardcoded.reviewsController.handleNewReview.Wmsg')],200);
             }
         } else {
-            return Response::json(['success'=>'error','msg'=>'Reviewer is not an user.'],200);
+            return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.handleNewReview.Emsg')],200);
         }
     }
 
@@ -100,14 +100,14 @@ class ReviewsController extends BaseController
                 $rating->school_lesson_id = $lesson_id;
                 $rating->save();
 
-                return 'Review saved';
+                return trans('hardcoded.reviewsController.handleSchoolLessonReview.Smsg');
             } else {
-                return 'Reviewer already reviewed this lesson';
+                return trans('hardcoded.reviewsController.handleSchoolLessonReview.Wmsg');
             }
         }
         else
         {
-            return 'Reviewer is not an user';
+            return trans('hardcoded.reviewsController.handleSchoolLessonReview.Emsg');
         }
     }
 
@@ -127,14 +127,14 @@ class ReviewsController extends BaseController
         );
         $validator = Validator::make($input, $rules);
         if($validator->fails())
-            return Response::json(['success'=>'error','msg'=>'No se pudo enviar valoración. Asegúrate de rellenar los campos correctamente.'],200);
+            return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.handleSchoolLessonNewReview.Emsg')],200);
 
         $user = Confide::user();
         $student = $user->student()->first();
         $lesson_id = $input['lessonId'];
         $existingRating = SchoolLessonRating::where('student_id','=',''.$student->id)->where('school_lesson_id','=',''.$lesson_id)->get();
         if ($existingRating->count() != 0)
-            return Response::json(['success'=>'warning','msg'=>'No es posible valorar la misma clase dos veces.'],200);
+            return Response::json(['success'=>'warning','msg'=>trans('hardcoded.reviewsController.handleSchoolLessonNewReview.Wmsg')],200);
 
         $rating = new SchoolLessonRating();
         $rating->student_id = $student->id;
@@ -142,8 +142,8 @@ class ReviewsController extends BaseController
         $rating->value = $input['score'];
         $rating->comment = $input['comment'];
         if($rating->save())
-            return Response::json(['success'=>'success','msg'=>'Muchas gracias. Tu valoración ha sido correctamente enviada.'],200);
-        return Response::json(['success'=>'error','msg'=>'No se pudo enviar tu valoración. Prueba de nuevo en unos minutos.'],200);
+            return Response::json(['success'=>'success','msg'=>trans('hardcoded.reviewsController.handleSchoolLessonNewReview.Smsg')],200);
+        return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.handleSchoolLessonNewReview.Emsg2')],200);
 
     }
 
@@ -165,11 +165,11 @@ class ReviewsController extends BaseController
             $review->yes_helpful = $review->yes_helpful + 1;
             $review->total_helpful = $review->total_helpful + 1;
             if($review->save())
-                return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+                return Response::json(['success'=>'success','msg'=>trans('hardcoded.reviewsController.wasHelpful.Smsg')],200);
         } else {
-            return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+            return Response::json(['success'=>'warning','msg'=>trans('hardcoded.reviewsController.wasHelpful.Wmsg')],200);
         }
-        return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+        return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.wasHelpful.Emsg')],200);
     }
 
     /**
@@ -188,11 +188,11 @@ class ReviewsController extends BaseController
             $review = TeacherLessonRating::findOrFail($review_id);
             $review->total_helpful = $review->total_helpful + 1;
             if($review->save())
-                return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+                return Response::json(['success'=>'success','msg'=>trans('hardcoded.reviewsController.wasNotHelpful.Smsg')],200);
         } else {
-            return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+            return Response::json(['success'=>'warning','msg'=>trans('hardcoded.reviewsController.wasNotHelpful.Wmsg')],200);
         }
-        return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+        return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.wasNotHelpful.Emsg')],200);
     }
 
     /**
@@ -212,11 +212,11 @@ class ReviewsController extends BaseController
             $review->yes_helpful = $review->yes_helpful + 1;
             $review->total_helpful = $review->total_helpful + 1;
             if($review->save())
-                return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+                return Response::json(['success'=>'success','msg'=>trans('hardcoded.reviewsController.wasHelpful.Smsg')],200);
         } else {
-            return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+            return Response::json(['success'=>'warning','msg'=>trans('hardcoded.reviewsController.wasHelpful.Wmsg')],200);
         }
-        return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+        return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.wasHelpful.Emsg')],200);
     }
 
     /**
@@ -236,10 +236,10 @@ class ReviewsController extends BaseController
             $review = SchoolLessonRating::findOrFail($review_id);
             $review->total_helpful = $review->total_helpful + 1;
             if($review->save())
-                return Response::json(['success'=>'success','msg'=>'Muchas gracias por compartir tu opinión.'],200);
+                return Response::json(['success'=>'success','msg'=>trans('hardcoded.reviewsController.wasNotHelpful.Smsg')],200);
         } else {
-            return Response::json(['success'=>'warning','msg'=>'No es posible evaluar el mismo comentario más de una vez.'],200);
+            return Response::json(['success'=>'warning','msg'=>trans('hardcoded.reviewsController.wasNotHelpful.Wmsg')],200);
         }
-        return Response::json(['success'=>'error','msg'=>'Se ha producido un Error. Prueba de nuevo en unos minutos.'],200);
+        return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.wasNotHelpful.Emsg')],200);
     }
 }

@@ -198,6 +198,32 @@ return array
             'Smsg' => 'Muchas gracias. Tu valoración ha sido correctamente enviada.',
             'Emsg2' => 'No se pudo enviar tu valoración. Inténtalo de nuevo en unos minutos.'
         ],
+        'handleNewReview' => [
+            'Smsg' => 'Tu valoración ha sido guardada. Muchas gracias.',
+            'Wmsg' => 'No es posible valorar la misma lección más una vez.',
+            'Emsg' => 'No es posible valorar sin acceder a tu cuenta de milPROFES.',
+        ],
+        'handleSchoolLessonReview' => [
+            'Smsg' => 'Valoración del curso guardada.',
+            'Wmsg' => 'Ya se ha valorado este curso.',
+            'Emsg' => 'No es posible valorar sin acceder a tu cuenta de milPROFES.',
+        ],
+        'handleSchoolLessonNewReview' => [
+            'Emsg' => 'No se pudo enviar valoración. Asegúrate de rellenar los campos correctamente.',
+            'Wmsg' => 'No es posible valorar la misma clase dos veces.',
+            'Smsg' => 'Muchas gracias. Tu valoración ha sido correctamente enviada.',
+            'Emsg2' => 'No se pudo enviar tu valoración. Prueba de nuevo en unos minutos.'
+        ],
+        'wasHelpful' => [
+            'Smsg' => 'Muchas gracias por compartir tu opinión.',
+            'Wmsg' => 'No es posible evaluar el mismo comentario más de una vez.',
+            'Emsg' => 'Se ha producido un Error. Prueba de nuevo en unos minutos.',
+        ],
+        'wasNotHelpful' => [
+            'Smsg' => 'Muchas gracias por compartir tu opinión.',
+            'Wmsg' => 'No es posible evaluar el mismo comentario más de una vez.',
+            'Emsg' => 'Se ha producido un Error. Prueba de nuevo en unos minutos.',
+        ],
     ],
 
     'userscontroller' => [
@@ -263,15 +289,19 @@ return array
             'errorData'             => 'Error al actualizar tus datos',
             'EmsgLink'              => 'Error al tratar de actualizar tus enlaces sociales.',
             'log-notice'            => 'Tu sesión ha caducado y no fue posible actualizar tus datos. Por favor, vuelve a acceder e inténtalo de nuevo.',
-
         ],
-
 
         'becomeATeacher' => [
             'success'               => '¡Ahora ya eres profe.! ¡Publica tus clases!',
+            'Ititle'                => 'Información',
+            'Imsg'                  => '¡Ya eres profe.! ¡Publica tus clases!',
             'Stitle'                => 'Éxito',
             'Smsg'                  => '¡Ya eres profe.! ¡Publica tus clase para aparecer en los resultados de las búsquedas!',
             'log-notice'            => 'Al parece tu sesión ha caducado. Por favor, vuelve a acceder e inténtalo de nuevo.',
+        ],
+
+        'forgotPassword' => [
+            'Etitle'    => 'error',
         ],
     ],
 );

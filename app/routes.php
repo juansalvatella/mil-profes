@@ -45,9 +45,9 @@ Route::get('request/persData/teacher', ['as' => 'request.teacherData', 'uses' =>
 //===================
 //User authentication
 //===================
-Route::get('users/create', ['as' => 'user.register', 'uses' => 'UsersController@usersRegister']);
+//Route::get('users/create', ['as' => 'user.register', 'uses' => 'UsersController@usersRegister']);
 Route::post('users', ['as' => 'users', 'uses'=> 'UsersController@store']);
-Route::get('users/login',['as' => 'users.login', 'uses'=> 'UsersController@login']);
+//Route::get('users/login',['as' => 'users.login', 'uses'=> 'UsersController@login']);
 Route::post('users/login', ['as' => 'users.login', 'uses'=> 'UsersController@doLogin']);
 Route::get('users/confirm/{code}', ['as' => 'users.confirm.code', 'uses' => 'UsersController@confirm']);
 Route::get('users/forgot-password', ['as' => 'users.forgot.pwd', 'uses' => 'UsersController@forgotPassword']);
