@@ -4,17 +4,14 @@ return [
 
     //Header
     'logo' => 'milPROFES.',
-
     'who' => 'Quiénes somos',
 	'faq' => 'FAQs',
     'contact' => 'Contáctanos',
-
 	'login' => 'Entrar',
     'register' => 'Registrarse',
     'register_xs' => 'Regístrate',
     'register_sm' => 'Regístrate',
     'register_md' => 'Registra tus clases GRATIS',
-
 
     //Footer
     'contact_logo' => 'milPROFES.',
@@ -24,12 +21,10 @@ return [
     'email' => 'info@milprofes.com',
     'address_title' => '',
     'address' => 'España | Cataluña | Barcelona',
-
     'follow_us' => 'Síguenos en: ',
     'recent_results' => 'Recientes',
     'schools' => 'Academias',
     'teachers' => 'Profes.',
-
     'contact_form_title' => 'Contáctanos',
     'contact_form_name' => 'Tu nombre',
     'contact_form_email' => 'Tu e-mail',
@@ -40,15 +35,12 @@ return [
     'mail_placeholder' => 'Tu e-mail',
     'subject_placeholder' => 'Asunto',
     'message_placeholder' => 'Tu mensaje',
-
     'copyright' => 'Copyrights 2015 &copy; All rights Reserved.',
     'authorship' => '',
-
     'user_terms' => 'Condiciones de uso',
     'privacy' => 'Política de privacidad',
     'cookies' => 'Política de cookies',
     'sitemap' => 'Mapa del sitio',
-
     'login-username' => 'E-mail o Nombre de usuario',
     'login-username-ph' => 'Tu e-mail o Nombre de usuario',
     'login-password' => 'Contraseña',
@@ -57,7 +49,6 @@ return [
     'login-forgot-passwd' => '¿Has olvidado la contraseña?',
     'login-send' => 'Entrar',
     'login-cancel' => 'Cancelar',
-
     'register-username' => 'Nombre de usuario (*)',
     'register-username-ph' => 'Tu nombre de usuario',
     'register-realname' => 'Nombre (*)',

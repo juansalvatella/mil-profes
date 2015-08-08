@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     'reviews' => [
         'dashboard' => 'Panel de control',
         'title_school' => 'Valoración de academias',
@@ -19,10 +20,8 @@ return [
         'school' => 'Academia',
         'teacher' => 'Profe.',
     ],
-
     'new-logo' => 'Nuevo logotipo',
     'new-pics' => 'Nuevas imágenes',
-
     'crawled' => 'Revisar',
     'active' => 'Activa',
 

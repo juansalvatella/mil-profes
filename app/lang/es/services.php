@@ -4,10 +4,8 @@ return [
 
     'title' => 'Servicios para academias',
     'subtitle' => 'Consulta aquí lo que podemos ofrecerte',
-
     'contact-us' => 'Cont&aacute;ctanos',
     'call-us' => 'Para formar parte de nuestra web, puede llamarnos al <strong>696089184</strong> o contactar con nosotros',
-
     'title1' => 'Búsquedas geolocalizadas:',
     'p1-1' => 'Una de las principales causas de abandono en las academias por parte de los estudiantes
                es la distancia hasta al centro. Nuestra página tiene una solución a este problema:',

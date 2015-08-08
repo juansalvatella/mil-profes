@@ -4,7 +4,6 @@ return [
 
     'title' => 'Política de cookies',
     'subtitle' => '',
-
     'p1' => 'En cumplimiento de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedadde la Información
     y Comercio Electrónico le informamos de la utilización de cookies en nuestro Sitio Web (milprofes.com)
     con el fin de facilitar y mejorar la navegación a los usuarios, recordando por donde navegó en el sitio web,
@@ -111,7 +110,6 @@ return [
         'l1' => 'http://support.apple.com/kb/PH5042​',
         'l2' => 'http://support.apple.com/kb/HT1677',
     ],
-
     't7' => 'Cambios en la Política de Cookies',
     'p7' => 'Es posible que actualicemos la Política de Cookies de nuestro Sitio Web, por ello le recomendamos
     revisar esta política cada vez que acceda a nuestro Sitio Web con el objetivo de estar adecuadamente informado
@@ -119,7 +117,5 @@ return [
     't8' => 'Contacto',
     'p8' => 'Si tuviera alguna duda, comentario o sugerencia sobre la Política de Cookies, puede ponerse en contacto
     con nosotros en la dirección de correo electrónico <a target="_blank" class="noconsent" href="mailto:info@milprofes.com">info@milprofes.com</a>.',
-
-    'logo' => '<span class="who-logo-mil">mil</span> <span class="who-logo-profes">PROFES.</span>',
 
 ];

@@ -4,7 +4,6 @@ return [
 
     'contact-us' => 'Contáctanos',
     'ask-us' => 'Pregúntanos o coméntanos, encantados',
-
     'contact_form_lastname' => 'Apellidos',
     'lastname_placeholder' => 'Tus apellidos',
     'contact_form_title' => 'Contáctanos',

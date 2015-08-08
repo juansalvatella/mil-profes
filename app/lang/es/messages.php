@@ -8,7 +8,6 @@ return [
     'positive_confirmation' => 'Tu correo ha sido confirmado! Ya puedes entrar en milProfes',
     'wrong_confirmation' => 'Error al tratar de confirmar tu correo. Ponte en contacto con nosotros si persiste el problema.',
 
-
     //confide, entrust kind of errors
     'username'              => 'Usuario',
     'password'              => 'Contraseña',

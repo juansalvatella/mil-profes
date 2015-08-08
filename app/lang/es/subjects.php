@@ -1,9 +1,8 @@
 <?php
 
-return array(
+return [
 
     'subject' => 'Categoría',
-
     //new categories
     'languages' => 'Idiomas',
     'science' => 'Ciencia',
@@ -21,4 +20,4 @@ return array(
     'general education' => 'Educación general',
     'all' => 'De todo',
 
-);
+];

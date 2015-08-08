@@ -13,7 +13,7 @@ class RequestController extends BaseController
     {
         $input = Input::all();
         if(Input::has('lessonId')) {
-            if (true || !Session::has('t_'.$input['teacherId'].'_visualized_'.$input['lessonId'])) //if this Tlf visualization hasn't been recorded before (during the session)
+            if (!Session::has('t_'.$input['teacherId'].'_visualized_'.$input['lessonId'])) //if this Tlf visualization hasn't been recorded before (during the session)
             {
                 Session::put('t_'.$input['teacherId'].'_visualized_'.$input['lessonId'], true); //record the visualization in the session array
                 Session::save();
@@ -30,7 +30,7 @@ class RequestController extends BaseController
                 return Response::json(['saved' => ''.$save], '200');
             }
         } else {
-            if (true || !Session::has('t_'.$input['teacherId'].'_visualized_null')) //if this Tlf visualization hasn't been recorded before (during the session)
+            if (!Session::has('t_'.$input['teacherId'].'_visualized_null')) //if this Tlf visualization hasn't been recorded before (during the session)
             {
                 Session::put('t_'.$input['teacherId'].'_visualized_null', true); //record the visualization in the session array
                 Session::save();
@@ -47,7 +47,7 @@ class RequestController extends BaseController
             }
         }
 
-        return Response::json(['warning' => 'Already saved in DB'], '200');
+        return Response::json(['warning' => trans('hardcoded.requestController.Wmsg')], '200');
     }
 
     /**
@@ -70,7 +70,7 @@ class RequestController extends BaseController
 
             return (string) $visualization->save();
         }
-        return 'Already saved in DB';
+        return trans('hardcoded.requestController.Wmsg');
     }
 
     /**
@@ -99,7 +99,7 @@ class RequestController extends BaseController
 
             return (string) $visualization->save();
         }
-        return 'Already saved in DB';
+        return trans('hardcoded.requestController.Wmsg');
     }
 
     /**
@@ -144,7 +144,7 @@ class RequestController extends BaseController
             }
         }
 
-        return Response::json(['warning' => 'Already saved in DB'], '200');
+        return Response::json(['warning' => trans('hardcoded.requestController.Wmsg')], '200');
     }
 
     /**
@@ -167,7 +167,7 @@ class RequestController extends BaseController
 
             return (string) $visualization->save();
         }
-        return 'Already saved in DB';
+        return trans('hardcoded.requestController.Wmsg');
     }
 
     /**
@@ -196,11 +196,11 @@ class RequestController extends BaseController
 
             return (string) $visualization->save();
         }
-        return 'Already saved in DB';
+        return trans('hardcoded.requestController.Wmsg');
     }
 
     /**
-     * Show the personal data of teacher
+     * Returns the contact info of a teacher
      * @return \Illuminate\Http\JsonResponse
      */
     public function teacherData()

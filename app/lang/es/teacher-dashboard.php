@@ -1,6 +1,7 @@
 <?php
 
-return array(
+return [
+
     'teachers' => 'Profes.',
     'dashboard' => 'Panel de control',
     'no-teachers' => 'No se han encontrado profesores',
@@ -14,4 +15,5 @@ return array(
     'showing' => 'Mostrando',
     'from-total' => 'de un total de',
     'of-teachers' => 'profe|profes',
-);
+
+];

@@ -15,44 +15,6 @@ class ContactController extends Controller {
     }
 
     /**
-     * Show the mini contact form
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function getMiniContactForm()
-    {
-
-        $data = Input::all();
-
-        $rules = array (
-            'contact_name' => 'required|max:50',
-            'contact_email' => 'required|email',
-            'contact_subject' => 'required|max:50',
-            'contact_message' => 'required|max:1000',
-        );
-        $validator = Validator::make($data, $rules);
-
-        if ($validator -> passes()){
-
-            Mail::queue('emails.feedback', $data, function($message) use ($data)
-            {
-                $message->from('info@milprofes.com' , 'milProfes.')
-                    ->replyTo($data['contact_email'] , $data['contact_name'])
-                    ->to('info@milprofes.com', 'milProfes.')->subject($data['contact_subject']);
-            });
-
-            return Redirect::back()
-                ->with(trans('hardcoded.contactcontroller.getMiniContactForm.minicontact-success'));
-        }
-        else
-        {
-            //return contact form with errors
-            return Redirect::back()
-                ->with(trans('hardcoded.contactcontroller.getMiniContactForm.minicontact-error'));
-        }
-
-    }
-
-    /**
      * Show the contact form
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -78,19 +40,19 @@ class ContactController extends Controller {
                     ->to('info@milprofes.com', 'milProfes.')->subject($data['contact_subject']);
             });
 
-            return Redirect::to('contactanos')
-                ->with(trans('hardcoded.contactcontroller.getContactForm.success'))
-                ->with(trans('hardcoded.contactcontroller.getContactForm.Stitle'))
-                ->with(trans('hardcoded.contactcontroller.getContactForm.Smsg'));
+            return Redirect::route('contact')
+                ->with('success','')
+                ->with('Stitle',trans('hardcoded.contactcontroller.getContactForm.Stitle'))
+                ->with('Smsg',trans('hardcoded.contactcontroller.getContactForm.Smsg'));
         }
         else
         {
             //return contact form with errors
-            return Redirect::to('contactanos')
+            return Redirect::route('contact')
                 ->withInput()
-                ->with(trans('hardcoded.contactcontroller.getContactForm.error'))
-                ->with(trans('hardcoded.contactcontroller.getContactForm.Etitle'))
-                ->with(trans('hardcoded.contactcontroller.getContactForm.Emsg'));
+                ->with('error','')
+                ->with('Etitle',trans('hardcoded.contactcontroller.getContactForm.Etitle'))
+                ->with('Emsg',trans('hardcoded.contactcontroller.getContactForm.Emsg'));
         }
 
     }

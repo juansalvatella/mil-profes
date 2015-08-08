@@ -38,6 +38,7 @@ return array
             'errorSaveAcademy'  => 'Fallo al guardar el código del vídeo asociado a la academia.',
             'EmsgSaveAcademy'   => 'Fallo al guardar el código del vídeo asociado a la academia.',
             'Etitle'            => 'Error',
+            'Stitle'            => 'Éxito',
             'errorDir'          => 'No se pudo modificar los datos de la acadamia. Fallo al guardar la dirección.',
             'EmsgDir'           => 'Se produjo un error al tratar de guardar la dirección. No se pudo modificar los datos de la acadamia.',
             'errorPostAvatar'   => 'Error al subir la imagen de perfil: ',
@@ -186,13 +187,26 @@ return array
 
     ],
 
+    'requestController' => [
+      'Wmsg' => 'Ya fue registrada.'
+    ],
+
+    'reviewsController' => [
+        'handleLessonReview' => [
+            'Emsg' => 'No se pudo enviar valoración. Asegúrate de rellenar los campos correctamente.',
+            'Wmsg' => 'No es posible valorar la misma clase dos veces.',
+            'Smsg' => 'Muchas gracias. Tu valoración ha sido correctamente enviada.',
+            'Emsg2' => 'No se pudo enviar tu valoración. Inténtalo de nuevo en unos minutos.'
+        ],
+    ],
+
     'userscontroller' => [
         'create' => [
             'show_register_modal'   => true,
         ],
         'store' => [
             'reg-error'             => 'No se cumplimentaron los campos correctamente. Vuelve a intentarlo.',
-            'show_login_modal'   => true,
+            'show_login_modal'      => true,
             'show_register_modal'   => true,
             'reg-error-dir'         => 'La dirección proporcionada no parece ser válida. Prueba escribiendo tu calle, número y ciudad.',
             'log-notice'            => trans('messages.user_just_registered'),

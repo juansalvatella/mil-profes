@@ -90,7 +90,7 @@ Route::get('admin/edit/school/{school_id}', ['as' => 'edit.school', 'uses' => 'A
 Route::post('admin/edit/school', ['as' => 'save.school', 'uses' => 'AdminController@saveSchool']);
 Route::get('admin/school/reviews', ['as' => 'school.reviews', 'uses' => 'AdminController@schoolReviews']);
 Route::post('admin/updateSchoolStatus', ['as' => 'update.school.status', 'uses' => 'AdminController@updateSchoolStatus']);
-Route::get('admin/teachers', ['as' => 'schools.dashboard', 'uses' => 'AdminController@teachersDashboard']);
+Route::get('admin/teachers', ['as' => 'teachers.dashboard', 'uses' => 'AdminController@teachersDashboard']);
 Route::get('admin/teacher/reviews', ['as' => 'teacher.reviews', 'uses' => 'AdminController@teacherReviews']);
 Route::get('admin/delete/teacher/review/{id}',  ['as' => 'delete.teacher.review', 'uses' => 'AdminController@deleteTeacherReview']);
 Route::get('admin/delete/teacher/{user_id}', ['as' => 'delete.teacher', 'uses' => 'AdminController@deleteTeacher']);

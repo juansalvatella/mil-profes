@@ -4,7 +4,6 @@ return [
 
     'common' => [
         'actions' => 'Acciones',
-
         'day' => 'Día',
         'from' => 'De',
         'to' => 'A',
@@ -32,7 +31,6 @@ return [
 
     'contact' => [
         'title' => 'Contáctanos',
-
         'name' => 'Tu nombre',
         'name-ph' => 'Tu nombre',
         'email' => 'Tu e-mail',
@@ -41,13 +39,11 @@ return [
         'subject-ph' => 'Asunto',
         'message' => 'Tu mensaje',
         'message-ph' => 'Tu mensaje',
-
         'send' => 'Enviar',
     ],
 
     'mini-contact' => [
         'title' => 'Contáctanos',
-
         'name' => 'Tu nombre',
         'name-ph' => 'Tu nombre',
         'email' => 'Tu e-mail',
@@ -56,7 +52,6 @@ return [
         'subject-ph' => 'Asunto',
         'message' => 'Tu mensaje',
         'message-ph' => 'Tu mensaje',
-
         'send' => 'Enviar',
     ],
     
@@ -65,7 +60,6 @@ return [
         'username-ph' => 'Tu e-mail o Nombre de usuario',
         'password' => 'Contraseña',
         'password-ph' => 'Tu contraseña',
-
         'remind_me' => 'Recuérdame',
         'forgot_passwd' => '¿Has olvidado la contraseña?',
         'send' => 'Entrar',
@@ -89,7 +83,6 @@ return [
         'password-ph' => 'Elige tu contraseña',
         'confirm-password' => 'Confirmar contraseña (*)',
         'confirm-password-ph' => 'Repite tu contraseña',
-
         'register' => 'Registrarme',
         'cancel' => 'Cancelar',
         'user_terms' => 'Condiciones de uso',
@@ -115,7 +108,6 @@ return [
         'description-ph' => 'Describe los contenidos de tu clase',
         'description-error' => 'Rellena este campo.',
         'description-helper' => 'Introduce una descripción breve y atractiva de tu clase',
-
         'schedule' => 'Horario de la clase',
         'default_start_time' => '15:00',
         'default_end_time' => '21:00',
@@ -131,7 +123,6 @@ return [
         'where-ph' => '¿Dónde se dará el curso?',
         'description' => 'Descripción breve',
         'description-ph' => '',
-
         'schedule' => 'Horario de los cursos',
         'default_start_time' => '9:00',
         'default_end_time' => '21:00',
@@ -140,6 +131,5 @@ return [
     'new_school' => [
 
     ],
-
 
 ];

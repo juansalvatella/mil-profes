@@ -18,14 +18,14 @@ class ReviewsController extends BaseController
         );
         $validator = Validator::make($input, $rules);
         if($validator->fails())
-            return Response::json(['success'=>'error','msg'=>'No se pudo enviar valoración. Asegúrate de rellenar los campos correctamente.'],200);
+            return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.handleLessonReview.Emsg')],200);
 
         $user = Confide::user();
         $student = $user->student()->first();
         $lesson_id = $input['lessonId'];
         $existingRating = TeacherLessonRating::where('student_id','=',''.$student->id)->where('teacher_lesson_id','=',''.$lesson_id)->get();
         if ($existingRating->count() != 0)
-            return Response::json(['success'=>'warning','msg'=>'No es posible valorar la misma clase dos veces.'],200);
+            return Response::json(['success'=>'warning','msg'=>trans('hardcoded.reviewsController.handleLessonReview.Wmsg')],200);
 
         $rating = new Rating();
         $rating->student_id = $student->id;
@@ -33,8 +33,8 @@ class ReviewsController extends BaseController
         $rating->value = $input['score'];
         $rating->comment = $input['comment'];
         if($rating->save())
-            return Response::json(['success'=>'success','msg'=>'Muchas gracias. Tu valoración ha sido correctamente enviada.'],200);
-        return Response::json(['success'=>'error','msg'=>'No se pudo enviar tu valoración. Prueba de nuevo en unos minutos.'],200);
+            return Response::json(['success'=>'success','msg'=>trans('hardcoded.reviewsController.handleLessonReview.Smsg')],200);
+        return Response::json(['success'=>'error','msg'=>trans('hardcoded.reviewsController.handleLessonReview.Emsg2')],200);
 
     }
 

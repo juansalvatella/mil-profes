@@ -4,7 +4,6 @@ return [
 
     'title' => 'Condiciones de uso',
     'subtitle' => '',
-
     'p1' => '
         En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de
         Comercio Electrónico de España, le informamos que esta página Web es propiedad de
@@ -29,9 +28,7 @@ return [
         Web, ampliar o reducir servicios, e incluso suprimirla de la Red, así como los servicios y
         contenidos prestados, todo ello de forma unilateral y sin previo aviso.
     ',
-
     't2' => 'A. PROPIEDAD INTELECTUAL',
-
     'p2' => '
         Todos los contenidos, textos, imágenes, y códigos fuente son propiedad de​ <b>Milprofes</b> o
         de terceros a los que se han adquirido sus derechos de explotación, y están protegidos
@@ -49,9 +46,7 @@ return [
         web no da derecho a otorgarse la categoría de colaborador o socio de​ <b>Milprofes</b>.
         Está absolutamente prohibida la imitación ya sea total o parcial de nuestro portal.
     ',
-
     't3' => 'B. CONDICIONES DE ACCESO',
-
     'p3' => '
         El acceso a nuestra página Web es gratuito y no exige previa suscripción o registro. No
         obstante, ​ <b>Milprofes</b> se reserva el derecho de ofrecer servicios que requieran el registro
@@ -82,9 +77,7 @@ return [
         renuncia formal a los mismas, permaneciendo éstas vigentes hasta los plazos de
         prescripción de las infracciones.
     ',
-
     't4' => 'C. PROTECCIÓN DE DATOS PERSONALES',
-
     'p4' => '
         La confidencialidad, el secreto profesional y la seguridad son valores primordiales de
         <b>Milprofes</b>​, que asume el compromiso de garantizar la privacidad del usuario ovisitante
@@ -109,7 +102,6 @@ return [
         Real Decreto 1720/2007 que regula el reglamento de medidas de seguridad de los
         ficheros que contengan datos de carácter personal.
     ',
-
     't5' => 'Uso de sus datos personales',
     'p5' => '
         Los datos que le solicitamos son los adecuados, pertinentes y estrictamente necesarios
@@ -131,7 +123,6 @@ return [
         <b>Milprofes</b>​, se reserva el derecho de decidir la incorporación o no de sus datos
         personales a sus ficheros.
     ',
-
     't6' => 'Recepción de Currículums Vitae',
     'p6' => '
         En el caso de enviarnos su currículum vitae, en virtud de la Ley de Protección de Datos
@@ -144,7 +135,6 @@ return [
         rogamos nos comunique cualquier cambio o modificación que se produzca en los
         mismos.
     ',
-
     't7' => 'Derechos de acceso, rectificación, cancelación y oposición de sus datos personales',
     'p7' => '
         En cualquier momento podrá oponerse a nuestros envíos comerciales, así como
@@ -153,7 +143,6 @@ return [
         de la Asamblea de Catalunya número 4, 3º, 1ª o mediante correo electrónico a la
         dirección ​<a target="_blank" href="mailto:info@milprofes.com">info@milprofes.com</a>​ aportando copia de su DNI.
     ',
-
     't8' => 'Comunicaciones de datos',
     'p8' => '
         <b>Milprofes</b> le informa que sus datos son tratados confidencialmente y son utilizados
@@ -161,7 +150,6 @@ return [
         cedemos ni comunicamos a ningún tercero tus datos, excepto en los casos legalmente
         previstos, o que el USUARIO nos lo autorice expresamente.
     ',
-
     't9' => 'Seguridad de sus datos personales',
     'p9' => '
         Con el objetivo de salvaguardar la seguridad de sus datos personales, le informamos
@@ -171,7 +159,6 @@ return [
         Decreto 1720/2007 regula el reglamento de medidas de seguridad de los ficheros que
         contengan datos de carácter personal.
     ',
-
     't10' => 'Actualización de sus datos',
     'p10' => '
         Es importante que para que podamos mantener sus datos personales actualizados, nos
@@ -192,7 +179,6 @@ return [
         Para cualquier cuestión respecto a la Política de Protección de Datos Personales puede
         ponerse en contacto con nosotros en los datos arriba indicados.
     ',
-
     't11' => 'D. RESPONSABILIDADES',
     'p11' => '
         Al poner a disposición del usuario esta página Web queremos ofrecerle toda una serie
@@ -245,7 +231,5 @@ return [
         Para cualquier cuestión respecto a las Condiciones de Uso de nuestra página web
         puede ponerse en contacto con nosotros en los datos arriba indicados.
     ',
-
-    'logo' => '<span class="who-logo-mil">mil</span> <span class="who-logo-profes">PROFES.</span>',
 
 ];

@@ -71,7 +71,8 @@ class ProfilesController extends BaseController
 
 //        Log::info('Rank query output', $qArray);
 
-        //Fecha de última actualización es el mínimo entre las fechas de última modificación de clases y fecha de última actualización de perfil
+        // Fecha de última actualización es el mínimo entre las fechas de
+        // última modificación de clases y fecha de última actualización de perfil
         $dates = array();
         $lessons = $teacher->lessons()->get();
         foreach ($lessons as $l)

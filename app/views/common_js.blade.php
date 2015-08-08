@@ -67,7 +67,7 @@ $(document).ready(function() {
     </script>
 @endif
 
-@if(Session::get('warning'))
+@if(Session::has('warning'))
     <input type="hidden" name="Wtitle" value="{{ Session::get('Wtitle') }}">
     <input type="hidden" name="Wmsg" value="{{ Session::get('Wmsg') }}">
     <script type="text/javascript">
@@ -85,7 +85,7 @@ $(document).ready(function() {
     </script>
 @endif
 
-@if(Session::get('error'))
+@if(Session::has('error'))
     <input type="hidden" name="Etitle" value="{{ Session::get('Etitle') }}">
     <input type="hidden" name="Emsg" value="{{ Session::get('Emsg') }}">
     <script type="text/javascript">

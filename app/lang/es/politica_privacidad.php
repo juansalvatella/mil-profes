@@ -4,7 +4,6 @@ return [
 
     'title' => 'Política de privacidad',
     'subtitle' => '',
-
     'p1' => '
         Milprofes S.L., en adelante ​<b>Milprofes</b>​, es titular del website milprofes.com (en
         adelante el “Website”), con domicilio social en Badalona, C/Plaza de la Asamblea de

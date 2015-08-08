@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +20,12 @@ return array(
     "alpha_num" => "El campo :attribute sólo puede contener letras y números.",
     "array" => "El campo :attribute debe ser un array.",
     "before" => "El campo :attribute debe ser una fecha anterior a :date.",
-    "between" => array(
+    "between" => [
         "numeric" => "El campo :attribute debe ser un valor entre :min y :max.",
         "file" => "El archivo :attribute debe pesar entre :min y :max kilobytes.",
         "string" => "El campo :attribute debe contener entre :min y :max caracteres.",
         "array" => "El campo :attribute debe contener entre :min y :max elementos.",
-    ),
+    ],
     "boolean" => "El campo :attribute debe ser verdadero o falso.",
     "confirmed" => "El campo confirmación de :attribute no coincide.",
     "date" => "El campo :attribute no corresponde con una fecha válida.",
@@ -40,19 +40,19 @@ return array(
     "in" => "El campo :attribute debe ser igual a alguno de estos valores :values",
     "integer" => "El campo :attribute debe ser un número entero.",
     "ip" => "El campo :attribute debe ser una dirección IP válida.",
-    "max" => array(
+    "max" => [
         "numeric" => "El campo :attribute debe ser menor que :max.",
         "file" => "El archivo :attribute debe pesar meno que :max kilobytes.",
         "string" => "El campo :attribute debe contener menos de :max caracteres.",
         "array" => "El campo :attribute debe contener al menos :max elementos.",
-    ),
+    ],
     "mimes" => "El campo :attribute debe ser un archivo de tipo :values.",
-    "min" => array(
+    "min" => [
         "numeric" => "El campo :attribute debe tener al menos :min.",
         "file" => "El archivo :attribute debe pesar al menos :min kilobytes.",
         "string" => "El campo :attribute debe contener al menos :min caracteres.",
         "array" => "El campo :attribute no debe contener más de :min elementos.",
-    ),
+    ],
     "not_in" => "El campo :attribute seleccionado es invalido.",
     "numeric" => "El campo :attribute debe ser un numero.",
     "regex" => "El formato del campo :attribute es inválido.",
@@ -63,12 +63,12 @@ return array(
     "required_without" => "El campo :attribute es obligatorio cuando :values no está presente.",
     "required_without_all" => "El campo :attribute es obligatorio cuando ningún campo :values están presentes.",
     "same" => "Los campos :attribute y :other deben coincidir.",
-    "size" => array(
+    "size" => [
         "numeric" => "El campo :attribute debe ser :size.",
         "file" => "El archivo :attribute debe pesar :size kilobytes.",
         "string" => "El campo :attribute debe contener :size caracteres.",
         "array" => "El campo :attribute debe contener :size elementos.",
-    ),
+    ],
     "unique" => "El elemento :attribute ya está en uso.",
     "url" => "El formato de :attribute no corresponde con el de una URL válida.",
     "timezone" => "El campo :attribute debe contener una zona válida.",
@@ -82,13 +82,13 @@ return array(
     | specify a specific custom language line for a given attribute rule.
     |
     */
-    'custom' => array(
-        'attribute-name' => array(
+    'custom' => [
+        'attribute-name' => [
             'rule-name' => 'custom-message',
             'alpha_spaces'      => 'Los nombres sólo pueden contener letras y espacios.',
             'numeric_spaces'    => 'El teléfono sólo puede contener números y espacios',
-        ),
-    ),
+        ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
@@ -99,6 +99,6 @@ return array(
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-    'attributes' => array(),
+    'attributes' => [],
 
-);
+];

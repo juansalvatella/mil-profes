@@ -1,23 +1,19 @@
 <?php
 
-return array(
+return [
 
     'my-control-panel' => 'Mi panel de control',
     'teacher-role' => 'Profe.',
     'see-my-profile' => 'Ver mi perfil',
-
     'school-ratings' => 'Valoración academias',
     'teacher-ratings' => 'Valoración profes.',
     'admin-schools' => 'Administrar academias',
     'admin-teachers' => 'Administrar profesores',
-
     'my-lessons' => 'Mis clases',
     'my-data' => 'Mis datos',
-
     'my-avatar' => 'Mi imagen de perfil',
     'new-image' => 'Nueva imagen',
     'new-image-info' => 'Puedes utilizar imágenes del tipo JPG, PNG o GIF y tamaño inferior a 1 MB.',
-
     'my-personal-data' => 'Mis datos personales',
     'name' => 'Nombre',
     'ph-name' => 'Tu nombre',
@@ -30,7 +26,6 @@ return array(
     'birthdate' => 'Fecha de nacimiento',
     'day' => 'Día',
     'month' => 'Mes',
-
     'january' => 'Enero',
     'february' => 'Febrero',
     'march' => 'Marzo',
@@ -43,22 +38,18 @@ return array(
     'october' => 'Octubre',
     'november' => 'Noviembre',
     'december' => 'Diciembre',
-
     'year' => 'Año',
     'address' => 'Dirección',
     'ph-address' => 'Mi calle, número, ciudad...',
-
     'email' => 'E-mail',
     'ph-email' => 'Tu e-mail',
     'email-info' => 'Introduce una dirección válida de correo electrónico.',
-
     'telephone' => 'Teléfono',
     'ph-telephone' => 'Tu teléfono de contacto',
     'telephone-info' => 'Introduce sólo números, sin espacios.',
     'telephone-helper' => 'Sólo números, sin espacios',
     'description' => 'Mi descripción',
     'ph-description' => 'Descríbete...',
-
     'web-and-social' => 'Web y redes sociales',
     'ph-facebook' => 'Tu página de Facebook',
     'facebook-error' => 'Introduce una dirección web válida. Ejemplo: http://facebook.com/milprofes',
@@ -79,7 +70,6 @@ return array(
     'ph-my-web' => 'Tu página web personal',
     'my-web-error' => 'Introduce una dirección web válida. Ejemplo: http://www.milprofes.com',
     'my-web-helper' => 'Introduce la dirección web de tu página web personal. Ejemplo: http://www.milprofes.com',
-
     'change-passwd' => 'Cambiar contraseña',
     'current-passwd' => 'Contraseña actual',
     'ph-current-passwd' => 'Contraseña actual',
@@ -92,32 +82,23 @@ return array(
     'ph-confirm-passwd' => 'Repite la contraseña',
     'confirm-passwd-error' => 'Rellena este campo.',
     'match-passwd-error' => 'No coincide.',
-
     'crop-avatar' => 'Recortar mi imagen de perfil',
     'preview' => 'Vista previa:',
     'save-selection' => 'Guardar selección',
-
     'fill-this' => 'Rellena este campo.',
-
-
     'become_teacher' => 'Trabajamos cada día para llevar a más personas la posibilidad de aprender aquello que les apasiona. Necesitamos gente que esté decidida a enseñar. Necesitamos gente que esté decidida a transmitir ese talento que sólo ellos tienen. Necesitamos gente como tú,<br>¡Hazte profesor!',
     'i_want_to' => '¡Quiero ser Profe.!',
-
     'your-availability' => 'Tu disponibilidad semanal',
     'your-lessons' => 'Tus clases',
-
     'subject' => 'Categoría',
     'title' => 'Título',
     'price' => 'Precio',
     'price-unit' => '(€/hora)',
     'actions' => 'Acciones',
-
     'no-price' => 'Sin precio',
-
     'you-have-published' => 'Tienes publicadas',
     'lessons' => 'clase|clases',
     'no-lessons' => 'Aún no tienes clases publicadas.',
-
     'new-lesson' => 'Nueva clase',
 
-);
+];
