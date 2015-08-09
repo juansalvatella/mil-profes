@@ -100,7 +100,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10 text-right">
                 <input type="submit" value="@lang('buttons.create')" class="btn btn-primary"/>
-                <a href="{{ url('admin/lessons',$school->id) }}" class="btn btn-link">@lang('buttons.cancel')</a>
+                <a href="{{ route('school.lessons',$school->id) }}" class="btn btn-link">@lang('buttons.cancel')</a>
             </div>
         </div>
 

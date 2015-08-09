@@ -30,7 +30,7 @@
             <input type="hidden" name="school_id" value="{{ $school->id }}"/>
             <input type="hidden" name="lesson_id" value="{{ $lesson->id }}"/>
             <input type="submit" class="btn btn-danger" value="@lang('buttons.confirm')"/>
-            <a href="{{ url('admin/lessons',$school->id) }}" class="btn btn-default">@lang('buttons.cancel')</a>
+            <a href="{{ route('school.lessons',$school->id) }}" class="btn btn-default">@lang('buttons.cancel')</a>
         </form>
     </div>
 </div>

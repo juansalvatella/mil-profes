@@ -7,7 +7,7 @@
             <hr class="hr-faqs">
         </div>
         <div class="row text-center">
-            <a href="{{ url('userpanel/become/teacher') }}" class="btn btn-primary btn-lg faqs-btn">@lang('userpanel.i_want_to')</a>
+            <a href="{{ route('userpanel.become.teacher') }}" class="btn btn-primary btn-lg faqs-btn">@lang('userpanel.i_want_to')</a>
         </div>
     </div>
 </div>

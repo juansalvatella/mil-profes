@@ -21,7 +21,7 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
-            <a href="{{ url('admin/create/lesson',array($school->id)) }}" class="btn btn-primary">@lang('buttons.new_course')</a>
+            <a href="{{ route('show.create.school.lesson',$school->id) }}" class="btn btn-primary">@lang('buttons.new_course')</a>
         </div>
     </div>
 
@@ -46,9 +46,9 @@
                     <td class="hidden-xs">{{ $lesson->description }}</td>
                     <td class="hidden-xs">@lang('subjects.'.$subjects[$lesson->id]->name)</td>
                     <td>
-                        <a href="{{ url('admin/edit/lesson',array($lesson->id)) }}" class="btn btn-default"><i class="fa fa-edit"></i><span class="hidden-xs"> @lang('buttons.edit_course')</span></a>
+                        <a href="{{ route('edit.school.lesson',$lesson->id) }}" class="btn btn-default"><i class="fa fa-edit"></i><span class="hidden-xs"> @lang('buttons.edit_course')</span></a>
                         &nbsp;
-                        <a href="{{ url('admin/delete/lesson',array($lesson->id)) }}" class="btn btn-danger"><i class="fa fa-trash-o"></i><span class="hidden-xs">  @lang('buttons.delete_course')</span></a>
+                        <a href="{{ route('show.delete.school.lesson',$lesson->id) }}" class="btn btn-danger"><i class="fa fa-trash-o"></i><span class="hidden-xs">  @lang('buttons.delete_course')</span></a>
                     </td>
                 </tr>
             @endforeach
@@ -62,7 +62,7 @@
     @endif
     <div class="panel panel-default">
         <div class="panel-body">
-            <a style="float:right;" href="{{ url('admin/schools') }}" class="btn btn-info">@lang('buttons.back_to_schools')</a>
+            <a style="float:right;" href="{{ route('schools.dashboard') }}" class="btn btn-info">@lang('buttons.back_to_schools')</a>
         </div>
     </div>
 </div>

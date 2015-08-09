@@ -63,7 +63,7 @@ class AdminController extends BaseController
             $review->lesson_reviewed = $lesson_reviewed->title;
             $review->reviewed = $reviewed_user->username;
             $review->slug = $reviewed_user->slug;
-            $review->reviewer = Student::find($review->student_id)->user->username;
+            $review->reviewer = Student::find($review->student_id)->user()->withTrashed()->first()->username;
         }
 
         return View::make('admin_teacher_reviews', compact('reviews'));
@@ -79,7 +79,7 @@ class AdminController extends BaseController
             ->leftJoin('school_lessons','s_lesson_ratings.school_lesson_id','=','school_lessons.id')
             ->leftJoin('schools','school_lessons.school_id','=','schools.id')
             ->whereNull('schools.deleted_at')
-            ->select('s_lesson_ratings.*','s_lesson_ratings.school_lesson_id')
+            ->select('s_lesson_ratings.*','s_lesson_ratings.school_lesson_id','schools.deleted_at')
             ->paginate(10);
 
         foreach($reviews as $review)
@@ -89,7 +89,7 @@ class AdminController extends BaseController
             $review->lesson_reviewed = $lesson_reviewed->title;
             $review->reviewed = $reviewed_school->name;
             $review->slug = $reviewed_school->slug;
-            $review->reviewer = Student::find($review->student_id)->user->username;
+            $review->reviewer = Student::find($review->student_id)->user()->withTrashed()->first()->username;
         }
 
         return View::make('admin_school_reviews', compact('reviews'));
@@ -441,7 +441,6 @@ class AdminController extends BaseController
         $geocoding = Geocoding::geocode(Input::get('address'));
         $school_id = Input::get('school_id');
         if(!$geocoding){
-//            return Redirect::route('lessons', array('school_id' => $school_id))
             return Redirect::back()
                 ->withInput()
                 ->with('error','')
@@ -459,7 +458,7 @@ class AdminController extends BaseController
         $lesson->school()->associate($school);
 
         if(!$lesson->save()) {
-            return Redirect::route('lessons', array('school_id' => $school_id))
+            return Redirect::route('school.lessons', array('school_id' => $school_id))
                 ->with('error','')
                 ->with('Etitle',trans('hardcoded.admincontroller.createLesson.Etitle'))
                 ->with('Emsg',trans('hardcoded.admincontroller.createLesson.EmsgCreate'));
@@ -475,7 +474,7 @@ class AdminController extends BaseController
                 $pick->start = $input['start'.$i];
                 $pick->end = $input['end'.$i];
                 if(!$pick->save()) {
-                    return Redirect::route('lessons', array('school_id' => $school_id))
+                    return Redirect::route('school.lessons', array('school_id' => $school_id))
                         ->with('warning','')
                         ->with('Wtitle',trans('hardcoded.admincontroller.createLesson.Wtitle'))
                         ->with('Wmsg',trans('hardcoded.admincontroller.createLesson.Wmsg'));
@@ -483,7 +482,7 @@ class AdminController extends BaseController
             }
         }
 
-        return Redirect::route('lessons',array('school_id' => $school_id))
+        return Redirect::route('school.lessons',array('school_id' => $school_id))
             ->with('success','')
             ->with('Stitle',trans('hardcoded.admincontroller.createLesson.Stitle'))
             ->with('Smsg',trans('hardcoded.admincontroller.createLesson.Smsg'));
@@ -542,7 +541,6 @@ class AdminController extends BaseController
         $lesson->address = Input::get('address');
         $geocoding = Geocoding::geocode(Input::get('address'));
         if(!$geocoding){
-//            return Redirect::route('lessons', array('school_id' => $school_id))
             return Redirect::back()
                 ->withInput()
                 ->with('error','')
@@ -557,7 +555,7 @@ class AdminController extends BaseController
         $lesson->subject()->associate($subject);
 
         if(!$lesson->save()) {
-            return Redirect::route('lessons', array('school_id' => $school_id))
+            return Redirect::route('school.lessons', array('school_id' => $school_id))
                 ->with('error','')
                 ->with('Etitle',trans('hardcoded.admincontroller.saveLesson.Etitle'))
                 ->with('Emsg',trans('hardcoded.admincontroller.saveLesson.EmsgUpdate'));
@@ -583,7 +581,7 @@ class AdminController extends BaseController
             }
         }
 
-        return Redirect::route('lessons',array('school_id' => $school_id))
+        return Redirect::route('school.lessons',array('school_id' => $school_id))
             ->with('success','')
             ->with('Stitle',trans('hardcoded.admincontroller.saveLesson.Stitle'))
             ->with('Smsg',trans('hardcoded.admincontroller.saveLesson.Smsg'));
@@ -615,12 +613,12 @@ class AdminController extends BaseController
         $lesson->delete();
 
         if($lesson->exists)
-            return Redirect::route('lessons',array('school_id' => $school_id))
+            return Redirect::route('school.lessons',array('school_id' => $school_id))
                 ->with('error','')
                 ->with('Etitle',trans('hardcoded.admincontroller.deleteLesson.Etitle'))
                 ->with('Emsg',trans('hardcoded.admincontroller.deleteLesson.EmsgDelete'));
         else
-            return Redirect::route('lessons',array('school_id' => $school_id))
+            return Redirect::route('school.lessons',array('school_id' => $school_id))
                 ->with('success','')
                 ->with('Stitle',trans('hardcoded.admincontroller.deleteLesson.Stitle'))
                 ->with('Smsg',trans('hardcoded.admincontroller.deleteLesson.SmsgLeeson'));

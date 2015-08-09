@@ -230,16 +230,16 @@
                 <div class="col-xs-12 col-sm-3 col-md-3">
                     <div class="row search-image-container">
                         @if($prof_o_acad=='profesor')
-                            <a href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{{ $result->displayName }}}" src="{{ asset('img/avatars/'.$result->avatar) }}"/></a>
+                            <a href="{{ route('profiles-teacher',['user_slug'=>$result->slug,'clase'=>$result->id]) }}"><img class="img-responsive img-thumbnail best-img" alt="{{{ $result->displayName }}}" src="{{ asset('img/avatars/'.$result->avatar) }}"/></a>
                         @else
-                            <a href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->name }}" src="{{ asset('img/logos/'.$result->logo) }}"/></a>
+                            <a href="{{ route('profiles-school',['school_slug'=>$result->slug,'curso'=>$result->id]) }}"><img class="img-responsive img-thumbnail best-img" alt="{{ $result->name }}" src="{{ asset('img/logos/'.$result->logo) }}"/></a>
                         @endif
                     </div>
                     <div class="text-center profile-link-name">
                         @if($prof_o_acad=='profesor')
-                            <a href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}">{{{ $result->displayName }}}</a>
+                            <a href="{{ route('profiles-teacher',['user_slug'=>$result->slug,'clase'=>$result->id]) }}">{{{ $result->displayName }}}</a>
                         @else
-                            <a href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}">{{{ $result->name }}}</a>
+                            <a href="{{ route('profiles-school',['school_slug'=>$result->slug,'curso'=>$result->id]) }}">{{{ $result->name }}}</a>
                         @endif
                     </div>
                 </div>
@@ -288,9 +288,9 @@
                     @if($result->aggregated > 1)
                     <div class="row result-aggregated">
                         @if($prof_o_acad=='profesor')
-                            <a class="btn btn-default btn-sm" href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}"><i class="fa fa-search-plus"></i> @lang('search.see') {{ $result->aggregated-1 }} @choice('search.lessons',$result->aggregated-1) @lang('search.more-of') {{ $result->displayName }} @lang('search.that') @choice('search.may',$result->aggregated-1) @lang('search.interest-you').</a>
+                            <a class="btn btn-default btn-sm" href="{{ route('profiles-teacher',['user_slug'=>$result->slug,'clase'=>$result->id]) }}"><i class="fa fa-search-plus"></i> @lang('search.see') {{ $result->aggregated-1 }} @choice('search.lessons',$result->aggregated-1) @lang('search.more-of') {{ $result->displayName }} @lang('search.that') @choice('search.may',$result->aggregated-1) @lang('search.interest-you').</a>
                         @else
-                            <a class="btn btn-default btn-sm" href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('search.courses',$result->aggregated-1) @lang('search.more-of') {{ $result->name }} @lang('search.that') @choice('search.may',$result->aggregated-1) @lang('search.interest-you').</a>
+                            <a class="btn btn-default btn-sm" href="{{ route('profiles-school',['school_slug'=>$result->slug,'curso'=>$result->id]) }}"><i class="fa fa-search-plus"></i> Ver {{ $result->aggregated-1 }} @choice('search.courses',$result->aggregated-1) @lang('search.more-of') {{ $result->name }} @lang('search.that') @choice('search.may',$result->aggregated-1) @lang('search.interest-you').</a>
                         @endif
                     </div>
                     @endif
@@ -325,9 +325,9 @@
                     </div>
                     <div class="row text-center top-buffer-15">
                         @if($prof_o_acad=='profesor')
-                            <a id="contact-me-{{ $result->id }}" href="{{ url('profe/'.$result->slug.'?clase='.$result->id) }}" class="btn btn-milprofes">@lang('search.t-contact-me')</a>
+                            <a id="contact-me-{{ $result->id }}" href="{{ route('profiles-teacher',['user_slug'=>$result->slug,'clase'=>$result->id]) }}" class="btn btn-milprofes">@lang('search.t-contact-me')</a>
                         @else
-                            <a id="contact-me-{{ $result->id }}" href="{{ url('academia/'.$result->slug.'?curso='.$result->id) }}" class="btn btn-milprofes">@lang('search.s-contact-me')</a>
+                            <a id="contact-me-{{ $result->id }}" href="{{ route('profiles-school',['school_slug'=>$result->slug,'curso'=>$result->id]) }}" class="btn btn-milprofes">@lang('search.s-contact-me')</a>
                         @endif
                     </div>
                 </div>

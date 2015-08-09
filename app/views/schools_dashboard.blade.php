@@ -24,7 +24,7 @@
                     <h1>Academias <small>Panel de control</small></h1>
                 </div>
                 <div class="pull-right">
-                    <a href="{{ url('userpanel/dashboard') }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> @lang('buttons.back')</a>
+                    <a href="{{ route('userpanel.dashboard') }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> @lang('buttons.back')</a>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
-            <a href="{{ url('/admin/create/school') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('buttons.new_school')</a>
+            <a href="{{ route('show.create.school') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('buttons.new_school')</a>
         </div>
     </div>
 
@@ -90,10 +90,10 @@
                     <td class="text-center hidden-xs">@if($school->lon && $school->lon != '0.0000000')<i class="glyphicon glyphicon-ok" aria-hidden="true" title="{{ $school->lat }},{{ $school->lon }}"></i>@else <i class="glyphicon glyphicon-remove" aria-hidden="true" title="Faltan datos"></i> @endif</td>
                     <td class="text-center">{{ $school->nlessons }}</td>
                     <td>
-                        <a href="{{ url('academia',array($school->slug)) }}" class="btn btn-xs btn-info"><i class="fa fa-link"></i>Ver<span class="hidden-xs"> perfil</span></a>
-                        <a href="{{ url('admin/lessons',array($school->id)) }}" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> <span class="hidden-xs">Editar </span>cursos</a>
-                        <a href="{{ url('admin/delete/school',array($school->id)) }}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> <span class="hidden-xs">Eliminar</span></a>
-                        <a href="{{ url('admin/edit/school',array($school->id)) }}" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> <span class="hidden-xs">Editar </span>academia</a>
+                        <a href="{{ route('profiles-school',$school->slug) }}" class="btn btn-xs btn-info"><i class="fa fa-link"></i>Ver<span class="hidden-xs"> perfil</span></a>
+                        <a href="{{ route('school.lessons',$school->id) }}" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> <span class="hidden-xs">Editar </span>cursos</a>
+                        <a href="{{ route('show.delete.school',$school->id) }}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> <span class="hidden-xs">Eliminar</span></a>
+                        <a href="{{ route('show.edit.school',$school->id) }}" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> <span class="hidden-xs">Editar </span>academia</a>
                     </td>
                 </tr>
                 @endforeach

@@ -137,7 +137,7 @@
                 @for($i=0;$i<4;++$i)
                 <div class="diamond-row">
                     <div class="diamond">
-                        <a href="{{ url('profe/'.$popular_teachers[$j]->slug) }}"><span class="fulldiv-link"></span></a>
+                        <a href="{{ route('profiles-teacher',$popular_teachers[$j]->slug) }}"><span class="fulldiv-link"></span></a>
                         <div class="diamond-img"><span style="background: url('{{ asset('img/avatars/'.$popular_teachers[$j]->avatar) }}') center no-repeat; background-size: cover;"></span></div>
                         <?php ++$j; ?>
                     </div>
@@ -145,18 +145,18 @@
                         @if($i==1)
                             <div class="diamond-img"><span class="profes-populares" style="background-color: #202020;"><i>Profes.</i><br>populares</span></div>
                         @else
-                            <a href="{{ url('profe/'.$popular_teachers[$j]->slug) }}"><span class="fulldiv-link"></span></a>
+                            <a href="{{ route('profiles-teacher',$popular_teachers[$j]->slug) }}"><span class="fulldiv-link"></span></a>
                             <div class="diamond-img"><span style="background: url('{{ asset('img/avatars/'.$popular_teachers[$j]->avatar) }}') center no-repeat; background-size: cover;"></span></div>
                             <?php ++$j; ?>
                         @endif
                     </div>
                     <div class="diamond">
-                        <a href="{{ url('profe/'.$popular_teachers[$j]->slug) }}"><span class="fulldiv-link"></span></a>
+                        <a href="{{ route('profiles-teacher',$popular_teachers[$j]->slug) }}"><span class="fulldiv-link"></span></a>
                         <div class="diamond-img"><span style="background: url('{{ asset('img/avatars/'.$popular_teachers[$j]->avatar) }}') center no-repeat; background-size: cover;"></span></div>
                         <?php ++$j; ?>
                     </div>
                     <div class="diamond">
-                        <a href="{{ url('profe/'.$popular_teachers[$j]->slug) }}"><span class="fulldiv-link"></span></a>
+                        <a href="{{ route('profiles-teacher',$popular_teachers[$j]->slug) }}"><span class="fulldiv-link"></span></a>
                         <div class="diamond-img"><span style="background: url('{{ asset('img/avatars/'.$popular_teachers[$j]->avatar) }}') center no-repeat; background-size: cover;"></span></div>
                         <?php ++$j; ?>
                     </div>
@@ -173,7 +173,7 @@
                 <div id="schools-carousel" class="owl-carousel owl-theme" style="width:525px;">
                     @foreach($popular_schools as $school)
                         <div class="item" style="width:175px;">
-                            <a href="{{ url('academia/'.$school->slug) }}"><span class="fulldiv-link"></span></a>
+                            <a href="{{ route('profiles-school',$school->slug) }}"><span class="fulldiv-link"></span></a>
                             <div class="header">
                                 <div class="logo-container">
                                     <div style="background: url('{{ asset('img/logos/'.$school->logo) }}') no-repeat center;background-size: contain;height:100%;width:100%;"></div>

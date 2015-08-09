@@ -29,14 +29,14 @@
                     </div>
                 </div>
                 <div class="pull-right">
-                    <a href="{{ url('profe/'.$user->slug) }}" class="btn btn-default"><i class="fa fa-user-plus"></i> @lang('userpanel.see-my-profile')</a>
+                    <a href="{{ route('profiles-teacher',$user->slug) }}" class="btn btn-default"><i class="fa fa-user-plus"></i> @lang('userpanel.see-my-profile')</a>
                 </div>
                 @if($user->hasRole("admin"))
                     <div class="pull-right" style="width:150px;text-align:center;">
-                        <a href="{{ url('admin/school/reviews') }}" class="btn btn-primary btn-xs inline-block">@lang('userpanel.school-ratings')</a>
-                        <a href="{{ url('admin/teacher/reviews') }}" class="btn btn-primary btn-xs inline-block top-buffer-4">@lang('userpanel.teacher-ratings')</a>
-                        <a href="{{ url('admin/schools') }}" class="btn btn-warning btn-xs inline-block top-buffer-4">@lang('userpanel.admin-schools')</a>
-                        <a href="{{ url('admin/teachers') }}" class="btn btn-warning btn-xs inline-block top-buffer-4">@lang('userpanel.admin-teachers')</a>
+                        <a href="{{ route('school.reviews') }}" class="btn btn-primary btn-xs inline-block">@lang('userpanel.school-ratings')</a>
+                        <a href="{{ route('teacher.reviews') }}" class="btn btn-primary btn-xs inline-block top-buffer-4">@lang('userpanel.teacher-ratings')</a>
+                        <a href="{{ route('schools.dashboard') }}" class="btn btn-warning btn-xs inline-block top-buffer-4">@lang('userpanel.admin-schools')</a>
+                        <a href="{{ route('teachers.dashboard') }}" class="btn btn-warning btn-xs inline-block top-buffer-4">@lang('userpanel.admin-teachers')</a>
                     </div>
                 @endif
             </div>

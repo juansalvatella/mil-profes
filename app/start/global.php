@@ -93,7 +93,8 @@ require app_path().'/validators.php';
 | the code.
 |
 */
-
-App::error(function($exception, $code) {
-    return Response::view('errors', compact('code'));
-});
+if(!Config::get('app.debug')) {
+    App::error(function ($exception, $code) {
+        return Response::view('errors', compact('code'));
+    });
+}

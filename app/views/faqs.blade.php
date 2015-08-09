@@ -35,7 +35,7 @@
                     <hr class="hr-faqs">
                 </div>
                 <div class="row text-center">
-                    <a href="{{ url('contacta') }}" class="btn input-lg faqs-btn">@lang('faqs.doubts')</a>
+                    <a href="{{ route('contact') }}" class="btn input-lg faqs-btn">@lang('faqs.doubts')</a>
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@
         <span class="sr-only">Close</span>
     </button>
     Este sitio web utiliza cookies propias y de terceros para mejorar nuestros servicios y mostrarle publicidad relacionada con sus preferencias mediante el análisis de sus hábitos de navegación.
-    Si está de acuerdo pulse <a href="#">Acepto</a> o siga navegando. Puede cambiar la configuración u obtener más información haciendo click en <a class="noconsent" href="{{ url('cookies') }}">más información</a>.
+    Si está de acuerdo pulse <a href="#">Acepto</a> o siga navegando. Puede cambiar la configuración u obtener más información haciendo click en <a class="noconsent" href="{{ route('cookies') }}">más información</a>.
 </div>
 
 {{--NAVBAR--}}
@@ -39,15 +39,15 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav text-center">
                         <li class="hidden-md hidden-lg"><span class="distance-correction" style="display:inline-block;height:32px;"></span></li>
-                        <li><a href="{{ url('milprofes') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
-                        <li><a href="{{ url('preguntas-frecuentes') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
-                        <li><a href="{{ url('contacta') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
+                        <li><a href="{{ route('who') }}" title="@lang('layout.who')">@lang('layout.who')</a></li>
+                        <li><a href="{{ route('faqs') }}" title="@lang('layout.faq')">@lang('layout.faq')</a></li>
+                        <li><a href="{{ route('contact') }}" title="@lang('layout.contact')">@lang('layout.contact')</a></li>
                         <li><a href="{{ route('services') }}" title="Servicios">Servicios</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right text-center">
                     @if(Auth::check())
-                        <li class="text-center"><a href="{{ url('userpanel/dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
-                        <li><a href="{{ url('users/logout') }}" title="Salir">Salir</a></li>
+                        <li class="text-center"><a href="{{ route('userpanel.dashboard') }}" title="Mi Cuenta">Mi Cuenta</a></li>
+                        <li><a href="{{ route('users.logout') }}" title="Salir">Salir</a></li>
                     @else
                         <li><a data-target="#modal-login" data-toggle="modal" href="javascript:" title="@lang('layout.login')">@lang('layout.login')</a></li>
                         <li>

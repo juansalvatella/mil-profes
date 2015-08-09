@@ -24,7 +24,7 @@
                 <h1>@lang('teacher-dashboard.teachers') <small>@lang('teacher-dashboard.dashboard')</small></h1>
             </div>
             <div class="pull-right">
-                <a href="{{ url('userpanel/dashboard') }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> @lang('buttons.back')</a>
+                <a href="{{ route('userpanel.dashboard') }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> @lang('buttons.back')</a>
             </div>
         </div>
     </div>
@@ -66,11 +66,11 @@
             <td>
             <?php $eloqUser = User::findOrFail($user->id); ?>
                 @if($eloqUser->hasRole("teacher"))
-                <a href="{{ url('profe',array($user->slug)) }}" class="btn btn-sm btn-info"><i class="fa fa-link"></i>@lang('teacher-dashboard.see-profile')</a>
+                <a href="{{ route('profiles-teacher',$user->slug) }}" class="btn btn-sm btn-info"><i class="fa fa-link"></i>@lang('teacher-dashboard.see-profile')</a>
             @endif
             </td>
             <td>
-                <a href="{{ url('admin/delete/teacher',array($user->id)) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> <span class="hidden-xs">@lang('teacher-dashboard.delete')</span></a>
+                <a href="{{ route('show.delete.teacher',$user->id) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> <span class="hidden-xs">@lang('teacher-dashboard.delete')</span></a>
             </td>
         </tr>
         @endforeach

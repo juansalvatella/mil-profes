@@ -149,7 +149,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <input type="submit" value="Guardar cambios" class="btn btn-primary"/>
-                <a href="{{ url('admin/schools') }}" class="btn btn-link">Cancelar</a>
+                <a href="{{ route('schools.dashboard') }}" class="btn btn-link">Cancelar</a>
             </div>
         </div>
     </form>

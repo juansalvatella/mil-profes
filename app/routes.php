@@ -73,7 +73,7 @@ Route::get('teacher/create/lesson', ['as' => 'teacher.create.lesson', 'uses' => 
 Route::post('teacher/create/lesson', ['as' => 'teacher.request.create.lesson', 'uses' => 'TeachersController@createLesson']);
 Route::get('teacher/edit/lesson/{lesson_id}', ['as' => 'teacher.edit.lesson', 'uses' => 'TeachersController@editLesson']);
 Route::post('teacher/save/lesson', ['as' => 'teacher.save.lesson', 'uses' =>'TeachersController@saveLesson']);
-Route::get('teacher/delete/lesson/{lesson_id}', ['as' => 'teacher.delete.lesson', 'uses' => 'TeachersController@deleteLesson']);
+Route::get('teacher/delete/lesson/{lesson_id}', ['as' => 'show.teacher.delete.lesson', 'uses' => 'TeachersController@deleteLesson']);
 Route::post('teacher/delete/lesson', ['as' => 'teacher.delete.lesson', 'uses' => 'TeachersController@doDeleteLesson']);
 Route::post('teacher/availability/save', ['as' => 'teacher.availability.save', 'uses' => 'TeachersController@saveAvailability']);
 
@@ -84,24 +84,24 @@ Route::get('admin/schools', ['as' => 'schools.dashboard', 'uses' => 'AdminContro
 Route::get('admin/delete/school/{school_id}', ['as' => 'show.delete.school', 'uses' => 'AdminController@deleteSchool']);
 Route::post('admin/delete/school', ['as' => 'delete.school', 'uses' => 'AdminController@doDeleteSchool']);
 Route::get('admin/delete/school/review/{id}', ['as' => 'delete.school.review', 'uses' => 'AdminController@deleteSchoolReview']);
-Route::get('admin/create/school', ['as' => 'school.register', 'uses' => 'AdminController@schoolRegister']);
+Route::get('admin/create/school', ['as' => 'show.create.school', 'uses' => 'AdminController@schoolRegister']);
 Route::post('admin/create/school', ['as' => 'create.school', 'uses' => 'AdminController@createSchool']);
-Route::get('admin/edit/school/{school_id}', ['as' => 'edit.school', 'uses' => 'AdminController@editSchool']);
+Route::get('admin/edit/school/{school_id}', ['as' => 'show.edit.school', 'uses' => 'AdminController@editSchool']);
 Route::post('admin/edit/school', ['as' => 'save.school', 'uses' => 'AdminController@saveSchool']);
 Route::get('admin/school/reviews', ['as' => 'school.reviews', 'uses' => 'AdminController@schoolReviews']);
 Route::post('admin/updateSchoolStatus', ['as' => 'update.school.status', 'uses' => 'AdminController@updateSchoolStatus']);
 Route::get('admin/teachers', ['as' => 'teachers.dashboard', 'uses' => 'AdminController@teachersDashboard']);
 Route::get('admin/teacher/reviews', ['as' => 'teacher.reviews', 'uses' => 'AdminController@teacherReviews']);
 Route::get('admin/delete/teacher/review/{id}',  ['as' => 'delete.teacher.review', 'uses' => 'AdminController@deleteTeacherReview']);
-Route::get('admin/delete/teacher/{user_id}', ['as' => 'delete.teacher', 'uses' => 'AdminController@deleteTeacher']);
+Route::get('admin/delete/teacher/{user_id}', ['as' => 'show.delete.teacher', 'uses' => 'AdminController@deleteTeacher']);
 Route::post('admin/delete/teacher', ['as' => 'delete.user.teacher', 'uses' => 'AdminController@deleteUser']);
-Route::get('admin/create/lesson/{school_id}', ['as' => 'show.create.lesson', 'uses' => 'AdminController@showCreateLesson']);
-Route::post('admin/create/lesson', ['as' => 'create.lesson', 'uses' =>'AdminController@createLesson']);
-Route::get('admin/edit/lesson/{lesson_id}', ['as' => 'edit.lesson', 'uses' =>'AdminController@editLesson']);
-Route::get('admin/lessons/{school_id}', ['as' => 'lessons', 'uses' => 'AdminController@lesssonDashboard']);
+Route::get('admin/create/lesson/{school_id}', ['as' => 'show.create.school.lesson', 'uses' => 'AdminController@showCreateLesson']);
+Route::post('admin/create/lesson', ['as' => 'create.school.lesson', 'uses' =>'AdminController@createLesson']);
+Route::get('admin/edit/lesson/{lesson_id}', ['as' => 'edit.school.lesson', 'uses' =>'AdminController@editLesson']);
+Route::get('admin/lessons/{school_id}', ['as' => 'school.lessons', 'uses' => 'AdminController@lesssonDashboard']);
 Route::post('admin/edit/lesson', ['as' => 'save.lessons', 'uses' => 'AdminController@saveLesson']);
-Route::get('admin/delete/lesson/{lesson_id}', ['as' => 'show.delete.lessons', 'uses' => 'AdminController@showDeleteLesson']);
-Route::post('admin/delete/lesson', ['as' => 'delete.lessons', 'uses' => 'AdminController@deleteLesson']);
+Route::get('admin/delete/lesson/{lesson_id}', ['as' => 'show.delete.school.lesson', 'uses' => 'AdminController@showDeleteLesson']);
+Route::post('admin/delete/lesson', ['as' => 'delete.school.lesson', 'uses' => 'AdminController@deleteLesson']);
 //Ya no existía la función loadProfilePics !
 Route::post('load-school-profile-pics', ['as' => 'load.school.profile', 'uses' => 'AdminController@loadProfilePics']);
 

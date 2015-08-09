@@ -21,7 +21,7 @@
                     <h1>@lang('adminpanel.reviews.title_school') <small>@lang('adminpanel.reviews.dashboard')</small></h1>
                 </div>
                 <div class="pull-right">
-                    <a href="{{ url('userpanel/dashboard') }}" class="btn btn-default">@lang('buttons.back')</a>
+                    <a href="{{ route('userpanel.dashboard') }}" class="btn btn-default">@lang('buttons.back')</a>
                 </div>
             </div>
         </div>
@@ -51,9 +51,9 @@
                         <td>{{ $review->comment }}</td>
                         <td>{{ $review->value }}</td>
                         <td>{{ $review->lesson_reviewed }}</td>
-                        <td><a href="{{ url('academia',$review->slug) }}" target="_blank">{{ $review->reviewed }}</a></td>
+                        <td><a href="{{ route('profiles-school',$review->slug) }}" target="_blank">{{ $review->reviewed }}</a></td>
                         <td>
-                            <a href="{{ url('admin/delete/school/review',$review->id) }}" class="btn btn-danger">@lang('buttons.delete')</a>
+                            <a href="{{ route('delete.school.review',$review->id) }}" class="btn btn-danger">@lang('buttons.delete')</a>
                         </td>
                     </tr>
                 @endforeach

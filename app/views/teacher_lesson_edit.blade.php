@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <input type="submit" value="@lang('buttons.save_changes')" class="btn btn-primary"/>
-                            <a href="{{ url('userpanel/dashboard') }}" class="btn btn-link">@lang('buttons.cancel')</a>
+                            <a href="{{ route('userpanel.dashboard') }}" class="btn btn-link">@lang('buttons.cancel')</a>
                         </div>
                     </div>
                 </form>

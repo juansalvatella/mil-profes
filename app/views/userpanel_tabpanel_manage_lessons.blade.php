@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-xs-12 clear-left" id="avail-controls">
                     <a href="#" id="avail-control-add" class="btn btn-default"><i class="glyphicon glyphicon-plus-sign"></i> @lang('buttons.add')</a>
-                    <a href="#" id="avail-control-del" class="btn btn-default hidden"><i class="glyphicon glyphicon-minus-sign"></i> @lang('buttons.delete')</a>
+                    <a href="#" id="avail-control-del" class="btn btn-default @if($picks[1]["day"]=="") hidden @endif"><i class="glyphicon glyphicon-minus-sign"></i> @lang('buttons.delete')</a>
                 </div>
                 <div class="col-xs-12 top-buffer-10">
                     <button type="submit" class="btn btn-primary pull-right">
@@ -80,9 +80,9 @@
                             {{-- + 0 removes zeros to the right of the decimal separator --}}
                             <td class="hidden-xs">@if($lesson->price!=0.0) {{{ str_replace(".", ",", $lesson->price + 0) }}} @else @lang('userpanel.no-price') @endif</td>
                             <td>
-                                <a href="{{ url("teacher/edit/lesson",array($lesson->id)) }}" class="btn btn-default bottom-buffer-5"><i class="fa fa-edit"></i><span class="hidden-xs hidden-sm"> @lang("buttons.edit")</span></a>
+                                <a href="{{ route("teacher.edit.lesson",$lesson->id) }}" class="btn btn-default bottom-buffer-5"><i class="fa fa-edit"></i><span class="hidden-xs hidden-sm"> @lang("buttons.edit")</span></a>
                                 &nbsp;
-                                <a href="{{ url("teacher/delete/lesson",array($lesson->id)) }}" class="btn btn-danger bottom-buffer-5"><i class="fa fa-trash-o"></i><span class="hidden-xs hidden-sm">  @lang("buttons.delete")</span></a>
+                                <a href="{{ route("show.teacher.delete.lesson",$lesson->id) }}" class="btn btn-danger bottom-buffer-5"><i class="fa fa-trash-o"></i><span class="hidden-xs hidden-sm">  @lang("buttons.delete")</span></a>
                             </td>
                         </tr>
                     @endforeach
@@ -91,11 +91,11 @@
             @endif
             <div class="clear-left col-xs-12">
             @if (!$lessons->isEmpty())
-                <div class="pull-left">@lang('userpanel.you-have-published') {{ count($lessons) }} @choice('messages.lessons',count($lessons))</div>
+                <div class="pull-left">@lang('userpanel.you-have-published') {{ count($lessons) }} @choice('userpanel.lessons',count($lessons))</div>
             @else
                 <div class="pull-left">@lang('userpanel.no-lessons')</div>
             @endif
-                <a href="{{ url("teacher/create/lesson") }}" class="btn btn-primary pull-right top-buffer-10">
+                <a href="{{ route("teacher.create.lesson") }}" class="btn btn-primary pull-right top-buffer-10">
                     <i class="fa fa-plus"></i> @lang('userpanel.new-lesson')
                 </a>
             </div>

@@ -30,7 +30,7 @@
             <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
             <input type="hidden" name="id" value="{{ $user->id }}"/>
             <input type="submit" class="btn btn-danger" value="@lang('buttons.confirm')"/>
-            <a href="{{ url('admin/teachers') }}" class="btn btn-default">@lang('buttons.cancel')</a>
+            <a href="{{ route('teachers.dashboard') }}" class="btn btn-default">@lang('buttons.cancel')</a>
         </form>
     </div>
 </div>

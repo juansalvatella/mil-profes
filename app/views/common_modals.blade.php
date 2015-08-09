@@ -167,7 +167,7 @@
                                         <div class="checkbox">
                                             <label>
                                                 <input value="1" type="checkbox" name="terms" id="terms" data-error="Debes aceptar las condiciones de uso para registrarte" required="required">
-                                                He leído y acepto las <a target="_blank" href="{{url('condiciones')}}">@lang('layout.register_user-terms')</a>
+                                                He leído y acepto las <a target="_blank" href="{{ route('terms') }}">@lang('layout.register_user-terms')</a>
                                             </label>
                                             <small><span class="help-block with-errors"></span></small>
                                         </div>
