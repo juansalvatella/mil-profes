@@ -2139,3 +2139,49 @@ a[class*=status-crawled] {
     font-size: 16px !important;
     margin-top: 0;
 }
+
+/*Error page*/
+#error-container {
+    background: #efefef url(/img/bg-err.png) center center no-repeat;
+    background-size: cover;
+    padding-top: 90px;
+}
+#err-code-container {
+
+}
+.err-code-line {
+    height: 210px;
+    background: url(/img/line-err.png) center center repeat-x;
+}
+.err-code {
+    font-family: "Open Sans", sans-serif;
+    color: #282b2f;
+}
+@media (max-width:500px) {
+    .err-code {
+        font-size: 148px;
+        line-height: 148px;
+    }
+}
+@media (min-width:500px) {
+    .err-code {
+        font-size: 210px;
+        line-height: 210px;
+    }
+}
+#err-title {
+    float: none;
+    font-size: 26px;
+    font-family: "Open Sans", sans-serif;
+    color: #282b2f;
+    padding-top: 23px;
+}
+#err-subtitle {
+    font-size: 14px;
+    font-family: "Open Sans", sans-serif;
+    color: #757989;
+    padding: 17px 0 35px 0;
+}
+#err-options {
+    padding-bottom: 100px;
+}

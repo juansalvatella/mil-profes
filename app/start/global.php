@@ -83,3 +83,17 @@ require app_path().'/filters.php';
 
 //require custom validators
 require app_path().'/validators.php';
+
+/*
+|--------------------------------------------------------------------------
+| Error page
+|--------------------------------------------------------------------------
+|
+| All error codes returns the same view, we customize the view by passing
+| the code.
+|
+*/
+
+App::error(function($exception, $code) {
+    return Response::view('errors', compact('code'));
+});

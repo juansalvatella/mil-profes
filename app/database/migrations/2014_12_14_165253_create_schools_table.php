@@ -32,7 +32,7 @@ class CreateSchoolsTable extends Migration {
 			$table->string('link_googleplus')->nullable();
 			$table->string('link_instagram')->nullable();
 			$table->string('logo')->default('default_logo.png');
-			$table->string('video');
+			$table->string('video')->nullable();
 			$table->string('description');
 			$table->decimal('lat',9,7);
 			$table->decimal('lon',9,7);
