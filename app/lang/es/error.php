@@ -23,7 +23,7 @@ return [
 
     '404' => [
         'title' => 'Página no encontrada',
-        'subtitle' => 'Al parecer la página que buscas ya no se encuentra disponible en milPROFES. ¿Deseas relalizar una nueva búsqueda?'
+        'subtitle' => 'Al parecer la página que buscas ya no se encuentra disponible en milPROFES. ¿Deseas realizar una nueva búsqueda?'
     ],
 
     '500' => [
