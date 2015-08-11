@@ -97,7 +97,10 @@ class User extends Eloquent implements ConfideUserInterface, SluggableInterface 
 		'link_linkedin',
 		'link_googleplus',
 		'link_instagram',
-		'description'
+		'description',
+        'social_id',
+        'oauth_token',
+        'oauth_token_secret'
 	];
 	protected $table = 'users';
 	protected $guarded = [];

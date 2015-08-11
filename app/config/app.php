@@ -132,6 +132,7 @@ return array(
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'JsLocalization\JsLocalizationServiceProvider',
         'CeesVanEgmond\Minify\MinifyServiceProvider',
+        'Artdarek\OAuth\OAuthServiceProvider',
 
 	),
 
@@ -205,6 +206,7 @@ return array(
 		'Entrust' 			=> 'Zizaco\Entrust\EntrustFacade',
         'GeoIP'             => 'Torann\GeoIP\GeoIPFacade',
         'Sitemap'           => 'Watson\Sitemap\Facades\Sitemap',
+        'OAuth'             => 'Artdarek\OAuth\Facade\OAuth',
 
 	),
 

@@ -1,6 +1,6 @@
 @media (max-width:500px) {
     .nav li a { font-size: 14px !important; padding: 7px 7px 7px 7px; !important; }
-    #welcome-responsive { font-size: 20px; margin-top: 20px; }
+    .welcome-responsive { font-size: 20px; margin-top: 20px; }
     #find-responsive { font-size: 24px; }
     .central-text { font-size: 13px; }
     .profile-maintitle { font-size: 16px; }
@@ -36,7 +36,7 @@
 }
 @media (min-width:500px) {
     .nav li a { font-size: 13px !important; padding: 7px 5px 7px 5px; !important; }
-    #welcome-responsive, #find-responsive {  font-size: 35px; margin-top: 20px;  }
+    .welcome-responsive, #find-responsive {  font-size: 35px; margin-top: 20px;  }
     .central-text { font-size: 20px; }
     .profile-maintitle { font-size: 20px; }
     .profile-subtitle { font-size: 16px; }
@@ -70,7 +70,7 @@
 }
 @media (min-width:992px) {
     .nav li a {  font-size: 14px !important; padding: 7px 15px 7px 15px; !important; }
-    #welcome-responsive, #find-responsive {  font-size: 35px; margin-top: 50px; }
+    .welcome-responsive, #find-responsive {  font-size: 35px; margin-top: 50px; }
     .central-text { font-size: 20px; }
     .profile-maintitle { font-size: 20px; }
     .profile-subtitle { font-size: 16px; }
@@ -104,7 +104,7 @@
 }
 @media (min-width:1200px) {
     .nav li a {  font-size: 16px !important; padding: 7px 15px 7px 15px; !important; }
-    #welcome-responsive {  font-size: 45px; margin-top: 40px; }
+    .welcome-responsive {  font-size: 45px; margin-top: 40px; }
     #find-responsive {  font-size: 36px;  }
     .central-text { font-size: 25px; }
     .profile-maintitle { font-size: 24px; }
@@ -853,7 +853,7 @@ div.diamond span i {
     padding-top: 50px;
     padding-bottom: 50px;
 }
-#welcome-responsive {
+.welcome-responsive {
     line-height: 175%;
     /*margin-top: 10px;*/
     font-family: raleway-regular, sans-serif;

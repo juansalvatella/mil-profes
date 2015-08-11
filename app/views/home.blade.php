@@ -21,10 +21,10 @@
           <div class="col-xs-12 col-md-6">
               <div class="row">
                   <div class="col-xs-12 col-md-offset-1 col-md-11 text-left hidden-xs hidden-sm">
-                      <h3 id="welcome-responsive">@lang('home.welcome')</h3>
+                      <h3 class="welcome-responsive">@lang('home.welcome')</h3>
                   </div>
                   <div class="col-xs-12 col-md-offset-1 col-md-11 text-center hidden-md hidden-lg">
-                      <h3 id="welcome-responsive">@lang('home.welcome')</h3>
+                      <h3 class="welcome-responsive">@lang('home.welcome')</h3>
                   </div>
               </div>
           </div>
