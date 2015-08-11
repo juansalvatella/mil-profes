@@ -307,9 +307,9 @@
                     <div class="row text-center">
                         @if($result->price=='0')
                             @if($prof_o_acad=='profesor')
-                                <div class="row no-price-provided">@lang('search.t-price-unkown')</div>
+                                <div class="row no-price-provided">@lang('search.t-price-unknown')</div>
                             @else
-                                <div class="row no-price-provided">@lang('search.s-price-unkown')</div>
+                                <div class="row no-price-provided">@lang('search.s-price-unknown')</div>
                             @endif
                         @else
                             <div class="row price">

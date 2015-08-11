@@ -54,7 +54,7 @@ return [
     'that' => 'que',
     'may' => 'podría|podrían',
     'interest-you' => 'interesarte',
-    't-price-unkown' => 'Contáctame<br>para saber<br>el precio',
+    't-price-unknown' => 'Contáctame<br>para saber<br>el precio',
     's-price-unknown' => 'Contáctanos<br>para saber<br>el precio',
     't-contact-me' => 'Contáctame',
     's-contact-me' => 'Contáctanos',
